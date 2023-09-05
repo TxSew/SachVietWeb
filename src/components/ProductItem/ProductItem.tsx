@@ -1,14 +1,8 @@
-import React from "react";
 import { memo } from "react";
-import PropTypes from "prop-types";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Rating, Stack } from "@mui/material";
-import { text } from "stream/consumers";
+import { Badge, CardMedia, Rating, Stack } from "@mui/material";
 import { color } from "../../Theme/color";
 
 const ProductItem = () => {
@@ -30,6 +24,7 @@ const ProductItem = () => {
         title=""
         image="https://cdn0.fahasa.com/media/catalog/product/z/4/z4635487376781_5f7b28f99f2375c670f627e4e1822c15.jpg"
       />
+
       <CardContent>
         <Typography variant="body1" color={color.text_color} fontSize={16}>
           Không Diệt Không Sinh Đừng Sợ Hãi - Bìa Cứng - Phiên Bản Đặc

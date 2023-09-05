@@ -1,7 +1,7 @@
-import { Box, Container, Grid, styled, Stack } from "@mui/material";
+import { Box, Container, Grid   } from "@mui/material";
 // Import the Swiper library's original types
-import SwiperCore, { Swiper, SwiperSlide, SwiperProps } from "swiper/react";
-import { Navigation, Pagination } from "swiper";
+import  { Swiper, SwiperSlide,  } from "swiper/react";
+import { Navigation, } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";

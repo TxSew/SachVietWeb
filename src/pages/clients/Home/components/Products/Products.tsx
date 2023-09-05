@@ -70,9 +70,9 @@ function Products() {
             </ToggleButtonGroup>
           </Box>
           <Grid container spacing={1} mt={2} pb={2}>
-            {[12, 5, 3, , 5, 5, 3, 5, 4, 5, 6].map((e) => {
+            {[12, 5, 3,  5, 5, 3, 5, 4, 5, 6].map((e,i) => {
               return (
-                <Grid item xs={2.4}>
+                <Grid key={i} item xs={2.4}>
                   <ProductItem />
                 </Grid>
               );

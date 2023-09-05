@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
 import Image from "../../../components/Image/Image";
-import { Grid, Stack, styled, TextField } from "@mui/material";
+import { Badge, Grid, Stack, styled, TextField } from "@mui/material";
 import { Link, NavLink } from "react-router-dom";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
@@ -15,7 +15,6 @@ import useMedia from "../../../hooks/useMedia/useMedia";
 const Header = () => {
   const { isMediumMD } = useMedia();
   console.log(isMediumMD);
-
   const BoxIcon = styled(Box)`
     display: flex;
     flex-direction: column;
@@ -172,8 +171,10 @@ const Header = () => {
                     <Typography variant="caption">Thông báo</Typography>
                   </BoxIcon>
                   <BoxIcon>
-                    <NavLink to={"/"}>
+                    <NavLink to={"/cart"}>
+                    <Badge badgeContent={1} color="primary">
                       <ShoppingCartOutlinedIcon />
+                    </Badge>
                     </NavLink>
                     <Typography variant="caption">Giỏ hàng </Typography>
                   </BoxIcon>

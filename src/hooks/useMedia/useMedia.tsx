@@ -1,5 +1,4 @@
 import { useMediaQuery, useTheme } from "@mui/material";
-import React from "react";
 
 export default function useMedia() {
   const theme = useTheme();
@@ -12,7 +11,6 @@ export default function useMedia() {
   const isMDOnly = useMediaQuery(theme.breakpoints.only("md"));
   const isLargeLG = useMediaQuery(theme.breakpoints.down("lg"));
   const isExtraLargeXL = useMediaQuery(theme.breakpoints.down("xl"));
-
   return {
     isExtraSmallXs,
     isMobileSM,

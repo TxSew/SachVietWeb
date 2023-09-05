@@ -5,7 +5,7 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import React from "react";
+import { color } from "../../../../Theme/color";
 
 const Login = () => {
   return (
@@ -16,13 +16,13 @@ const Login = () => {
         }}
         fullWidth
       >
-        <label>Số điện thoại/Email</label>
+        <label>Tài khoản</label>
         <OutlinedInput
           sx={{
             py: 1,
           }}
           fullWidth
-          placeholder="Please enter text"
+          placeholder="Vui lòng nhập Tài khoản"
         />
       </FormControl>
       <FormControl
@@ -37,13 +37,18 @@ const Login = () => {
             py: 1,
           }}
           fullWidth
-          placeholder="Please enter Password"
+          placeholder="Vui lòng nhập mật khẩu"
         />
       </FormControl>
-      <Typography>Quên mật khẩu?</Typography>
+      <Typography color={color.error} sx={{
+         mt: "20px",
+         mb: "10px",
+         float: "right",
+      }}>Quên mật khẩu?</Typography>
       <Box
         mt={2}
         sx={{
+          clear: "both",
           display: "flex",
           direction: "column",
           justifyContent: "center",

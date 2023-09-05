@@ -1,18 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
 import {
   Box,
-  Button,
   Container,
-  FormControl,
   Grid,
-  FormLabel,
-  OutlinedInput,
   Tab,
   Tabs,
-  Typography,
 } from "@mui/material";
 import Login from "./components/Login";
+import { Register } from "./components/Register";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -107,38 +102,7 @@ export default function Auth() {
                 <Login />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-                <form noValidate autoComplete="off">
-                  <FormControl
-                    sx={{
-                      mt: "10px",
-                    }}
-                    fullWidth
-                  >
-                    <Typography>Số điện thoại/Email</Typography>
-                    <OutlinedInput
-                      sx={{
-                        py: 1,
-                      }}
-                      fullWidth
-                      placeholder="Please enter text"
-                    />
-                  </FormControl>
-                  <FormControl
-                    sx={{
-                      mt: "20px",
-                    }}
-                    fullWidth
-                  >
-                    <Typography>Mật khẩu</Typography>
-                    <OutlinedInput
-                      sx={{
-                        py: 1,
-                      }}
-                      fullWidth
-                      placeholder="Please enter Password"
-                    />
-                  </FormControl>
-                </form>
+               <Register/> 
               </CustomTabPanel>
             </Box>
           </Box>

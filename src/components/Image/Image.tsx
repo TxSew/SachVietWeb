@@ -1,4 +1,3 @@
-import React, { ReactElement } from "react";
 interface Props {
   src: string;
   alt: string;

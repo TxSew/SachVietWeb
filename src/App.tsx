@@ -1,30 +1,27 @@
 import { Routes, Route } from "react-router-dom";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
-import HomePage from "./pages/clients/Home/Home";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./index.css";
-import Auth from "./pages/clients/auth/Auth";
+import { PublicRouter } from "./routes";
 function App() {
   return (
-    <div className="h">
+    <div className="App">
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <DefaultLayout>
-                <HomePage />
-              </DefaultLayout>
-            }
-          ></Route>
-          <Route
-            path="/auth"
-            element={
-              <DefaultLayout>
-                <Auth />
-              </DefaultLayout>
-            }
-          ></Route>
+          {PublicRouter.map((e, i) => {
+            const Component = e.component;
+            let Layout = DefaultLayout
+            return (
+              <Route
+                path={e.path}
+                element={
+                  <Layout>
+                    <Component />
+                  </Layout>
+                }
+              />
+            );
+          })}
         </Routes>
       </Router>
     </div>

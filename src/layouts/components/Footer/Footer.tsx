@@ -1,5 +1,4 @@
-import { Box, Container, Grid, Stack, Typography, styled } from "@mui/material";
-import React from "react";
+import { Box, Container, Grid, Stack, Typography  } from "@mui/material";
 import Image from "../../../components/Image/Image";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -8,11 +7,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import StackCustom from "../../../components/CustomComponents/Stack/StackCustom";
 import { color } from "../../../Theme/color";
 function Footer() {
-  const AlignStack = styled(Stack)`
-    display: flex;
-    flex-direction: "row";
-    align-items: center;
-  `;
   return (
     <Grid bgcolor={"#eee"}>
       <Container maxWidth={"xl"}>

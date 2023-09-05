@@ -1,0 +1,218 @@
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Rating,
+  Stack,
+  Typography,
+} from "@mui/material";
+import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
+import { color } from "../../../Theme/color";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from '@mui/icons-material/Remove';
+
+export const Details = () => {
+  return (
+    <Box bgcolor={"#eee"}>
+      <Container maxWidth="xl">
+        <Stack direction={"row"} py={1} alignItems={"center"}>
+          <Typography variant="caption">Sách tiếng việt</Typography>
+          <ChevronRightOutlinedIcon />
+          <Typography variant="caption">Sách lớp 1</Typography>
+        </Stack>
+        <Box pb={2} >
+          <Grid container bgcolor={"#fff"} p={3}>
+            <Grid item xs={5}>
+              <Box mx={"auto"} display={"flex"} justifyContent={"center"}>
+                <img
+                  src="https://cdn0.fahasa.com/media/catalog/product/2/0/20230830_152654_1.jpg"
+                  alt=""
+                  width={"388px"}
+                  height={"388px"}
+                />
+              </Box>
+              <Stack
+                direction={"row"}
+                spacing={2}
+                mx={"auto"}
+                textAlign={"center"}
+                justifyContent={"center"}
+                mt={3}
+              >
+                <Button
+                  variant="outlined"
+                  sx={{
+                    color: "red",
+                    borderColor: "red",
+                  }}
+                >
+                  Thêm vào giỏ hàng
+                </Button>
+                <Button
+                  sx={{
+                    fontWeight: "bold",
+                  }}
+                  variant="contained"
+                >
+                  Mua ngay
+                </Button>
+              </Stack>
+            </Grid>
+            <Grid item xs={6}>
+              <Box pl={4}>
+                <Typography variant="h2" fontSize={"22.1px"} fontWeight={500}>
+                  Sổ Bìa Da A5 - Kẻ Ngang 200 Trang 80gsm - 4 Seasons - The Sun
+                  01 - Màu Đỏ Đô
+                </Typography>
+                <Box mt={3}>
+                  <Stack
+                    rowGap={2}
+                    direction={"row"}
+                    justifyContent={"space-between"}
+                    flexWrap={"wrap"}
+                  >
+                    <Stack
+                      direction={"row"}
+                      spacing={1}
+                      sx={{
+                        width: "50%",
+                      }}
+                    >
+                      <Typography>Nhà cung cấp:</Typography>
+                      <Typography fontWeight={"bold"} color={"primary"}>
+                        Fahasa Print
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      spacing={1}
+                      sx={{
+                        width: "50%",
+                      }}
+                    >
+                      <Typography>Thương hiệu:</Typography>
+                      <Typography fontWeight={"bold"}>The sun</Typography>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      spacing={1}
+                      sx={{
+                        width: "50%",
+                      }}
+                    >
+                      <Typography>Xuất xứ</Typography>
+                      <Typography fontWeight={"bold"}>Việt Nam</Typography>
+                    </Stack>
+                  </Stack>
+                </Box>
+                <Box mt={1}>
+                  <Rating
+                    defaultChecked={true}
+                    defaultValue={2}
+                    name="read-only"
+                    size="medium"
+                    readOnly
+                  />
+                </Box>
+                <Box>
+                  <Stack direction={"row"} spacing={2} mt={2}>
+                    <Typography
+                      className="price"
+                      color={color.error}
+                      fontSize={25}
+                      fontWeight={"bold"}
+                    >
+                      340.000đ
+                    </Typography>
+                    <Typography
+                      className="price"
+                      fontSize={15}
+                      sx={{
+                        textDecoration: "underline",
+                      }}
+                    >
+                      70.000đ
+                    </Typography>
+
+                    <Typography
+                      variant="caption"
+                      bgcolor={color.error}
+                      color={color.white}
+                      p={"3px 10px"}
+                      borderRadius={"3px"}
+                      fontWeight={"bold"}
+                    >
+                      -5%
+                    </Typography>
+                  </Stack>
+                </Box>
+                {/* order by */}
+                <Box>
+                  <Box
+                    mt={2}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      rowGap: 1,
+                    }}
+                  >
+                    <Stack direction={"row"} spacing={7}>
+                      <Typography variant="caption">
+                        Thời gian giao hàng
+                      </Typography>
+                      <Stack>
+                        <Stack direction={"row"} spacing={1} sx={{}}>
+                          <Typography>Giao hàng đến</Typography>
+                          <Typography color="primary" fontWeight={"bold"}>
+                            Thay đổi
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                    <Stack direction={"row"} spacing={7}>
+                      <Typography variant="caption">
+                        Chính sách đổi trả
+                      </Typography>
+                      <Stack>
+                        <Stack direction={"row"} spacing={1} sx={{}}>
+                          <Typography>
+                            Đổi trả sản phẩm trong 30 ngày
+                          </Typography>
+                          <Typography color="primary" fontWeight={"bold"}>
+                            Xem thêm
+                          </Typography>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                  </Box>
+                </Box>
+                {/* quantity */}
+                <Box mt={3}>
+                  <Stack direction={"row"} spacing={7}>
+                    <Typography variant="caption" fontWeight={"bold"} fontSize={"18px"}>Số lượng</Typography>
+                    <Stack>
+                      <Stack direction={"row"} spacing={1} sx={{}}>
+                        <Stack direction={"row"} spacing={3} border={"1px solid #eee"} p={"3px 10px"} borderRadius={2}>
+                          <RemoveIcon
+                          sx={{
+                            fontSize:"17px"
+                         }}
+                          />
+                          <Typography variant="caption">1</Typography>
+                          <AddIcon sx={{
+                             fontSize:"17px"
+                          }}/>
+                        </Stack>
+                      </Stack>
+                    </Stack>
+                  </Stack>
+                </Box>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
+    </Box>
+  );
+};
