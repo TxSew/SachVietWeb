@@ -71,9 +71,10 @@ const Category = () => {
             flexWrap: "wrap",
           }}
         >
-          {[2, 3, 4, 5, 5, 5, 5, 3, 34, 3].map((e) => {
+          {[2, 3, 4, 5, 5, 5, 5, 3, 34, 3].map((e,i) => {
             return (
               <Stack
+               key={i}
                 width={"10%"}
                 justifyContent={"center"}
                 alignContent={"center"}

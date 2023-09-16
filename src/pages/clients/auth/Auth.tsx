@@ -45,7 +45,7 @@ function a11yProps(index: number) {
 export default function Auth() {
   const [value, setValue] = React.useState(0);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
 
@@ -91,7 +91,7 @@ export default function Auth() {
                 </Tabs>
               </Box>
             </Box>
-            <Box
+            <Grid
               sx={{
                 display: "flex",
                 width: "100%",
@@ -104,7 +104,7 @@ export default function Auth() {
               <CustomTabPanel value={value} index={1}>
                <Register/> 
               </CustomTabPanel>
-            </Box>
+            </Grid>
           </Box>
         </Box>
       </Container>

@@ -11,8 +11,13 @@ import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { color } from "../../../Theme/color";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from "../../../redux/storeClient";
+import { increment,decrement } from "../../../redux/features/counter/CounterProducer";
 
 export const Details = () => {
+  const count = useSelector((state: RootState) => state.counter.value)
+  const dispatch = useDispatch()
   return (
     <Box bgcolor={"#eee"}>
       <Container maxWidth="xl">
@@ -195,12 +200,17 @@ export const Details = () => {
                       <Stack direction={"row"} spacing={1} sx={{}}>
                         <Stack direction={"row"} spacing={3} border={"1px solid #eee"} p={"3px 10px"} borderRadius={2}>
                           <RemoveIcon
+                          onClick={() => dispatch(decrement())}
+                          
                           sx={{
                             fontSize:"17px"
-                         }}
+                          }}
                           />
-                          <Typography variant="caption">1</Typography>
-                          <AddIcon sx={{
+                          <Typography variant="caption">{count}</Typography>
+                          <AddIcon 
+                                                    onClick={() => dispatch(increment())}
+
+                          sx={{
                              fontSize:"17px"
                           }}/>
                         </Stack>

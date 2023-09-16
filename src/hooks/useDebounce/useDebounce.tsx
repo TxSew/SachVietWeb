@@ -7,7 +7,6 @@ function useDebounce<T>(value: T, delay: number): T {
     const timer = setTimeout(() => {
       setDebouncedValue(value);
     }, delay);
-
     // Cleanup the timer if the value or delay changes before the timeout
     return () => {
       clearTimeout(timer);
