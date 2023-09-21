@@ -5,19 +5,50 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
-import { color } from "../../../../Theme/color";
 import { Controller, useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { color } from "../../../../Theme/color";
+import { BaseAPi } from "../../../../configs/BaseApi";
 import { FormRegister } from "../../../../models/AuthModel/Register";
-
+import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
 export const Register = () => {
+  
+  const http =  new HttpAccountController(BaseAPi)
+   const redirect  = useNavigate()
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<FormRegister>();
-  const RegisterSubmit = (register: FormRegister) => {
-    console.log(register);
+  const RegisterSubmit = async (register: FormRegister) => {
+     console.log(register);
+      try {
+         
+     const Sign = await http.register(register)
+      if(Sign){
+         toast.success("Register Success", {
+          position:"bottom-right"
+
+         })
+          localStorage.setItem('user', JSON.stringify(register))
+          redirect('/')
+           
+      }
+      }
+       catch(err:any) {       
+       if(
+
+
+       err.response.data.message === "Email already exists"
+       ) {
+         toast.error("Tai khoan email ton tai", {
+           position:"bottom-right"
+         })
+       }
+       }
+      
+     
   };
   return (
     <form autoComplete="off" onSubmit={handleSubmit(RegisterSubmit)}>
@@ -97,10 +128,11 @@ export const Register = () => {
           name="phone"
           rules={{
             required: "Vui lòng nhập số diện thoại!",
+           
           }}
+          
           render={({ field }) => (
             <OutlinedInput
-              key={1}
               {...field}
               sx={{
                 py: 1,

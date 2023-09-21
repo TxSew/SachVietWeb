@@ -10,6 +10,7 @@ export const Theme = createTheme({
     h1: {},
   },
   components: {
+     
     MuiTextField: {
       defaultProps: {
         InputProps: {},
@@ -88,5 +89,8 @@ export const Theme = createTheme({
         },
       },
     },
+     MuiContainer: {
+       
+     }
   },
 });

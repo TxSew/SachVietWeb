@@ -3,7 +3,9 @@ import Image from "../../../../../components/Image/Image";
 
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import { color } from "../../../../../Theme/color";
+import useMedia from "../../../../../hooks/useMedia/useMedia";
 const Category = () => {
+  const {  isMediumMD, isMobileSM} = useMedia()
   return (
     <Container
       maxWidth={"xl"}
@@ -12,7 +14,7 @@ const Category = () => {
       }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <Image
             src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
             alt=""
@@ -20,7 +22,7 @@ const Category = () => {
             height="200px"
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <Image
             src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
             alt=""
@@ -28,7 +30,7 @@ const Category = () => {
             height="200px"
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <Image
             src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
             alt=""
@@ -36,7 +38,7 @@ const Category = () => {
             height="200px"
           />
         </Grid>
-        <Grid item xs={3}>
+        <Grid item xs={6} md={3}>
           <Image
             src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
             alt=""
@@ -75,9 +77,17 @@ const Category = () => {
             return (
               <Stack
                key={i}
-                width={"10%"}
                 justifyContent={"center"}
                 alignContent={"center"}
+                 flexWrap={"wrap"}
+                  sx={
+                     isMediumMD ?
+                    {
+                       width:"20%"
+                  }: {
+                     width:"10%"
+                  } 
+                }
               >
                 <Box
                   sx={{

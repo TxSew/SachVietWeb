@@ -10,14 +10,45 @@ import {
 import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
 import { color } from "../../../Theme/color";
 import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from '@mui/icons-material/Remove';
-import { useSelector, useDispatch } from 'react-redux'
+import RemoveIcon from "@mui/icons-material/Remove";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../redux/storeClient";
-import { increment,decrement } from "../../../redux/features/counter/CounterProducer";
+import {
+  increment,
+  decrement,
+} from "../../../redux/features/counter/CounterProducer";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { BaseAPi } from "../../../configs/BaseApi";
+import Products from "../Home/components/Products/Products";
+import { Product } from "../../../submodules/models/ProductModel/Product";
+import { addToCart } from "../../../redux/features/cart/CartProducer";
 
 export const Details = () => {
-  const count = useSelector((state: RootState) => state.counter.value)
-  const dispatch = useDispatch()
+  const {id} = useParams()
+   const http = new HttpProductController(BaseAPi)
+    
+    const [Detail, setDetail] = useState<Product>({})
+   const FetchProductOne =  async () => {
+     if(id){
+     const detailValue = await http.getOne(id) 
+      console.log(detailValue);
+        setDetail(detailValue) 
+       
+      
+     }
+   }
+    const handleAddToCart = (detail:any) => {
+        dispatch(addToCart(detail)); 
+    }
+   useEffect(() => {
+      FetchProductOne(); 
+   }, [])
+   
+   
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
   return (
     <Box bgcolor={"#eee"}>
       <Container maxWidth="xl">
@@ -26,12 +57,12 @@ export const Details = () => {
           <ChevronRightOutlinedIcon />
           <Typography variant="caption">Sách lớp 1</Typography>
         </Stack>
-        <Box pb={2} >
+        <Box pb={2}>  
           <Grid container bgcolor={"#fff"} p={3}>
             <Grid item xs={5}>
               <Box mx={"auto"} display={"flex"} justifyContent={"center"}>
                 <img
-                  src="https://cdn0.fahasa.com/media/catalog/product/2/0/20230830_152654_1.jpg"
+                  src={Detail.productImage  ? Detail.productImage[0].image : ""}
                   alt=""
                   width={"388px"}
                   height={"388px"}
@@ -51,6 +82,7 @@ export const Details = () => {
                     color: "red",
                     borderColor: "red",
                   }}
+                  onClick={() => handleAddToCart(Detail)}
                 >
                   Thêm vào giỏ hàng
                 </Button>
@@ -67,9 +99,8 @@ export const Details = () => {
             <Grid item xs={6}>
               <Box pl={4}>
                 <Typography variant="h2" fontSize={"22.1px"} fontWeight={500}>
-                  Sổ Bìa Da A5 - Kẻ Ngang 200 Trang 80gsm - 4 Seasons - The Sun
-                  01 - Màu Đỏ Đô
-                </Typography>
+                                 {Detail.title}
+                                 </Typography>
                 <Box mt={3}>
                   <Stack
                     rowGap={2}
@@ -128,7 +159,7 @@ export const Details = () => {
                       fontSize={25}
                       fontWeight={"bold"}
                     >
-                      340.000đ
+                      {Detail.price}
                     </Typography>
                     <Typography
                       className="price"
@@ -137,7 +168,7 @@ export const Details = () => {
                         textDecoration: "underline",
                       }}
                     >
-                      70.000đ
+                      {Detail.price_sale}
                     </Typography>
 
                     <Typography
@@ -195,24 +226,35 @@ export const Details = () => {
                 {/* quantity */}
                 <Box mt={3}>
                   <Stack direction={"row"} spacing={7}>
-                    <Typography variant="caption" fontWeight={"bold"} fontSize={"18px"}>Số lượng</Typography>
+                    <Typography
+                      variant="caption"
+                      fontWeight={"bold"}
+                      fontSize={"18px"}
+                    >
+                      Số lượng
+                    </Typography>
                     <Stack>
                       <Stack direction={"row"} spacing={1} sx={{}}>
-                        <Stack direction={"row"} spacing={3} border={"1px solid #eee"} p={"3px 10px"} borderRadius={2}>
+                        <Stack
+                          direction={"row"}
+                          spacing={3}
+                          border={"1px solid #eee"}
+                          p={"3px 10px"}
+                          borderRadius={2}
+                        >
                           <RemoveIcon
-                          onClick={() => dispatch(decrement())}
-                          
-                          sx={{
-                            fontSize:"17px"
-                          }}
+                            onClick={() => dispatch(decrement())}
+                            sx={{
+                              fontSize: "17px",
+                            }}
                           />
                           <Typography variant="caption">{count}</Typography>
-                          <AddIcon 
-                                                    onClick={() => dispatch(increment())}
-
-                          sx={{
-                             fontSize:"17px"
-                          }}/>
+                          <AddIcon
+                            onClick={() => dispatch(increment())}
+                            sx={{
+                              fontSize: "17px",
+                            }}
+                          />
                         </Stack>
                       </Stack>
                     </Stack>
@@ -221,6 +263,11 @@ export const Details = () => {
               </Box>
             </Grid>
           </Grid>
+        </Box>
+        {/* chi tiet san pham */}
+        <Box>
+          <Typography variant="h2">Thông tin sản phẩm</Typography>
+           
         </Box>
       </Container>
     </Box>

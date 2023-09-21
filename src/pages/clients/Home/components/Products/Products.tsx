@@ -1,9 +1,13 @@
 import { Box, Container, Stack, Typography, Grid, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { color } from "../../../../../Theme/color";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ToggleButton from "@mui/material/ToggleButton";
 import ProductItem from "../../../../../components/ProductItem/ProductItem";
+import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
+import { BaseAPi } from "../../../../../configs/BaseApi";
+import { Product } from "../../../../../submodules/models/ProductModel/Product";
+import { Link } from "react-router-dom";
 
 function Products() {
   const [alignment, setAlignment] = React.useState("web");
@@ -14,6 +18,23 @@ function Products() {
   ) => {
     setAlignment(newAlignment);
   };
+  const [Products, setProducts] = useState<Product[]>([]);
+  const http = new HttpProductController(BaseAPi);
+  const fetchData = async () => {
+    try {
+    const productData:any = await http.getAll();
+     console.log(productData);
+    const { products } = productData;
+    setProducts(products);
+    }
+     catch(err) {
+       console.error(err);
+     }
+  };
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Box>
       <Container maxWidth={"xl"}>
@@ -70,10 +91,10 @@ function Products() {
             </ToggleButtonGroup>
           </Box>
           <Grid container spacing={1} mt={2} pb={2}>
-            {[12, 5, 3,  5, 5, 3, 5, 4, 5, 6].map((e,i) => {
+            {Products.map((element, i) => {
               return (
-                <Grid key={i} item xs={2.4}>
-                  <ProductItem />
+                <Grid key={i} item md={4} lg={2.4} xs={12} sm={6}>
+                  <ProductItem key={i} products={element} />
                 </Grid>
               );
             })}

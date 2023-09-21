@@ -75,7 +75,7 @@ function Category() {
                 {Array.from({ length: 8 }).map((item) => {
                   return (
                     <Grid item xs={3}>
-                      <ProductItem />
+                      {/* <ProductItem products={item} /> */}
                     </Grid>
                   );
                 })}

@@ -4,17 +4,21 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { Badge, CardMedia, Rating, Stack } from "@mui/material";
 import { color } from "../../Theme/color";
-
-const ProductItem = () => {
-  console.log("re-rendering product");
-
+import { Product } from "../../submodules/models/ProductModel/Product";
+import { Link } from "react-router-dom";
+ interface ProductItem {
+   products:Product
+ } 
+const ProductItem = ( Props:ProductItem) => {
+   
   return (
     <Card
       variant="outlined"
       sx={{
-        border: "1px solid  #eee",
+        border: "1px solid #eee",
       }}
     >
+       <Link to={`/products/${Props.products.slug}`}>
       <CardMedia
         component="img"
         height={"190"}
@@ -22,12 +26,14 @@ const ProductItem = () => {
           p: 1,
         }}
         title=""
-        image="https://cdn0.fahasa.com/media/catalog/product/z/4/z4635487376781_5f7b28f99f2375c670f627e4e1822c15.jpg"
+        
+        image={Props.products.productImage ?Props.products.productImage[0].image : ""}
       />
+       </Link>
 
       <CardContent>
         <Typography variant="body1" color={color.text_color} fontSize={16}>
-          Không Diệt Không Sinh Đừng Sợ Hãi - Bìa Cứng - Phiên Bản Đặc
+        {Props.products.title}
         </Typography>
         <Stack direction={"row"} spacing={3} mt={2}>
           <Typography
@@ -36,7 +42,7 @@ const ProductItem = () => {
             fontSize={18}
             fontWeight={"bold"}
           >
-            340.000
+            {Props.products.price}
           </Typography>
           <Typography
             variant="caption"
@@ -55,7 +61,7 @@ const ProductItem = () => {
             textDecoration: "line-through",
           }}
         >
-          70.000
+          {Props.products.price_sale}
         </Typography>
       </CardContent>
       <Rating

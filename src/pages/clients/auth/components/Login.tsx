@@ -8,21 +8,57 @@ import {
 import { color } from "../../../../Theme/color";
 import { Controller, useForm } from "react-hook-form";
 import { FormLogin } from "../../../../models/AuthModel/Login";
+import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
+import { BaseAPi } from "../../../../configs/BaseApi";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+
+const http = new HttpAccountController(BaseAPi)
+   const redirect = useNavigate()
   const {
     handleSubmit,
     control,
-     
-    formState: { errors, isValid },
+    formState: { errors  },
   } = useForm<FormLogin>();
+ const handleLogin =  async (data:FormLogin) => {
+      try {
+     const login:any = await http.login(data)
+      if(login) {
+         toast.success("Login successful", {
+           position:"bottom-right"
+         })
+         console.log(login)
 
+          const {user, token} = login
+         localStorage.setItem('user', JSON.stringify(user))
+         localStorage.setItem('token', JSON.stringify(token))
+      }
+      redirect('/')
+      }
+       catch(err:any){
+         if(err.response.data.message ==='invalid email') {
+           toast.error("Invalid email exits" , {
+             position:"bottom-right"
+           })
+         }
+         if(err.response.data.message === 'Invalid password.') {
+          toast.error("sai password" , {
+            position:"bottom-right"
+          })
+        }
+      
+       
+   
+    }
+    
+     
+ }
   return (
     <form
       autoComplete="off"
-      onSubmit={handleSubmit((d) => {
-        console.log(d);
-      })}
+      onSubmit={handleSubmit(handleLogin)}
     >
       <FormControl
         sx={{

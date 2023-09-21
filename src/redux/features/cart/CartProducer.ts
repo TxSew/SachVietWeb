@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 interface CartItem {
-  productID: number;
+  id: number;
   cartQuantity: number;
   price:number
   // Add other properties from your item here
@@ -28,7 +28,7 @@ export const cardSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<CartItem>) {
-      const itemIndex = state.cartItem.findIndex((item) => item.productID === action.payload.productID);
+      const itemIndex = state.cartItem.findIndex((item) => item.id === action.payload.id);
       console.log(itemIndex)
       if (itemIndex >= 0) {
         state.cartItem[itemIndex].cartQuantity += 1;
@@ -45,6 +45,37 @@ export const cardSlice = createSlice({
       }
       localStorage.setItem('CartItems', JSON.stringify(state.cartItem));
     },
+    
+    decrementCartItem(state, action: PayloadAction<CartItem>) {
+      const itemIndex = state.cartItem.findIndex((item) => item.id === action.payload.id);
+      if (itemIndex >= 0) {
+        if (state.cartItem[itemIndex].cartQuantity > 1) {
+          state.cartItem[itemIndex].cartQuantity -= 1;
+          localStorage.setItem('CartItems', JSON.stringify(state.cartItem));
+          toast.info("Cập nhật giỏ hàng thành công!", {
+            position: "bottom-right",
+          });
+        } else {
+          // If the cart quantity becomes zero, remove the item from the cart
+          state.cartItem = state.cartItem.filter((item) => item.id !== action.payload.id);
+          localStorage.setItem('CartItems', JSON.stringify(state.cartItem));
+          toast.error('Đã xóa sản phẩm khỏi giỏ hàng!', {
+            position: "bottom-right",
+          });
+        }
+      }
+    },
+    incrementCartItem(state, action: PayloadAction<CartItem>) {
+      const itemIndex = state.cartItem.findIndex((item) => item.id === action.payload.id);
+      if (itemIndex >= 0) {
+        state.cartItem[itemIndex].cartQuantity += 1;
+        localStorage.setItem('CartItems', JSON.stringify(state.cartItem));
+        toast.info("Cập nhật giỏ hàng thành công!", {
+          position: "bottom-right",
+        });
+      }
+    },
+
     getTotal(state) {
       let { total, quantity } = state.cartItem.reduce(
         (cartTotal, cartItem) => {
@@ -63,7 +94,7 @@ export const cardSlice = createSlice({
       state.cartTotalAmount = total;
     },
     removeItem(state, action: PayloadAction<CartItem>) {
-      const remove = state.cartItem.filter((item) => item.productID !== action.payload.productID);
+      const remove = state.cartItem.filter((item) => item.id !== action.payload.id);
       state.cartItem = remove;
       localStorage.setItem('CartItems', JSON.stringify(state.cartItem));
       toast.error('Đã xóa sản phẩm khỏi giỏ hàng!', {
@@ -74,6 +105,6 @@ export const cardSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { addToCart, getTotal, removeItem } = cardSlice.actions;
+export const { addToCart, getTotal, removeItem, decrementCartItem , incrementCartItem } = cardSlice.actions;
 
 export default cardSlice.reducer;
