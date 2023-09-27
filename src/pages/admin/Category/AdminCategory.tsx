@@ -1,3 +1,5 @@
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
@@ -5,7 +7,6 @@ import {
   OutlinedInput,
   Pagination,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -15,30 +16,29 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import CategoryIcon from "@mui/icons-material/Category";
+import moment from "moment";
 import * as React from "react";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
-import {
-  Product,
-  TProductResponse,
-} from "../../../submodules/models/ProductModel/Product";
-
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
+import { BaseAPi } from "../../../configs/BaseApi";
+import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 
-const http = new HttpProductController(BaseAPi);
+const http = new HttpCategoryController(BaseAPi);
 export default function CategoryAdmin() {
-  const [Products, setProducts] = React.useState<Product[]>([]);
+  const [category, setCategory] = React.useState([]);
   React.useEffect(() => {
     fetchData();
   }, []);
   const fetchData = async () => {
     try {
-      const ProductData: TProductResponse = await http.getAll();
-      const data: any = ProductData.products;
-      console.log(data);
-      setProducts(data);
+      const CategoryData: any = await http.getAll();
+      const { subcategories } = CategoryData[0];
+      const da: any = subcategories;
+      console.log(CategoryData);
+
+      setCategory(da);
     } catch (err) {
       console.log(err);
     }
@@ -51,12 +51,16 @@ export default function CategoryAdmin() {
 
   // remove item
   const handleDelete = async (element: any) => {
-    console.log(element.id);
     const destroy = await http.delete(element.id);
-    const product = Products.filter((e) => e.id !== element.id);
-    console.log(product);
-
-    setProducts(product);
+    const filter = category.filter((e: any) => {
+      return e.id !== element.id;
+    });
+    if (destroy) {
+      toast.error("Delete item successfully", {
+        position: "bottom-right",
+      });
+      setCategory(filter);
+    }
   };
 
   return (
@@ -70,7 +74,7 @@ export default function CategoryAdmin() {
           justifyContent={"space-between"}
         >
           <Typography variant="h2" fontSize={"26px"} mb={3} fontWeight={"bold"}>
-          Danh mục sản phẩm 
+            <CategoryIcon /> Danh mục sản phẩm
           </Typography>
           <OutlinedInput
             sx={{
@@ -83,8 +87,9 @@ export default function CategoryAdmin() {
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
           />
-
-          <Button variant="contained">Thêm Danh mục</Button>
+          <Link to={"/admin/createCategory"}>
+            <Button variant="contained">Thêm Danh mục</Button>
+          </Link>
         </Stack>
         <TableContainer component={Paper}>
           <Table
@@ -106,10 +111,11 @@ export default function CategoryAdmin() {
                 <TableCell align="right">Danh mục cha</TableCell>
                 <TableCell align="right">Ngày tạo</TableCell>
                 <TableCell align="right">Trạng thái</TableCell>
+                <TableCell align="right">Hành động</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {Products.map((e, i) => (
+              {category.map((e: any, i) => (
                 <TableRow
                   key={e.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -118,20 +124,26 @@ export default function CategoryAdmin() {
                     {e.id}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {e.productImage && e.productImage[0] ? (
-                      <img
-                        src={e.productImage[0].image}
-                        width={"100px"}
-                        alt=""
-                      />
+                    {e.name}
+                  </TableCell>
+                  <TableCell align="right">{e.parentId}</TableCell>
+                  <TableCell align="right">
+                    {moment(e.createdAt).format("DD MMM YYYY")}
+                  </TableCell>
+                  <TableCell align="right">
+                    {e.status == null ? (
+                      <Typography
+                        color={"#fff"}
+                        bgcolor={"green"}
+                        p={"2px 6px"}
+                        variant="caption"
+                      >
+                        active
+                      </Typography>
                     ) : (
-                      <div>No Image</div>
+                      "ubactive"
                     )}
                   </TableCell>
-                  <TableCell align="right">{e.title}</TableCell>
-                  <TableCell align="right">{e.number}</TableCell>
-                  <TableCell align="right">{e.categoryId}</TableCell>
-                  <TableCell align="right">{e.status}</TableCell>
                   <TableCell align="right">
                     <Stack
                       direction={"row"}
@@ -139,11 +151,13 @@ export default function CategoryAdmin() {
                       spacing={2}
                       justifyContent={"end"}
                     >
-                      <EditIcon
-                        sx={{
-                          color: "green",
-                        }}
-                      />
+                      <Link to={`${e.id}`}>
+                        <EditIcon
+                          sx={{
+                            color: "green",
+                          }}
+                        />
+                      </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{

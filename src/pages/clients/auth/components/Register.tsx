@@ -12,43 +12,35 @@ import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
 import { FormRegister } from "../../../../models/AuthModel/Register";
 import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
+import { User } from "../../../../submodules/models/UserModel/User";
 export const Register = () => {
-  
-  const http =  new HttpAccountController(BaseAPi)
-   const redirect  = useNavigate()
+  const http = new HttpAccountController(BaseAPi);
+  const redirect = useNavigate();
   const {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormRegister>();
-  const RegisterSubmit = async (register: FormRegister) => {
-     console.log(register);
-      try {
-         
-     const Sign = await http.register(register)
-      if(Sign){
-         toast.success("Register Success", {
-          position:"bottom-right"
-
-         })
-          localStorage.setItem('user', JSON.stringify(register))
-          redirect('/')
-           
+  } = useForm<User>({
+    mode: "all",
+  });
+  const RegisterSubmit = async (register: User) => {
+    console.log(register);
+    try {
+      const Sign = await http.register(register);
+      if (Sign) {
+        toast.success("Register Success", {
+          position: "bottom-right",
+        });
+        localStorage.setItem("user", JSON.stringify(register));
+        redirect("/");
       }
+    } catch (err: any) {
+      if (err.response.data.message === "Email already exists") {
+        toast.error("Tai khoan email ton tai", {
+          position: "bottom-right",
+        });
       }
-       catch(err:any) {       
-       if(
-
-
-       err.response.data.message === "Email already exists"
-       ) {
-         toast.error("Tai khoan email ton tai", {
-           position:"bottom-right"
-         })
-       }
-       }
-      
-     
+    }
   };
   return (
     <form autoComplete="off" onSubmit={handleSubmit(RegisterSubmit)}>
@@ -124,13 +116,10 @@ export const Register = () => {
         <Typography>Số điện thoại</Typography>
         <Controller
           control={control}
-          defaultValue="" // Set an initial value here
           name="phone"
           rules={{
             required: "Vui lòng nhập số diện thoại!",
-           
           }}
-          
           render={({ field }) => (
             <OutlinedInput
               {...field}

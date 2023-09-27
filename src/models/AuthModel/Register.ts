@@ -1,6 +1,6 @@
- export interface FormRegister {
-      fullName?:string,
-      email:string
-      password:string
-      phone?:string
- }
+export interface FormRegister {
+  fullName?: string;
+  email?: string;
+  password?: string;
+  phone?: number;
+}

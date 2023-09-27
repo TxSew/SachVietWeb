@@ -1,9 +1,25 @@
-import { Routes, Route } from "react-router-dom";
-import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
-import { BrowserRouter as Router } from "react-router-dom";
+import {
+  Route,
+  BrowserRouter as Router,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import "./index.css";
-import { PrivateRouter, PublicRouter } from "./routes";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
+import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
+import HeaderOnly from "./layouts/HeaderOnly/HeaderOnly";
+import { PrivateRouter, PublicRouter } from "./routes";
+
+function isUserAuthenticated() {
+  // Replace this with your actual logic to check if the user is authenticated and the token is valid
+  const token = localStorage.getItem("token"); // Retrieve the JWT token from storage
+  if (token) {
+    // Verify the token's validity using your JWT library
+    return true;
+  }
+  return false;
+}
+
 function App() {
   return (
     <div className="App">
@@ -11,9 +27,13 @@ function App() {
         <Routes>
           {PublicRouter.map((e, i) => {
             const Component = e.component;
-            let Layout = DefaultLayout
+            let Layout = DefaultLayout;
+            if (e.isRequired) {
+              Layout = HeaderOnly;
+            }
             return (
               <Route
+                key={i}
                 path={e.path}
                 element={
                   <Layout>
@@ -23,24 +43,26 @@ function App() {
               />
             );
           })}
-           {/* Private */}
-            {/* admin */}
-             {
-               PrivateRouter.map((e, i) => {
-                 const AdminComponent = e.component
-                  let Layout = AdminLayout
-                  return (
-                     <Route 
-                     path={e.path} 
-                     element={
-                       <Layout>
-                        <AdminComponent/>
-                       </Layout>
-                     }
-                     /> 
-                  )
-               })
-             }
+
+          {PrivateRouter?.map((e, i) => {
+            if (isUserAuthenticated()) {
+              const AdminComponent = e.component;
+              let Layout = AdminLayout;
+              return (
+                <Route
+                  key={i}
+                  path={e.path}
+                  element={
+                    <Layout>
+                      <AdminComponent />
+                    </Layout>
+                  }
+                />
+              );
+            } else {
+              return;
+            }
+          })}
         </Routes>
       </Router>
     </div>

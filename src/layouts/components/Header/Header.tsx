@@ -13,11 +13,9 @@ import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/storeClient";
-import { getTotal } from "../../../redux/features/cart/CartProducer";
 const Header = () => {
-  
-  const count = useSelector((state: RootState) => state.counter.value);
- 
+  const cart = useSelector((state: RootState) => state.cart.cartItems);
+
   const { isMediumMD } = useMedia();
   console.log(isMediumMD);
   const BoxIcon = styled(Box)`
@@ -177,9 +175,9 @@ const Header = () => {
                   </BoxIcon>
                   <BoxIcon>
                     <NavLink to={"/cart"}>
-                    <Badge badgeContent={count} color="primary">
-                      <ShoppingCartOutlinedIcon />
-                    </Badge>
+                      <Badge badgeContent={cart.length} color="primary">
+                        <ShoppingCartOutlinedIcon />
+                      </Badge>
                     </NavLink>
                     <Typography variant="caption">Giỏ hàng </Typography>
                   </BoxIcon>

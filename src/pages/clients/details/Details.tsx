@@ -17,7 +17,7 @@ import {
   increment,
   decrement,
 } from "../../../redux/features/counter/CounterProducer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { BaseAPi } from "../../../configs/BaseApi";
@@ -26,27 +26,28 @@ import { Product } from "../../../submodules/models/ProductModel/Product";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
 
 export const Details = () => {
-  const {id} = useParams()
-   const http = new HttpProductController(BaseAPi)
-    
-    const [Detail, setDetail] = useState<Product>({})
-   const FetchProductOne =  async () => {
-     if(id){
-     const detailValue = await http.getOne(id) 
+  const redirect = useNavigate();
+  const { id } = useParams();
+  const http = new HttpProductController(BaseAPi);
+  const [Detail, setDetail] = useState<Product>({});
+  const FetchProductOne = async () => {
+    if (id) {
+      const detailValue = await http.getOne(id);
       console.log(detailValue);
-        setDetail(detailValue) 
-       
-      
-     }
-   }
-    const handleAddToCart = (detail:any) => {
-        dispatch(addToCart(detail)); 
+      setDetail(detailValue);
     }
-   useEffect(() => {
-      FetchProductOne(); 
-   }, [])
-   
-   
+  };
+  const handleAddToCart = (detail: any) => {
+    dispatch(addToCart(detail));
+  };
+  const handleOrder = (detail: any) => {
+    dispatch(addToCart(detail));
+    redirect("/cart");
+  };
+  useEffect(() => {
+    FetchProductOne();
+  }, []);
+
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
   return (
@@ -57,12 +58,12 @@ export const Details = () => {
           <ChevronRightOutlinedIcon />
           <Typography variant="caption">Sách lớp 1</Typography>
         </Stack>
-        <Box pb={2}>  
+        <Box pb={2}>
           <Grid container bgcolor={"#fff"} p={3}>
             <Grid item xs={5}>
               <Box mx={"auto"} display={"flex"} justifyContent={"center"}>
                 <img
-                  src={Detail.productImage  ? Detail.productImage[0].image : ""}
+                  src={Detail.productImage ? Detail.productImage[0].image : ""}
                   alt=""
                   width={"388px"}
                   height={"388px"}
@@ -87,6 +88,7 @@ export const Details = () => {
                   Thêm vào giỏ hàng
                 </Button>
                 <Button
+                  onClick={() => handleOrder(Detail)}
                   sx={{
                     fontWeight: "bold",
                   }}
@@ -99,8 +101,8 @@ export const Details = () => {
             <Grid item xs={6}>
               <Box pl={4}>
                 <Typography variant="h2" fontSize={"22.1px"} fontWeight={500}>
-                                 {Detail.title}
-                                 </Typography>
+                  {Detail.title}
+                </Typography>
                 <Box mt={3}>
                   <Stack
                     rowGap={2}
@@ -117,7 +119,7 @@ export const Details = () => {
                     >
                       <Typography>Nhà cung cấp:</Typography>
                       <Typography fontWeight={"bold"} color={"primary"}>
-                        Fahasa Print
+                        {Detail.producer?.name}
                       </Typography>
                     </Stack>
                     <Stack
@@ -128,7 +130,9 @@ export const Details = () => {
                       }}
                     >
                       <Typography>Thương hiệu:</Typography>
-                      <Typography fontWeight={"bold"}>The sun</Typography>
+                      <Typography fontWeight={"bold"}>
+                        {Detail.category?.name}
+                      </Typography>
                     </Stack>
                     <Stack
                       direction={"row"}
@@ -267,7 +271,6 @@ export const Details = () => {
         {/* chi tiet san pham */}
         <Box>
           <Typography variant="h2">Thông tin sản phẩm</Typography>
-           
         </Box>
       </Container>
     </Box>

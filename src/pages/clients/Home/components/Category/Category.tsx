@@ -5,7 +5,7 @@ import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBullet
 import { color } from "../../../../../Theme/color";
 import useMedia from "../../../../../hooks/useMedia/useMedia";
 const Category = () => {
-  const {  isMediumMD, isMobileSM} = useMedia()
+  const { isMediumMD, isMobileSM } = useMedia();
   return (
     <Container
       maxWidth={"xl"}
@@ -73,20 +73,21 @@ const Category = () => {
             flexWrap: "wrap",
           }}
         >
-          {[2, 3, 4, 5, 5, 5, 5, 3, 34, 3].map((e,i) => {
+          {[2, 3, 4, 5, 5, 5, 5, 3, 34, 3].map((e, i) => {
             return (
               <Stack
-               key={i}
+                key={i}
                 justifyContent={"center"}
                 alignContent={"center"}
-                 flexWrap={"wrap"}
-                  sx={
-                     isMediumMD ?
-                    {
-                       width:"20%"
-                  }: {
-                     width:"10%"
-                  } 
+                flexWrap={"wrap"}
+                sx={
+                  isMediumMD
+                    ? {
+                        width: "20%",
+                      }
+                    : {
+                        width: "10%",
+                      }
                 }
               >
                 <Box

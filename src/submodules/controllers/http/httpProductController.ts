@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { AxiosConfig } from '../interface/axiosConfig';
-import { Product, TProductResponse } from '../../models/ProductModel/Product';
+import axios, { AxiosInstance, AxiosResponse } from "axios";
+import { AxiosConfig } from "../interface/axiosConfig";
+import { Product, TProductResponse } from "../../models/ProductModel/Product";
 class HttpProductController {
   get(): TProductResponse | PromiseLike<TProductResponse> {
     throw new Error("Method not implemented.");
@@ -10,66 +10,66 @@ class HttpProductController {
   constructor(axiosConfig: AxiosConfig) {
     // Create an Axios instance with the provided configuration
     this.axiosInstance = axios.create(axiosConfig);
-   const token:any =  localStorage.getItem('token')
-       const jwtToken = JSON.parse(token)
-        if (jwtToken) {
-          this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`
+    const token: any = localStorage.getItem("token");
+    const jwtToken = JSON.parse(token);
+    if (jwtToken) {
+      this.axiosInstance.defaults.headers.common[
+        "Authorization"
+      ] = `Bearer ${jwtToken}`;
+    }
+
+    this.axiosInstance.interceptors.response.use(
+      (response) => {
+        return response;
+      },
+      (error) => {
+        if (error.response.status === 401) {
+          return (window.location.href = "/auth");
         }
-
-        this.axiosInstance.interceptors.response.use((response) => {
-          return response;
-      }, (error) => {
-              if (error.response.status === 401) {
-      
-                  return window.location.href = '/auth'
-              }
-          return Promise.reject(error);
-      });
-
+        return Promise.reject(error);
+      }
+    );
   }
 
-  async getAll(): Promise<any> {
+  async getAll(page: number = 1): Promise<any> {
     try {
-      const response = await this.axiosInstance.get('products');
+      const response = await this.axiosInstance.get(`products?page=${page}`);
       return response.data;
     } catch (error) {
       throw error;
     }
   }
-   async getOne(slug:string) : Promise<any> {
-     try {
-       const response = await this.axiosInstance.get(`products/${slug}`) 
-        return response.data
-     } 
-      catch (err) {
-         throw err
-      }
-   }
-   async getOneUpdate(id:number) {
+  async getOne(slug: string): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(`products/currentUpdate/${id}`) 
-       return response.data
-    } 
-     catch (err) {
-        throw err
-     }
+      const response = await this.axiosInstance.get(`products/${slug}`);
+      return response.data;
+    } catch (err) {
+      throw err;
+    }
   }
-  async post(  product:any): Promise<any> {
+  async getOneUpdate(id: number) {
     try {
-      const response = await this.axiosInstance.post(
-        `products/store`,
-        product,
+      const response = await this.axiosInstance.get(
+        `products/currentUpdate/${id}`
       );
       return response.data;
+    } catch (err) {
+      throw err;
+    }
+  }
+  async post(product: any): Promise<any> {
+    try {
+      const response = await this.axiosInstance.post(`products/store`, product);
+      return response.data;
     } catch (error) {
       throw error;
     }
   }
-  async put(id: number, data:any): Promise<any> {
+  async put(id: number, data: any): Promise<any> {
     try {
       const response = await this.axiosInstance.put(
         `products/update/${id}`,
-        data,
+        data
       );
       return response.data;
     } catch (error) {
@@ -77,11 +77,9 @@ class HttpProductController {
     }
   }
 
-  async delete( id: number): Promise<any> {
+  async delete(id: number): Promise<any> {
     try {
-      const response = await this.axiosInstance.delete(
-          `products/${id}`
-      );
+      const response = await this.axiosInstance.delete(`products/${id}`);
       return response.data;
     } catch (error) {
       throw error;

@@ -1,6 +1,7 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
-import { AxiosConfig } from '../interface/axiosConfig';
+import axios, { AxiosInstance } from 'axios';
+import { Category } from '../../models/ProductModel/Category';
 import { Product, TProductResponse } from '../../models/ProductModel/Product';
+import { AxiosConfig } from '../interface/axiosConfig';
 class HttpCategoryController {
   get(): TProductResponse | PromiseLike<TProductResponse> {
     throw new Error("Method not implemented.");
@@ -36,9 +37,9 @@ class HttpCategoryController {
       throw error;
     }
   }
-   async getOne(slug:string) : Promise<any> {
+   async getOne(id:number) : Promise<any> {
      try {
-       const response = await this.axiosInstance.get(`products/${slug}`) 
+       const response = await this.axiosInstance.get(`category/${id}`) 
         return response.data
      } 
       catch (err) {
@@ -46,11 +47,11 @@ class HttpCategoryController {
       }
    }
 
-  async post(  product: Product): Promise<any> {
+  async store(  category: Category): Promise<any> {
     try {
       const response = await this.axiosInstance.post(
-        `products/store`,
-        product,
+        `category/store`,
+        category,
       );
       return response.data;
     } catch (error) {
@@ -60,8 +61,8 @@ class HttpCategoryController {
   async put(id: number, data: Product): Promise<any> {
     try {
       const response = await this.axiosInstance.put(
-        'update',
-        id,
+        `/category/update/${id}`,
+        data,
       );
       return response.data;
     } catch (error) {
@@ -69,10 +70,10 @@ class HttpCategoryController {
     }
   }
 
-  async delete(url: string, id: number): Promise<any> {
+  async delete( id: number): Promise<any> {
     try {
       const response = await this.axiosInstance.delete(
-        url,
+        `category/${id}`,
       );
       return response.data;
     } catch (error) {

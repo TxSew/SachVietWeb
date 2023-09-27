@@ -1,5 +1,7 @@
-import { BaseModel } from '../BaseModel';
-import { Modified } from '../BaseModel/contanst';
+import { BaseModel } from "../BaseModel";
+import { Modified } from "../BaseModel/contanst";
+import { Producer } from "../producerModel/producer";
+import { Category } from "./Category";
 
 export interface Product extends BaseModel, Modified {
   title?: string;
@@ -9,19 +11,20 @@ export interface Product extends BaseModel, Modified {
   slug?: string;
   price?: number;
   price_sale?: number;
-  number?: number;
+  quantity?: number;
   image?: string;
   listImage?: string;
-   productId?:number;
-   cartQuantity?: number;
-    files?: string[]
-    productImage?: ProductImage[] 
+  productId?: number;
+  cartQuantity?: number;
+  files?: string[];
+  productImage?: ProductImage[];
+  category?: Category;
+  producer?: Producer;
 }
- interface ProductImage extends Modified  {
-   productId?:number;
-   image?:string;
-
- }
+interface ProductImage extends Modified {
+  productId?: number;
+  image?: string;
+}
 
 export interface TProductResponse {
   page?: number;

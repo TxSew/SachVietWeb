@@ -1,8 +1,8 @@
 interface Props {
   src: string;
   alt: string;
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }
 export default function Image(props: Props) {
   return (

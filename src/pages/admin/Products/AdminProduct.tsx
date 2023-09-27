@@ -5,7 +5,6 @@ import {
   OutlinedInput,
   Pagination,
   Stack,
-  TextField,
   Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
@@ -22,10 +21,12 @@ import {
   Product,
   TProductResponse,
 } from "../../../submodules/models/ProductModel/Product";
-
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
+import { Link } from "react-router-dom";
 
 const http = new HttpProductController(BaseAPi);
 export default function AdminProduct() {
@@ -44,17 +45,26 @@ export default function AdminProduct() {
     }
   };
   const [page, setPage] = React.useState(1);
-  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+  const handleChange = async (
+    event: React.ChangeEvent<unknown>,
+    value: number
+  ) => {
     setPage(value);
-    console.log(value);
+    const panigate: any = await http.getAll(value);
+    const data: any = panigate.products;
+    setProducts(data);
   };
 
   // remove item
   const handleDelete = async (element: any) => {
     console.log(element.id);
     const destroy = await http.delete(element.id);
+    console.log(destroy);
+    toast.error("Delete item successfully", {
+      position: "bottom-right",
+    });
+
     const product = Products.filter((e) => e.id !== element.id);
-    console.log(product);
 
     setProducts(product);
   };
@@ -69,7 +79,13 @@ export default function AdminProduct() {
           spacing={2}
           justifyContent={"space-between"}
         >
-          <Typography variant="h2" fontSize={"26px"} mb={3} fontWeight={"bold"}>
+          <Typography
+            variant="h2"
+            fontSize={"26px"}
+            mb={3}
+            fontWeight={"bold"}
+            textTransform={"uppercase"}
+          >
             Sản phẩm
           </Typography>
           <OutlinedInput
@@ -83,8 +99,9 @@ export default function AdminProduct() {
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
           />
-
-          <Button variant="contained">Thêm sản phẩm</Button>
+          <Link to={"/admin/createProduct"}>
+            <Button variant="contained">Thêm sản phẩm</Button>
+          </Link>
         </Stack>
         <TableContainer component={Paper}>
           <Table
@@ -106,6 +123,7 @@ export default function AdminProduct() {
                 <TableCell align="right">Tiêu đề</TableCell>
                 <TableCell align="right">Số lượng sản phẩm</TableCell>
                 <TableCell align="right">Danh mục</TableCell>
+                <TableCell align="right">Nhà cung cấp</TableCell>
                 <TableCell align="right">Trạng thái</TableCell>
                 <TableCell align="right">Hành động</TableCell>
               </TableRow>
@@ -131,8 +149,9 @@ export default function AdminProduct() {
                     )}
                   </TableCell>
                   <TableCell align="right">{e.title}</TableCell>
-                  <TableCell align="right">{e.number}</TableCell>
-                  <TableCell align="right">{e.categoryId}</TableCell>
+                  <TableCell align="right">{e.quantity}</TableCell>
+                  <TableCell align="right">{e.category?.name}</TableCell>
+                  <TableCell align="right">{e.producer?.name}</TableCell>
                   <TableCell align="right">{e.status}</TableCell>
                   <TableCell align="right">
                     <Stack
@@ -141,11 +160,13 @@ export default function AdminProduct() {
                       spacing={2}
                       justifyContent={"end"}
                     >
-                      <EditIcon
-                        sx={{
-                          color: "green",
-                        }}
-                      />
+                      <Link to={`/admin/product/${e.id}`}>
+                        <EditCalendarIcon
+                          sx={{
+                            color: "green",
+                          }}
+                        />
+                      </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{

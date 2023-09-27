@@ -1,13 +1,12 @@
-import { Box, Container, Stack, Typography, Grid, Button } from "@mui/material";
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import React, { useEffect, useState } from "react";
 import { color } from "../../../../../Theme/color";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ToggleButton from "@mui/material/ToggleButton";
 import ProductItem from "../../../../../components/ProductItem/ProductItem";
-import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { BaseAPi } from "../../../../../configs/BaseApi";
+import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
-import { Link } from "react-router-dom";
 
 function Products() {
   const [alignment, setAlignment] = React.useState("web");
@@ -22,14 +21,13 @@ function Products() {
   const http = new HttpProductController(BaseAPi);
   const fetchData = async () => {
     try {
-    const productData:any = await http.getAll();
-     console.log(productData);
-    const { products } = productData;
-    setProducts(products);
+      const productData: any = await http.getAll();
+      console.log(productData);
+      const { products } = productData;
+      setProducts(products);
+    } catch (err) {
+      console.error(err);
     }
-     catch(err) {
-       console.error(err);
-     }
   };
   useEffect(() => {
     fetchData();
@@ -91,7 +89,47 @@ function Products() {
             </ToggleButtonGroup>
           </Box>
           <Grid container spacing={1} mt={2} pb={2}>
-            {Products.map((element, i) => {
+            {Products.map((element: Product, i) => {
+              return (
+                <Grid key={i} item md={4} lg={2.4} xs={12} sm={6}>
+                  <ProductItem key={i} products={element} />
+                </Grid>
+              );
+            })}
+          </Grid>
+          <Stack>
+            <Button variant="outlined">Xem thêm</Button>
+          </Stack>
+        </Box>
+        <Box pb={2} borderRadius={3} bgcolor={"#fff"}>
+          <Box
+            mt={3}
+            sx={{
+              borderTopLeftRadius: 3,
+              borderBottom: " 1px solid #eee",
+              borderTopRightRadius: 3,
+            }}
+          >
+            <ToggleButtonGroup
+              color="primary"
+              value={alignment}
+              exclusive
+              onChange={handleChange}
+              aria-label="Platform"
+              sx={{
+                py: "10px",
+                pl: "10px",
+              }}
+            >
+              <ToggleButton value={"web"}>Xu Hướng Theo Ngày</ToggleButton>
+              <ToggleButton value={"sale"}> Sách HOT - Giảm Sốc</ToggleButton>
+              <ToggleButton value={"bestSealer"}>
+                BestSeller - Ngoại văn
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Box>
+          <Grid container spacing={1} mt={2} pb={2}>
+            {Products.map((element: Product, i) => {
               return (
                 <Grid key={i} item md={4} lg={2.4} xs={12} sm={6}>
                   <ProductItem key={i} products={element} />

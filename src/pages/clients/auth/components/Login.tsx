@@ -14,52 +14,44 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-
-const http = new HttpAccountController(BaseAPi)
-   const redirect = useNavigate()
+  const http = new HttpAccountController(BaseAPi);
+  const redirect = useNavigate();
   const {
     handleSubmit,
     control,
-    formState: { errors  },
-  } = useForm<FormLogin>();
- const handleLogin =  async (data:FormLogin) => {
-      try {
-     const login:any = await http.login(data)
-      if(login) {
-         toast.success("Login successful", {
-           position:"bottom-right"
-         })
-         console.log(login)
+    formState: { errors },
+  } = useForm<FormLogin>({
+    mode: "all",
+  });
+  const handleLogin = async (data: FormLogin) => {
+    try {
+      const login: any = await http.login(data);
+      if (login) {
+        toast.success("Login successful", {
+          position: "bottom-right",
+        });
+        console.log(login);
 
-          const {user, token} = login
-         localStorage.setItem('user', JSON.stringify(user))
-         localStorage.setItem('token', JSON.stringify(token))
+        const { user, token } = login;
+        localStorage.setItem("user", JSON.stringify(user));
+        localStorage.setItem("token", JSON.stringify(token));
       }
-      redirect('/')
+      redirect("/");
+    } catch (err: any) {
+      if (err.response.data.message === "invalid email") {
+        toast.error("Invalid email exits", {
+          position: "bottom-right",
+        });
       }
-       catch(err:any){
-         if(err.response.data.message ==='invalid email') {
-           toast.error("Invalid email exits" , {
-             position:"bottom-right"
-           })
-         }
-         if(err.response.data.message === 'Invalid password.') {
-          toast.error("sai password" , {
-            position:"bottom-right"
-          })
-        }
-      
-       
-   
+      if (err.response.data.message === "Invalid password.") {
+        toast.error("sai password", {
+          position: "bottom-right",
+        });
+      }
     }
-    
-     
- }
+  };
   return (
-    <form
-      autoComplete="off"
-      onSubmit={handleSubmit(handleLogin)}
-    >
+    <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
       <FormControl
         sx={{
           mt: "10px",
@@ -110,7 +102,7 @@ const http = new HttpAccountController(BaseAPi)
           }}
           render={({ field }) => (
             <OutlinedInput
-             key={1}
+              key={1}
               {...field}
               sx={{
                 py: 1,
@@ -143,7 +135,7 @@ const http = new HttpAccountController(BaseAPi)
           justifyContent: "center",
         }}
       >
-        <Button type="submit" variant="outlined" >
+        <Button type="submit" variant="outlined">
           Đăng nhập
         </Button>
       </Box>
