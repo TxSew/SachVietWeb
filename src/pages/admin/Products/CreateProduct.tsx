@@ -71,9 +71,7 @@ const CreateProduct = () => {
     },
   });
 
-  // console.log(watch().desc);
   const isDisabled = !(isDirty && isValid);
-  //  upload image file base
   const handleAddProduct = async (data: Product) => {
     console.log(data);
     const images = url.map((e) => {
@@ -85,7 +83,6 @@ const CreateProduct = () => {
       product: data,
       productImages: images,
     };
-    console.log(ProductDto);
 
     const storeProduct = await httpProduct.post(ProductDto);
     if (storeProduct) {
@@ -104,7 +101,6 @@ const CreateProduct = () => {
   const loadImageFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-
       await uploadBytes(imageRef, images[i])
         .then(() => {
           storage

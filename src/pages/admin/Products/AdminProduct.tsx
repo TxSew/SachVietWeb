@@ -1,3 +1,5 @@
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
   Box,
   Button,
@@ -15,18 +17,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import {
   Product,
   TProductResponse,
 } from "../../../submodules/models/ProductModel/Product";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
-import { toast } from "react-toastify";
-import { color } from "../../../Theme/color";
-import { Link } from "react-router-dom";
+import useDebounce from "../../../hooks/useDebounce/useDebounce";
 
 const http = new HttpProductController(BaseAPi);
 export default function AdminProduct() {
@@ -57,9 +57,7 @@ export default function AdminProduct() {
 
   // remove item
   const handleDelete = async (element: any) => {
-    console.log(element.id);
     const destroy = await http.delete(element.id);
-    console.log(destroy);
     toast.error("Delete item successfully", {
       position: "bottom-right",
     });
@@ -68,6 +66,9 @@ export default function AdminProduct() {
 
     setProducts(product);
   };
+  const handleChangeValue = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {};
 
   return (
     <Grid>
@@ -98,6 +99,7 @@ export default function AdminProduct() {
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
+            onChange={handleChangeValue}
           />
           <Link to={"/admin/createProduct"}>
             <Button variant="contained">Thêm sản phẩm</Button>

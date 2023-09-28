@@ -11,14 +11,12 @@ import {
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
-import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Producer } from "../../../submodules/models/producerModel/producer";
-import { useParams } from "react-router-dom";
 
 var http = new HttpProducerController(BaseAPi);
 const UpdateProducer = () => {
@@ -81,7 +79,7 @@ const UpdateProducer = () => {
             name="name"
             defaultValue="" // Set an initial value here
             rules={{
-              required: "Tên danh mục không được bỏ trống!",
+              required: "Tên nhà cung cấp không được bỏ trống!",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -108,7 +106,7 @@ const UpdateProducer = () => {
             control={control}
             name="code"
             rules={{
-              required: "Price is not",
+              required: "Vui lòng nhập mã code",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -135,11 +133,11 @@ const UpdateProducer = () => {
             control={control}
             name="keyword"
             rules={{
-              required: "Price is not",
+              required: "Vui lòng nhập từ khóa",
             }}
             render={({ field }) => (
               <OutlinedInput
-                type="number"
+                type="text"
                 {...field}
                 sx={{
                   mt: 1,
@@ -163,7 +161,7 @@ const UpdateProducer = () => {
             control={control}
             name="status"
             rules={{
-              required: "Price is not",
+              required: "Vui lòng nhập trạng thái",
             }}
             render={({ field }) => (
               <FormControl fullWidth>
