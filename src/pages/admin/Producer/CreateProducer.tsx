@@ -9,9 +9,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";

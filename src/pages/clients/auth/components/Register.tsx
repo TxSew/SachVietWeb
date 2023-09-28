@@ -10,7 +10,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
-import { FormRegister } from "../../../../models/AuthModel/Register";
 import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
 import { User } from "../../../../submodules/models/UserModel/User";
 export const Register = () => {

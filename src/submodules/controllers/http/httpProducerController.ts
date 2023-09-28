@@ -1,7 +1,7 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { AxiosConfig } from "../interface/axiosConfig";
-import { Product, TProductResponse } from "../../models/ProductModel/Product";
+import axios, { AxiosInstance } from "axios";
+import { TProductResponse } from "../../models/ProductModel/Product";
 import { Producer } from "../../models/producerModel/producer";
+import { AxiosConfig } from "../interface/axiosConfig";
 class HttpProducerController {
   get(): TProductResponse | PromiseLike<TProductResponse> {
     throw new Error("Method not implemented.");
