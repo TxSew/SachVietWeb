@@ -1,12 +1,9 @@
 import AdminCarts from "../pages/admin/Carts/AdminCarts";
 import DetailCarts from "../pages/admin/Carts/DetailCarts";
 import CategoryAdmin from "../pages/admin/Category/AdminCategory";
-import {
-  default as CreateCategory,
-  default as UpdateCategory,
-} from "../pages/admin/Category/UpdateCategory";
+import CreateCategory from "../pages/admin/Category/Createcategory";
+import UpdateCategory from "../pages/admin/Category/UpdateCategory";
 import AdminCustomer from "../pages/admin/Customer/AdminCustomer";
-import CreateCustomer from "../pages/admin/Customer/CreateCustomer";
 import UpdateCustomer from "../pages/admin/Customer/UpdateCustomer";
 import AdminDiscount from "../pages/admin/Discount/AdminDiscount";
 import CreateDiscount from "../pages/admin/Discount/CreateDiscount";

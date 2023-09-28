@@ -19,7 +19,7 @@ import HttpCategoryController from "../../../submodules/controllers/http/httpCat
 import { Category } from "../../../submodules/models/ProductModel/Category";
 
 var httpcategory = new HttpCategoryController(BaseAPi);
-const CreateCategory = () => {
+const UpdateCategory = () => {
   const { id } = useParams();
 
   console.log(id);
@@ -249,4 +249,4 @@ const CreateCategory = () => {
   );
 };
 
-export default CreateCategory;
+export default UpdateCategory;

@@ -34,6 +34,10 @@ export default function CategoryAdmin() {
   const fetchData = async () => {
     try {
       const CategoryData: any = await http.getAll();
+      console.log(
+        "🚀 ~ file: AdminCategory.tsx:37 ~ fetchData ~ CategoryData:",
+        CategoryData
+      );
       const { subcategories } = CategoryData[0];
       const da: any = subcategories;
       console.log(CategoryData);
