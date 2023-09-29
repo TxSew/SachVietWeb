@@ -60,7 +60,7 @@ export const Details = () => {
         <Box pb={2}>
           <Grid container bgcolor={"#fff"} p={3}>
             <Grid item xs={5}>
-              <Box mx={"auto"} display={"flex"} justifyContent={"center"}>
+              <Box mx={"auto"} display={"flex"}>
                 <img
                   src={
                     Detail.productImages ? Detail.productImages[0].image : ""

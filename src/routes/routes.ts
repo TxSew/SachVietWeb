@@ -14,6 +14,7 @@ import UpdateProducer from "../pages/admin/Producer/UpdateProducer";
 import AdminProduct from "../pages/admin/Products/AdminProduct";
 import CreateProduct from "../pages/admin/Products/CreateProduct";
 import UpdateProduct from "../pages/admin/Products/UpdateProduct";
+import AdminStatistical from "../pages/admin/Statistical/AdminStatistical";
 import Category from "../pages/clients/Category/Category";
 import HomePage from "../pages/clients/Home/Home";
 import Auth from "../pages/clients/auth/Auth";
@@ -129,6 +130,10 @@ const PrivateRouter = [
   {
     path: "/admin/customer/:id",
     component: UpdateCustomer,
+  },
+  {
+    path: "admin/statistical",
+    component: AdminStatistical,
   },
 ];
 
