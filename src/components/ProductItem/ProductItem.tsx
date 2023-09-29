@@ -10,6 +10,8 @@ interface ProductItem {
   products: Product;
 }
 const ProductItem = (Props: ProductItem) => {
+  console.log(Props.products);
+
   return (
     <Card
       variant="outlined"
@@ -26,8 +28,8 @@ const ProductItem = (Props: ProductItem) => {
           }}
           title=""
           image={
-            Props.products.productImage
-              ? Props.products.productImage[0].image
+            Props.products.productImages
+              ? Props.products.productImages[0].image
               : ""
           }
         />

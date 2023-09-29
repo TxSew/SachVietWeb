@@ -1,3 +1,6 @@
+import AddIcon from "@mui/icons-material/Add";
+import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
+import RemoveIcon from "@mui/icons-material/Remove";
 import {
   Box,
   Button,
@@ -7,23 +10,19 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import ChevronRightOutlinedIcon from "@mui/icons-material/ChevronRightOutlined";
-import { color } from "../../../Theme/color";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
-import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../redux/storeClient";
-import {
-  increment,
-  decrement,
-} from "../../../redux/features/counter/CounterProducer";
-import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
-import Products from "../Home/components/Products/Products";
-import { Product } from "../../../submodules/models/ProductModel/Product";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
+import {
+  decrement,
+  increment,
+} from "../../../redux/features/counter/CounterProducer";
+import { RootState } from "../../../redux/storeClient";
+import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { Product } from "../../../submodules/models/ProductModel/Product";
 
 export const Details = () => {
   const redirect = useNavigate();
@@ -63,7 +62,9 @@ export const Details = () => {
             <Grid item xs={5}>
               <Box mx={"auto"} display={"flex"} justifyContent={"center"}>
                 <img
-                  src={Detail.productImage ? Detail.productImage[0].image : ""}
+                  src={
+                    Detail.productImages ? Detail.productImages[0].image : ""
+                  }
                   alt=""
                   width={"388px"}
                   height={"388px"}

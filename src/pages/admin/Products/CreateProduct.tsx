@@ -179,7 +179,7 @@ const CreateProduct = () => {
                     required: "Vui lòng nhập Danh mục sản phẩm!",
                   }}
                   render={({ field }) => (
-                    <FormControl fullWidth>
+                    <FormControl fullWidth key={1}>
                       <Select
                         {...field}
                         displayEmpty

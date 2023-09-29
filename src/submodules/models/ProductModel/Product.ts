@@ -17,7 +17,7 @@ export interface Product extends BaseModel, Modified {
   productId?: number;
   cartQuantity?: number;
   files?: string[];
-  productImage?: ProductImage[];
+  productImages?: ProductImage[];
   category?: Category;
   producer?: Producer;
 }

@@ -97,8 +97,8 @@ const CartProduct = () => {
                       <Box maxWidth={"119px"}>
                         <img
                           src={
-                            element.productImage
-                              ? element.productImage[0].image
+                            element.productImages
+                              ? element.productImages[0].image
                               : ""
                           }
                           alt=""

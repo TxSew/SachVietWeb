@@ -39,6 +39,7 @@ export default function AdminProduct() {
       const ProductData: TProductResponse = await http.getAll();
       const data: any = ProductData.products;
       console.log(data);
+
       setProducts(data);
     } catch (err) {
       console.log(err);
@@ -140,14 +141,14 @@ export default function AdminProduct() {
                     {e.id}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {e.productImage && e.productImage[0] ? (
+                    {e.productImages && e?.productImages[0] ? (
                       <img
-                        src={e.productImage[0].image}
+                        src={e?.productImages[0].image}
                         width={"100px"}
                         alt=""
                       />
                     ) : (
-                      <div>No Image</div>
+                      <div>No</div>
                     )}
                   </TableCell>
                   <TableCell align="right">{e.title}</TableCell>
