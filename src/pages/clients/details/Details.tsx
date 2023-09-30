@@ -61,14 +61,35 @@ export const Details = () => {
           <Grid container bgcolor={"#fff"} p={3}>
             <Grid item xs={5}>
               <Box mx={"auto"} display={"flex"}>
-                <img
-                  src={
-                    Detail.productImages ? Detail.productImages[0].image : ""
-                  }
-                  alt=""
-                  width={"388px"}
-                  height={"388px"}
-                />
+                <Stack direction={"row"} spacing={2}>
+                  <Stack width={"20%"} direction={"column"} spacing={1}>
+                    {Detail.productImages
+                      ? Detail.productImages.map((e: any, i: number) => {
+                          return (
+                            <img
+                              key={i}
+                              src={e.image}
+                              alt=""
+                              width={"100px"}
+                              height={"70px"}
+                            />
+                          );
+                        })
+                      : ""}
+                  </Stack>
+                  <Stack flex={1} justifyContent={"center"} spacing={2}>
+                    <img
+                      src={
+                        Detail.productImages
+                          ? Detail.productImages[0].image
+                          : ""
+                      }
+                      alt=""
+                      width={"100%"}
+                      height={"388px"}
+                    />
+                  </Stack>
+                </Stack>
               </Box>
               <Stack
                 direction={"row"}
@@ -101,7 +122,12 @@ export const Details = () => {
             </Grid>
             <Grid item xs={6}>
               <Box pl={4}>
-                <Typography variant="h2" fontSize={"22.1px"} fontWeight={500}>
+                <Typography
+                  variant="h2"
+                  fontSize={"22.1px"}
+                  textTransform={"capitalize"}
+                  fontWeight={500}
+                >
                   {Detail.title}
                 </Typography>
                 <Box mt={3}>

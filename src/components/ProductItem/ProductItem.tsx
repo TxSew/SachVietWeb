@@ -22,9 +22,10 @@ const ProductItem = (Props: ProductItem) => {
       <Link to={`/products/${Props.products.slug}`}>
         <CardMedia
           component="img"
-          height={"190"}
+          height={"190px"}
           sx={{
             p: 1,
+            objectFit: "cover",
           }}
           title=""
           image={
@@ -36,7 +37,12 @@ const ProductItem = (Props: ProductItem) => {
       </Link>
 
       <CardContent>
-        <Typography variant="body1" color={color.text_color} fontSize={16}>
+        <Typography
+          variant="body1"
+          color={color.text_color}
+          fontSize={16}
+          textTransform={"capitalize"}
+        >
           {Props.products.title}
         </Typography>
         <Stack direction={"row"} spacing={3} mt={2}>
