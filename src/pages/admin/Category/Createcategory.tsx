@@ -15,30 +15,19 @@ import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
-import { Producer } from "../../../submodules/models/producerModel/producer";
+import { storage } from "../../../configs/fireBaseConfig";
+import { ref, uploadBytes } from "firebase/storage";
 
-var http = new HttpProducerController(BaseAPi);
-var httpcategory = new HttpCategoryController(BaseAPi);
+var httpCategory = new HttpCategoryController(BaseAPi);
 const CreateCategory = () => {
-  const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [category, setCategory] = useState([]);
   useEffect(() => {
-    fetchProducer();
     fetchCategory();
   }, []);
-  const fetchProducer = async () => {
-    try {
-      const producer: any = await http.getAll();
-      setProducer(producer);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getAll();
+      const category: any = await httpCategory.getAll();
       console.log(category);
       setCategory(category);
     } catch (err) {
@@ -46,7 +35,31 @@ const CreateCategory = () => {
     }
   };
   const editorRef = useRef<any>(null);
-
+  const [images, setImages] = useState("");
+  const [url, setUrl] = useState<string>("");
+  useEffect(() => {
+    loadImageFile(images);
+  }, [images]);
+  const loadImageFile = async (images: any) => {
+    for (let i = 0; i < images.length; i++) {
+      const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
+      await uploadBytes(imageRef, images[i])
+        .then(() => {
+          storage
+            .ref("multipleFiles")
+            .child(images[i].name)
+            .getDownloadURL()
+            .then((url: any) => {
+              console.log(url);
+              setUrl(url);
+              return url;
+            });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  };
   // if (editorRef.current) {
   //   console.log(editorRef.current.getContent());
   // }
@@ -63,35 +76,20 @@ const CreateCategory = () => {
     },
   });
 
-  // console.log(watch().desc);
   const isDisabled = !(isDirty && isValid);
-  //  upload image file base
   const handleAddProduct = async (data: Category) => {
-    console.log("dat", data);
-    const categoryDto = await httpcategory.store(data);
-    console.log(categoryDto);
+    data.image = url;
+    const category: Category = data;
+    console.log(category);
+
+    const categoryDto = await httpCategory.store(category);
     if (categoryDto) {
       toast.success("category added successfully", {
         position: "bottom-right",
       });
     }
   };
-  function renderCategories(categories: any, parentId: number = 1) {
-    categories.forEach((e: any) => {
-      const id = e.id;
-      const name = e.name;
-      if ((e.parentId = parentId)) {
-        return (
-          <>
-            <MenuItem value={id}>
-              <em>{name}</em>
-            </MenuItem>
-            {renderCategories(categories, parentId)}
-          </>
-        );
-      }
-    });
-  }
+
   return (
     <Box>
       <form action="" onSubmit={handleSubmit(handleAddProduct)}>
@@ -167,7 +165,7 @@ const CreateCategory = () => {
                     >
                       {category.map((e: any) => {
                         return (
-                          <MenuItem value={e.id}>
+                          <MenuItem key={e.id} value={e.id}>
                             <em>{e.name}</em>
                           </MenuItem>
                         );
@@ -184,29 +182,22 @@ const CreateCategory = () => {
             </Grid>
           </Grid>
           <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
-            Sắp xếp
+            Hình ảnh danh mục
           </Typography>
-          <Controller
-            control={control}
-            name="level"
-            rules={{
-              required: "Price is not",
+          <OutlinedInput
+            type="file"
+            onChange={(e: any) => setImages(e.target.files)}
+            sx={{
+              mt: 1,
+              "& > input": {
+                p: "7px",
+              },
             }}
-            render={({ field }) => (
-              <OutlinedInput
-                type="number"
-                {...field}
-                sx={{
-                  mt: 1,
-                  "& > input": {
-                    p: "7px",
-                  },
-                }}
-                fullWidth
-                placeholder="Giá không được để trống!"
-              />
-            )}
+            fullWidth
           />
+          <Stack direction={"row"} flexWrap={"wrap"}>
+            <img src={url} width={"150px"} alt="" />
+          </Stack>
           <Typography variant="caption" color={color.error}>
             {errors.level && errors.level.message}
           </Typography>

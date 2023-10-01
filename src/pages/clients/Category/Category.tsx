@@ -11,7 +11,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { color } from "../../../Theme/color";
-import ProductItem from "../../../components/ProductItem/ProductItem";
 import Tabbar from "./components/Tabbar";
 
 function Category() {

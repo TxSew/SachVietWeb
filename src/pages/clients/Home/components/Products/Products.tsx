@@ -101,46 +101,6 @@ function Products() {
             <Button variant="outlined">Xem thêm</Button>
           </Stack>
         </Box>
-        <Box pb={2} borderRadius={3} bgcolor={"#fff"}>
-          <Box
-            mt={3}
-            sx={{
-              borderTopLeftRadius: 3,
-              borderBottom: " 1px solid #eee",
-              borderTopRightRadius: 3,
-            }}
-          >
-            <ToggleButtonGroup
-              color="primary"
-              value={alignment}
-              exclusive
-              onChange={handleChange}
-              aria-label="Platform"
-              sx={{
-                py: "10px",
-                pl: "10px",
-              }}
-            >
-              <ToggleButton value={"web"}>Xu Hướng Theo Ngày</ToggleButton>
-              <ToggleButton value={"sale"}> Sách HOT - Giảm Sốc</ToggleButton>
-              <ToggleButton value={"bestSealer"}>
-                BestSeller - Ngoại văn
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Box>
-          <Grid container spacing={1} mt={2} pb={2}>
-            {Products.map((element: Product, i) => {
-              return (
-                <Grid key={i} item md={4} lg={2.4} xs={12} sm={6}>
-                  <ProductItem key={i} products={element} />
-                </Grid>
-              );
-            })}
-          </Grid>
-          <Stack>
-            <Button variant="outlined">Xem thêm</Button>
-          </Stack>
-        </Box>
       </Container>
     </Box>
   );
