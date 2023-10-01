@@ -166,7 +166,6 @@ const CreateProduct = () => {
             <Typography variant="caption" color={color.error}>
               {errors.title && errors.title.message}
             </Typography>
-
             <Grid container mt={2} justifyContent={"space-between"}>
               <Grid xs={5.8}>
                 <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
@@ -179,7 +178,7 @@ const CreateProduct = () => {
                     required: "Vui lòng nhập Danh mục sản phẩm!",
                   }}
                   render={({ field }) => (
-                    <FormControl fullWidth key={1}>
+                    <FormControl fullWidth>
                       <Select
                         {...field}
                         displayEmpty

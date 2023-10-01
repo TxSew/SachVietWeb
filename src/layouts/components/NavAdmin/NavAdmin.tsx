@@ -117,11 +117,11 @@ export default function NavAdmin() {
             </Stack>
           </ListItemButton>
         </Link>
-        <Link to={"/admin/orders"}>
+        <Link to={"/admin/orders"} color={color.white}>
           <ListItemButton>
             <Stack direction={"row"} spacing={4} color={color.text_color}>
               <ShoppingBasketIcon />
-              <ListItemText primary="Đơn hàng" />
+              <ListItemText color="white" primary="Đơn hàng" />
             </Stack>
           </ListItemButton>
         </Link>

@@ -38,11 +38,8 @@ export default function CategoryAdmin() {
         "🚀 ~ file: AdminCategory.tsx:37 ~ fetchData ~ CategoryData:",
         CategoryData
       );
-      const { subcategories } = CategoryData[0];
-      const da: any = subcategories;
       console.log(CategoryData);
-
-      setCategory(da);
+      setCategory(CategoryData);
     } catch (err) {
       console.log(err);
     }
@@ -111,6 +108,7 @@ export default function CategoryAdmin() {
                 }}
               >
                 <TableCell>ID</TableCell>
+                <TableCell>Hình ảnh</TableCell>
                 <TableCell>Tên loại danh mục</TableCell>
                 <TableCell align="right">Danh mục cha</TableCell>
                 <TableCell align="right">Ngày tạo</TableCell>
@@ -127,10 +125,16 @@ export default function CategoryAdmin() {
                   <TableCell component="th" scope="row">
                     {e.id}
                   </TableCell>
+
+                  <TableCell component="th" scope="row">
+                    <img src={e.image} alt="" width={"50px"} height={"70px"} />
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {e.name}
                   </TableCell>
-                  <TableCell align="right">{e.parentId}</TableCell>
+                  <TableCell align="right">
+                    {e.parentName == null ? "Danh mục gốc" : e.parentName}
+                  </TableCell>
                   <TableCell align="right">
                     {moment(e.createdAt).format("DD MMM YYYY")}
                   </TableCell>

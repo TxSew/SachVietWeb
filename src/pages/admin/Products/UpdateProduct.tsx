@@ -140,9 +140,9 @@ const CreateProduct = () => {
           </Button>
         </Stack>
         <Grid
+          container
           bgcolor={color.white}
           p={2}
-          container
           mt={3}
           justifyContent={"space-between"}
         >

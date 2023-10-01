@@ -6,6 +6,8 @@ export interface Category extends BaseModel, Modified {
   parentId?: string;
   level?: number;
   orders?: number;
+  status?: string | number;
+  image?: string;
   subcategories?: [
     {
       id: number;

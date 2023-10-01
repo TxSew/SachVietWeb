@@ -144,7 +144,8 @@ export default function AdminProduct() {
                     {e.productImages && e?.productImages[0] ? (
                       <img
                         src={e?.productImages[0].image}
-                        width={"100px"}
+                        width={"70px"}
+                        height={"100px"}
                         alt=""
                       />
                     ) : (

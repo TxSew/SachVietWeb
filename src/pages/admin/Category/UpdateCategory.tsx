@@ -17,6 +17,8 @@ import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
+import { ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../configs/fireBaseConfig";
 
 var httpcategory = new HttpCategoryController(BaseAPi);
 const UpdateCategory = () => {
@@ -44,7 +46,31 @@ const UpdateCategory = () => {
     }
   };
   const editorRef = useRef<any>(null);
-
+  const [images, setImages] = useState("");
+  const [url, setUrl] = useState<string>("");
+  useEffect(() => {
+    loadImageFile(images);
+  }, [images]);
+  const loadImageFile = async (images: any) => {
+    for (let i = 0; i < images.length; i++) {
+      const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
+      await uploadBytes(imageRef, images[i])
+        .then(() => {
+          storage
+            .ref("multipleFiles")
+            .child(images[i].name)
+            .getDownloadURL()
+            .then((url: any) => {
+              console.log(url);
+              setUrl(url);
+              return url;
+            });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  };
   // if (editorRef.current) {
   //   console.log(editorRef.current.getContent());
   // }
@@ -62,11 +88,11 @@ const UpdateCategory = () => {
     },
   });
   console.log(detail.parentId);
-
   // console.log(watch().desc);
   const isDisabled = !(isDirty && isValid);
   //  upload image file base
   const handleAddProduct = async (data: Category) => {
+    data.image = url;
     const categoryDto = await httpcategory.put(Number(id), data);
     if (categoryDto) {
       toast.success("category updated successfully", {
@@ -181,32 +207,22 @@ const UpdateCategory = () => {
             </Grid>
           </Grid>
           <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
-            Sắp xếp
+            Hình ảnh danh mục
           </Typography>
-          <Controller
-            control={control}
-            name="level"
-            rules={{
-              required: "Chọn vị trí sắp xếp",
+          <OutlinedInput
+            type="file"
+            onChange={(e: any) => setImages(e.target.files)}
+            sx={{
+              mt: 1,
+              "& > input": {
+                p: "7px",
+              },
             }}
-            render={({ field }) => (
-              <OutlinedInput
-                type="number"
-                {...field}
-                sx={{
-                  mt: 1,
-                  "& > input": {
-                    p: "7px",
-                  },
-                }}
-                fullWidth
-                placeholder={String(detail.level)}
-              />
-            )}
+            fullWidth
           />
-          <Typography variant="caption" color={color.error}>
-            {errors.level && errors.level.message}
-          </Typography>
+          <Stack direction={"row"} flexWrap={"wrap"}>
+            <img src={url} width={"150px"} alt="" />
+          </Stack>
           <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
             Trạng thái
           </Typography>
