@@ -26,11 +26,11 @@ import {
   Product,
   TProductResponse,
 } from "../../../submodules/models/ProductModel/Product";
-import useDebounce from "../../../hooks/useDebounce/useDebounce";
 
 const http = new HttpProductController(BaseAPi);
 export default function AdminProduct() {
   const [Products, setProducts] = React.useState<Product[]>([]);
+  const [page, setPage] = React.useState(1);
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -45,7 +45,6 @@ export default function AdminProduct() {
       console.log(err);
     }
   };
-  const [page, setPage] = React.useState(1);
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     value: number

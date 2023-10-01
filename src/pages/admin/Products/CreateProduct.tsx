@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Editor } from "@tinymce/tinymce-react";
-import { ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -27,14 +27,22 @@ import { Producer } from "../../../submodules/models/producerModel/producer";
 
 var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
+const httpProduct = new HttpProductController(BaseAPi);
 const CreateProduct = () => {
-  const redirect = useNavigate();
+  const [images, setImages] = useState("");
+  const [urls, setUrls] = useState<string[]>([]);
+  const [base64Data, setBase64Data] = useState<any>("");
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
+  const redirect = useNavigate();
+  const editorRef = useRef<any>(null);
   useEffect(() => {
     fetchProducer();
     fetchCategory();
   }, []);
+  useEffect(() => {
+    loadImagesFile(images);
+  }, [images]);
   const fetchProducer = async () => {
     try {
       const producer: any = await http.getAll();
@@ -51,30 +59,10 @@ const CreateProduct = () => {
       console.error(err);
     }
   };
-  const editorRef = useRef<any>(null);
 
-  // if (editorRef.current) {
-  //   console.log(editorRef.current.getContent());
-  // }
-
-  const {
-    handleSubmit,
-    control,
-    register,
-    watch,
-    formState: { errors, isDirty, isValid },
-  } = useForm<Product>({
-    defaultValues: {
-      producerID: undefined,
-      categoryId: undefined,
-      status: "1",
-    },
-  });
-
-  const isDisabled = !(isDirty && isValid);
-  const handleAddProduct = async (data: Product) => {
-    console.log(data);
-    const images = url.map((e) => {
+  const handleAddProduct = async (data: any) => {
+    data.image = base64Data;
+    const images = urls.map((e) => {
       return {
         image: e,
       };
@@ -92,13 +80,22 @@ const CreateProduct = () => {
       redirect("/admin/product");
     }
   };
-  const [images, setImages] = useState("");
-  const [url, setUrl] = useState<string[]>([]);
-  useEffect(() => {
-    loadImageFile(images);
-  }, [images]);
-  const httpProduct = new HttpProductController(BaseAPi);
-  const loadImageFile = async (images: any) => {
+  const handleFileChange = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e: any) => {
+        const base64 = e.target.result;
+        setBase64Data(base64);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+  const loadImagesFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
       await uploadBytes(imageRef, images[i])
@@ -109,8 +106,7 @@ const CreateProduct = () => {
             .getDownloadURL()
             .then((url: any) => {
               console.log(url);
-
-              setUrl((prev) => prev.concat(url));
+              setUrls((prev) => prev.concat(url));
               return url;
             });
         })
@@ -120,6 +116,19 @@ const CreateProduct = () => {
     }
   };
 
+  const {
+    handleSubmit,
+    control,
+    register,
+    watch,
+    formState: { errors, isDirty, isValid },
+  } = useForm<Product>({
+    defaultValues: {
+      producerID: undefined,
+      categoryId: undefined,
+      status: "1",
+    },
+  });
   return (
     <Box>
       <form action="" onSubmit={handleSubmit(handleAddProduct)}>
@@ -387,6 +396,7 @@ const CreateProduct = () => {
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  type="number"
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -401,6 +411,28 @@ const CreateProduct = () => {
             <Typography variant="caption" color={color.error}>
               {errors.quantity && errors.quantity.message}
             </Typography>
+            <Typography
+              variant="h2"
+              mt={2}
+              fontSize={"18px"}
+              fontWeight={"bold"}
+            >
+              Ảnh nổi bật
+            </Typography>
+
+            <OutlinedInput
+              type="file"
+              onChange={handleFileChange}
+              sx={{
+                mt: 1,
+                "& > input": {
+                  p: "7px",
+                },
+              }}
+              fullWidth
+              placeholder="Vui lòng nhập Ten của bạn!"
+            />
+            {base64Data && <img src={base64Data} alt="Uploaded File" />}
             <Typography
               variant="h2"
               mt={2}
@@ -424,7 +456,7 @@ const CreateProduct = () => {
               placeholder="Vui lòng nhập Ten của bạn!"
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
-              {url.map((e, i) => {
+              {urls.map((e, i) => {
                 return <img src={e} width={"150px"} alt="" />;
               })}
             </Stack>
