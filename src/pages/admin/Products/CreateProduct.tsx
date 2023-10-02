@@ -138,7 +138,6 @@ const CreateProduct = () => {
    const [State,setState]= useState('')
    const handleImageChange = (event:any) => {
     const selectedImage = event.target.files[0];
-    setState({ selectedImage });
   }
   const {
     handleSubmit,
