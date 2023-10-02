@@ -14,13 +14,19 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/icon?family=Material+Icons"
     />
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script
+      src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
     <script>
       tinymce.init({
-        selector: '#mytextarea'
+        selector: "#mytextarea",
       });
     </script>
-      <script src="https://cdn.tiny.cloud/1/y6r6bf309zyr8a2wfdmqtbg9k3ppxi62522uau0w63mssgiz/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script
+      src="https://cdn.tiny.cloud/1/y6r6bf309zyr8a2wfdmqtbg9k3ppxi62522uau0w63mssgiz/tinymce/6/tinymce.min.js"
+      referrerpolicy="origin"
+    ></script>
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -38,31 +44,39 @@
     -->
     <script type="text/javascript">
       tinymce.init({
-        selector: '#myTextarea',
+        selector: "#myTextarea",
         width: 600,
-        height: 300,
+        height: 500,
+        selector: "textarea", // change this value according to your HTML
+        automatic_uploads: true,
+        images_upload_url: "postAcceptor.php",
+        images_reuse_filename: true,
         plugins: [
-          'advlist autolink link image lists charmap print preview hr anchor pagebreak',
-          'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-          'table emoticons template paste help'
+          "advlist autolink link image lists charmap print preview hr anchor pagebreak",
+          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+          "table emoticons template paste help",
         ],
-        toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
-          'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
-          'forecolor backcolor emoticons | help',
+        toolbar:
+          "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | " +
+          "bullist numlist outdent indent | link image | print preview media fullscreen | " +
+          "forecolor backcolor emoticons | help",
         menu: {
-          favs: {title: 'My Favorites', items: 'code visualaid | searchreplace | emoticons'}
+          favs: {
+            title: "My Favorites",
+            items: "code visualaid | searchreplace | emoticons",
+          },
         },
-        menubar: 'favs file edit view insert format tools table help',
-        content_css: 'css/content.css'
+        menubar: "favs file edit view insert format tools table help",
+        content_css: "css/content.css",
       });
-      </script>
-      <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
-      <df-messenger
-        intent="WELCOME"
-        chat-title="NewAgent"
-        agent-id="905d13ef-3217-4f07-80fa-6f02f928faf3"
-        language-code="en"
-      ></df-messenger>
+    </script>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
+    <df-messenger
+      intent="WELCOME"
+      chat-title="NewAgent"
+      agent-id="905d13ef-3217-4f07-80fa-6f02f928faf3"
+      language-code="en"
+    ></df-messenger>
     <title>React App</title>
   </head>
   <body>
@@ -79,5 +93,4 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
-
 </html>

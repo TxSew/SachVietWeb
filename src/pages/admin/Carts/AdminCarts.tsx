@@ -180,6 +180,8 @@ export default function AdminCarts() {
                               const updated = await http.put(Number(e.id), {
                                 status: 1,
                               });
+                              window.location.reload();
+
                               toast.success("updated order successfully", {
                                 position: "bottom-right",
                               });
@@ -199,6 +201,8 @@ export default function AdminCarts() {
                                 const updated = await http.put(Number(e.id), {
                                   status: 0,
                                 });
+                                window.location.reload();
+
                                 toast.success("updated order successfully", {
                                   position: "bottom-right",
                                 });
@@ -222,6 +226,7 @@ export default function AdminCarts() {
                               toast.success("updated order successfully", {
                                 position: "bottom-right",
                               });
+                              window.location.reload();
                             }}
                           >
                             <Typography fontSize={"10px"}>
@@ -238,6 +243,7 @@ export default function AdminCarts() {
                                 const updated = await http.put(Number(e.id), {
                                   status: 0,
                                 });
+                                window.location.reload();
                                 toast.success("updated order successfully", {
                                   position: "bottom-right",
                                 });

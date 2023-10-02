@@ -30,7 +30,7 @@ import {
 const http = new HttpProductController(BaseAPi);
 export default function AdminProduct() {
   const [Products, setProducts] = React.useState<Product[]>([]);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = React.useState<any>({});
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -39,6 +39,8 @@ export default function AdminProduct() {
       const ProductData: TProductResponse = await http.getAll();
       const data: any = ProductData.products;
       console.log(data);
+      console.log(ProductData);
+      setPage(ProductData);
 
       setProducts(data);
     } catch (err) {
@@ -49,9 +51,10 @@ export default function AdminProduct() {
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    setPage(value);
+    console.log(value);
     const panigate: any = await http.getAll(value);
     const data: any = panigate.products;
+     setPage(panigate)
     setProducts(data);
   };
 
@@ -140,16 +143,12 @@ export default function AdminProduct() {
                     {e.id}
                   </TableCell>
                   <TableCell component="th" scope="row">
-                    {e.productImages && e?.productImages[0] ? (
-                      <img
-                        src={e?.productImages[0].image}
-                        width={"70px"}
-                        height={"100px"}
-                        alt=""
-                      />
-                    ) : (
-                      <div>No</div>
-                    )}
+                    <img
+                      src={e?.image}
+                      width={"70px"}
+                      height={"100px"}
+                      alt=""
+                    />
                   </TableCell>
                   <TableCell align="right">{e.title}</TableCell>
                   <TableCell align="right">{e.quantity}</TableCell>
@@ -185,7 +184,11 @@ export default function AdminProduct() {
           </Table>
         </TableContainer>
         <Box mt={2}>
-          <Pagination count={10} page={page} onChange={handleChange} />
+          <Pagination
+            count={page?.totalPage}
+            page={page?.page}
+            onChange={handleChange}
+          />
         </Box>
       </Grid>
     </Grid>

@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   MenuItem,
@@ -10,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Editor } from "@tinymce/tinymce-react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -30,19 +31,27 @@ var httpcategory = new HttpCategoryController(BaseAPi);
 const httpProduct = new HttpProductController(BaseAPi);
 const CreateProduct = () => {
   const [images, setImages] = useState("");
+  const [image, setImage] = useState("");
   const [urls, setUrls] = useState<string[]>([]);
-  const [base64Data, setBase64Data] = useState<any>("");
+  const [url, setUrl] = useState<string[]>([]);
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
   const redirect = useNavigate();
+  const [isLoadings, setIsLoadings] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const editorRef = useRef<any>(null);
+
   useEffect(() => {
     fetchProducer();
     fetchCategory();
   }, []);
   useEffect(() => {
-    loadImagesFile(images);
+    loadImagesFiles(images);
   }, [images]);
+
+  useEffect(() => {
+    loadImagesFile(image);
+  }, [image]);
   const fetchProducer = async () => {
     try {
       const producer: any = await http.getAll();
@@ -61,7 +70,7 @@ const CreateProduct = () => {
   };
 
   const handleAddProduct = async (data: any) => {
-    data.image = base64Data;
+    data.image = url[0];
     const images = urls.map((e) => {
       return {
         image: e,
@@ -80,22 +89,10 @@ const CreateProduct = () => {
       redirect("/admin/product");
     }
   };
-  const handleFileChange = (e: any) => {
-    const file = e.target.files[0];
-    console.log(file);
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (e: any) => {
-        const base64 = e.target.result;
-        setBase64Data(base64);
-      };
-
-      reader.readAsDataURL(file);
+  const loadImagesFiles = async (images: any) => {
+    if (images) {
+      setIsLoadings(true);
     }
-  };
-  const loadImagesFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
       await uploadBytes(imageRef, images[i])
@@ -105,8 +102,8 @@ const CreateProduct = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              console.log(url);
-              setUrls((prev) => prev.concat(url));
+              setUrls((prev) => [...prev, url]);
+              setIsLoadings(false);
               return url;
             });
         })
@@ -115,7 +112,34 @@ const CreateProduct = () => {
         });
     }
   };
-
+  const loadImagesFile = async (images: any) => {
+    if (images) {
+      setIsLoading(true);
+    }
+    for (let i = 0; i < images.length; i++) {
+      const imageRef = ref(storage, `imageUpload/${images[i].name}`);
+      await uploadBytes(imageRef, images[i])
+        .then(() => {
+          storage
+            .ref("imageUpload")
+            .child(images[i].name)
+            .getDownloadURL()
+            .then((url: any) => {
+              setUrl((prev) => [...prev, url]);
+              setIsLoading(false);
+              return url;
+            });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  };
+   const [State,setState]= useState('')
+   const handleImageChange = (event:any) => {
+    const selectedImage = event.target.files[0];
+    setState({ selectedImage });
+  }
   const {
     handleSubmit,
     control,
@@ -279,8 +303,30 @@ const CreateProduct = () => {
                       value={field.value}
                       {...register("desc")}
                       init={{
-                        height: 250,
+                        height: 350,
                         menubar: false,
+                        image_title: true,
+                        automatic_uploads: true,
+                        file_picker_types: "image",
+                        file_picker_callback: function (callback, value, meta) {
+                          // Provide file and text for the link dialog
+                          if (meta.filetype == "file") {
+                            callback("mypage.html", { text: "My text" });
+                          }
+
+                          // Provide image and alt text for the image dialog
+                          if (meta.filetype == "image") {
+                            callback("myimage.jpg", { alt: "My alt text" });
+                          }
+
+                          // Provide alternative source and posted for the media dialog
+                          if (meta.filetype == "media") {
+                            callback("movie.mp4", {
+                              source2: "alt.ogg",
+                              poster: "image.jpg",
+                            });
+                          }
+                        },
                         plugins: [
                           "advlist",
                           "autolink",
@@ -305,7 +351,7 @@ const CreateProduct = () => {
                           "help",
                         ],
                         toolbar:
-                          "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons",
+                          " undo redo | link image | code |undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons",
                         content_style:
                           "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                       }}
@@ -421,8 +467,8 @@ const CreateProduct = () => {
             </Typography>
 
             <OutlinedInput
+              onChange={(e: any) => setImage(e.target.files)}
               type="file"
-              onChange={handleFileChange}
               sx={{
                 mt: 1,
                 "& > input": {
@@ -432,16 +478,38 @@ const CreateProduct = () => {
               fullWidth
               placeholder="Vui lòng nhập Ten của bạn!"
             />
-            {base64Data && <img src={base64Data} alt="Uploaded File" />}
+            {isLoading ? (
+              <Box
+                sx={{
+                  ml: 2,
+                  mt: 1,
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : url.length > 0 ? (
+              // Nếu mảng urls có chứa hình ảnh
+              url.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  width={"100px"}
+                  alt={`Image ${index}`}
+                />
+              ))
+            ) : (
+              // Nếu mảng urls không có hình ảnh
+              <div></div>
+            )}
+
             <Typography
               variant="h2"
               mt={2}
               fontSize={"18px"}
               fontWeight={"bold"}
             >
-              Ảnh sản phẩm
+              Ảnh chi tiết
             </Typography>
-
             <OutlinedInput
               type="file"
               onChange={(e: any) => setImages(e.target.files)}
@@ -456,11 +524,38 @@ const CreateProduct = () => {
               placeholder="Vui lòng nhập Ten của bạn!"
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
-              {urls.map((e, i) => {
-                return <img src={e} width={"150px"} alt="" />;
-              })}
+              {isLoadings ? (
+                <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
+              ) : urls.length > 0 ? (
+                // Nếu mảng urls có chứa hình ảnh
+                urls.map((url, index) => (
+                  <img
+                    key={index}
+                    src={url}
+                    width={"100px"}
+                    alt={`Image ${index}`}
+                  />
+                ))
+              ) : (
+                // Nếu mảng urls không có hình ảnh
+                <div></div>
+              )}
             </Stack>
           </Grid>
+    <div>
+        <h2>Image Upload Example</h2>
+        <input
+          type="file"
+          accept="image/*" // Accept only image files
+          onChange={handleImageChange}
+        />
+        {selectedImage && (
+          <div>
+            <p>Selected Image:</p>
+            <img src={URL.createObjectURL(selectedImage)} alt="Selected" width="200" />
+          </div>
+        )}
+      </div>
         </Grid>
       </form>
     </Box>
