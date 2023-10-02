@@ -548,12 +548,7 @@ const CreateProduct = () => {
           accept="image/*" // Accept only image files
           onChange={handleImageChange}
         />
-        {selectedImage && (
-          <div>
-            <p>Selected Image:</p>
-            <img src={URL.createObjectURL(selectedImage)} alt="Selected" width="200" />
-          </div>
-        )}
+
       </div>
         </Grid>
       </form>
