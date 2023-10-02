@@ -1,12 +1,12 @@
-import { Container, Grid, Stack, Box, Typography } from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "../../../../../components/Image/Image";
 
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
-import { color } from "../../../../../Theme/color";
-import useMedia from "../../../../../hooks/useMedia/useMedia";
 import { useEffect, useState } from "react";
-import HttpCategoryController from "../../../../../submodules/controllers/http/httpCategoryController";
+import { color } from "../../../../../Theme/color";
 import { BaseAPi } from "../../../../../configs/BaseApi";
+import useMedia from "../../../../../hooks/useMedia/useMedia";
+import HttpCategoryController from "../../../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../../../submodules/models/ProductModel/Category";
 const http = new HttpCategoryController(BaseAPi);
 const CategoryNav = () => {
@@ -17,8 +17,9 @@ const CategoryNav = () => {
 
   const fetchcategory = async () => {
     const category = await http.getAll();
-    SetCategory(category);
-    console.log(category);
+
+    const filteredData = category.filter((item: any) => item.parentId !== null);
+    SetCategory(filteredData);
   };
   const { isMediumMD, isMobileSM } = useMedia();
   return (
@@ -131,7 +132,12 @@ const CategoryNav = () => {
                     sx={{
                       fontSize: "15px",
                       lineHeight: "1",
+                      overflow: "hidden",
+                      display: "-webkit-box",
                       textAlign: "center",
+                      WebkitLineClamp: 2,
+                      lineClamp: 2,
+                      WebkitBoxOrient: "vertical",
                     }}
                   >
                     {e.name}

@@ -33,7 +33,7 @@ export const Details = () => {
     if (id) {
       const detailValue = await http.getOne(id);
       console.log(detailValue);
-      setDetail(detailValue);
+      setDetail(detailValue.product);
     }
   };
   const handleAddToCart = (detail: any) => {
@@ -52,10 +52,15 @@ export const Details = () => {
   return (
     <Box bgcolor={"#eee"}>
       <Container maxWidth="xl">
-        <Stack direction={"row"} py={1} alignItems={"center"}>
-          <Typography variant="caption">Sách tiếng việt</Typography>
+        <Stack
+          direction={"row"}
+          py={1}
+          alignItems={"center"}
+          textTransform={"uppercase"}
+        >
+          <Typography variant="caption">{Detail.category?.name}</Typography>
           <ChevronRightOutlinedIcon />
-          <Typography variant="caption">Sách lớp 1</Typography>
+          <Typography variant="caption">{Detail.title}</Typography>
         </Stack>
         <Box pb={2}>
           <Grid container bgcolor={"#fff"} p={3}>
@@ -79,11 +84,7 @@ export const Details = () => {
                   </Stack>
                   <Stack flex={1} justifyContent={"center"} spacing={2}>
                     <img
-                      src={
-                        Detail.productImages
-                          ? Detail.productImages[0].image
-                          : ""
-                      }
+                      src={Detail.image}
                       alt=""
                       width={"100%"}
                       height={"388px"}
@@ -295,9 +296,65 @@ export const Details = () => {
             </Grid>
           </Grid>
         </Box>
+
         {/* chi tiet san pham */}
+        <Box pb={2}>
+          <Box bgcolor={color.white} p={2}>
+            <Typography variant="h2" fontWeight={"bold"} fontSize={"18.85px"}>
+              Thông tin sản phẩm
+            </Typography>
+            <Grid container mt={2}>
+              <Grid item xs={3}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    rowGap: "5px",
+                  }}
+                >
+                  <Typography variant="h3">Mã hàng</Typography>
+                  <Typography variant="h3">Tên nhà cung cấp</Typography>
+                  <Typography variant="h3">Tác giả</Typography>
+                  <Typography variant="h3">Ngôn ngữ</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={9}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    rowGap: "5px",
+                  }}
+                >
+                  <Typography variant="h3">{Detail.id}</Typography>
+                  <Typography
+                    variant="h3"
+                    fontWeight={"bold"}
+                    color={color.text_second}
+                  >
+                    {Detail.producer?.name}
+                  </Typography>
+                  <Typography variant="h3">{Detail.author}</Typography>
+                  <Typography variant="h3">Việt Nam</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+            <Typography variant="body1" mt={2} fontSize={"15px"}>
+              Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện hành.
+              Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng
+              mà có thể phát sinh thêm chi phí khác như Phụ phí đóng gói, phí
+              vận chuyển, phụ phí hàng cồng kềnh,...
+            </Typography>
+            <Typography variant="body1" color={color.error} mt={1}>
+              Chính sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống
+              Nhà sách Fahasa trên toàn quốc
+            </Typography>
+            <Box></Box>
+          </Box>
+        </Box>
+
         <Box>
-          <Typography variant="h2">Thông tin sản phẩm</Typography>
+          <Box></Box>
         </Box>
       </Container>
     </Box>

@@ -40,6 +40,14 @@ class HttpCategoryController {
       throw error;
     }
   }
+  async getCategory(): Promise<any> {
+    try {
+      const response = await this.axiosInstance.get("category");
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
   async getOne(id: number): Promise<any> {
     try {
       const response = await this.axiosInstance.get(`category/${id}`);

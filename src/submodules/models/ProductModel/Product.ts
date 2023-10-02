@@ -5,6 +5,7 @@ import { Category } from "./Category";
 
 export interface Product extends BaseModel, Modified {
   title?: string;
+  product?: any;
   desc?: string;
   producerID?: number;
   categoryId?: number;
@@ -15,6 +16,7 @@ export interface Product extends BaseModel, Modified {
   image?: string;
   listImage?: string;
   productId?: number;
+  author?: string;
   cartQuantity?: number;
   files?: string[];
   productImages?: ProductImage[];

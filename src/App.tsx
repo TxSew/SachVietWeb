@@ -46,7 +46,7 @@ function App() {
 
           {PrivateRouter?.map((e, i) => {
             if (isUserAuthenticated()) {
-              const AdminComponent = e.component;
+              const AdminComponent:any = e.component;
               let Layout = AdminLayout;
               return (
                 <Route

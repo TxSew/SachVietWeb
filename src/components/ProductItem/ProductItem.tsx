@@ -29,9 +29,7 @@ const ProductItem = (Props: ProductItem) => {
           }}
           title=""
           image={
-            Props.products.productImages
-              ? Props.products.productImages[0].image
-              : ""
+          Props.products.image
           }
         />
       </Link>

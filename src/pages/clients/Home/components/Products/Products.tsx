@@ -10,7 +10,6 @@ import { Product } from "../../../../../submodules/models/ProductModel/Product";
 
 function Products() {
   const [alignment, setAlignment] = React.useState("web");
-
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string

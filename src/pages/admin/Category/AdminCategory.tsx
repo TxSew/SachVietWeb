@@ -34,12 +34,10 @@ export default function CategoryAdmin() {
   const fetchData = async () => {
     try {
       const CategoryData: any = await http.getAll();
-      console.log(
-        "🚀 ~ file: AdminCategory.tsx:37 ~ fetchData ~ CategoryData:",
-        CategoryData
+      const filteredData = CategoryData.filter(
+        (item: any) => item.parentId !== null
       );
-      console.log(CategoryData);
-      setCategory(CategoryData);
+      setCategory(filteredData);
     } catch (err) {
       console.log(err);
     }
