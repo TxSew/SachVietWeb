@@ -11,6 +11,7 @@ export interface Product extends BaseModel, Modified {
   categoryId?: number;
   slug?: string;
   price?: number;
+  sale?: number;
   price_sale?: number;
   quantity?: number;
   image?: string;
@@ -31,6 +32,6 @@ interface ProductImage extends Modified {
 export interface TProductResponse {
   page?: number;
   limit?: number;
-  total?: number;
+  totalPage?: number;
   products?: Product[];
 }

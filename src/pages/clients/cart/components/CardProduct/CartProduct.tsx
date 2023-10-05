@@ -116,7 +116,7 @@ const CartProduct = () => {
                             className="cartItem_Price"
                             fontWeight={"bold"}
                           >
-                            {`${element.price_sale} đ`}
+                            {`${element.price} đ`}
                           </Typography>
                           <Typography
                             variant="caption"

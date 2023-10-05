@@ -31,9 +31,9 @@ class HttpCartController {
     );
   }
 
-  async getAll(): Promise<any> {
+  async getAll(page: number = 1): Promise<any> {
     try {
-      const response = await this.axiosInstance.get("/order");
+      const response = await this.axiosInstance.get(`/order?page=${page}`);
       return response.data;
     } catch (error) {
       throw error;

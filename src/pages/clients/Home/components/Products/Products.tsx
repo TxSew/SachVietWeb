@@ -9,6 +9,7 @@ import HttpProductController from "../../../../../submodules/controllers/http/ht
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
 
 function Products() {
+  const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -17,7 +18,6 @@ function Products() {
     setAlignment(newAlignment);
   };
   const [Products, setProducts] = useState<Product[]>([]);
-  const http = new HttpProductController(BaseAPi);
   const fetchData = async () => {
     try {
       const productData: any = await http.getAll();

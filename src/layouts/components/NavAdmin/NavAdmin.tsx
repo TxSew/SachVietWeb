@@ -4,7 +4,7 @@ import SendIcon from "@mui/icons-material/Send";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import SupervisedUserCircleIcon from "@mui/icons-material/SupervisedUserCircle";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
@@ -21,9 +21,9 @@ export default function NavAdmin() {
   };
 
   return (
-    <>
+    <Box height={"100%"} bgcolor={"#33333"}>
       <List
-        sx={{ maxWidth: 360, bgcolor: "#282727" }}
+        sx={{ maxWidth: 360, bgcolor: color.navAdmin_color }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
@@ -33,13 +33,14 @@ export default function NavAdmin() {
             sx={{
               fontSize: "20px",
               fontWeight: "bold",
+              color: "black",
             }}
           >
             Tổng quan
           </ListSubheader>
         }
       >
-        <Link to={"/"}>
+        <Link to={"/admin/statistical"}>
           <ListItemButton>
             <Stack direction={"row"} spacing={4} color={color.text_color}>
               <DiscountIcon />
@@ -50,7 +51,7 @@ export default function NavAdmin() {
       </List>
 
       <List
-        sx={{ maxWidth: 360, bgcolor: "#282727", color: "#fff" }}
+        sx={{ maxWidth: 360, bgcolor: color.navAdmin_color, color: "#fff" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
@@ -66,11 +67,11 @@ export default function NavAdmin() {
           </ListSubheader>
         }
       >
-        <NavLink to={"/admin/product"} color={color.text_color}>
+        <NavLink to={"/admin/product"} color={color.white}>
           <ListItemButton>
             <Stack direction={"row"} spacing={4} color={color.text_color}>
-              <SendIcon color="inherit" />
-              <ListItemText color="white" primary="Sản phẩm" />
+              <SendIcon />
+              <ListItemText color="#fff" primary="Sản phẩm" />
             </Stack>
           </ListItemButton>
         </NavLink>
@@ -93,7 +94,7 @@ export default function NavAdmin() {
       </List>
 
       <List
-        sx={{ maxWidth: 360, bgcolor: "#282727" }}
+        sx={{ maxWidth: 360, bgcolor: "#ccc" }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
@@ -135,7 +136,7 @@ export default function NavAdmin() {
         </Link>
       </List>
       <List
-        sx={{ maxWidth: 360, bgcolor: "#282727" }}
+        sx={{ maxWidth: 360, bgcolor: color.navAdmin_color }}
         component="nav"
         aria-labelledby="nested-list-subheader"
         subheader={
@@ -168,6 +169,6 @@ export default function NavAdmin() {
           </ListItemButton>
         </Link>
       </List>
-    </>
+    </Box>
   );
 }

@@ -1,12 +1,11 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
+import { TProductResponse } from "../../models/ProductModel/Product";
 import { AxiosConfig } from "../interface/axiosConfig";
-import { Product, TProductResponse } from "../../models/ProductModel/Product";
 class HttpDiscountController {
   get(): TProductResponse | PromiseLike<TProductResponse> {
     throw new Error("Method not implemented.");
   }
   private axiosInstance: AxiosInstance;
-
   constructor(axiosConfig: AxiosConfig) {
     // Create an Axios instance with the provided configuration
     this.axiosInstance = axios.create(axiosConfig);
@@ -17,7 +16,6 @@ class HttpDiscountController {
         "Authorization"
       ] = `Bearer ${jwtToken}`;
     }
-
     this.axiosInstance.interceptors.response.use(
       (response) => {
         return response;
@@ -30,7 +28,6 @@ class HttpDiscountController {
       }
     );
   }
-
   async getAll(): Promise<any> {
     try {
       const response = await this.axiosInstance.get("discount");

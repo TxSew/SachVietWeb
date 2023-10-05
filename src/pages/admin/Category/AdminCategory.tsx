@@ -3,6 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   OutlinedInput,
   Pagination,
@@ -24,28 +25,31 @@ import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
+import { Category } from "../../../submodules/models/ProductModel/Category";
 
 const http = new HttpCategoryController(BaseAPi);
 export default function CategoryAdmin() {
   const [category, setCategory] = React.useState([]);
+  const [pageCount, setPageCount] = React.useState<number>(1);
+
+  const [page, setPage] = React.useState<number>(1);
   React.useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
+    fetchData(page);
+  }, [page]);
+  const fetchData = async (page: number = 1) => {
     try {
-      const CategoryData: any = await http.getAll();
-      const filteredData = CategoryData.filter(
+      const CategoryData: any = await http.getAll(page);
+      const filteredData = CategoryData.category.filter(
         (item: any) => item.parentId !== null
       );
       setCategory(filteredData);
+      setPageCount(CategoryData.totalPage);
     } catch (err) {
       console.log(err);
     }
   };
-  const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    console.log(value);
   };
 
   // remove item
@@ -115,7 +119,7 @@ export default function CategoryAdmin() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {category.map((e: any, i) => (
+              {category.map((e: Category, i) => (
                 <TableRow
                   key={e.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -138,16 +142,9 @@ export default function CategoryAdmin() {
                   </TableCell>
                   <TableCell align="right">
                     {e.status == null ? (
-                      <Typography
-                        color={"#fff"}
-                        bgcolor={"green"}
-                        p={"2px 6px"}
-                        variant="caption"
-                      >
-                        active
-                      </Typography>
+                      <Chip label="Hoạt động" color="success" />
                     ) : (
-                      "ubactive"
+                      <Chip color="error" label="Ngưng hoạt động" />
                     )}
                   </TableCell>
                   <TableCell align="right">
@@ -178,9 +175,9 @@ export default function CategoryAdmin() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box mt={2}>
-          <Pagination count={10} page={page} onChange={handleChange} />
-        </Box>
+        <Stack mt={2} justifyContent={"center"}>
+          <Pagination count={pageCount} page={page} onChange={handleChange} />
+        </Stack>
       </Grid>
     </Grid>
   );

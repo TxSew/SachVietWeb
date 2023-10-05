@@ -3,9 +3,14 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
   Box,
   Button,
+  Chip,
+  FormControl,
   Grid,
+  MenuItem,
   OutlinedInput,
   Pagination,
+  Select,
+  SelectChangeEvent,
   Stack,
   Typography,
 } from "@mui/material";
@@ -21,27 +26,40 @@ import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
+import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
-import {
-  Product,
-  TProductResponse,
-} from "../../../submodules/models/ProductModel/Product";
+import { Product } from "../../../submodules/models/ProductModel/Product";
 
 const http = new HttpProductController(BaseAPi);
 export default function AdminProduct() {
   const [Products, setProducts] = React.useState<Product[]>([]);
-  const [page, setPage] = React.useState<any>({});
-  React.useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    try {
-      const ProductData: TProductResponse = await http.getAll();
-      const data: any = ProductData.products;
-      console.log(data);
-      console.log(ProductData);
-      setPage(ProductData);
+  const [pageCount, setPageCount] = React.useState<number>(1);
+  const [page, setPage] = React.useState<number>(1);
+  const [search, setSearch] = React.useState<string>("");
+  const [sortBy, setSortBy] = React.useState("createdAt");
+  const [sortWith, setSortWith] = React.useState("asc");
+  const [sort, setSort] = React.useState("");
 
+  const debounce = useDebounce(search, 400);
+  React.useEffect(() => {
+    fetchData(page, debounce, sortBy, sortWith);
+  }, [page, debounce, sortBy, sortWith]);
+  const fetchData = async (
+    page: number,
+    search: string = debounce || "",
+    sortBy: string,
+    sortWith: string
+  ) => {
+    try {
+      const ProductData: any = await http.getAll(
+        page,
+        search,
+        sortBy,
+        sortWith
+      );
+      const data: any = ProductData.products;
+      setPageCount(ProductData.totalPage);
       setProducts(data);
     } catch (err) {
       console.log(err);
@@ -51,11 +69,7 @@ export default function AdminProduct() {
     event: React.ChangeEvent<unknown>,
     value: number
   ) => {
-    console.log(value);
-    const panigate: any = await http.getAll(value);
-    const data: any = panigate.products;
-     setPage(panigate)
-    setProducts(data);
+    setPage(value);
   };
 
   // remove item
@@ -71,7 +85,33 @@ export default function AdminProduct() {
   };
   const handleChangeValue = async (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => {};
+  ) => {
+    setSearch((pre) => event.target.value);
+    if (event.target.value) {
+      setPage(1);
+    }
+  };
+
+  const handleChangeSort = (event: SelectChangeEvent) => {
+    if (event.target.value == "priceDown") {
+      setSortBy("price_sale");
+      setSortWith("desc");
+      setSort(event.target.value);
+    } else if (event.target.value == "priceUp") {
+      setSortBy("price_sale");
+      setSortWith("asc");
+      setSort(event.target.value);
+    }
+    if (event.target.value == "old") {
+      setSortBy("createdAt");
+      setSortWith("desc");
+      setSort(event.target.value);
+    } else if (event.target.value == "new") {
+      setSortBy("createdAt");
+      setSortWith("asc");
+      setSort(event.target.value);
+    }
+  };
 
   return (
     <Grid>
@@ -104,6 +144,25 @@ export default function AdminProduct() {
             placeholder="Tìm kiếm sản phẩm..."
             onChange={handleChangeValue}
           />
+          <Stack sx={{ minWidth: 300 }} direction={"row"}>
+            <Typography>Sắp xếp:</Typography>
+            <FormControl sx={{ m: 1, minWidth: 120 }}>
+              <Select
+                value={sort}
+                onChange={handleChangeSort}
+                displayEmpty
+                inputProps={{ "aria-label": "Without label" }}
+              >
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"old"}>Cũ nhất</MenuItem>
+                <MenuItem value={"new"}>Mới nhất</MenuItem>
+                <MenuItem value={"priceDown"}>Giá từ cao tới thấp</MenuItem>
+                <MenuItem value={"priceUp"}>Giá từ thấp tới cao</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
           <Link to={"/admin/createProduct"}>
             <Button variant="contained">Thêm sản phẩm</Button>
           </Link>
@@ -128,6 +187,7 @@ export default function AdminProduct() {
                 <TableCell align="right">Tiêu đề</TableCell>
                 <TableCell align="right">Số lượng sản phẩm</TableCell>
                 <TableCell align="right">Danh mục</TableCell>
+                <TableCell align="right">Giá</TableCell>
                 <TableCell align="right">Nhà cung cấp</TableCell>
                 <TableCell align="right">Trạng thái</TableCell>
                 <TableCell align="right">Hành động</TableCell>
@@ -144,17 +204,27 @@ export default function AdminProduct() {
                   </TableCell>
                   <TableCell component="th" scope="row">
                     <img
+                      style={{ objectFit: "cover" }}
                       src={e?.image}
                       width={"70px"}
-                      height={"100px"}
+                      height={"70px"}
                       alt=""
                     />
                   </TableCell>
                   <TableCell align="right">{e.title}</TableCell>
                   <TableCell align="right">{e.quantity}</TableCell>
                   <TableCell align="right">{e.category?.name}</TableCell>
+                  <TableCell align="right">
+                    {NumberFormattingComponent(e.price_sale)}
+                  </TableCell>
                   <TableCell align="right">{e.producer?.name}</TableCell>
-                  <TableCell align="right">{e.status}</TableCell>
+                  <TableCell align="right">
+                    {e.status == null ? (
+                      <Chip label="Hoạt động" color="success" />
+                    ) : (
+                      <Chip color="error" label="Ngưng hoạt động" />
+                    )}
+                  </TableCell>
                   <TableCell align="right">
                     <Stack
                       direction={"row"}
@@ -183,13 +253,9 @@ export default function AdminProduct() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Box mt={2}>
-          <Pagination
-            count={page?.totalPage}
-            page={page?.page}
-            onChange={handleChange}
-          />
-        </Box>
+        <Stack mt={2} textAlign={"center"} justifyContent={"center"}>
+          <Pagination count={pageCount} page={page} onChange={handleChange} />
+        </Stack>
       </Grid>
     </Grid>
   );

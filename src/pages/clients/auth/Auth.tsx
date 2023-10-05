@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Container,
-  Grid,
-  Tab,
-  Tabs,
-} from "@mui/material";
+import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import Login from "./components/Login";
 import { Register } from "./components/Register";
 
@@ -41,10 +35,8 @@ function a11yProps(index: number) {
     "aria-controls": `simple-tabpanel-${index}`,
   };
 }
-
 export default function Auth() {
   const [value, setValue] = React.useState(0);
-
   const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -102,7 +94,7 @@ export default function Auth() {
                 <Login />
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
-               <Register/> 
+                <Register />
               </CustomTabPanel>
             </Grid>
           </Box>

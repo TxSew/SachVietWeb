@@ -23,6 +23,12 @@ export interface TOrderResponse {
   result: Order;
   detailData: OrderDetail[];
 }
+export interface TOrders {
+  totalPage?: number;
+  page?: number;
+  limit?: number;
+  orders?: Order[];
+}
 export type OrderHistory = Omit<
   Order,
   "province" | "district" | "orderDate" | "price_ship"

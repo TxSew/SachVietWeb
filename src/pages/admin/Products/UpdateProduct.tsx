@@ -14,6 +14,7 @@ import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
@@ -23,7 +24,6 @@ import HttpProductController from "../../../submodules/controllers/http/httpProd
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
-import { toast } from "react-toastify";
 
 var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
@@ -40,10 +40,12 @@ const CreateProduct = () => {
     fetchCategory();
     fetchProduct();
   }, []);
+
   const fetchProduct = async () => {
     const dataProduct = await httpProduct.getOneUpdate(parInt);
     setProductUpdate(dataProduct);
   };
+
   const fetchProducer = async () => {
     try {
       const producer: any = await http.getAll();
@@ -52,19 +54,16 @@ const CreateProduct = () => {
       console.log(error);
     }
   };
+
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getAll();
+      const category: any = await httpcategory.getCategory();
       setCategory(category);
     } catch (err) {
       console.error(err);
     }
   };
   const editorRef = useRef<any>(null);
-
-  // if (editorRef.current) {
-  //   console.log(editorRef.current.getContent());
-  // }
 
   const {
     handleSubmit,
@@ -75,7 +74,6 @@ const CreateProduct = () => {
   } = useForm<Product>({
     defaultValues: {
       producerID: undefined,
-      status: "1",
       categoryId: undefined,
     },
   });
@@ -100,11 +98,7 @@ const CreateProduct = () => {
       });
     }
   };
-  const [images, setImages] = useState("");
   const [url, setUrl] = useState<string[]>([]);
-  useEffect(() => {
-    loadImageFile(images);
-  }, [images]);
   const loadImageFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
@@ -423,7 +417,7 @@ const CreateProduct = () => {
 
             <OutlinedInput
               type="file"
-              onChange={(e: any) => setImages(e.target.files)}
+              onChange={(e: any) => loadImageFile(e.target.files)}
               inputProps={{ multiple: true }}
               sx={{
                 mt: 1,

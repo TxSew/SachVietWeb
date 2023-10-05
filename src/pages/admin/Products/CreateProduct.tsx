@@ -30,28 +30,20 @@ var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
 const httpProduct = new HttpProductController(BaseAPi);
 const CreateProduct = () => {
-  const [images, setImages] = useState("");
-  const [image, setImage] = useState("");
   const [urls, setUrls] = useState<string[]>([]);
   const [url, setUrl] = useState<string[]>([]);
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
-  const redirect = useNavigate();
   const [isLoadings, setIsLoadings] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const editorRef = useRef<any>(null);
+  const redirect = useNavigate();
 
   useEffect(() => {
     fetchProducer();
     fetchCategory();
   }, []);
-  useEffect(() => {
-    loadImagesFiles(images);
-  }, [images]);
 
-  useEffect(() => {
-    loadImagesFile(image);
-  }, [image]);
   const fetchProducer = async () => {
     try {
       const producer: any = await http.getAll();
@@ -62,13 +54,12 @@ const CreateProduct = () => {
   };
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getAll();
+      const category: any = await httpcategory.getCategory();
       setCategory(category);
     } catch (err) {
       console.error(err);
     }
   };
-
   const handleAddProduct = async (data: any) => {
     data.image = url[0];
     const images = urls.map((e) => {
@@ -135,10 +126,6 @@ const CreateProduct = () => {
         });
     }
   };
-   const [State,setState]= useState('')
-   const handleImageChange = (event:any) => {
-    const selectedImage = event.target.files[0];
-  }
   const {
     handleSubmit,
     control,
@@ -149,7 +136,6 @@ const CreateProduct = () => {
     defaultValues: {
       producerID: undefined,
       categoryId: undefined,
-      status: "1",
     },
   });
   return (
@@ -224,7 +210,7 @@ const CreateProduct = () => {
                       >
                         {Category.map((e: any, i) => {
                           return (
-                            <MenuItem value={e.id}>
+                            <MenuItem key={e.id} value={e.id}>
                               <em>{e.name}</em>
                             </MenuItem>
                           );
@@ -264,7 +250,7 @@ const CreateProduct = () => {
                       >
                         {Producer.map((e: Producer) => {
                           return (
-                            <MenuItem value={e.id}>
+                            <MenuItem key={e.id} value={e.id}>
                               <em>{e.name}</em>
                             </MenuItem>
                           );
@@ -402,7 +388,7 @@ const CreateProduct = () => {
             </Typography>
             <Controller
               control={control}
-              name="price_sale"
+              name="sale"
               rules={{
                 required: "Price is not",
               }}
@@ -422,7 +408,7 @@ const CreateProduct = () => {
               )}
             />
             <Typography variant="caption" color={color.error}>
-              {errors.price_sale && errors.price_sale.message}
+              {errors.sale && errors.sale.message}
             </Typography>
             <Typography
               variant="h2"
@@ -466,7 +452,7 @@ const CreateProduct = () => {
             </Typography>
 
             <OutlinedInput
-              onChange={(e: any) => setImage(e.target.files)}
+              onChange={(e: any) => loadImagesFiles(e.target.files)}
               type="file"
               sx={{
                 mt: 1,
@@ -511,7 +497,7 @@ const CreateProduct = () => {
             </Typography>
             <OutlinedInput
               type="file"
-              onChange={(e: any) => setImages(e.target.files)}
+              onChange={(e: any) => loadImagesFile(e.target.files)}
               inputProps={{ multiple: true }}
               sx={{
                 mt: 1,
@@ -541,15 +527,6 @@ const CreateProduct = () => {
               )}
             </Stack>
           </Grid>
-    <div>
-        <h2>Image Upload Example</h2>
-        <input
-          type="file"
-          accept="image/*" // Accept only image files
-          onChange={handleImageChange}
-        />
-
-      </div>
         </Grid>
       </form>
     </Box>

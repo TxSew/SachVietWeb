@@ -61,9 +61,6 @@ export const Register = () => {
             <OutlinedInput
               key={1}
               {...field}
-              sx={{
-                py: 1,
-              }}
               fullWidth
               placeholder="Vui lòng nhập tên của bạn!"
             />
@@ -75,7 +72,7 @@ export const Register = () => {
       </Typography>
       <FormControl
         sx={{
-          mt: "20px",
+          mt: "16px",
         }}
         fullWidth
       >
@@ -94,9 +91,6 @@ export const Register = () => {
           render={({ field }) => (
             <OutlinedInput
               {...field}
-              sx={{
-                py: 1,
-              }}
               fullWidth
               placeholder="Vui lòng nhập Email của bạn!"
             />
@@ -108,7 +102,7 @@ export const Register = () => {
       </Typography>
       <FormControl
         sx={{
-          mt: "20px",
+          mt: "16px",
         }}
         fullWidth
       >
@@ -122,9 +116,6 @@ export const Register = () => {
           render={({ field }) => (
             <OutlinedInput
               {...field}
-              sx={{
-                py: 1,
-              }}
               fullWidth
               placeholder="Vui lòng nhập mật khẩu"
             />
@@ -137,7 +128,7 @@ export const Register = () => {
 
       <FormControl
         sx={{
-          mt: "20px",
+          mt: "16px",
         }}
         fullWidth
       >
@@ -153,9 +144,6 @@ export const Register = () => {
             <OutlinedInput
               key={1}
               {...field}
-              sx={{
-                py: 1,
-              }}
               fullWidth
               placeholder="Vui lòng nhập mật khẩu"
             />
@@ -168,7 +156,7 @@ export const Register = () => {
       <Box mx={"auto"} textAlign={"center"}>
         <Button
           sx={{
-            mt: "20px",
+            mt: "16px",
           }}
           type="submit"
           variant="outlined"

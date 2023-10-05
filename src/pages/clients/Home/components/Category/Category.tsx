@@ -16,12 +16,12 @@ const CategoryNav = () => {
   }, []);
 
   const fetchcategory = async () => {
-    const category = await http.getAll();
+    const category = await http.getCategory();
 
     const filteredData = category.filter((item: any) => item.parentId !== null);
     SetCategory(filteredData);
   };
-  const { isMediumMD, isMobileSM } = useMedia();
+  const { isMediumMD } = useMedia();
   return (
     <Container
       maxWidth={"xl"}

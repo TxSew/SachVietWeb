@@ -3,8 +3,7 @@ import DetailCarts from "../pages/admin/Carts/DetailCarts";
 import CategoryAdmin from "../pages/admin/Category/AdminCategory";
 import CreateCategory from "../pages/admin/Category/Createcategory";
 import UpdateCategory from "../pages/admin/Category/UpdateCategory";
-import AdminCustomer from "../pages/admin/Customer/AdminCustomer";
-import UpdateCustomer from "../pages/admin/Customer/UpdateCustomer";
+import AdminCustomer from "../pages/admin/Users/AdminCustomer";
 import AdminDiscount from "../pages/admin/Discount/AdminDiscount";
 import CreateDiscount from "../pages/admin/Discount/CreateDiscount";
 import UpdateDiscount from "../pages/admin/Discount/UpdateProduct";
@@ -126,13 +125,8 @@ const PrivateRouter = [
     path: "/admin/customer",
     component: AdminCustomer,
   },
-
   {
-    path: "/admin/customer/:id",
-    component: UpdateCustomer,
-  },
-  {
-    path: "admin/statistical",
+    path: "/admin/statistical",
     component: AdminStatistical,
   },
 ];

@@ -46,7 +46,7 @@ function DetailCarts() {
   });
 
   return (
-    <div>
+    <Box bgcolor={color.text_color}>
       <Typography variant="h2" fontSize={"25px"}>
         Chi tiết đơn hàng
       </Typography>
@@ -67,7 +67,7 @@ function DetailCarts() {
         >
           Chi tiết đơn hàng
         </Typography>
-        <Stack direction={"column"} spacing={"3px"}>
+        <Box>
           <Stack direction={"row"} spacing={1}>
             <Typography>Tên khách hàng:</Typography>
             <Typography fontWeight={"bold"}>{DetailOrder?.fullName}</Typography>
@@ -92,7 +92,7 @@ function DetailCarts() {
             <Typography> Mã đơn hàng:</Typography>
             <Typography fontWeight={"bold"}>{DetailOrder.id}</Typography>
           </Stack>
-        </Stack>
+        </Box>
         <Box
           sx={{
             mt: 2,
@@ -216,7 +216,7 @@ function DetailCarts() {
         />{" "}
         In hoá đơn
       </Button>
-    </div>
+    </Box>
   );
 }
 

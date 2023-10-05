@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
-import { FormLogin } from "../../../../models/AuthModel/Login";
 import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
+import { User } from "../../../../submodules/models/UserModel/User";
 
 const Login = () => {
   const http = new HttpAccountController(BaseAPi);
@@ -20,12 +20,12 @@ const Login = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FormLogin>({
+  } = useForm<User>({
     mode: "all",
   });
-  const handleLogin = async (data: FormLogin) => {
+  const handleLogin = async (data: User) => {
     try {
-      const login: any = await http.login(data);
+      const login = await http.login(data);
       if (login) {
         toast.success("Login successful", {
           position: "bottom-right",
@@ -74,9 +74,6 @@ const Login = () => {
             <OutlinedInput
               {...field}
               key={2}
-              sx={{
-                py: 1,
-              }}
               fullWidth
               placeholder="Vui lòng nhập Email của bạn!"
             />
@@ -104,9 +101,6 @@ const Login = () => {
             <OutlinedInput
               key={1}
               {...field}
-              sx={{
-                py: 1,
-              }}
               fullWidth
               placeholder="Vui lòng nhập mật khẩu"
             />
