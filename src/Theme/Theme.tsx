@@ -1,16 +1,16 @@
-import { createTheme } from "@mui/material";
+import { colors, createTheme } from "@mui/material";
+import { color } from "./color";
 
 export const Theme = createTheme({
   palette: {
     secondary: {
-      main: "#333333",
+      main: color.main,
     },
   },
   typography: {
     h1: {},
   },
   components: {
-     
     MuiTextField: {
       defaultProps: {
         InputProps: {},
@@ -20,9 +20,9 @@ export const Theme = createTheme({
       },
       styleOverrides: {
         root: {
-          backgroundColor: "#ffff",
+          backgroundColor: color.white,
           "& .MuiOutlinedInput-input": {
-            padding: "10px 14px",
+            padding: "7px 14px",
             fontWeight: 400,
             color: "gray",
             fontSize: "14px",
@@ -30,12 +30,13 @@ export const Theme = createTheme({
         },
       },
     },
+
     MuiOutlinedInput: {
       defaultProps: {},
       styleOverrides: {
         root: {
           "& .MuiOutlinedInput-input": {
-            padding: "0px 14px",
+            padding: "7px 14px",
             fontWeight: 400,
             color: "gray",
           },
@@ -89,8 +90,6 @@ export const Theme = createTheme({
         },
       },
     },
-     MuiContainer: {
-       
-     }
+    MuiContainer: {},
   },
 });

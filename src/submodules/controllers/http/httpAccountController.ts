@@ -26,9 +26,9 @@ class HttpAccountController {
       }
     );
   }
-  async getAll() {
+  async getAll(page: number = 1) {
     try {
-      const response = await this.axiosInstance.get("/users");
+      const response = await this.axiosInstance.get(`/users?page=${page}`);
       return response.data;
     } catch (error) {
       throw error;

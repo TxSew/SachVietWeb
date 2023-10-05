@@ -3,6 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   OutlinedInput,
   Pagination,
@@ -21,27 +22,26 @@ import { Link } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpAccountController from "../../../submodules/controllers/http/httpAccountController";
-import { User } from "../../../submodules/models/UserModel/User";
+import { TUser, User } from "../../../submodules/models/UserModel/User";
 
 export default function AdminCustomer() {
   const http = new HttpAccountController(BaseAPi);
   const [customer, setCustomer] = React.useState<User[]>([]);
-
+  const [page, setPage] = React.useState(1);
+  const [count, setCount] = React.useState(1);
   React.useEffect(() => {
-    fetchData();
-  }, []);
+    fetchData(page);
+  }, [page]);
 
-  const fetchData = async () => {
-    const user = await http.getAll();
-    console.log(user);
+  const fetchData = async (page: number = 1) => {
+    const user: TUser = await http.getAll(page);
     if (user) {
-      setCustomer(user);
+      setCustomer(user.Users);
+      setCount(user.totalPage);
     }
   };
-  const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    console.log(value);
   };
 
   async function handleRemove(id: number) {}
@@ -115,16 +115,9 @@ export default function AdminCustomer() {
                   <TableCell align="right">{e.phone}</TableCell>
                   <TableCell align="right">
                     {e.status == null ? (
-                      <Typography
-                        color={"#fff"}
-                        bgcolor={"green"}
-                        p={"2px 6px"}
-                        variant="caption"
-                      >
-                        active
-                      </Typography>
+                      <Chip label="Hoạt động" color="success" />
                     ) : (
-                      "ubactive"
+                      <Chip color="error" label="Ngưng hoạt động" />
                     )}
                   </TableCell>
                   <TableCell align="right">
@@ -157,7 +150,7 @@ export default function AdminCustomer() {
           </Table>
         </TableContainer>
         <Box mt={2}>
-          <Pagination count={10} page={page} onChange={handleChange} />
+          <Pagination count={count} page={page} onChange={handleChange} />
         </Box>
       </Grid>
     </Grid>

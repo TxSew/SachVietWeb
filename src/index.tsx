@@ -14,17 +14,16 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-     <ThemeProvider theme={Theme}>
+    <ThemeProvider theme={Theme}>
       <CssBaseline />
       <GlobalStyle>
-    <Provider store={store}>
-     <ToastContainer/>
-        <App />
-    </Provider>
+        <Provider store={store}>
+          <ToastContainer />
+          <App />
+        </Provider>
       </GlobalStyle>
     </ThemeProvider>
-  
-      </React.StrictMode>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

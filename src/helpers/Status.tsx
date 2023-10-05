@@ -1,13 +1,14 @@
 import { Typography } from "@mui/material";
+import React from "react";
 
-export const Status = (value: any, key: any) => {
+export const Status = (value: any) => {
   return (
-    <>
-      {value == key ? (
+    <React.Fragment>
+      {value == null ? (
         <Typography>active</Typography>
       ) : (
         <Typography>unActive</Typography>
       )}
-    </>
+    </React.Fragment>
   );
 };

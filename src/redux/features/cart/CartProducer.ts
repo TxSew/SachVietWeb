@@ -4,7 +4,6 @@ import "react-toastify/dist/ReactToastify.css";
 
 interface CartItem {
   id: number;
-  // Define other properties of the cart item here
   cartQuantity: number;
   price_sale: number;
 }
@@ -28,19 +27,14 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart(state, action: PayloadAction<CartItem>) {
-      console.log(state.cartItems);
-
       const existingIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload.id
       );
-      console.log(state.cartItems[existingIndex]);
-
       if (existingIndex >= 0) {
         state.cartItems[existingIndex] = {
           ...state.cartItems[existingIndex],
           cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
         };
-        console.log(state.cartItems);
       } else {
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProductItem);
@@ -54,7 +48,6 @@ const cartSlice = createSlice({
       const itemIndex = state.cartItems.findIndex(
         (item) => item.id === action.payload
       );
-      console.log(state.cartItems[itemIndex].cartQuantity);
 
       if (state.cartItems[itemIndex].cartQuantity > 1) {
         state.cartItems[itemIndex].cartQuantity -= 1;
@@ -62,10 +55,8 @@ const cartSlice = createSlice({
         const nextCartItems = state.cartItems.filter(
           (item) => item.id !== action.payload.id
         );
-
         state.cartItems = nextCartItems;
       }
-
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     removeFromCart(state, action: any) {
@@ -79,7 +70,6 @@ const cartSlice = createSlice({
         position: "bottom-left",
       });
     },
-
     getTotals(state) {
       let { total, quantity } = state.cartItems.reduce(
         (cartTotal, cartItem) => {

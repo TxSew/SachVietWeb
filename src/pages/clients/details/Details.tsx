@@ -23,6 +23,7 @@ import {
 import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
+import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
 
 export const Details = () => {
   const redirect = useNavigate();
@@ -191,16 +192,16 @@ export const Details = () => {
                       fontSize={25}
                       fontWeight={"bold"}
                     >
-                      {Detail.price}
+                      {`${NumberFormattingComponent(Detail.price)} `}
                     </Typography>
                     <Typography
                       className="price"
                       fontSize={15}
                       sx={{
-                        textDecoration: "underline",
+                        textDecoration: "line-through",
                       }}
                     >
-                      {Detail.price_sale}
+                      {`${NumberFormattingComponent(Detail.price_sale)}  `}
                     </Typography>
 
                     <Typography
@@ -211,7 +212,7 @@ export const Details = () => {
                       borderRadius={"3px"}
                       fontWeight={"bold"}
                     >
-                      -5%
+                      {`-${Detail.sale}%`}
                     </Typography>
                   </Stack>
                 </Box>

@@ -1,6 +1,7 @@
 import {
   Box,
   Container,
+  FormControl,
   Grid,
   MenuItem,
   Pagination,
@@ -9,17 +10,55 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { color } from "../../../Theme/color";
+import ProductItem from "../../../components/ProductItem/ProductItem";
+import { BaseAPi } from "../../../configs/BaseApi";
+import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { Product } from "../../../submodules/models/ProductModel/Product";
 import Tabbar from "./components/Tabbar";
-
+const http = new HttpProductController(BaseAPi);
 function Category() {
   const [age, setAge] = React.useState("");
   const [page, setPage] = React.useState(1);
+  const [count, setCount] = useState<number>(1);
+  const [products, setProducts] = React.useState<Product[]>([] as Product[]);
+  const [sortBy, setSortBy] = React.useState("createdAt");
+  const [sortWith, setSortWith] = React.useState("asc");
+  const [sort, setSort] = React.useState("");
+  useEffect(() => {
+    fetchProducts(page);
+  }, [page]);
+  const fetchProducts = async (page: number = 1) => {
+    const products: any = await http.getAll(page);
+    if (products) {
+      setProducts(products.products);
+      setCount(products.totalPage);
+    }
+  };
   const handleChanges = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-
+  const handleChangeSort = (event: SelectChangeEvent) => {
+    if (event.target.value == "priceDown") {
+      setSortBy("price_sale");
+      setSortWith("desc");
+      setSort(event.target.value);
+    } else if (event.target.value == "priceUp") {
+      setSortBy("price_sale");
+      setSortWith("asc");
+      setSort(event.target.value);
+    }
+    if (event.target.value == "old") {
+      setSortBy("createdAt");
+      setSortWith("desc");
+      setSort(event.target.value);
+    } else if (event.target.value == "new") {
+      setSortBy("createdAt");
+      setSortWith("asc");
+      setSort(event.target.value);
+    }
+  };
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
@@ -32,55 +71,42 @@ function Category() {
           </Grid>
           <Grid item xs={9}>
             <Box>
-              <Stack direction={"row"} spacing={3}>
-                <Typography mr={2} variant="h2">
-                  Sắp xếp theo:
-                </Typography>
-                <Select
-                  sx={{
-                    px: "20px",
-                    py: "4px",
-                  }}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
-
-                <Select
-                  sx={{
-                    px: "20px",
-                    py: "4px",
-                  }}
-                  labelId="demo-simple-select-label"
-                  id="demo-simple-select"
-                  value={age}
-                  label="Age"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={10}>Ten</MenuItem>
-                  <MenuItem value={20}>Twenty</MenuItem>
-                  <MenuItem value={30}>Thirty</MenuItem>
-                </Select>
+              <Stack sx={{ minWidth: 300 }} direction={"row"}>
+                <Typography>Sắp xếp:</Typography>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                  <Select
+                    value={sort}
+                    onChange={handleChangeSort}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={"old"}>Cũ nhất</MenuItem>
+                    <MenuItem value={"new"}>Mới nhất</MenuItem>
+                    <MenuItem value={"priceDown"}>Giá từ cao tới thấp</MenuItem>
+                    <MenuItem value={"priceUp"}>Giá từ thấp tới cao</MenuItem>
+                  </Select>
+                </FormControl>
               </Stack>
             </Box>
             <Box mt={3}>
               <Stack direction={"row"} flexWrap={"wrap"}>
-                {Array.from({ length: 8 }).map((item) => {
+                {products.map((item: Product, index) => {
                   return (
                     <Grid item xs={3}>
-                      {/* <ProductItem products={item} /> */}
+                      <ProductItem products={item} />
                     </Grid>
                   );
                 })}
               </Stack>
               <Stack mt={2} spacing={2}>
-                <Pagination count={10} page={page} onChange={handleChanges} />
+                <Pagination
+                  count={count}
+                  page={page}
+                  onChange={handleChanges}
+                />
               </Stack>
             </Box>
           </Grid>

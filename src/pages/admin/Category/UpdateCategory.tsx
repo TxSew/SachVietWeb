@@ -38,19 +38,14 @@ const UpdateCategory = () => {
   };
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getAll();
+      const category: any = await httpcategory.getCategory();
       console.log(category);
       setCategory(category);
     } catch (err) {
       console.error(err);
     }
   };
-  const editorRef = useRef<any>(null);
-  const [images, setImages] = useState("");
   const [url, setUrl] = useState<string>("");
-  useEffect(() => {
-    loadImageFile(images);
-  }, [images]);
   const loadImageFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
@@ -71,15 +66,11 @@ const UpdateCategory = () => {
         });
     }
   };
-  // if (editorRef.current) {
-  //   console.log(editorRef.current.getContent());
-  // }
 
   const {
     handleSubmit,
     control,
     register,
-    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<Category>({
     defaultValues: {
@@ -87,11 +78,7 @@ const UpdateCategory = () => {
       parentId: "1",
     },
   });
-  console.log(detail.parentId);
-  // console.log(watch().desc);
-  const isDisabled = !(isDirty && isValid);
-  //  upload image file base
-  const handleAddProduct = async (data: Category) => {
+  const handelUpdateCategory = async (data: Category) => {
     data.image = url;
     const categoryDto = await httpcategory.put(Number(id), data);
     if (categoryDto) {
@@ -100,25 +87,10 @@ const UpdateCategory = () => {
       });
     }
   };
-  function renderCategories(categories: any, parentId: number = 1) {
-    categories.forEach((e: any) => {
-      const id = e.id;
-      const name = e.name;
-      if ((e.parentId = parentId)) {
-        return (
-          <>
-            <MenuItem value={id}>
-              <em>{name}</em>
-            </MenuItem>
-            {renderCategories(categories, parentId)}
-          </>
-        );
-      }
-    });
-  }
+
   return (
     <Box>
-      <form action="" onSubmit={handleSubmit(handleAddProduct)}>
+      <form action="" onSubmit={handleSubmit(handelUpdateCategory)}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
             Cập nhật danh mục {detail?.id}
@@ -196,7 +168,6 @@ const UpdateCategory = () => {
                         );
                       })}
                     </Select>
-                    {/* <FormHelperText>Without label</FormHelperText> */}
                   </FormControl>
                 )}
               />
@@ -211,7 +182,7 @@ const UpdateCategory = () => {
           </Typography>
           <OutlinedInput
             type="file"
-            onChange={(e: any) => setImages(e.target.files)}
+            onChange={(e: any) => loadImageFile(e.target.files)}
             sx={{
               mt: 1,
               "& > input": {

@@ -3,6 +3,7 @@ import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   OutlinedInput,
   Pagination,
@@ -27,6 +28,7 @@ import { TProductResponse } from "../../../submodules/models/ProductModel/Produc
 import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
 import DiscountIcon from "@mui/icons-material/Discount";
 import moment from "moment";
+import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
 
 const http = new HttpDiscountController(BaseAPi);
 export default function AdminDiscount() {
@@ -135,8 +137,12 @@ export default function AdminDiscount() {
                   <TableCell component="th" scope="row">
                     {e.code}
                   </TableCell>
-                  <TableCell align="right">{e.discount}</TableCell>
-                  <TableCell align="right">{e.payment_limit}</TableCell>
+                  <TableCell align="right">
+                    {NumberFormattingComponent(e.discount)}
+                  </TableCell>
+                  <TableCell align="right">
+                    {NumberFormattingComponent(e.payment_limit)}
+                  </TableCell>
                   <TableCell align="right">{e.limit_number}</TableCell>
 
                   <TableCell align="right">
@@ -144,18 +150,7 @@ export default function AdminDiscount() {
                   </TableCell>
                   <TableCell align="right">
                     {e?.status == 1 ? (
-                      <Typography
-                        className=""
-                        bgcolor={"green"}
-                        sx={{
-                          p: 0,
-                        }}
-                        textAlign={"center"}
-                        borderRadius={2}
-                        color={"white"}
-                      >
-                        active
-                      </Typography>
+                      <Chip label="Hoạt động" color="success" />
                     ) : (
                       "unactive"
                     )}

@@ -1,17 +1,17 @@
+import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
+import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
+import { Badge, Grid, Stack, styled, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
-import Image from "../../../components/Image/Image";
-import { Badge, Grid, Stack, styled, TextField } from "@mui/material";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
-import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import SearchIcon from "@mui/icons-material/Search";
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
+import Image from "../../../components/Image/Image";
 import useMedia from "../../../hooks/useMedia/useMedia";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/storeClient";
 const Header = () => {
   const cart = useSelector((state: RootState) => state.cart.cartItems);

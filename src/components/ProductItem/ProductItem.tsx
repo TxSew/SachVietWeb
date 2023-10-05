@@ -6,6 +6,10 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { color } from "../../Theme/color";
 import { Product } from "../../submodules/models/ProductModel/Product";
+import {
+  NumberFormattingComponent,
+  formatByPrice,
+} from "../../helpers/formatvalidate";
 interface ProductItem {
   products: Product;
 }
@@ -28,9 +32,7 @@ const ProductItem = (Props: ProductItem) => {
             objectFit: "cover",
           }}
           title=""
-          image={
-          Props.products.image
-          }
+          image={Props.products.image}
         />
       </Link>
 
@@ -50,7 +52,7 @@ const ProductItem = (Props: ProductItem) => {
             fontSize={18}
             fontWeight={"bold"}
           >
-            {Props.products.price}
+           {`${NumberFormattingComponent(Props.products.price)}`}
           </Typography>
           <Typography
             variant="caption"
@@ -60,7 +62,7 @@ const ProductItem = (Props: ProductItem) => {
             borderRadius={"3px"}
             fontWeight={"bold"}
           >
-            -5%
+            {`-${Props.products.sale}%`}
           </Typography>
         </Stack>
         <Typography
@@ -69,7 +71,7 @@ const ProductItem = (Props: ProductItem) => {
             textDecoration: "line-through",
           }}
         >
-          {Props.products.price_sale}
+          {`${NumberFormattingComponent(Props.products.price_sale)} `}
         </Typography>
       </CardContent>
       <Rating

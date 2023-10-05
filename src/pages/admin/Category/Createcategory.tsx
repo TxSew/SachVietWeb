@@ -9,37 +9,32 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { ref, uploadBytes } from "firebase/storage";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { storage } from "../../../configs/fireBaseConfig";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
-import { storage } from "../../../configs/fireBaseConfig";
-import { ref, uploadBytes } from "firebase/storage";
 
 var httpCategory = new HttpCategoryController(BaseAPi);
 const CreateCategory = () => {
   const [category, setCategory] = useState([]);
+  const [url, setUrl] = useState<string>("");
   useEffect(() => {
     fetchCategory();
   }, []);
   const fetchCategory = async () => {
     try {
-      const category: any = await httpCategory.getAll();
+      const category: any = await httpCategory.getCategory();
       console.log(category);
       setCategory(category);
     } catch (err) {
       console.error(err);
     }
   };
-  const editorRef = useRef<any>(null);
-  const [images, setImages] = useState("");
-  const [url, setUrl] = useState<string>("");
-  useEffect(() => {
-    loadImageFile(images);
-  }, [images]);
   const loadImageFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
@@ -50,7 +45,6 @@ const CreateCategory = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              console.log(url);
               setUrl(url);
               return url;
             });
@@ -60,15 +54,10 @@ const CreateCategory = () => {
         });
     }
   };
-  // if (editorRef.current) {
-  //   console.log(editorRef.current.getContent());
-  // }
-
   const {
     handleSubmit,
     control,
     register,
-    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<Category>({
     defaultValues: {
@@ -76,12 +65,9 @@ const CreateCategory = () => {
     },
   });
 
-  const isDisabled = !(isDirty && isValid);
-  const handleAddProduct = async (data: Category) => {
+  const handleAddCategory = async (data: Category) => {
     data.image = url;
     const category: Category = data;
-    console.log(category);
-
     const categoryDto = await httpCategory.store(category);
     if (categoryDto) {
       toast.success("category added successfully", {
@@ -92,7 +78,7 @@ const CreateCategory = () => {
 
   return (
     <Box>
-      <form action="" onSubmit={handleSubmit(handleAddProduct)}>
+      <form action="" onSubmit={handleSubmit(handleAddCategory)}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
             Thêm danh mục mới
@@ -186,7 +172,7 @@ const CreateCategory = () => {
           </Typography>
           <OutlinedInput
             type="file"
-            onChange={(e: any) => setImages(e.target.files)}
+            onChange={(e: any) => loadImageFile(e.target.value)}
             sx={{
               mt: 1,
               "& > input": {

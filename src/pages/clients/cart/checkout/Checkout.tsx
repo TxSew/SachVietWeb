@@ -1,3 +1,4 @@
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Box,
   Button,
@@ -16,6 +17,8 @@ import {
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
 import {
@@ -31,9 +34,6 @@ import {
   Province,
   district,
 } from "../../../../submodules/models/Province/Province";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 const httpProvince = new HttpProviceController(BaseAPi);
 const httpOrder = new HttpCartController(BaseAPi);
 function Checkout() {
@@ -140,9 +140,6 @@ function Checkout() {
                   <OutlinedInput
                     key={1}
                     {...field}
-                    sx={{
-                      py: 1,
-                    }}
                     fullWidth
                     placeholder="Vui lòng nhập tên của bạn!"
                   />
@@ -166,9 +163,6 @@ function Checkout() {
                   <OutlinedInput
                     key={1}
                     {...field}
-                    sx={{
-                      py: 1,
-                    }}
                     fullWidth
                     placeholder="Vui lòng nhập tên của bạn!"
                   />
@@ -194,12 +188,6 @@ function Checkout() {
                     {...field}
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
-                    sx={{
-                      py: 1,
-                      "& > div": {
-                        py: "7px",
-                      },
-                    }}
                   >
                     {province.map((e: Province) => {
                       return (
@@ -231,12 +219,6 @@ function Checkout() {
                     {...field}
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
-                    sx={{
-                      py: 1,
-                      "& > div": {
-                        py: "7px",
-                      },
-                    }}
                   >
                     {district.map((e: district) => {
                       return (
@@ -267,9 +249,6 @@ function Checkout() {
                   <OutlinedInput
                     key={1}
                     {...field}
-                    sx={{
-                      py: 1,
-                    }}
                     fullWidth
                     placeholder="Vui lòng nhập tên của bạn!"
                   />

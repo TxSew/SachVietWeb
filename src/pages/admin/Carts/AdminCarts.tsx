@@ -1,8 +1,10 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditCalendarIcon from "@mui/icons-material/EditCalendar";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   OutlinedInput,
   Pagination,
@@ -16,32 +18,37 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import moment from "moment";
 import * as React from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import HttpCartController from "../../../submodules/controllers/http/httpCartController";
-import { Order } from "../../../submodules/models/OrderModel/Order";
-import moment from "moment";
-import { toast } from "react-toastify";
+import { Order, TOrders } from "../../../submodules/models/OrderModel/Order";
 
 const http = new HttpCartController(BaseAPi);
 export default function AdminCarts() {
   const [carts, setCarts] = React.useState<Order[]>([] as Order[]);
+  const [page, setPage] = React.useState<number>(1);
+  const [count, setCount] = React.useState<number>(1);
   React.useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
+    fetchData(page);
+  }, [page]);
+  const handleUpdateOrder = async (id: any) => {
+    await http.put(Number(id), {
+      status: 2,
+    });
+  };
+  const fetchData = async (page: number) => {
     try {
-      const cartsData = await http.getAll();
-      setCarts(cartsData);
+      const cartsData: any = await http.getAll(page);
+      setCarts(cartsData?.orders);
+      setCount(cartsData?.totalPage);
     } catch (err) {
       console.log(err);
     }
   };
-  const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
     console.log(value);
@@ -135,31 +142,13 @@ export default function AdminCarts() {
                   </TableCell>
                   <TableCell align="right">
                     {e.status == null ? (
-                      <Typography fontSize={"12px"}>Đang chờ duyệt</Typography>
+                      <Chip label="Đang chờ duyệt" />
                     ) : e.status == 1 ? (
-                      <Typography
-                        fontSize={"12px"}
-                        fontWeight={"bold"}
-                        color={color.text_second}
-                      >
-                        Đang giao
-                      </Typography>
+                      <Chip color="primary" label="Đang giao hàng" />
                     ) : e.status == 2 ? (
-                      <Typography
-                        fontSize={"12px"}
-                        fontWeight={"bold"}
-                        color={"green"}
-                      >
-                        Đã giao
-                      </Typography>
+                      <Chip label=" Đã giao hàng" color="success" />
                     ) : (
-                      <Typography
-                        fontSize={"12px"}
-                        color={color.error}
-                        fontWeight={"bold"}
-                      >
-                        Bị hủy
-                      </Typography>
+                      <Chip label="Đã bị hủy" color="error" />
                     )}
                   </TableCell>
                   <TableCell align="right">
@@ -171,11 +160,7 @@ export default function AdminCarts() {
                     >
                       {e.status == null ? (
                         <>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              bgcolor: "gray",
-                            }}
+                          <Stack
                             onClick={async () => {
                               const updated = await http.put(Number(e.id), {
                                 status: 1,
@@ -187,16 +172,10 @@ export default function AdminCarts() {
                               });
                             }}
                           >
-                            <Typography fontSize={"10px"}>
-                              Duyệt đơn hàng
-                            </Typography>
-                          </Button>
+                            <Chip label="Duyệt đơn hàng" />
+                          </Stack>
                           <Box>
-                            <Button
-                              variant="contained"
-                              sx={{
-                                bgcolor: "red",
-                              }}
+                            <Stack
                               onClick={async () => {
                                 const updated = await http.put(Number(e.id), {
                                   status: 0,
@@ -208,37 +187,17 @@ export default function AdminCarts() {
                                 });
                               }}
                             >
-                              <Typography fontSize={"10px"}>Hủy đơn</Typography>
-                            </Button>
+                              <Chip color="error" label="Hủy đơn" />
+                            </Stack>
                           </Box>
                         </>
                       ) : e.status == 1 ? (
                         <>
-                          <Button
-                            variant="contained"
-                            sx={{
-                              bgcolor: "green",
-                            }}
-                            onClick={async () => {
-                              const updated = await http.put(Number(e.id), {
-                                status: 2,
-                              });
-                              toast.success("updated order successfully", {
-                                position: "bottom-right",
-                              });
-                              window.location.reload();
-                            }}
-                          >
-                            <Typography fontSize={"10px"}>
-                              Xác nhận thanh toán
-                            </Typography>
-                          </Button>
+                          <Stack onClick={() => handleUpdateOrder(e.id)}>
+                            <Chip color="success" label="Xác nhận thanh toán" />
+                          </Stack>
                           <Box>
-                            <Button
-                              variant="contained"
-                              sx={{
-                                bgcolor: "red",
-                              }}
+                            <Stack
                               onClick={async () => {
                                 const updated = await http.put(Number(e.id), {
                                   status: 0,
@@ -249,8 +208,8 @@ export default function AdminCarts() {
                                 });
                               }}
                             >
-                              <Typography fontSize={"10px"}>Hủy đơn</Typography>
-                            </Button>
+                              <Chip color="error" label="Hủy đơn" />
+                            </Stack>
                           </Box>
                         </>
                       ) : (
@@ -288,7 +247,7 @@ export default function AdminCarts() {
           </Table>
         </TableContainer>
         <Box mt={2}>
-          <Pagination count={10} page={page} onChange={handleChange} />
+          <Pagination count={count} page={page} onChange={handleChange} />
         </Box>
       </Grid>
     </Grid>

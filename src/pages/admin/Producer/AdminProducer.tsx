@@ -3,6 +3,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Button,
+  Chip,
   Grid,
   OutlinedInput,
   Pagination,
@@ -118,16 +119,9 @@ export default function ProducerAdmin() {
                   <TableCell align="right">{e.keyword}</TableCell>
                   <TableCell align="right">
                     {e.status == null ? (
-                      <Typography
-                        color={"#fff"}
-                        bgcolor={"green"}
-                        p={"2px 6px"}
-                        variant="caption"
-                      >
-                        active
-                      </Typography>
+                      <Chip label="Hoạt động" color="success" />
                     ) : (
-                      "ubactive"
+                      <Chip color="error" label="Ngưng hoạt động" />
                     )}
                   </TableCell>
                   <TableCell align="right">

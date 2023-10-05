@@ -30,10 +30,17 @@ class HttpProductController {
       }
     );
   }
-
-  async getAll(page: number = 1): Promise<any> {
+  async getAll(
+    page: number = 1,
+    search: string = "",
+    sortBy: string = "",
+    sortWith: string = "",
+    limit: number = 6
+  ): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(`products?page=${page}`);
+      const response = await this.axiosInstance.get(
+        `products?page=${page}&keyword=${search}&sortBy=${sortBy}&sortWith=${sortWith}&limit=${limit}`
+      );
       return response.data;
     } catch (error) {
       throw error;
