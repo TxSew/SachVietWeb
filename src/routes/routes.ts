@@ -17,6 +17,7 @@ import UpdateProduct from "../pages/admin/Products/UpdateProduct";
 import AdminStatistical from "../pages/admin/Statistical/AdminStatistical";
 import Category from "../pages/clients/Category/Category";
 import HomePage from "../pages/clients/Home/Home";
+import User from "../pages/clients/User/User";
 import Auth from "../pages/clients/auth/Auth";
 import ChangePassword from "../pages/clients/auth/changePassword";
 import { Cart } from "../pages/clients/cart/Cart";
@@ -60,6 +61,10 @@ const PublicRouter = [
     path: "/category",
     component: Category,
   },
+  {
+    path: '/user',
+    component: User
+  }
 ];
 const PrivateRouter = [
   {
