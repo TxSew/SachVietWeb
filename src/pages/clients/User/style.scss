@@ -1,8 +1,13 @@
+.UserGroup {
+    background-color: #eee;
+}
+
 .user {
-    margin: 48px 24px;
 
     &>.container {
         padding: 0 24px;
+        max-width: 1490px;
+        margin: 0 auto;
 
         &>.user-row {
             display: flex;
@@ -10,4 +15,92 @@
     }
 
 
+}
+
+.side-item {
+    border-bottom: 1px solid #e0dcdc;
+
+}
+
+.side-item-text {
+    color: #565555;
+}
+
+
+.side-waper {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.main-waper-top {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.main-waper-end {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    margin: 16px 0;
+
+    &>.main-hd {
+        font-size: 20px;
+        color: #565555;
+    }
+}
+
+.main-poin {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 65px;
+    }
+
+
+}
+
+.main-sumpoin {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 65%
+    }
+
+
+}
+
+
+
+.poin-text {
+    text-align: center;
+    color: #F7941E;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.main-info {
+    background-color: #FFF6E3;
+
+    &-hd {
+        border-bottom: 1px solid #ccc;
+    }
+
+    &>.row {
+        margin: 0;
+    }
+
+}
+
+.info-content {
+    font-size: 13px;
+}
+
+.info-content-end {
+    text-align: end;
+}
+
+.info-content-smoney {
+    text-align: center;
 }
