@@ -1,8 +1,13 @@
-.xxx {
-    color: red;
-}
+.user {
+    margin: 48px 24px;
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
+    &>.container {
+        padding: 0 24px;
+
+        &>.user-row {
+            display: flex;
+        }
+    }
+
+
 }
