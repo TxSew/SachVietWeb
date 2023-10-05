@@ -2,6 +2,7 @@ import React from "react";
 import "./style.scss";
 import "./index.scss";
 function User() {
+
   return (
     <div className="">
       <section className="user">
@@ -14,6 +15,7 @@ function User() {
       </section>
     </div>
   );
+
 }
 
 export default User;
