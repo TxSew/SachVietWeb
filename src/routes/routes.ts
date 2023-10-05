@@ -61,9 +61,9 @@ const PublicRouter = [
     component: Category,
   },
   {
-    path: '/user',
-    component: User
-  }
+    path: "/user",
+    component: User,
+  },
 ];
 const PrivateRouter = [
   {
@@ -125,7 +125,6 @@ const PrivateRouter = [
     path: "/admin/orders/detail/:id",
     component: DetailCarts,
   },
-
   {
     path: "/admin/customer",
     component: AdminCustomer,
