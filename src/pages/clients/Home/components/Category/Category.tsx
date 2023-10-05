@@ -1,6 +1,5 @@
 import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "../../../../../components/Image/Image";
-
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import { useEffect, useState } from "react";
 import { color } from "../../../../../Theme/color";
