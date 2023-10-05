@@ -16,13 +16,14 @@ import UpdateProduct from "../pages/admin/Products/UpdateProduct";
 import AdminStatistical from "../pages/admin/Statistical/AdminStatistical";
 import Category from "../pages/clients/Category/Category";
 import HomePage from "../pages/clients/Home/Home";
-import User from "../pages/clients/User/User";
+import User from "../pages/clients/User/DashboardUser";
 import Auth from "../pages/clients/auth/Auth";
 import ChangePassword from "../pages/clients/auth/changePassword";
 import { Cart } from "../pages/clients/cart/Cart";
 import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Payment from "../pages/clients/cart/payment/Payment";
 import { Details } from "../pages/clients/details/Details";
+import UserInfo from "../pages/clients/User/UserInfo";
 
 const PublicRouter = [
   {
@@ -63,6 +64,10 @@ const PublicRouter = [
   {
     path: "/user",
     component: User,
+  },
+  {
+    path: "/user/info",
+    component: UserInfo,
   },
 ];
 const PrivateRouter = [
