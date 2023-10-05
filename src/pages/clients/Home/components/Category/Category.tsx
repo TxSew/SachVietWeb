@@ -16,10 +16,15 @@ const CategoryNav = () => {
   }, []);
 
   const fetchcategory = async () => {
-    const category = await http.getCategory();
-
-    const filteredData = category.filter((item: any) => item.parentId !== null);
-    SetCategory(filteredData);
+    try {
+      const category = await http.getCategory();
+      const filteredData = category.filter(
+        (item: any) => item.parentId !== null
+      );
+      SetCategory(filteredData);
+    } catch (error) {
+      console.log(error);
+    }
   };
   const { isMediumMD } = useMedia();
   return (

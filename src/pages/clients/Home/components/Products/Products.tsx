@@ -25,7 +25,7 @@ function Products() {
       const { products } = productData;
       setProducts(products);
     } catch (err) {
-      console.error(err);
+      console.log(err);
     }
   };
   useEffect(() => {
