@@ -13,6 +13,7 @@ import { Link, NavLink } from "react-router-dom";
 import Image from "../../../components/Image/Image";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
+import SearchModel from "./components/models/SearchModel";
 const Header = () => {
   const cart = useSelector((state: RootState) => state.cart.cartItems);
 
@@ -129,14 +130,14 @@ const Header = () => {
                       borderRadius: "5px",
                     }}
                   >
-                    <TextField
+                    {/* <TextField
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
                         width: "100%",
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
-                    />
-
+                    /> */}
+                    <SearchModel />
                     <Typography
                       variant="caption"
                       sx={{

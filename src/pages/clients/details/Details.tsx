@@ -24,17 +24,30 @@ import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
+import ProductItem from "../../../components/ProductItem/ProductItem";
 
+const http = new HttpProductController(BaseAPi);
 export const Details = () => {
+   const [RelatedProduct, setRelatedProduct] = useState<Product[]>([])
   const redirect = useNavigate();
   const { id } = useParams();
-  const http = new HttpProductController(BaseAPi);
   const [Detail, setDetail] = useState<Product>({});
+  const Id: any = id;
+  useEffect(() => {
+    // 👇️ scroll to top on page load
+    window.scrollTo({top: 0, left: 0, behavior: 'auto'});
+  }, [id]);
   const FetchProductOne = async () => {
-    if (id) {
-      const detailValue = await http.getOne(id);
-      console.log(detailValue);
+    try {
+      const detailValue = await http.getOne(Id);
+      if (detailValue) {
+      }
       setDetail(detailValue.product);
+      setRelatedProduct(detailValue.relatedProducts);
+       console.log(detailValue);
+       
+    } catch (err) {
+      console.log(err);
     }
   };
   const handleAddToCart = (detail: any) => {
@@ -46,8 +59,7 @@ export const Details = () => {
   };
   useEffect(() => {
     FetchProductOne();
-  }, []);
-
+  }, [id]);
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
   return (
@@ -59,9 +71,9 @@ export const Details = () => {
           alignItems={"center"}
           textTransform={"uppercase"}
         >
-          <Typography variant="caption">{Detail.category?.name}</Typography>
+          <Typography variant="caption">{Detail?.category?.name}</Typography>
           <ChevronRightOutlinedIcon />
-          <Typography variant="caption">{Detail.title}</Typography>
+          <Typography variant="caption">{Detail?.title}</Typography>
         </Stack>
         <Box pb={2}>
           <Grid container bgcolor={"#fff"} p={3}>
@@ -69,8 +81,8 @@ export const Details = () => {
               <Box mx={"auto"} display={"flex"}>
                 <Stack direction={"row"} spacing={2}>
                   <Stack width={"20%"} direction={"column"} spacing={1}>
-                    {Detail.productImages
-                      ? Detail.productImages.map((e: any, i: number) => {
+                    {Detail?.productImages
+                      ? Detail?.productImages.map((e: any, i: number) => {
                           return (
                             <img
                               key={i}
@@ -85,7 +97,9 @@ export const Details = () => {
                   </Stack>
                   <Stack flex={1} justifyContent={"center"} spacing={2}>
                     <img
-                      src={Detail.image}
+                      src={Detail?.image}
+
+                            id={`/products/${Detail.slug}`}
                       alt=""
                       width={"100%"}
                       height={"388px"}
@@ -130,7 +144,7 @@ export const Details = () => {
                   textTransform={"capitalize"}
                   fontWeight={500}
                 >
-                  {Detail.title}
+                  {Detail?.title}
                 </Typography>
                 <Box mt={3}>
                   <Stack
@@ -148,7 +162,7 @@ export const Details = () => {
                     >
                       <Typography>Nhà cung cấp:</Typography>
                       <Typography fontWeight={"bold"} color={"primary"}>
-                        {Detail.producer?.name}
+                        {Detail?.producer?.name}
                       </Typography>
                     </Stack>
                     <Stack
@@ -160,7 +174,7 @@ export const Details = () => {
                     >
                       <Typography>Thương hiệu:</Typography>
                       <Typography fontWeight={"bold"}>
-                        {Detail.category?.name}
+                        {Detail?.category?.name}
                       </Typography>
                     </Stack>
                     <Stack
@@ -192,7 +206,7 @@ export const Details = () => {
                       fontSize={25}
                       fontWeight={"bold"}
                     >
-                      {`${NumberFormattingComponent(Detail.price)} `}
+                      {`${NumberFormattingComponent(Detail?.price_sale)}  `}
                     </Typography>
                     <Typography
                       className="price"
@@ -201,7 +215,8 @@ export const Details = () => {
                         textDecoration: "line-through",
                       }}
                     >
-                      {`${NumberFormattingComponent(Detail.price_sale)}  `}
+
+                      {`${NumberFormattingComponent(Detail?.price)} `}
                     </Typography>
 
                     <Typography
@@ -212,7 +227,7 @@ export const Details = () => {
                       borderRadius={"3px"}
                       fontWeight={"bold"}
                     >
-                      {`-${Detail.sale}%`}
+                      {`-${Detail?.sale}%`}
                     </Typography>
                   </Stack>
                 </Box>
@@ -327,15 +342,15 @@ export const Details = () => {
                     rowGap: "5px",
                   }}
                 >
-                  <Typography variant="h3">{Detail.id}</Typography>
+                  <Typography variant="h3">{Detail?.id}</Typography>
                   <Typography
                     variant="h3"
                     fontWeight={"bold"}
                     color={color.text_second}
                   >
-                    {Detail.producer?.name}
+                    {Detail?.producer?.name}
                   </Typography>
-                  <Typography variant="h3">{Detail.author}</Typography>
+                  <Typography variant="h3">{Detail?.author}</Typography>
                   <Typography variant="h3">Việt Nam</Typography>
                 </Box>
               </Grid>
@@ -354,9 +369,27 @@ export const Details = () => {
           </Box>
         </Box>
 
-        <Box>
-          <Box></Box>
+        <Box pb={2}>
+          <Box bgcolor={color.white} p={2}>
+            <Typography variant="h2" fontWeight={"bold"} fontSize={"18.85px"}>
+              Sản phẩm liên quan
+            </Typography>
+           
+            <Grid container mt={2}>
+             {
+               RelatedProduct.map((e) => {
+                 return (
+                   <Grid xs={2} item > 
+                  <ProductItem products={e}/> 
+                   </Grid>
+                 ) 
+               })
+             }
+            </Grid>
+          </Box>
         </Box>
+
+
       </Container>
     </Box>
   );

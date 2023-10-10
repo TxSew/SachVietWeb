@@ -23,7 +23,7 @@ const ProductItem = (Props: ProductItem) => {
         border: "1px solid #eee",
       }}
     >
-      <Link to={`/products/${Props.products.slug}`}>
+      <Link  to={`/products/${Props.products.slug}`}>
         <CardMedia
           component="img"
           height={"190px"}

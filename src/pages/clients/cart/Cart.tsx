@@ -5,7 +5,6 @@ import CartProduct from "./components/CardProduct/CartProduct";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/storeClient";
 export const Cart = () => {
-  const [isCheck, setisCheck] = useState(false);
   const cart = useSelector((cart: RootState) => cart.cart);
   return (
     <Box bgcolor={"#eee"} pb={2}>

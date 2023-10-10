@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   MenuItem,
@@ -13,7 +14,7 @@ import { Editor } from "@tinymce/tinymce-react";
 import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
@@ -28,33 +29,37 @@ import { Producer } from "../../../submodules/models/producerModel/producer";
 var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
 const httpProduct = new HttpProductController(BaseAPi);
-
-const CreateProduct = () => {
-  var id = useParams();
-  const parInt: any = id.id;
+const UpdateProduct = () => {
+  const [urls, setUrls] = useState<string[]>([]);
+  const [url, setUrl] = useState<string[]>([]);
+  const [product, setProduct] = useState<Product>({});
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
-  const [ProductUpdate, setProductUpdate] = useState<Product>({});
+  const [isLoadings, setIsLoadings] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const editorRef = useRef<any>(null);
+  const redirect = useNavigate();
+  const id = useParams();
+  const ID: any = id.id;
   useEffect(() => {
     fetchProducer();
     fetchCategory();
     fetchProduct();
   }, []);
-
   const fetchProduct = async () => {
-    const dataProduct = await httpProduct.getOneUpdate(parInt);
-    setProductUpdate(dataProduct);
+    const product: Product = await httpProduct.getOneUpdate(ID);
+    if (product) {
+      setProduct(product);
+    }
   };
-
   const fetchProducer = async () => {
     try {
-      const producer: any = await http.getAll();
-      setProducer(producer);
+     const producer: any = await http.getAll();
+     setProducer(producer.producers);
     } catch (error) {
       console.log(error);
     }
   };
-
   const fetchCategory = async () => {
     try {
       const category: any = await httpcategory.getCategory();
@@ -63,26 +68,9 @@ const CreateProduct = () => {
       console.error(err);
     }
   };
-  const editorRef = useRef<any>(null);
-
-  const {
-    handleSubmit,
-    control,
-    register,
-    watch,
-    formState: { errors, isDirty, isValid },
-  } = useForm<Product>({
-    defaultValues: {
-      producerID: undefined,
-      categoryId: undefined,
-    },
-  });
-
-  // console.log(watch().desc);
-  const isDisabled = !(isDirty && isValid);
-  //  upload image file base
-  const handleUpdateProduct = async (data: Product) => {
-    const images = url.map((e) => {
+  const handleUpdateProduct = async (data: any) => {
+    data.image = url[0];
+    const images = urls.map((e) => {
       return {
         image: e,
       };
@@ -91,18 +79,21 @@ const CreateProduct = () => {
       product: data,
       productImages: images,
     };
-    const UpdatedProduct = await httpProduct.put(parInt, ProductDto);
-    if (UpdatedProduct) {
-      toast.success("Sản phẩm cập nhật thành công", {
+   
+    const storeProduct = await httpProduct.put(ID, ProductDto);
+    if (storeProduct) {
+      toast.success("created new product successfully", {
         position: "bottom-right",
       });
+      redirect("/admin/product");
     }
   };
-  const [url, setUrl] = useState<string[]>([]);
-  const loadImageFile = async (images: any) => {
+  const loadImagesFiles = async (images: any) => {
+    if (images) {
+      setIsLoadings(true);
+    }
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-
       await uploadBytes(imageRef, images[i])
         .then(() => {
           storage
@@ -110,9 +101,8 @@ const CreateProduct = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              console.log(url);
-
-              setUrl((prev) => prev.concat(url));
+              setUrls((prev) => [...prev, url]);
+              setIsLoadings(false);
               return url;
             });
         })
@@ -121,22 +111,55 @@ const CreateProduct = () => {
         });
     }
   };
-
+  const loadImagesFile = async (images: any) => {
+    if (images) {
+      setIsLoading(true);
+    }
+    for (let i = 0; i < images.length; i++) {
+      const imageRef = ref(storage, `imageUpload/${images[i].name}`);
+      await uploadBytes(imageRef, images[i])
+        .then(() => {
+          storage
+            .ref("imageUpload")
+            .child(images[i].name)
+            .getDownloadURL()
+            .then((url: any) => {
+              setUrl((prev) => [...prev, url]);
+              setIsLoading(false);
+              return url;
+            });
+        })
+        .catch((err) => {
+          alert(err);
+        });
+    }
+  };
+  const {
+    handleSubmit,
+    control,
+    register,
+    formState: { errors },
+  } = useForm<Product>({
+    defaultValues: {
+      producerID: undefined,
+      categoryId: undefined,
+    },
+  });
   return (
     <Box>
       <form action="" onSubmit={handleSubmit(handleUpdateProduct)}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
-            Cập nhật sản phẩm {ProductUpdate?.id}
+            Cập nhật sản phẩm {ID}
           </Typography>
           <Button type="submit" variant="contained">
             Lưu
           </Button>
         </Stack>
         <Grid
-          container
           bgcolor={color.white}
           p={2}
+          container
           mt={3}
           justifyContent={"space-between"}
         >
@@ -161,14 +184,13 @@ const CreateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={ProductUpdate?.title}
+                  placeholder={product.title}
                 />
               )}
             />
             <Typography variant="caption" color={color.error}>
               {errors.title && errors.title.message}
             </Typography>
-
             <Grid container mt={2} justifyContent={"space-between"}>
               <Grid xs={5.8}>
                 <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
@@ -195,7 +217,7 @@ const CreateProduct = () => {
                       >
                         {Category.map((e: any, i) => {
                           return (
-                            <MenuItem value={e.id}>
+                            <MenuItem key={e.id} value={e.id}>
                               <em>{e.name}</em>
                             </MenuItem>
                           );
@@ -235,7 +257,7 @@ const CreateProduct = () => {
                       >
                         {Producer.map((e: Producer) => {
                           return (
-                            <MenuItem value={e.id}>
+                            <MenuItem key={e.id} value={e.id}>
                               <em>{e.name}</em>
                             </MenuItem>
                           );
@@ -265,7 +287,6 @@ const CreateProduct = () => {
                     >
                       Chi tiết sản phẩm
                     </Typography>
-
                     <Editor
                       apiKey="i6krl4na00k3s7n08vuwluc3ynywgw9pt6kd46v0dn1knm3i"
                       onInit={(evt, editor) => (editorRef.current = editor)}
@@ -274,9 +295,30 @@ const CreateProduct = () => {
                       value={field.value}
                       {...register("desc")}
                       init={{
-                        placeholder: ProductUpdate.desc,
-                        height: 250,
+                        height: 350,
                         menubar: false,
+                        image_title: true,
+                        automatic_uploads: true,
+                        file_picker_types: "image",
+                        file_picker_callback: function (callback, value, meta) {
+                          // Provide file and text for the link dialog
+                          if (meta.filetype == "file") {
+                            callback("mypage.html", { text: "My text" });
+                          }
+
+                          // Provide image and alt text for the image dialog
+                          if (meta.filetype == "image") {
+                            callback("myimage.jpg", { alt: "My alt text" });
+                          }
+
+                          // Provide alternative source and posted for the media dialog
+                          if (meta.filetype == "media") {
+                            callback("movie.mp4", {
+                              source2: "alt.ogg",
+                              poster: "image.jpg",
+                            });
+                          }
+                        },
                         plugins: [
                           "advlist",
                           "autolink",
@@ -301,7 +343,7 @@ const CreateProduct = () => {
                           "help",
                         ],
                         toolbar:
-                          "undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons",
+                          " undo redo | link image | code |undo redo | styles | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media | forecolor backcolor emoticons",
                         content_style:
                           "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
                       }}
@@ -317,12 +359,15 @@ const CreateProduct = () => {
           <Grid xs={12} md={3.8}>
             <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
               Giá gốc
+              <Typography color={"red"} fontWeight={"bold"}>
+                (*)
+              </Typography>
             </Typography>
             <Controller
               control={control}
               name="price"
               rules={{
-                required: "Vui lòng nhập giá gốc!",
+                required: "Vui lòng nhập giá gốc",
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -335,7 +380,7 @@ const CreateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={String(ProductUpdate?.price)}
+                  placeholder={String(product?.price)}
                 />
               )}
             />
@@ -349,13 +394,16 @@ const CreateProduct = () => {
               fontSize={"18px"}
               fontWeight={"bold"}
             >
-              Khuyến mãi
+              Khuyến mãi{" "}
+              <Typography color={"red"} fontWeight={"bold"}>
+                (*)
+              </Typography>
             </Typography>
             <Controller
               control={control}
-              name="price_sale"
+              name="sale"
               rules={{
-                required: "Price is not",
+                required: "Vui lòng nhập % khuyến mãi",
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -368,12 +416,12 @@ const CreateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={String(ProductUpdate?.price_sale)}
+                  placeholder={String(product.sale)}
                 />
               )}
             />
             <Typography variant="caption" color={color.error}>
-              {errors.price_sale && errors.price_sale.message}
+              {errors.sale && errors.sale.message}
             </Typography>
             <Typography
               variant="h2"
@@ -387,11 +435,12 @@ const CreateProduct = () => {
               control={control}
               name="quantity"
               rules={{
-                required: "required",
+                required: "Vui lòng nhập số lượng sản phẩm!",
               }}
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  type="number"
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -399,7 +448,7 @@ const CreateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={String(ProductUpdate?.quantity)}
+                  placeholder={String(product.quantity)}
                 />
               )}
             />
@@ -412,12 +461,56 @@ const CreateProduct = () => {
               fontSize={"18px"}
               fontWeight={"bold"}
             >
-              Ảnh sản phẩm
+              Ảnh nổi bật
             </Typography>
 
             <OutlinedInput
+              onChange={(e: any) => loadImagesFiles(e.target.files)}
               type="file"
-              onChange={(e: any) => loadImageFile(e.target.files)}
+              sx={{
+                mt: 1,
+                "& > input": {
+                  p: "7px",
+                },
+              }}
+              fullWidth
+              placeholder="Vui lòng nhập Ten của bạn!"
+            />
+            {isLoading ? (
+              <Box
+                sx={{
+                  ml: 2,
+                  mt: 1,
+                }}
+              >
+                <CircularProgress />
+              </Box>
+            ) : url.length > 0 ? (
+              // Nếu mảng urls có chứa hình ảnh
+              url.map((url, index) => (
+                <img
+                  key={index}
+                  src={url}
+                  width={"100px"}
+                  alt={`Image ${index}`}
+                />
+              ))
+            ) : (
+              // Nếu mảng urls không có hình ảnh
+              <div></div>
+            )}
+
+            <Typography
+              variant="h2"
+              mt={2}
+              fontSize={"18px"}
+              fontWeight={"bold"}
+            >
+              Ảnh chi tiết
+            </Typography>
+            <OutlinedInput
+              type="file"
+              onChange={(e: any) => loadImagesFile(e.target.files)}
               inputProps={{ multiple: true }}
               sx={{
                 mt: 1,
@@ -429,9 +522,22 @@ const CreateProduct = () => {
               placeholder="Vui lòng nhập Ten của bạn!"
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
-              {url.map((e, i) => {
-                return <img src={e} width={"150px"} alt="" />;
-              })}
+              {isLoadings ? (
+                <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
+              ) : urls.length > 0 ? (
+                // Nếu mảng urls có chứa hình ảnh
+                urls.map((url, index) => (
+                  <img
+                    key={index}
+                    src={url}
+                    width={"100px"}
+                    alt={`Image ${index}`}
+                  />
+                ))
+              ) : (
+                // Nếu mảng urls không có hình ảnh
+                <div></div>
+              )}
             </Stack>
           </Grid>
         </Grid>
@@ -440,4 +546,4 @@ const CreateProduct = () => {
   );
 };
 
-export default CreateProduct;
+export default UpdateProduct;

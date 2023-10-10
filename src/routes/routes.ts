@@ -44,7 +44,6 @@ const PublicRouter = [
   },
   {
     path: "/checkout",
-
     component: Checkout,
     isRequired: true,
   },
@@ -117,26 +116,26 @@ const PrivateRouter = [
     component: CreateDiscount,
   },
   {
-    path: "/admin/discount/:id",
-    component: UpdateDiscount,
+   path: "/admin/discount/:id",
+   component: UpdateDiscount,
   },
 
   {
-    path: "/admin/orders",
-    component: AdminCarts,
+   path: "/admin/orders",
+   component: AdminCarts,
   },
 
   {
-    path: "/admin/orders/detail/:id",
-    component: DetailCarts,
+   path: "/admin/orders/detail/:id",
+   component: DetailCarts,
   },
   {
-    path: "/admin/customer",
-    component: AdminCustomer,
+   path: "/admin/customer",
+   component: AdminCustomer,
   },
   {
-    path: "/admin/statistical",
-    component: AdminStatistical,
+   path: "/admin/statistical",
+   component: AdminStatistical,
   },
 ];
 
