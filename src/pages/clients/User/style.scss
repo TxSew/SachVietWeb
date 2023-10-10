@@ -33,17 +33,19 @@
 }
 
 .main-waper {
-    background-color: #fff;
+    background-color: #eee;
 }
 
 
 .main-waper-top {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    background-color: #fff;
 }
 
 .main-waper-end {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     margin: 16px 0;
+    background-color: #fff;
 
     &>.main-hd {
         font-size: 20px;
@@ -150,7 +152,10 @@
 
 
     &>label {
+        display: flex;
+        justify-content: start;
         padding-bottom: 8px;
+
     }
 
     &>input {
@@ -183,4 +188,54 @@
     color: #fff;
     font-size: 16px;
     border-radius: 12px;
+}
+
+.rpass {
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+.dpass {
+    display: none;
+}
+
+#rpass:checked~.dpass {
+    display: block;
+}
+
+.ttlh {
+    margin: 24px 0;
+
+    &>input {
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+        padding: 4px 8px;
+
+    }
+
+    &>input:focus {
+        box-shadow: 0 0 2px 3px rgba(0, 123, 255, .25);
+    }
+}
+
+.adr {
+    margin: 24px 0;
+
+    &>select {
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+        padding: 4px 8px;
+
+    }
+
+    &>input {
+        width: 100%;
+        box-shadow: rgba(0, 0, 0, 0.16) 0px 0px 0px 1px;
+        padding: 4px 8px;
+
+    }
+
+    &>select:focus {
+        box-shadow: 0 0 2px 3px rgba(0, 123, 255, .25);
+    }
 }
