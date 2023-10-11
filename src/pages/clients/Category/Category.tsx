@@ -27,7 +27,6 @@ function Category() {
   const [sortBy, setSortBy] = React.useState("createdAt");
   const [sortWith, setSortWith] = React.useState("asc");
   const [sort, setSort] = React.useState("");
-   const {id}= useParams()
   useEffect(() => {
     fetchProducts(page);
   }, [page]);
