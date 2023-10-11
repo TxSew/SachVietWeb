@@ -32,14 +32,14 @@ const cartSlice = createSlice({
       );
       if (existingIndex >= 0) {
         state.cartItems[existingIndex] = {
-          ...state.cartItems[existingIndex],
-          cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
+         ...state.cartItems[existingIndex],
+         cartQuantity: state.cartItems[existingIndex].cartQuantity + 1,
         };
       } else {
         let tempProductItem = { ...action.payload, cartQuantity: 1 };
         state.cartItems.push(tempProductItem);
         toast.success("Product added to cart", {
-          position: "bottom-left",
+        position: "bottom-left",
         });
       }
       localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
@@ -77,7 +77,6 @@ const cartSlice = createSlice({
           const itemTotal = price_sale * cartQuantity;
           cartTotal.total += itemTotal;
           cartTotal.quantity += cartQuantity;
-
           return cartTotal;
         },
         {

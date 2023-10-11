@@ -67,7 +67,7 @@ const UpdateProducer = () => {
             name="name"
             defaultValue="" // Set an initial value here
             rules={{
-              required: "Tên danh mục không được bỏ trống!",
+              required: "Tên nhà cung cấp không được bỏ trống",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -94,7 +94,7 @@ const UpdateProducer = () => {
             control={control}
             name="code"
             rules={{
-              required: "Price is not",
+              required: "Vui lòng nhập mã code",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -120,7 +120,7 @@ const UpdateProducer = () => {
             control={control}
             name="keyword"
             rules={{
-              required: "Price is not",
+              required: "Vui lòng nhậ từ khóa",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -139,43 +139,6 @@ const UpdateProducer = () => {
           <Typography variant="caption" color={color.error}>
             {errors.keyword && errors.keyword.message}
           </Typography>
-
-          <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
-            Trạng thái
-          </Typography>
-          <Controller
-            control={control}
-            name="status"
-            rules={{
-              required: "Price is not",
-            }}
-            render={({ field }) => (
-              <FormControl fullWidth>
-                <Select
-                  {...field}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                  sx={{
-                    mt: 1,
-                    "& > div": {
-                      p: "7px",
-                    },
-                  }}
-                >
-                  <MenuItem value={""}>
-                    <em>[--Chọn trạng thái--]</em>
-                  </MenuItem>
-                  <MenuItem value={1}>
-                    <em>Đang kinh doanh</em>
-                  </MenuItem>
-                  <MenuItem value={0}>
-                    <em>Ngưng kinh doanh</em>
-                  </MenuItem>
-                </Select>
-                {/* <FormHelperText>Without label</FormHelperText> */}
-              </FormControl>
-            )}
-          />
         </Grid>
       </form>
     </Box>

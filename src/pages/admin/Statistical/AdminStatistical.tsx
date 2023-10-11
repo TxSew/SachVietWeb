@@ -4,6 +4,7 @@ import HttpStatisticalController from "../../../submodules/controllers/http/http
 import { BaseAPi } from "../../../configs/BaseApi";
 import { useEffect, useState } from "react";
 import { StatisticalDto } from "../../../submodules/models/Statistical/Statistical";
+import { ChartMOney } from "./chart/ChartMoney";
 
 function AdminStatistical() {
   const http = new HttpStatisticalController(BaseAPi);
@@ -111,6 +112,7 @@ function AdminStatistical() {
                 </Typography>
               </Box>
             </Grid>
+            <ChartMOney/>
           </Grid>
         </Container>
       </Box>

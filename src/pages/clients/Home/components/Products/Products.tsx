@@ -7,7 +7,13 @@ import ProductItem from "../../../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../../../configs/BaseApi";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
-
+ interface PropsSort {
+  page: number 
+  search: string 
+  sortBy: string 
+  sortWith: string,
+  limit: number   
+ }
 function Products() {
   const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
@@ -20,8 +26,8 @@ function Products() {
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async () => {
     try {
+      
       const productData: any = await http.getAll();
-      console.log(productData);
       const { products } = productData;
       setProducts(products);
     } catch (err) {

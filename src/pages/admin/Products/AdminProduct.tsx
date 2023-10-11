@@ -40,23 +40,24 @@ export default function AdminProduct() {
   const [sortBy, setSortBy] = React.useState("createdAt");
   const [sortWith, setSortWith] = React.useState("asc");
   const [sort, setSort] = React.useState("");
-
   const debounce = useDebounce(search, 400);
   React.useEffect(() => {
-    fetchData(page, debounce, sortBy, sortWith);
+    fetchData(page, debounce, sortBy, sortWith );
   }, [page, debounce, sortBy, sortWith]);
   const fetchData = async (
     page: number,
     search: string = debounce || "",
     sortBy: string,
-    sortWith: string
+    sortWith: string,
   ) => {
+       const limit = '6';
     try {
       const ProductData: any = await http.getAll(
         page,
         search,
         sortBy,
-        sortWith
+        sortWith,
+         limit
       );
       const data: any = ProductData.products;
       setPageCount(ProductData.totalPage);

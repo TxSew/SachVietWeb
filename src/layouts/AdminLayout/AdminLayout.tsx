@@ -1,9 +1,7 @@
-import React from "react";
-import Header from "../components/Header/Header";
-import Footer from "../components/Footer/Footer";
 import { Grid } from "@mui/material";
-import NavAdmin from "../components/NavAdmin/NavAdmin";
+import React from "react";
 import HeaderAdmin from "../components/HeaderAdmin/HeaderAdmin";
+import NavAdmin from "../components/NavAdmin/NavAdmin";
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
   return (

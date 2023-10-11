@@ -35,7 +35,7 @@ class HttpProductController {
     search: string = "",
     sortBy: string = "",
     sortWith: string = "",
-    limit: number = 6
+    limit: string = "",
   ): Promise<any> {
     try {
       const response = await this.axiosInstance.get(
@@ -54,7 +54,7 @@ class HttpProductController {
       throw err;
     }
   }
-  async getOneUpdate(id: number) {
+    async getOneUpdate(id: number) {
     try {
       const response = await this.axiosInstance.get(
         `products/currentUpdate/${id}`
@@ -63,6 +63,18 @@ class HttpProductController {
     } catch (err) {
       throw err;
     }
+  }
+  async getProductByCategory(slug: string): Promise<any> {
+    try {
+       const response = await this.axiosInstance.post(
+          `products/category?slug=${slug}`
+       )
+        return response.data;
+    } 
+     catch (err) {
+       console.log(err);
+        
+     }
   }
   async post(product: any): Promise<any> {
     try {
