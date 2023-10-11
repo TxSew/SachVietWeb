@@ -24,6 +24,8 @@ import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Payment from "../pages/clients/cart/payment/Payment";
 import { Details } from "../pages/clients/details/Details";
 import UserInfo from "../pages/clients/User/UserInfo";
+import UserAdress from "../pages/clients/User/Useradress";
+import UserVi from "../pages/clients/User/Uservi";
 
 const PublicRouter = [
   {
@@ -69,6 +71,14 @@ const PublicRouter = [
   {
     path: '/user/info',
     component: UserInfo
+  },
+  {
+    path: '/user/adress',
+    component: UserAdress
+  },
+  {
+    path: '/user/vi',
+    component: UserVi
   }
 ];
 const PrivateRouter = [
