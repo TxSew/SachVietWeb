@@ -6,7 +6,7 @@ import NavUser from "./layout/NavUser";
 function UserInfo() {
   return (
     <NavUser>
-      <div className="main p-3">
+      <div className="main ps-0 pt-3 pb-3 pe-0">
         <div className="main-waper ">
           <div className="main-waper-top pt-2 pb-2 ps-4">
             <h1 className="info-acc-hd p-3">Thông tin tài khoản</h1>
