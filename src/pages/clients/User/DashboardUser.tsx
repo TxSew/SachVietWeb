@@ -15,7 +15,7 @@ function User() {
               <Link to="">Cập nhật thông tin ngay</Link>
             </p>
           </div>
-          <div className="main-waper-end pt-4 pb-5 ps-4  pe-4">
+          <div className="main-waper-end pt-4 pb-5 ps-4 pe-4">
             <h1 className="main-hd">BẢNG ĐIỀU KHIỂN CỦA KHÁCH HÀNG</h1>
             <div className="main-poin">
               <img

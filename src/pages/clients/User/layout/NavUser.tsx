@@ -33,7 +33,12 @@ function NavUser({ children }: { children: React.ReactNode }) {
                     </div>
                     <div className="side-item pt-3 pb-1">
                       <Link to="/user/vi">
-                        <p className="side-item-text">Ví</p>
+                        <p className="side-item-text">Ví voucher</p>
+                      </Link>
+                    </div>
+                    <div className="side-item pt-3 pb-1">
+                      <Link to="/user/mycart">
+                        <p className="side-item-text">Đơn hàng của tôi</p>
                       </Link>
                     </div>
                   </div>
