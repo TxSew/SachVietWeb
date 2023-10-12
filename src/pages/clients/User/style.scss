@@ -27,13 +27,17 @@
 
 
 
+
+
 .side-waper {
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     background-color: #fff;
+    height: 100vh;
 }
 
 .main-waper {
     background-color: #eee;
+
 }
 
 
@@ -46,6 +50,7 @@
     box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
     margin: 16px 0;
     background-color: #fff;
+    height: 100vh;
 
     &>.main-hd {
         font-size: 20px;
@@ -241,3 +246,105 @@
 }
 
 // Ví voucher 
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    background-color: #eee;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 48px;
+
+    &-checkbox {
+        &>input {
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    &-ct {
+        font-size: 12px;
+
+        &>a {
+            color: #2F80ED;
+        }
+
+        &>a:hover {
+            color: red;
+        }
+    }
+
+    &-quantity {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+
+        &>input {
+            width: 50px;
+            background-color: red;
+        }
+    }
+
+    &-header {
+        display: flex;
+        align-items: center;
+        background-color: #C92127;
+        color: white;
+
+        &-checkbox {
+            display: flex;
+            align-items: center;
+
+            &>input {
+                width: 16px;
+                height: 16px;
+            }
+
+            &>span {
+                font-size: 16px;
+            }
+        }
+    }
+
+}
+
+.dasb-nav-drop-item {
+    display: none;
+}
+
+.dasb {
+    background-color: #d1d6db;
+    height: 100vh;
+
+    &-logo {
+        width: 100%;
+        padding: 48px;
+        padding-top: 24px;
+    }
+
+    &-nav {
+        list-style: none;
+        padding: 0 24px;
+
+        &-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #fff;
+
+            &>a {
+                color: #000;
+                text-transform: unset
+            }
+        }
+    }
+
+    &-sidebar {
+        background-color: #FCDDEF;
+        position: relative;
+    }
+
+    &-main {
+        padding: 48px;
+        padding-top: 24px;
+    }
+
+}
