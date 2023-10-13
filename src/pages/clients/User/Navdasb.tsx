@@ -4,10 +4,11 @@ import "./index.scss";
 import { Link } from "react-router-dom";
 import NavUser from "./layout/NavUser";
 import Divider from "@mui/material/Divider";
+import Dashboard from "../../admin/Dashboard/Dashboard";
 function NavDas() {
   return (
     <div className="dasb row">
-      <div className="dasb-sidebar c-2 l-2 m-2">
+      <div className="dasb-sidebar c-12 l-3 m-4">
         <div className="dasb-logo">
           <img
             src="https://cdn0.fahasa.com/media/quiz-game-T7/Avatar_IconApp_SN47_logoSN47_1.png"
@@ -16,7 +17,10 @@ function NavDas() {
         </div>
         <ul className="dasb-nav">
           <li className="dasb-nav-item">
-            <Link to="">Tổng quan</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Tổng quan</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -24,7 +28,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý danh mục</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Danh mục</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -32,7 +39,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý sản phẩm</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Sản phẩm</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -40,7 +50,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý đơn hàng</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Đơn hàng</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -48,7 +61,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý Người dùng</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Người dùng</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -56,7 +72,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý thương hiệu / Tác giả</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Thương hiệu / Tác giả</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -64,7 +83,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý bình luận và đánh giá</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Bình luận và đánh giá</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -72,7 +94,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý Khuyến mãi và Coupon</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Khuyến mãi và Coupon</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -80,7 +105,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Thống kê và Báo cáo</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Thống kê và Báo cáo</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -88,7 +116,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Cài đặt và Tùy chỉnh</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Cài đặt và Tùy chỉnh</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -96,7 +127,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Quản lý Người dùng và Phân quyền:</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Hỗ trợ và Liên hệ</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -104,15 +138,10 @@ function NavDas() {
             </div>
           </li>
           <li className="dasb-nav-item">
-            <Link to="">Hỗ trợ và Liên hệ:</Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">Đăng xuất</Link>
+            <Link to="">
+              <i>aa</i>
+              <p>Đăng xuất</p>
+            </Link>
             <div className="dasb-nav-drop-item">
               <ul>
                 <li className="dasb-nav-item">aaa</li>
@@ -121,9 +150,28 @@ function NavDas() {
           </li>
         </ul>
       </div>
-      <div className="dasb-main c-10 l-10 m-10">
-        <div className="dasb-main-header">Header</div>
-        <div className="dasb-main-header">MAIN</div>
+      <div className="dasb-main c-12 l-9 m-8">
+        <div className="dasb-main-header row">
+          <div className="dasb-main-header-title c-9 m-9 l-9">
+            <h1>Dashboard</h1>
+          </div>
+          <div className="dasb-main-header-end c-3 m-3 l-3">
+            <div className="row">
+              <div className="dasb-main-header-end-user c-4 m-4 l-4">
+                <h1>user</h1>
+              </div>
+              <div className="dasb-main-header-end-vn c-4 m-4 l-4">
+                <h1>logo</h1>
+              </div>
+              <div className="dasb-main-header-end-logout c-4 m-4 l-4">
+                <Link to="">Logout</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="dasb-main-wapper">
+          <div className="dasb-main-wapper-body">body</div>
+        </div>
       </div>
     </div>
   );

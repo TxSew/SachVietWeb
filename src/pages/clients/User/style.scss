@@ -313,38 +313,88 @@
 }
 
 .dasb {
-    background-color: #d1d6db;
-    height: 100vh;
+    height: 100%;
+    display: flex;
 
     &-logo {
-        width: 100%;
-        padding: 48px;
-        padding-top: 24px;
+        display: flex;
+        width: 200px;
+        padding: 24px;
+
+        &>img {
+            padding: 8px;
+        }
     }
 
     &-nav {
         list-style: none;
-        padding: 0 24px;
+
 
         &-item {
             padding: 12px 0;
             border-bottom: 1px solid #fff;
+            transition: all 0.3s ease;
 
             &>a {
+                display: flex;
+                align-items: center;
                 color: #000;
-                text-transform: unset
+                font-size: 16px;
+                transition: all 0.4s ease;
+                padding: 0 0 0 24px;
+
+                &>i {
+                    padding: 8px;
+                }
+            }
+
+        }
+
+        &-item:hover {
+            background-color: lightcyan;
+
+            &>a {
+                color: #0d6efd;
             }
         }
     }
 
     &-sidebar {
-        background-color: #FCDDEF;
+        background-color: white;
         position: relative;
+
     }
 
     &-main {
-        padding: 48px;
-        padding-top: 24px;
+        background-color: lightcyan;
+
+        &-header {
+            display: flex;
+            align-items: center;
+            padding: 48px;
+            padding-bottom: 24px;
+            background-color: white;
+            text-transform: uppercase;
+
+            &-end {
+                display: flex;
+                text-align: center;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        &-wapper {
+            height: 100%;
+            padding: 24px;
+
+
+            &-body {
+                background-color: white;
+                padding: 24px;
+                height: 100%;
+            }
+        }
     }
 
 }
