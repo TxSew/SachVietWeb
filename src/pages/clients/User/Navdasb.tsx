@@ -1,176 +1,121 @@
 import React from "react";
 import "./style.scss";
 import "./index.scss";
+import { BiSolidCategoryAlt } from "react-icons/bi";
+import { BiBookAdd } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import NavUser from "./layout/NavUser";
-import Divider from "@mui/material/Divider";
-import Dashboard from "../../admin/Dashboard/Dashboard";
+import { FaThLarge } from "react-icons/fa";
+import { FaHome } from "react-icons/fa";
+import { FaBookOpen } from "react-icons/fa";
+import { FaComment } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
+import { FaRedoAlt } from "react-icons/fa";
+import { FaChevronDown } from "react-icons/fa";
+import { FaFlag } from "react-icons/fa";
+import { FaSearch } from "react-icons/fa";
+import { FaBell } from "react-icons/fa";
+import { FaListUl } from "react-icons/fa";
 function NavDas() {
   return (
-    <div className="dasb row">
-      <div className="dasb-sidebar c-12 l-3 m-4">
-        <div className="dasb-logo">
-          <img
-            src="https://cdn0.fahasa.com/media/quiz-game-T7/Avatar_IconApp_SN47_logoSN47_1.png"
-            alt="Logo"
-          />
+    <div className="dasb pb-3">
+      <div className="dasb-header">
+        <div className="dasb-header-logo">
+          <h1>TuanDEV</h1>
         </div>
-        <ul className="dasb-nav">
-          <li className="dasb-nav-item">
+        <div className="dasb-header-right row">
+          <div className="dasb-header-togg c-1 m-1 l-1">
             <Link to="">
-              <i>aa</i>
-              <p>Tổng quan</p>
+              <FaListUl />
             </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Danh mục</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Sản phẩm</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Đơn hàng</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Người dùng</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Thương hiệu / Tác giả</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Bình luận và đánh giá</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Khuyến mãi và Coupon</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Thống kê và Báo cáo</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Cài đặt và Tùy chỉnh</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Hỗ trợ và Liên hệ</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-          <li className="dasb-nav-item">
-            <Link to="">
-              <i>aa</i>
-              <p>Đăng xuất</p>
-            </Link>
-            <div className="dasb-nav-drop-item">
-              <ul>
-                <li className="dasb-nav-item">aaa</li>
-              </ul>
-            </div>
-          </li>
-        </ul>
+          </div>
+          <ul className="dasb-header-right c-11 m-11 l-11">
+            <li className="dasb-header-right-search">
+              <Link to="">
+                <i>
+                  <FaSearch />
+                </i>
+              </Link>
+            </li>
+            <li className="dasb-header-right-flag">
+              <Link to="">
+                <i>
+                  <FaFlag />
+                </i>
+              </Link>
+            </li>
+            <li className="dasb-header-right-search">
+              <Link to="">
+                <i>
+                  <FaBell />
+                </i>
+              </Link>
+            </li>
+            <li className="dasb-header-right-action">
+              <input type="checkbox" id="action" />
+              <label htmlFor="action">
+                <img
+                  width={32}
+                  src="https://php.spruko.com/ynex/ynex/assets/images/faces/9.jpg"
+                  alt="Ảnh admin"
+                />
+                <span>Tuấn</span>
+                <i>
+                  <FaChevronDown />
+                </i>
+              </label>
+              <div className="dasb-header-right-action-drop" id="drop">
+                <Link className="info" to="">
+                  <i></i>
+                  <p>Thông tin</p>
+                </Link>
+                <Link className="log" to="">
+                  <i></i>
+                  <p>Logout</p>
+                </Link>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div className="dasb-main c-12 l-9 m-8">
-        <div className="dasb-main-header row">
-          <div className="dasb-main-header-title c-9 m-9 l-9">
-            <h1>Dashboard</h1>
-          </div>
-          <div className="dasb-main-header-end c-3 m-3 l-3">
-            <div className="row">
-              <div className="dasb-main-header-end-user c-4 m-4 l-4">
-                <h1>user</h1>
-              </div>
-              <div className="dasb-main-header-end-vn c-4 m-4 l-4">
-                <h1>logo</h1>
-              </div>
-              <div className="dasb-main-header-end-logout c-4 m-4 l-4">
-                <Link to="">Logout</Link>
-              </div>
-            </div>
-          </div>
+      <div className="dasb-wapper">
+        <div className="dasb-sidebar">
+          <ul className="">
+            <li>
+              <Link to="#">
+                <i>
+                  <FaHome />
+                </i>
+                <span>Trang chủ</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#">
+                <i>
+                  <BiSolidCategoryAlt />
+                </i>
+                <span>Danh mục</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#">
+                <i>
+                  <FaBookOpen />
+                </i>
+                <span>Sản phẩm</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </Link>
+            </li>
+          </ul>
         </div>
-        <div className="dasb-main-wapper">
-          <div className="dasb-main-wapper-body">body</div>
+        <div className="dasb-wapper-main">
+          <div className="dasb-wapper-main-bg">chay</div>
         </div>
       </div>
     </div>
