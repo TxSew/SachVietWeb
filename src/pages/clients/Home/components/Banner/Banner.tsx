@@ -1,7 +1,7 @@
-import { Box, Container, Grid   } from "@mui/material";
+import { Box, Container, Grid } from "@mui/material";
 // Import the Swiper library's original types
-import  { Swiper, SwiperSlide,  } from "swiper/react";
-import { Navigation, } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
@@ -11,71 +11,16 @@ import useMedia from "../../../../../hooks/useMedia/useMedia";
 // import required modules
 // import { Navigation } from "swiper/modules";
 function Banner() {
-   const { isMediumMD} = useMedia()
+  const { isMediumMD } = useMedia();
   return (
     <Container maxWidth={"xl"}>
-       {
-         isMediumMD ? (
-
-      <Grid container spacing={2} sx={{ "&.MuiGrid-root": { marginTop: 0 } }}>
-        <Grid item xs={12}>
-          <Swiper
-            navigation
-            pagination={{
-              clickable: true,
-            }}
-            modules={[Navigation]}
-            className="mySwiper"
-          >
-            <SwiperSlide>
-              <Box
-                sx={{
-                  borderRadius: "10px",
-                }}
-              >
-                <img
-                  src="https://cdn0.fahasa.com/media/magentothem/banner7/AhamoveT8_840x320.png"
-                  alt=""
-                  style={{
-                    width: "100%",
-                    borderRadius: "10px",
-                    height: "325px",
-                  }}
-                />
-              </Box>
-            </SwiperSlide>
-            <SwiperSlide>
-              <Box
-                sx={{
-                  borderRadius: "10px",
-                }}
-              >
-                <img
-                  src="https://cdn0.fahasa.com/media/magentothem/banner7/MCbooks_PlatinumT723_Banner_Slide_840x320.jpg"
-                  alt=""
-                  style={{
-                    borderRadius: "10px",
-
-                    width: "100%",
-                    height: "325px",
-                  }}
-                />
-              </Box>
-            </SwiperSlide>
-          </Swiper>
-        </Grid>
-    
-      </Grid>
-
-         ) : (
-
-
-          <Grid container spacing={2} sx={{ "&.MuiGrid-root": { marginTop: 0 } }}>
-          <Grid item xs={8}>
+      {isMediumMD ? (
+        <Grid container spacing={2} sx={{ "&.MuiGrid-root": { marginTop: 0 } }}>
+          <Grid item xs={12}>
             <Swiper
               navigation
               pagination={{
-                clickable: true,
+                clickable: true
               }}
               modules={[Navigation]}
               className="mySwiper"
@@ -83,7 +28,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px",
+                    borderRadius: "10px"
                   }}
                 >
                   <img
@@ -92,7 +37,7 @@ function Banner() {
                     style={{
                       width: "100%",
                       borderRadius: "10px",
-                      height: "325px",
+                      height: "325px"
                     }}
                   />
                 </Box>
@@ -100,7 +45,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px",
+                    borderRadius: "10px"
                   }}
                 >
                   <img
@@ -108,9 +53,58 @@ function Banner() {
                     alt=""
                     style={{
                       borderRadius: "10px",
-  
+
                       width: "100%",
-                      height: "325px",
+                      height: "325px"
+                    }}
+                  />
+                </Box>
+              </SwiperSlide>
+            </Swiper>
+          </Grid>
+        </Grid>
+      ) : (
+        <Grid container spacing={2} sx={{ "&.MuiGrid-root": { marginTop: 0 } }}>
+          <Grid item xs={8}>
+            <Swiper
+              navigation
+              pagination={{
+                clickable: true
+              }}
+              modules={[Navigation]}
+              className="mySwiper"
+            >
+              <SwiperSlide>
+                <Box
+                  sx={{
+                    borderRadius: "10px"
+                  }}
+                >
+                  <img
+                    src="https://cdn0.fahasa.com/media/magentothem/banner7/AhamoveT8_840x320.png"
+                    alt=""
+                    style={{
+                      width: "100%",
+                      borderRadius: "10px",
+                      height: "325px"
+                    }}
+                  />
+                </Box>
+              </SwiperSlide>
+              <SwiperSlide>
+                <Box
+                  sx={{
+                    borderRadius: "10px"
+                  }}
+                >
+                  <img
+                    src="https://cdn0.fahasa.com/media/magentothem/banner7/MCbooks_PlatinumT723_Banner_Slide_840x320.jpg"
+                    alt=""
+                    style={{
+                      borderRadius: "10px",
+
+                      width: "100%",
+                      height: "325px"
                     }}
                   />
                 </Box>
@@ -121,7 +115,7 @@ function Banner() {
             <Box
               sx={{
                 width: "100%",
-                height: "156px",
+                height: "156px"
               }}
             >
               <img
@@ -130,7 +124,7 @@ function Banner() {
                 width={"100%"}
                 height={"100%"}
                 style={{
-                  borderRadius: "10px",
+                  borderRadius: "10px"
                 }}
               />
             </Box>
@@ -138,7 +132,7 @@ function Banner() {
               sx={{
                 width: "100%",
                 height: "156px",
-                mt: "10px",
+                mt: "10px"
               }}
             >
               <img
@@ -147,15 +141,13 @@ function Banner() {
                 width={"100%"}
                 height={"100%"}
                 style={{
-                  borderRadius: "10px",
+                  borderRadius: "10px"
                 }}
               />
             </Box>
           </Grid>
         </Grid>
-
-         )
-       }
+      )}
     </Container>
   );
 }
