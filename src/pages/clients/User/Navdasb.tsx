@@ -1,20 +1,16 @@
-import React from "react";
-import "./style.scss";
+import { BiBookAdd, BiSolidCategoryAlt } from "react-icons/bi";
+import {
+  FaBell,
+  FaBookOpen,
+  FaChevronDown,
+  FaFlag,
+  FaHome,
+  FaListUl,
+  FaSearch
+} from "react-icons/fa";
+import { Link, NavLink } from "react-router-dom";
 import "./index.scss";
-import { BiSolidCategoryAlt } from "react-icons/bi";
-import { BiBookAdd } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { FaThLarge } from "react-icons/fa";
-import { FaHome } from "react-icons/fa";
-import { FaBookOpen } from "react-icons/fa";
-import { FaComment } from "react-icons/fa";
-import { FaPowerOff } from "react-icons/fa";
-import { FaRedoAlt } from "react-icons/fa";
-import { FaChevronDown } from "react-icons/fa";
-import { FaFlag } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
-import { FaBell } from "react-icons/fa";
-import { FaListUl } from "react-icons/fa";
+import "./style.scss";
 function NavDas() {
   return (
     <div className="dasb pb-3">
@@ -24,31 +20,31 @@ function NavDas() {
         </div>
         <div className="dasb-header-right row">
           <div className="dasb-header-togg c-1 m-1 l-1">
-            <Link to="">
+            <NavLink to="">
               <FaListUl />
-            </Link>
+            </NavLink>
           </div>
           <ul className="dasb-header-right c-11 m-11 l-11">
             <li className="dasb-header-right-search">
-              <Link to="">
+              <NavLink to="">
                 <i>
                   <FaSearch />
                 </i>
-              </Link>
+              </NavLink>
             </li>
             <li className="dasb-header-right-flag">
-              <Link to="">
+              <NavLink to="">
                 <i>
                   <FaFlag />
                 </i>
-              </Link>
+              </NavLink>
             </li>
             <li className="dasb-header-right-search">
-              <Link to="">
+              <NavLink to="">
                 <i>
                   <FaBell />
                 </i>
-              </Link>
+              </NavLink>
             </li>
             <li className="dasb-header-right-action">
               <input type="checkbox" id="action" />
@@ -64,14 +60,14 @@ function NavDas() {
                 </i>
               </label>
               <div className="dasb-header-right-action-drop" id="drop">
-                <Link className="info" to="">
+                <NavLink className="info" to="">
                   <i></i>
                   <p>Thông tin</p>
-                </Link>
-                <Link className="log" to="">
+                </NavLink>
+                <NavLink className="log" to="">
                   <i></i>
                   <p>Logout</p>
-                </Link>
+                </NavLink>
               </div>
             </li>
           </ul>
@@ -80,42 +76,42 @@ function NavDas() {
       <div className="dasb-wapper">
         <div className="dasb-sidebar">
           <ul className="">
-            <li>
-              <Link to="#">
+            <li className="">
+              <NavLink to="">
                 <i>
                   <FaHome />
                 </i>
                 <span>Trang chủ</span>
-              </Link>
+              </NavLink>
             </li>
-            <li>
-              <Link to="#">
+            <li className="">
+              <NavLink to="#">
                 <i>
                   <BiSolidCategoryAlt />
                 </i>
                 <span>Danh mục</span>
-              </Link>
+              </NavLink>
             </li>
-            <li>
-              <Link to="#">
+            <li className="">
+              <NavLink to="#">
                 <i>
                   <FaBookOpen />
                 </i>
                 <span>Sản phẩm</span>
-              </Link>
+              </NavLink>
             </li>
-            <li>
-              <Link to="#">
+            <li className="">
+              <NavLink to="#">
                 <i>
                   <BiBookAdd />
                 </i>
                 <span>...</span>
-              </Link>
+              </NavLink>
             </li>
           </ul>
         </div>
         <div className="dasb-wapper-main">
-          <div className="dasb-wapper-main-bg">chay</div>
+          <div className="dasb-wapper-main-bg"></div>
         </div>
       </div>
     </div>

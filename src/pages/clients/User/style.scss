@@ -310,8 +310,8 @@
 
 .dasb {
     height: auto;
-    position: relative;
     background-color: #EBEFF2;
+    position: relative;
 
 
     li {
@@ -319,10 +319,15 @@
     }
 
     &-header {
+        position: sticky;
+        top: 0;
+        z-index: 1;
         display: flex;
         align-items: center;
         background-color: #008C89;
         color: white;
+        transition: all .1s ease-out;
+
 
         &-logo {
             width: 240px;
@@ -413,6 +418,7 @@
                     display: none;
                     position: absolute;
                     top: 52px;
+                    right: 24px;
                     background-color: white;
                     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
                     padding: 16px;
@@ -422,7 +428,10 @@
                     &>a {
                         color: black;
                         transition: all .3s ease-out;
-                        padding-top: 8px;
+
+                        &>p {
+                            padding: 8px 0 0;
+                        }
                     }
 
 
@@ -441,29 +450,49 @@
 
     }
 
+    &-wapper {
+        display: flex;
+        position: relative;
+
+        &-main {
+            width: calc(100% - 240px);
+            padding: 16px 0 16px 16px;
+
+            &-bg {
+                background-color: #fff;
+                padding: 16px;
+                height: 100vh;
+            }
+        }
+    }
+
     &-sidebar {
         width: 240px;
         background: #ffffff;
-        bottom: 0;
-        // position: fixed;
         transition: all .1s ease-out;
-        top: 70px;
-        height: 100vh;
 
         ul {
-            padding-top: 16px;
-        }
+            position: sticky;
+            top: 70px;
 
+        }
 
         li {
             padding: 16px 48px;
-            transition: all .3s ease-out;
             border-bottom: 1px solid #f8f9fa;
+            transition: all .3s ease-in-out;
+            border-left: 1px solid #fff;
 
         }
 
+        li:active {
+            border-left: 10px solid #008C89;
+        }
+
         li:hover {
+            border-left: 10px solid #008C89;
             background-color: #f8f9fa;
+
 
             a {
                 color: #71b6f9;
@@ -476,8 +505,6 @@
             align-items: center;
             color: gray;
             transition: all .3s ease-out;
-
-
         }
 
         span {
@@ -486,21 +513,6 @@
         }
     }
 
-    &-wapper {
-        display: flex;
 
-
-
-        &-main {
-            width: calc(100% - 240px);
-            padding: 16px 0 16px 16px;
-
-            &-bg {
-                background-color: #fff;
-                height: calc(100vh - 16px);
-                padding: 16px
-            }
-        }
-    }
 
 }

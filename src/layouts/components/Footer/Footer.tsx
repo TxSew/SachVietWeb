@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Stack, Typography  } from "@mui/material";
+import { Box, Container, Grid, Stack, Typography } from "@mui/material";
 import Image from "../../../components/Image/Image";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -16,7 +16,7 @@ function Footer() {
               <Box
                 sx={{
                   paddingRight: "20px",
-                  borderRight: "1px solid #eee",
+                  borderRight: "1px solid #eee"
                 }}
               >
                 <Image
@@ -38,7 +38,7 @@ function Footer() {
                 </Box>
                 <Box
                   sx={{
-                    marginTop: "20px",
+                    marginTop: "20px"
                   }}
                 >
                   <Typography variant="subtitle1" color="initial" fontSize={13}>
@@ -51,7 +51,7 @@ function Footer() {
                 <Box
                   sx={{
                     maxWidth: "100px",
-                    my: "10px",
+                    my: "10px"
                   }}
                 >
                   <Image
@@ -66,7 +66,7 @@ function Footer() {
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    gap: "10px",
+                    gap: "10px"
                   }}
                   color={"gray"}
                 >
@@ -97,14 +97,14 @@ function Footer() {
             <Grid item xs={8}>
               <Box
                 sx={{
-                  display: "flex",
+                  display: "flex"
                 }}
               >
                 <Grid item xs={4}>
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "bold",
+                      fontWeight: "bold"
                     }}
                     variant="h2"
                   >
@@ -115,7 +115,7 @@ function Footer() {
                       display: "flex",
                       flexDirection: "column",
                       rowGap: "10px",
-                      mt: "10px",
+                      mt: "10px"
                     }}
                   >
                     <Typography variant="caption">
@@ -138,7 +138,7 @@ function Footer() {
                     variant="h2"
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "bold",
+                      fontWeight: "bold"
                     }}
                   >
                     HỖ TRỢ
@@ -148,7 +148,7 @@ function Footer() {
                       display: "flex",
                       mt: "10px",
                       rowGap: "10px",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
                     <Typography variant="caption">
@@ -173,7 +173,7 @@ function Footer() {
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "bold",
+                      fontWeight: "bold"
                     }}
                     variant="h2"
                   >
@@ -184,7 +184,7 @@ function Footer() {
                       display: "flex",
                       flexDirection: "column",
                       rowGap: "10px",
-                      mt: "10px",
+                      mt: "10px"
                     }}
                   >
                     <Typography variant="caption">
@@ -206,7 +206,7 @@ function Footer() {
                   sx={{
                     fontSize: "20px",
                     fontWeight: "bold",
-                    textTransform: "uppercase",
+                    textTransform: "uppercase"
                   }}
                 >
                   Liên hệ
