@@ -17,9 +17,7 @@ function HeaderAdmin() {
       </div>
       <div className="dasb-header-right row">
         <div className="dasb-header-togg c-1 m-1 l-1">
-          <NavLink to="">
-            <FaListUl />
-          </NavLink>
+          <NavLink to=""></NavLink>
         </div>
         <ul className="dasb-header-right c-11 m-11 l-11">
           <li className="dasb-header-right-search">

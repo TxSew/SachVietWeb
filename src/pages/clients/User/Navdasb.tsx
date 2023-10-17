@@ -20,9 +20,7 @@ function NavDas() {
         </div>
         <div className="dasb-header-right row">
           <div className="dasb-header-togg c-1 m-1 l-1">
-            <NavLink to="">
-              <FaListUl />
-            </NavLink>
+            <NavLink to=""></NavLink>
           </div>
           <ul className="dasb-header-right c-11 m-11 l-11">
             <li className="dasb-header-right-search">
@@ -74,8 +72,12 @@ function NavDas() {
         </div>
       </div>
       <div className="dasb-wapper">
+        <label htmlFor="tool" className="tool">
+          <FaListUl />
+        </label>
+        <input type="checkbox" id="tool" />
         <div className="dasb-sidebar">
-          <ul className="">
+          <ul className="k">
             <li className="">
               <NavLink to="">
                 <i>
@@ -85,7 +87,7 @@ function NavDas() {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="#">
+              <NavLink to="../admin/category">
                 <i>
                   <BiSolidCategoryAlt />
                 </i>
@@ -93,7 +95,7 @@ function NavDas() {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="#">
+              <NavLink to="../admin/product">
                 <i>
                   <FaBookOpen />
                 </i>
@@ -108,6 +110,7 @@ function NavDas() {
                 <span>...</span>
               </NavLink>
             </li>
+            <div className="active start"></div>
           </ul>
         </div>
         <div className="dasb-wapper-main">

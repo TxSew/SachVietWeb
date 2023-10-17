@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import NavAdmin from "../components/NavAdmin/NavAdmin";
 import HeaderAdmin from "../components/HeaderAdmin/HeaderAdmin";
 import { NavLink } from "react-router-dom";
-import { FaBookOpen, FaHome } from "react-icons/fa";
+import { FaBookOpen, FaHome, FaListUl } from "react-icons/fa";
 import { BiBookAdd, BiSolidCategoryAlt } from "react-icons/bi";
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -13,8 +13,12 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
     <div className="App dasb pb-3">
       <HeaderAdmin />
       <div className="dasb-wapper">
+        <label htmlFor="tool" className="tool">
+          <FaListUl />
+        </label>
+        <input type="checkbox" id="tool" />
         <div className="dasb-sidebar">
-          <ul className="">
+          <ul className="k">
             <li className="">
               <NavLink to="">
                 <i>
@@ -24,7 +28,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="#">
+              <NavLink to="../admin/category">
                 <i>
                   <BiSolidCategoryAlt />
                 </i>
@@ -32,7 +36,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="#">
+              <NavLink to="../admin/product">
                 <i>
                   <FaBookOpen />
                 </i>
@@ -47,6 +51,71 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <span>...</span>
               </NavLink>
             </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="#">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>...</span>
+              </NavLink>
+            </li>
+            <div className="active start"></div>
           </ul>
         </div>
         <div className="dasb-wapper-main">

@@ -454,9 +454,64 @@
         display: flex;
         position: relative;
 
+        &>.tool {
+            position: fixed;
+            display: flex;
+            left: 256px;
+            top: 16px;
+            z-index: 10;
+            font-size: 24px;
+            color: rgb(255, 255, 255);
+        }
+
+
+
+
+        &>input {
+            display: none;
+        }
+
+        &>input:checked+.dasb-sidebar {
+            width: 70px;
+
+            li {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 16px 24px;
+                text-align: center;
+            }
+
+            li:hover {
+                border-left: 7px solid #008C89;
+                background-color: #f8f9fa;
+
+
+                a {
+                    color: #71b6f9;
+                }
+            }
+
+            span {
+                display: none;
+            }
+
+        }
+
+        &>input:checked~.dasb-wapper-main {
+            width: calc(100% - 70px);
+
+        }
+
+        &>input:checked~.dasb-header-logo {
+            width: 70px;
+
+        }
+
         &-main {
             width: calc(100% - 240px);
             padding: 16px 0 16px 16px;
+            transition: all .3s ease-in-out;
 
             &-bg {
                 background-color: #fff;
@@ -469,12 +524,12 @@
     &-sidebar {
         width: 240px;
         background: #ffffff;
-        transition: all .1s ease-out;
+        transition: all .3s ease-out;
+        position: relative;
 
         ul {
             position: sticky;
             top: 70px;
-
         }
 
         li {
@@ -511,7 +566,11 @@
             font-size: 16px;
             padding-left: 8px;
         }
+
+
     }
+
+
 
 
 
