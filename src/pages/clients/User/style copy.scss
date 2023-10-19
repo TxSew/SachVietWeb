@@ -324,18 +324,13 @@
     &-header {
         position: sticky;
         top: 0;
+        z-index: 1;
+        display: flex;
+        align-items: center;
         background-color: #008C89;
         color: white;
         transition: all .1s ease-out;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
 
-        &>.tool {
-            color: rgb(255, 255, 255);
-            font-size: 24px;
-            padding: 8px 32px;
-        }
 
         &-logo {
             width: 240px;
@@ -350,7 +345,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 48px;
+            width: calc(100% - 240px);
         }
 
         &-togg {
@@ -498,21 +493,15 @@
 
         }
 
-
-
         &-main {
-            position: relative;
             width: calc(100% - 240px);
+            padding: 16px 0 16px 16px;
             transition: all .3s ease-in-out;
 
             &-bg {
-                padding: 0 0 0 16px;
-
-                &>.content {
-                    background-color: #ffffff;
-                    height: 100vh;
-                    padding: 16px;
-                }
+                background-color: #fff;
+                padding: 28px;
+                height: 100vh;
             }
         }
     }
@@ -523,28 +512,50 @@
         background: #ffffff;
         transition: all .3s ease-out;
 
-        &-logo {
+        &>.tool {
             position: sticky;
-            top: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 48px;
-            font-size: 20px;
-            background-color: #008C89;
-            color: white;
+            display: block;
+            width: 100%;
+            height: 16px;
+            margin: 0 auto;
+            cursor: pointer;
+            background-color: whitesmoke;
+            margin: 8px 0;
 
+            &>p:nth-child(1) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #008C89;
+                height: 4px;
+                width: 100%;
+                border-radius: 10px;
+            }
 
+            &>p:nth-child(2) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 8px;
+                width: 100%;
+            }
 
+            &>p:nth-child(3) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: #008C89;
+                height: 4px;
+                width: 100%;
+                border-radius: 10px;
 
+            }
         }
-
-
 
 
         ul {
             position: sticky;
-            top: 48px;
+            top: 70px;
         }
 
         li {
