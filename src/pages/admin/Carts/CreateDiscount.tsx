@@ -4,7 +4,7 @@ import {
   Grid,
   OutlinedInput,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -21,15 +21,14 @@ const CreateDiscount = () => {
     control,
     register,
     watch,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid }
   } = useForm<Discount>({});
 
   // console.log(watch().desc);
   //  upload image file base
   const handleAddDiscount = async (data: Discount) => {
     const addDiscount = await http.post(data);
-     console.log(addDiscount);
-     
+    console.log(addDiscount);
   };
 
   return (
@@ -47,7 +46,7 @@ const CreateDiscount = () => {
           bgcolor={color.white}
           p={2}
           container
-          mt={3}
+          mt={0}
           justifyContent={"space-between"}
         >
           <Grid xs={12} md={7.8} mb={3} fontSize={"20px"}>
@@ -59,7 +58,7 @@ const CreateDiscount = () => {
               name="code"
               defaultValue="" // Set an initial value here
               rules={{
-                required: "Vui lòng nhập mã giảm giá",
+                required: "Vui lòng nhập mã giảm giá"
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -67,8 +66,8 @@ const CreateDiscount = () => {
                   sx={{
                     mt: 1,
                     "& > input": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                   fullWidth
                   placeholder="Vui lòng nhập mã giảm giá"
@@ -92,7 +91,7 @@ const CreateDiscount = () => {
               name="discount"
               defaultValue="" // Set an initial value here
               rules={{
-                required: "Vui lòng nhập số tiền giảm giá",
+                required: "Vui lòng nhập số tiền giảm giá"
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -100,8 +99,8 @@ const CreateDiscount = () => {
                   sx={{
                     mt: 1,
                     "& > input": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                   fullWidth
                   placeholder="Vui lòng nhập số tiền giảm giá"
@@ -123,7 +122,7 @@ const CreateDiscount = () => {
               control={control}
               name="payment_limit"
               rules={{
-                required: "Vui lòng nhập số tiền giới hạn",
+                required: "Vui lòng nhập số tiền giới hạn"
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -131,8 +130,8 @@ const CreateDiscount = () => {
                   sx={{
                     mt: 1,
                     "& > input": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                   fullWidth
                   placeholder="Vui lòng nhập số tiền giới hạn"
@@ -154,7 +153,7 @@ const CreateDiscount = () => {
               control={control}
               name="limit_number"
               rules={{
-                required: "Vui lòng nhập số lần tối thiểu",
+                required: "Vui lòng nhập số lần tối thiểu"
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -162,8 +161,8 @@ const CreateDiscount = () => {
                   sx={{
                     mt: 1,
                     "& > input": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                   fullWidth
                   placeholder="Vui lòng nhập số lần tối thiểu"
@@ -182,7 +181,7 @@ const CreateDiscount = () => {
               control={control}
               name="expiration_date"
               rules={{
-                required: "Vui lòng nhập ngày giới hạn nhập",
+                required: "Vui lòng nhập ngày giới hạn nhập"
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -191,8 +190,8 @@ const CreateDiscount = () => {
                   sx={{
                     mt: 1,
                     "& > input": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                   fullWidth
                   placeholder="Giá không được để trống!"
@@ -215,7 +214,7 @@ const CreateDiscount = () => {
               control={control}
               name="desc"
               rules={{
-                required: "Vui lòng nhập mô tả ngắn",
+                required: "Vui lòng nhập mô tả ngắn"
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -224,8 +223,8 @@ const CreateDiscount = () => {
                   sx={{
                     mt: 1,
                     "& > input": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                   fullWidth
                   placeholder="Vui lòng nhập mô tả ngắn"

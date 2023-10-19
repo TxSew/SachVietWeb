@@ -5,7 +5,7 @@ import { Grid } from "@mui/material";
 import NavAdmin from "../components/NavAdmin/NavAdmin";
 import HeaderAdmin from "../components/HeaderAdmin/HeaderAdmin";
 import { NavLink } from "react-router-dom";
-import { FaBookOpen, FaHome, FaListUl } from "react-icons/fa";
+import { FaBookOpen, FaHome, FaListUl, FaWpforms } from "react-icons/fa";
 import { BiBookAdd, BiSolidCategoryAlt } from "react-icons/bi";
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -20,7 +20,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         <div className="dasb-sidebar">
           <ul className="k">
             <li className="">
-              <NavLink to="">
+              <NavLink to="/admin/statistical">
                 <i>
                   <FaHome />
                 </i>
@@ -28,7 +28,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="../admin/category">
+              <NavLink to="/admin/category">
                 <i>
                   <BiSolidCategoryAlt />
                 </i>
@@ -36,7 +36,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="../admin/product">
+              <NavLink to="/admin/product">
                 <i>
                   <FaBookOpen />
                 </i>
@@ -44,67 +44,11 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
               </NavLink>
             </li>
             <li className="">
-              <NavLink to="#">
+              <NavLink to="/admin/orders">
                 <i>
-                  <BiBookAdd />
+                  <FaWpforms />
                 </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
-                <i>
-                  <BiBookAdd />
-                </i>
-                <span>...</span>
+                <span>Đơn</span>
               </NavLink>
             </li>
             <li className="">

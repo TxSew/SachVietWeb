@@ -4,7 +4,15 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
-import { Badge, Grid, Stack, styled, TextField } from "@mui/material";
+import {
+  Badge,
+  Grid,
+  Stack,
+  styled,
+  TextField,
+  Modal,
+  ModalManager
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
@@ -136,7 +144,6 @@ const Header = () => {
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
-
                     <Typography
                       variant="caption"
                       sx={{

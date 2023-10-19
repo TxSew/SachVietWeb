@@ -9,7 +9,7 @@ import {
   OutlinedInput,
   Pagination,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -37,7 +37,7 @@ export default function AdminCarts() {
   }, [page]);
   const handleUpdateOrder = async (id: any) => {
     await http.put(Number(id), {
-      status: 2,
+      status: 2
     });
   };
   const fetchData = async (page: number) => {
@@ -63,7 +63,7 @@ export default function AdminCarts() {
 
   return (
     <Grid>
-      <Grid mt={3} width={"100%"}>
+      <Grid mt={0} width={"100%"}>
         <Stack
           direction={"row"}
           mb={2}
@@ -74,7 +74,7 @@ export default function AdminCarts() {
           <Typography variant="h2" fontSize={"26px"} mb={3} fontWeight={"bold"}>
             <ShoppingBasketIcon
               sx={{
-                mr: 1,
+                mr: 1
               }}
             />
             Danh sách đơn hàng
@@ -84,8 +84,8 @@ export default function AdminCarts() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px",
-              },
+                p: "7px"
+              }
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
@@ -97,7 +97,7 @@ export default function AdminCarts() {
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800,
+              minWidth: 800
             }}
             aria-label="simple tablek w"
           >
@@ -105,8 +105,8 @@ export default function AdminCarts() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold",
-                  },
+                    fontWeight: "bold"
+                  }
                 }}
               >
                 <TableCell>Mã đơn hàng</TableCell>
@@ -134,7 +134,7 @@ export default function AdminCarts() {
                   <TableCell align="right">{e.phone}</TableCell>
                   <TableCell align="right">
                     {Intl.NumberFormat("en-US", {
-                      currency: "USD",
+                      currency: "USD"
                     }).format(Number(e.money))}
                   </TableCell>
                   <TableCell align="right">
@@ -163,12 +163,12 @@ export default function AdminCarts() {
                           <Stack
                             onClick={async () => {
                               const updated = await http.put(Number(e.id), {
-                                status: 1,
+                                status: 1
                               });
                               window.location.reload();
 
                               toast.success("updated order successfully", {
-                                position: "bottom-right",
+                                position: "bottom-right"
                               });
                             }}
                           >
@@ -178,12 +178,12 @@ export default function AdminCarts() {
                             <Stack
                               onClick={async () => {
                                 const updated = await http.put(Number(e.id), {
-                                  status: 0,
+                                  status: 0
                                 });
                                 window.location.reload();
 
                                 toast.success("updated order successfully", {
-                                  position: "bottom-right",
+                                  position: "bottom-right"
                                 });
                               }}
                             >
@@ -200,11 +200,11 @@ export default function AdminCarts() {
                             <Stack
                               onClick={async () => {
                                 const updated = await http.put(Number(e.id), {
-                                  status: 0,
+                                  status: 0
                                 });
                                 window.location.reload();
                                 toast.success("updated order successfully", {
-                                  position: "bottom-right",
+                                  position: "bottom-right"
                                 });
                               }}
                             >
@@ -228,14 +228,14 @@ export default function AdminCarts() {
                       <Link to={`/admin/orders/detail/${e.id}`}>
                         <VisibilityIcon
                           sx={{
-                            color: "green",
+                            color: "green"
                           }}
                         />
                       </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{
-                            color: "red",
+                            color: "red"
                           }}
                         />
                       </Box>
