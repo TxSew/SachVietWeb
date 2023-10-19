@@ -5,7 +5,6 @@ import { NavLink } from "react-router-dom";
 import { FaBookOpen, FaHome, FaListUl, FaWpforms } from "react-icons/fa";
 import { BiBookAdd, BiSolidCategoryAlt } from "react-icons/bi";
 
-
 function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="App dasb pb-3">
