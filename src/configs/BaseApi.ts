@@ -1,5 +1,5 @@
 
 
-export const BaseAPi =  {
-         baseURL:"http://localhost:3000",
-    }
+export const BaseAPi = {
+     baseURL: "http://192.168.1.11:3000",
+}

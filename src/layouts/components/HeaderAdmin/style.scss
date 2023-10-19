@@ -1,0 +1,268 @@
+// .dasb {
+//     height: auto;
+//     background-color: #EBEFF2;
+//     position: relative;
+
+
+//     li {
+//         list-style: none;
+//     }
+
+//     &-header {
+//         position: sticky;
+//         top: 0;
+//         z-index: 1;
+//         display: flex;
+//         align-items: center;
+//         background-color: #008C89;
+//         color: white;
+//         transition: all .1s ease-out;
+
+
+//         &-logo {
+//             width: 240px;
+//             display: flex;
+//             font-size: 24px;
+//             color: white;
+//             padding: 8px 48px;
+//             border-right: 1px solid white;
+//         }
+
+//         &-right {
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
+//             width: calc(100% - 240px);
+//         }
+
+//         &-togg {
+//             display: flex;
+//             justify-content: center;
+//             align-items: center;
+//             transition: all .3s ease-out;
+//             cursor: pointer;
+//             font-size: 24px;
+//             padding-left: 32px;
+
+
+
+//             &>i {
+//                 display: flex;
+//                 align-items: center;
+//             }
+
+//         }
+
+
+//         i {
+//             display: flex;
+//             align-items: center;
+//             font-size: 16px;
+//             margin-right: 24px;
+//         }
+
+//         &-right {
+//             display: flex !important;
+//             justify-content: end;
+//             align-items: center;
+
+//             a {
+//                 color: white;
+//             }
+
+//             &>li {
+//                 list-style: none;
+//                 margin: 0 8px;
+//             }
+
+//             &-action {
+//                 display: flex;
+//                 padding-right: 48px;
+
+//                 &>label {
+//                     display: flex;
+//                     align-items: center;
+
+//                     &>img {
+//                         border-radius: 50%;
+//                     }
+
+//                     &>span {
+//                         margin: 0 0 0 12px;
+//                         font-size: 14px;
+//                     }
+
+//                     &>i {
+//                         margin: 0 0 0 12px;
+//                         font-size: 12px;
+//                     }
+//                 }
+
+//                 &>input {
+//                     display: none;
+//                     transition: all 0.7s ease;
+
+//                 }
+
+//                 &-drop {
+//                     display: none;
+//                     position: absolute;
+//                     top: 52px;
+//                     right: 24px;
+//                     background-color: white;
+//                     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+//                     padding: 16px;
+//                     transition: all 0.7s ease;
+
+
+//                     &>a {
+//                         color: black;
+//                         transition: all .3s ease-out;
+
+//                         &>p {
+//                             padding: 8px 0 0;
+//                         }
+//                     }
+
+
+//                     &>a:hover {
+//                         color: #71b6f9;
+//                     }
+
+
+//                 }
+
+//                 &>input:checked~#drop {
+//                     display: block;
+//                 }
+//             }
+//         }
+
+//     }
+
+//     &-wapper {
+//         display: flex;
+//         position: relative;
+
+//         &>.tool {
+//             position: fixed;
+//             display: flex;
+//             left: 256px;
+//             top: 16px;
+//             z-index: 10;
+//             font-size: 24px;
+//             color: rgb(255, 255, 255);
+//         }
+
+
+
+
+//         &>input {
+//             display: none;
+//         }
+
+//         &>input:checked+.dasb-sidebar {
+//             width: 70px;
+
+//             li {
+//                 display: flex;
+//                 justify-content: center;
+//                 align-items: center;
+//                 padding: 16px 24px;
+//                 text-align: center;
+//             }
+
+//             li:hover {
+//                 border-left: 7px solid #008C89;
+//                 background-color: #f8f9fa;
+
+
+//                 a {
+//                     color: #71b6f9;
+//                 }
+//             }
+
+//             span {
+//                 display: none;
+//             }
+
+//         }
+
+//         &>input:checked~.dasb-wapper-main {
+//             width: calc(100% - 70px);
+
+//         }
+
+//         &>input:checked~.dasb-header-logo {
+//             width: 70px;
+
+//         }
+
+//         &-main {
+//             width: calc(100% - 240px);
+//             padding: 16px 0 16px 16px;
+//             transition: all .3s ease-in-out;
+
+//             &-bg {
+//                 background-color: #fff;
+//                 padding: 16px;
+//                 height: 100vh;
+//             }
+//         }
+//     }
+
+//     &-sidebar {
+//         width: 240px;
+//         background: #ffffff;
+//         transition: all .3s ease-out;
+//         position: relative;
+
+//         ul {
+//             position: sticky;
+//             top: 70px;
+
+//         }
+
+//         li {
+//             padding: 16px 48px;
+//             border-bottom: 1px solid #f8f9fa;
+//             transition: all .3s ease-in-out;
+//             border-left: 1px solid #fff;
+
+//         }
+
+//         li:active {
+//             border-left: 10px solid #008C89;
+//         }
+
+//         li:hover {
+//             border-left: 10px solid #008C89;
+//             background-color: #f8f9fa;
+
+
+//             a {
+//                 color: #71b6f9;
+//             }
+//         }
+
+
+//         a {
+//             display: flex;
+//             align-items: center;
+//             color: gray;
+//             transition: all .3s ease-out;
+//         }
+
+//         span {
+//             font-size: 16px;
+//             padding-left: 8px;
+//         }
+
+
+//     }
+
+
+
+
+
+// }

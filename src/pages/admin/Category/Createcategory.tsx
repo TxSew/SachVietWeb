@@ -7,7 +7,7 @@ import {
   OutlinedInput,
   Select,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
@@ -58,11 +58,11 @@ const CreateCategory = () => {
     handleSubmit,
     control,
     register,
-    formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid }
   } = useForm<Category>({
     defaultValues: {
-      status: "1",
-    },
+      status: "1"
+    }
   });
 
   const handleAddCategory = async (data: Category) => {
@@ -71,7 +71,7 @@ const CreateCategory = () => {
     const categoryDto = await httpCategory.store(category);
     if (categoryDto) {
       toast.success("category added successfully", {
-        position: "bottom-right",
+        position: "bottom-right"
       });
     }
   };
@@ -91,7 +91,7 @@ const CreateCategory = () => {
           bgcolor={color.white}
           p={2}
           container
-          mt={3}
+          mt={0}
           justifyContent={"space-between"}
         >
           <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
@@ -102,7 +102,7 @@ const CreateCategory = () => {
             name="name"
             defaultValue="" // Set an initial value here
             rules={{
-              required: "Tên danh mục không được bỏ trống!",
+              required: "Tên danh mục không được bỏ trống!"
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -111,8 +111,8 @@ const CreateCategory = () => {
                 sx={{
                   mt: 1,
                   "& > input": {
-                    p: "7px",
-                  },
+                    p: "7px"
+                  }
                 }}
                 fullWidth
                 placeholder="Vui lòng nhập Ten của bạn!"
@@ -132,7 +132,7 @@ const CreateCategory = () => {
                 control={control}
                 name="parentId"
                 rules={{
-                  required: "Vui lòng nhập Danh mục sản phẩm!",
+                  required: "Vui lòng nhập Danh mục sản phẩm!"
                 }}
                 render={({ field }) => (
                   <FormControl fullWidth>
@@ -144,8 +144,8 @@ const CreateCategory = () => {
                       sx={{
                         mt: 1,
                         "& > div": {
-                          p: "7px",
-                        },
+                          p: "7px"
+                        }
                       }}
                       defaultValue="2"
                     >
@@ -176,8 +176,8 @@ const CreateCategory = () => {
             sx={{
               mt: 1,
               "& > input": {
-                p: "7px",
-              },
+                p: "7px"
+              }
             }}
             fullWidth
           />
@@ -194,7 +194,7 @@ const CreateCategory = () => {
             control={control}
             name="status"
             rules={{
-              required: "Price is not",
+              required: "Price is not"
             }}
             render={({ field }) => (
               <FormControl fullWidth>
@@ -205,8 +205,8 @@ const CreateCategory = () => {
                   sx={{
                     mt: 1,
                     "& > div": {
-                      p: "7px",
-                    },
+                      p: "7px"
+                    }
                   }}
                 >
                   <MenuItem value={""}>

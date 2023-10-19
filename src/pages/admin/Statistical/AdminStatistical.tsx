@@ -21,7 +21,7 @@ function AdminStatistical() {
     <Box
       sx={{
         mt: 5,
-        px: 5,
+        px: 5
       }}
     >
       <Typography variant="h3" fontSize={"30px"} fontWeight={"bold"}>
@@ -38,7 +38,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
               >
                 <Typography
@@ -58,7 +58,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
               >
                 <Typography
@@ -79,7 +79,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
               >
                 <Typography
@@ -100,7 +100,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  justifyContent: "center"
                 }}
               >
                 <Typography
