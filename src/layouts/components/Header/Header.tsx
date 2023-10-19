@@ -23,7 +23,6 @@ import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
 const Header = () => {
   const cart = useSelector((state: RootState) => state.cart.cartItems);
-
   const { isMediumMD } = useMedia();
   console.log(isMediumMD);
   const BoxIcon = styled(Box)`
@@ -38,6 +37,16 @@ const Header = () => {
       color: gray;
     }
   `;
+  const style = {
+    position: 'absolute',
+    top: '20%',
+    left: "47%",
+    transform: 'translate(-50%, -50%)',
+    width: "600px",
+    bgcolor: 'background.paper',
+    boxShadow: 24,
+    p: 4,
+  };
   return (
     <Box>
       {!isMediumMD ? (
@@ -125,9 +134,14 @@ const Header = () => {
                     </Stack>
                   </Box>
                 </Grid>
-                <Grid item xs={5.5}>
+                <Grid item xs={5.5}
+                sx={{
+                   position: "relative",
+                }} 
+                >
                   <Stack
                     sx={{
+                      position: "relative",
                       display: "flex",
                       flexDirection: "row",
                       alignItems: "center",
@@ -162,7 +176,7 @@ const Header = () => {
                         }}
                       />
                     </Typography>
-                  </Stack>
+                 </Stack>
                 </Grid>
                 <Grid
                   item

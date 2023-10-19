@@ -60,6 +60,7 @@ export default function Auth() {
               <Box sx={{}}>
                 <Tabs
                   value={value}
+
                   onChange={handleChange}
                   aria-label="basic tabs example"
                   sx={{

@@ -38,7 +38,6 @@ const CreateProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const editorRef = useRef<any>(null);
   const redirect = useNavigate();
-
   useEffect(() => {
     fetchProducer();
     fetchCategory();
@@ -47,7 +46,7 @@ const CreateProduct = () => {
   const fetchProducer = async () => {
     try {
       const producer: any = await http.getAll();
-      setProducer(producer);
+      setProducer(producer.producers);
     } catch (error) {
       console.log(error);
     }

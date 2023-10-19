@@ -26,16 +26,17 @@ import { Producer } from "../../../submodules/models/producerModel/producer";
 
 const http = new HttpProducerController(BaseAPi);
 export default function ProducerAdmin() {
-  const [producer, setProducer] = React.useState<Producer[]>([] as Producer[]);
+  const [count, setCount] = React.useState<number>(1);
+  const [page, setPage] = React.useState<number>(1);
+  const [producer, setProducer] = React.useState<Producer[]>([]);
   React.useEffect(() => {
-    fetchData();
-  }, []);
-  const fetchData = async () => {
-    const producerData = await http.getAll();
-    console.log(producerData);
-    setProducer(producerData);
+    fetchData(page);
+  }, [page]);
+  const fetchData = async (page: number = 1) => {
+    const producerData: any = await http.getAll(page);
+    setCount(producerData?.totalPage);
+    setProducer(producerData?.producers);
   };
-  const [page, setPage] = React.useState(1);
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
     console.log(value);
@@ -43,7 +44,7 @@ export default function ProducerAdmin() {
 
   async function handleRemove(id: number) {
     const destroy = await http.delete(Number(id));
-    const filter = producer.filter((e) => e.id !== id);
+    const filter = producer.filter((e: any) => e.id !== id);
     setProducer(filter);
   }
   return (
@@ -104,7 +105,7 @@ export default function ProducerAdmin() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {producer.map((e: Producer, i) => (
+              {producer.map((e: Producer) => (
                 <TableRow
                   key={e.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -154,7 +155,7 @@ export default function ProducerAdmin() {
           </Table>
         </TableContainer>
         <Box mt={2}>
-          <Pagination count={10} page={page} onChange={handleChange} />
+          <Pagination count={count} page={page} onChange={handleChange} />
         </Box>
       </Grid>
     </Grid>

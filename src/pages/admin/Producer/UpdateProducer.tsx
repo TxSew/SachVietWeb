@@ -153,7 +153,6 @@ const UpdateProducer = () => {
           <Typography variant="caption" color={color.error}>
             {errors.keyword && errors.keyword.message}
           </Typography>
-
           <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
             Trạng thái
           </Typography>

@@ -11,6 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import ProductItem from "../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../configs/BaseApi";
@@ -29,7 +30,7 @@ function Category() {
   useEffect(() => {
     fetchProducts(page);
   }, [page]);
-  const fetchProducts = async (page: number = 1) => {
+  const fetchProducts = async (page: number = 1 ) => {
     const products: any = await http.getAll(page);
     if (products) {
       setProducts(products.products);
