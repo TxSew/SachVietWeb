@@ -28,7 +28,6 @@ import UserAdress from "../pages/clients/User/Useradress";
 import UserVi from "../pages/clients/User/Uservi";
 import UserMyCart from "../pages/clients/User/Usermycart";
 import NavDas from "../pages/clients/User/Navdasb";
-import Chay from '../pages/clients/User/Chay';
 
 const PublicRouter = [
   {
@@ -90,10 +89,6 @@ const PublicRouter = [
   {
     path: '/user/navdas',
     component: NavDas
-  },
-  {
-    path: '/user/chay',
-    component: Chay
   }
 ];
 const PrivateRouter = [
