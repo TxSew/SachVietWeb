@@ -24,7 +24,6 @@ import { RootState } from "../../../redux/storeClient";
 const Header = () => {
   const cart = useSelector((state: RootState) => state.cart.cartItems);
   const { isMediumMD } = useMedia();
-  console.log(isMediumMD);
   const BoxIcon = styled(Box)`
     display: flex;
     flex-direction: column;
