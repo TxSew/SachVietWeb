@@ -27,8 +27,6 @@ import UserInfo from "../pages/clients/User/UserInfo";
 import UserAdress from "../pages/clients/User/Useradress";
 import UserVi from "../pages/clients/User/Uservi";
 import UserMyCart from "../pages/clients/User/Usermycart";
-import NavDas from "../pages/clients/User/Navdasb";
-
 const PublicRouter = [
   {
     path: "/",
@@ -69,27 +67,21 @@ const PublicRouter = [
     component: User,
   },
   {
-
-    path: '/user/info',
-    component: UserInfo
+    path: "/user/info",
+    component: UserInfo,
   },
   {
-    path: '/user/adress',
-    component: UserAdress
+    path: "/user/adress",
+    component: UserAdress,
   },
   {
-    path: '/user/vi',
-    component: UserVi
+    path: "/user/vi",
+    component: UserVi,
   },
   {
-    path: '/user/mycart',
-    component: UserMyCart
+    path: "/user/mycart",
+    component: UserMyCart,
   },
-  {
-    path: '/user/navdas',
-    component: NavDas
-  }
-
 ];
 const PrivateRouter = [
   {
@@ -138,26 +130,26 @@ const PrivateRouter = [
     component: CreateDiscount,
   },
   {
-   path: "/admin/discount/:id",
-   component: UpdateDiscount,
+    path: "/admin/discount/:id",
+    component: UpdateDiscount,
   },
 
   {
-   path: "/admin/orders",
-   component: AdminCarts,
+    path: "/admin/orders",
+    component: AdminCarts,
   },
 
   {
-   path: "/admin/orders/detail/:id",
-   component: DetailCarts,
+    path: "/admin/orders/detail/:id",
+    component: DetailCarts,
   },
   {
-   path: "/admin/customer",
-   component: AdminCustomer,
+    path: "/admin/customer",
+    component: AdminCustomer,
   },
   {
-   path: "/admin/statistical",
-   component: AdminStatistical,
+    path: "/admin/statistical",
+    component: AdminStatistical,
   },
 ];
 
