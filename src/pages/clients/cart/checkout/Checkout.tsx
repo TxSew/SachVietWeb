@@ -37,7 +37,9 @@ import {
   Province,
   district,
 } from "../../../../submodules/models/Province/Province";
+import HttpPaymentController from "../../../../submodules/controllers/http/httppaymentController";
 const httpProvince = new HttpProviceController(BaseAPi);
+const httpPayment = new HttpPaymentController(BaseAPi);
 const httpOrder = new HttpCartController(BaseAPi);
 function Checkout() {
   const redirect = useNavigate();
@@ -88,18 +90,20 @@ function Checkout() {
     const orderData = {
       orders: orders,
       orderDetail: detailData,
+      paymentMethod: data.orderType,
     };
-    console.log(orderData);
-    const CreateOrder = await httpOrder.post(orderData);
-    console.log(CreateOrder);
 
+    const CreateOrder = await httpPayment.getPayment(orderData);
     if (CreateOrder) {
-      toast.success("Mua hàng thành công", {
-        position: "bottom-right",
-      });
-      dispatch(clearCart());
-      redirect("/checkout/payment");
+      window.location.assign(CreateOrder);
     }
+    // if (CreateOrder) {
+    //   toast.success("Mua hàng thành công", {
+    //     position: "bottom-right",
+    //   });
+    //   dispatch(clearCart());
+    //   // redirect("/checkout/payment");
+    // }
   };
   const {
     handleSubmit,
