@@ -4,12 +4,14 @@ import {
   Button,
   Container,
   FormControl,
+  FormControlLabel,
   FormGroup,
   FormHelperText,
   Grid,
   MenuItem,
   OutlinedInput,
   Radio,
+  RadioGroup,
   Select,
   Stack,
   Typography,
@@ -21,6 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
+import { numberFormat } from "../../../../helpers/formatPrice";
 import {
   clearCart,
   getTotals,
@@ -39,6 +42,7 @@ const httpOrder = new HttpCartController(BaseAPi);
 function Checkout() {
   const redirect = useNavigate();
   const dispatch = useDispatch();
+  const [value, setValue] = useState("COD");
   const { cartTotalAmount, cartItems } = useSelector(
     (state: RootState) => state.cart
   );
@@ -65,7 +69,6 @@ function Checkout() {
       setprovince(provinceData);
     }
   };
-  console.log(cartTotalAmount);
   const handleCheckout = async (data: any) => {
     console.log(data);
     const detailData = cart.map((e: Product) => {
@@ -73,6 +76,7 @@ function Checkout() {
         productId: e.id,
         quantity: e.cartQuantity,
         price: e.price_sale,
+        image: e.image,
       };
     });
 
@@ -88,6 +92,7 @@ function Checkout() {
     console.log(orderData);
     const CreateOrder = await httpOrder.post(orderData);
     console.log(CreateOrder);
+
     if (CreateOrder) {
       toast.success("Mua hàng thành công", {
         position: "bottom-right",
@@ -103,6 +108,10 @@ function Checkout() {
   } = useForm<Order>({
     defaultValues: {},
   });
+  function handleChange(e: any) {
+    setValue(e.target.value);
+  }
+
   return (
     <Grid bgcolor={"#eee"} pb={"170px"}>
       <Container
@@ -297,7 +306,43 @@ function Checkout() {
             PHƯƠNG THỨC THANH TOÁN
           </Typography>
           <Box>
-            <Stack direction={"row"} spacing={2} py={1}>
+            <FormControl component="fieldset">
+              <Controller
+                name="orderType"
+                control={control}
+                rules={{ required: "Vui lòng nhập phương thức thanh toán" }}
+                render={({ field }) => (
+                  <RadioGroup
+                    aria-labelledby="demo-controlled-radio-buttons-group"
+                    value={field.value}
+                    onChange={field.onChange}
+                  >
+                    <FormControlLabel
+                      value="COD"
+                      control={<Radio />}
+                      sx={{
+                        fontWeight: "bold",
+                      }}
+                      label="Thanh toán bằng tiền mặt khi nhận hàng COD"
+                    />
+                    <FormControlLabel
+                      value="Visa"
+                      sx={{
+                        fontWeight: "bold",
+                      }}
+                      control={<Radio />}
+                      label="Thanh toán bằng thẻ Visa"
+                    />
+                  </RadioGroup>
+                )}
+              />
+
+              <FormHelperText sx={{ color: color.error }}>
+                {errors.orderType && errors.orderType.message}
+              </FormHelperText>
+            </FormControl>
+
+            {/* <Stack direction={"row"} spacing={2} py={1}>
               <Radio
                 sx={{
                   color: "pink[800]",
@@ -315,7 +360,7 @@ function Checkout() {
                   Thanh toán bằng tiền mặt khi nhận hàng
                 </Typography>
               </Stack>
-            </Stack>
+            </Stack> */}
           </Box>
         </Box>
         <Box bgcolor={color.white} mt={2} p={2}>
@@ -363,13 +408,13 @@ function Checkout() {
                             className="cartItem_Price"
                             fontWeight={"bold"}
                           >
-                            {e.price_sale}
+                            {numberFormat(Number(e.price))}
                           </Typography>
                           <Typography
                             variant="caption"
                             className="cartItem_PriceSale"
                           >
-                            sdsdjdjss
+                            {numberFormat(Number(e.price_sale))}
                           </Typography>
                         </Stack>
                       </Stack>
@@ -381,9 +426,9 @@ function Checkout() {
                     spacing={10}
                   >
                     <Typography>{e.cartQuantity}</Typography>
-                    <Typography color={"#F39801"}>
+                    <Typography color={"#F39801"} fontWeight={"bold"}>
                       {e.cartQuantity && e.price_sale
-                        ? e.cartQuantity * e.price_sale
+                        ? numberFormat(Number(e.cartQuantity * e.price_sale))
                         : ""}
                     </Typography>
                   </Stack>

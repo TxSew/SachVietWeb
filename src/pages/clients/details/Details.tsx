@@ -25,17 +25,18 @@ import HttpProductController from "../../../submodules/controllers/http/httpProd
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
 import ProductItem from "../../../components/ProductItem/ProductItem";
+import { numberFormat } from "../../../helpers/formatPrice";
 
 const http = new HttpProductController(BaseAPi);
 export const Details = () => {
-   const [RelatedProduct, setRelatedProduct] = useState<Product[]>([])
+  const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
   const redirect = useNavigate();
   const { id } = useParams();
   const [Detail, setDetail] = useState<Product>({});
   const Id: any = id;
   useEffect(() => {
     // 👇️ scroll to top on page load
-    window.scrollTo({top: 0, left: 0, behavior: 'auto'});
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [id]);
   const FetchProductOne = async () => {
     try {
@@ -44,8 +45,6 @@ export const Details = () => {
       }
       setDetail(detailValue.product);
       setRelatedProduct(detailValue.relatedProducts);
-       console.log(detailValue);
-       
     } catch (err) {
       console.log(err);
     }
@@ -98,8 +97,7 @@ export const Details = () => {
                   <Stack flex={1} justifyContent={"center"} spacing={2}>
                     <img
                       src={Detail?.image}
-
-                            id={`/products/${Detail.slug}`}
+                      id={`/products/${Detail.slug}`}
                       alt=""
                       width={"100%"}
                       height={"388px"}
@@ -206,7 +204,7 @@ export const Details = () => {
                       fontSize={25}
                       fontWeight={"bold"}
                     >
-                      {`${NumberFormattingComponent(Detail?.price_sale)}  `}
+                      {`${numberFormat(Number(Detail.price_sale))} `}
                     </Typography>
                     <Typography
                       className="price"
@@ -215,8 +213,7 @@ export const Details = () => {
                         textDecoration: "line-through",
                       }}
                     >
-
-                      {`${NumberFormattingComponent(Detail?.price)} `}
+                      {`${numberFormat(Number(Detail.price))} `}
                     </Typography>
 
                     <Typography
@@ -374,22 +371,18 @@ export const Details = () => {
             <Typography variant="h2" fontWeight={"bold"} fontSize={"18.85px"}>
               Sản phẩm liên quan
             </Typography>
-           
+
             <Grid container mt={2}>
-             {
-               RelatedProduct.map((e) => {
-                 return (
-                   <Grid xs={2} item > 
-                  <ProductItem products={e}/> 
-                   </Grid>
-                 ) 
-               })
-             }
+              {RelatedProduct.map((e) => {
+                return (
+                  <Grid xs={2} item>
+                    <ProductItem products={e} />
+                  </Grid>
+                );
+              })}
             </Grid>
           </Box>
         </Box>
-
-
       </Container>
     </Box>
   );

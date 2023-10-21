@@ -30,6 +30,7 @@ import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
+import { numberFormat } from "../../../helpers/formatPrice";
 
 const http = new HttpProductController(BaseAPi);
 export default function AdminProduct() {
@@ -42,22 +43,22 @@ export default function AdminProduct() {
   const [sort, setSort] = React.useState("");
   const debounce = useDebounce(search, 400);
   React.useEffect(() => {
-    fetchData(page, debounce, sortBy, sortWith );
+    fetchData(page, debounce, sortBy, sortWith);
   }, [page, debounce, sortBy, sortWith]);
   const fetchData = async (
     page: number,
     search: string = debounce || "",
     sortBy: string,
-    sortWith: string,
+    sortWith: string
   ) => {
-       const limit = '6';
+    const limit = "6";
     try {
       const ProductData: any = await http.getAll(
         page,
         search,
         sortBy,
         sortWith,
-         limit
+        limit
       );
       const data: any = ProductData.products;
       setPageCount(ProductData.totalPage);
@@ -216,7 +217,7 @@ export default function AdminProduct() {
                   <TableCell align="right">{e.quantity}</TableCell>
                   <TableCell align="right">{e.category?.name}</TableCell>
                   <TableCell align="right">
-                    {NumberFormattingComponent(e.price_sale)}
+                    {numberFormat(Number(e.price_sale))}
                   </TableCell>
                   <TableCell align="right">{e.producer?.name}</TableCell>
                   <TableCell align="right">

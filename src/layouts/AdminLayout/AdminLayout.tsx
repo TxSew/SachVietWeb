@@ -1,8 +1,5 @@
-import { Grid } from "@mui/material";
 import React from "react";
-import HeaderAdmin from "../components/HeaderAdmin/HeaderAdmin";
-import { NavLink } from "react-router-dom";
-
+import { BiBookAdd, BiSolidCategoryAlt } from "react-icons/bi";
 import {
   FaBell,
   FaBookOpen,
@@ -11,10 +8,9 @@ import {
   FaHome,
   FaListUl,
   FaSearch,
-  FaWpforms
 } from "react-icons/fa";
-
-import { BiBookAdd, BiSolidCategoryAlt } from "react-icons/bi";
+import { NavLink } from "react-router-dom";
+import "./style.scss";
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
   return (

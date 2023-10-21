@@ -17,6 +17,7 @@ import {
 } from "../../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../../redux/storeClient";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
+import { numberFormat } from "../../../../../helpers/formatPrice";
 
 const CartProduct = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const CartProduct = () => {
   );
 
   const cart = useSelector((state: RootState) => state.cart.cartItems);
-  console.log(cart);
   useEffect(() => {
     fetchCart();
   }, []);
@@ -42,7 +42,6 @@ const CartProduct = () => {
   }, [dispatch, cart]);
 
   const handleRemove = (id: any) => {
-    console.log(cart);
     const remove = cart.filter((cart: any) => cart.id !== id);
     dispatch(removeFromCart(id));
     setCart(remove);
@@ -57,7 +56,7 @@ const CartProduct = () => {
   return (
     <Container maxWidth="xl">
       <Grid container spacing={2}>
-        <Grid item xs={8}>
+        <Grid item xs={12} md={8}>
           <Stack
             bgcolor={color.white}
             direction={"row"}
@@ -116,7 +115,7 @@ const CartProduct = () => {
                             className="cartItem_Price"
                             fontWeight={"bold"}
                           >
-                            {`${element.price} đ`}
+                            {numberFormat(Number(element.price))}
                           </Typography>
                           <Typography
                             variant="caption"
@@ -125,7 +124,7 @@ const CartProduct = () => {
                               textDecoration: "underline",
                             }}
                           >
-                            {`${element.price_sale} đ`}
+                            {`${numberFormat(Number(element.price_sale))} `}
                           </Typography>
                         </Stack>
                       </Stack>
@@ -152,9 +151,13 @@ const CartProduct = () => {
                           onClick={() => handleDes(element.id)}
                         />
                       </Box>
-                      <Typography variant="caption">
-                        {element.cartQuantity}
-                      </Typography>
+                      <input
+                        type="text"
+                        value={element?.cartQuantity}
+                        style={{
+                          width: "10px",
+                        }}
+                      />
                       <AddIcon
                         onClick={() => handleIncrement(element)}
                         sx={{
@@ -167,7 +170,9 @@ const CartProduct = () => {
                       {
                         element?.price_sale !== undefined &&
                         element?.cartQuantity !== undefined
-                          ? `${element.price_sale * element.cartQuantity} đ`
+                          ? `${numberFormat(
+                              Number(element.price_sale * element.cartQuantity)
+                            )} `
                           : "N/A" /* Replace "N/A" with your preferred placeholder */
                       }
                     </Typography>
@@ -184,8 +189,7 @@ const CartProduct = () => {
             })}
           </Box>
         </Grid>
-
-        <Grid item xs={4}>
+        <Grid item xs={12} md={4}>
           <Box bgcolor={color.white} px={2} borderRadius={2}>
             <Stack
               direction={"row"}
@@ -275,7 +279,7 @@ const CartProduct = () => {
                   fontWeight={"bold"}
                   color={color.error}
                 >
-                  {`${cartTotalAmount} đ`}
+                  {`${numberFormat(Number(cartTotalAmount))}`}
                 </Typography>
               </Stack>
               <Link to={"/checkout"}>

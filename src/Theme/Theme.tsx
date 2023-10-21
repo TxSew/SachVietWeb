@@ -8,7 +8,12 @@ export const Theme = createTheme({
     },
   },
   typography: {
-    h1: {},
+    h1: {
+      fontSize: "30px",
+    },
+    caption: {
+      fontSize: "14px",
+    },
   },
   components: {
     MuiTextField: {
@@ -76,6 +81,13 @@ export const Theme = createTheme({
         },
       ],
     },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: "10px",
+        },
+      },
+    },
     MuiStack: {
       defaultProps: {
         sx: {
@@ -90,6 +102,12 @@ export const Theme = createTheme({
         },
       },
     },
-    MuiContainer: {},
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          maxWidth: "1280px !important",
+        },
+      },
+    },
   },
 });
