@@ -16,6 +16,7 @@ export interface Order extends BaseModel, Modified {
   district?: string;
   address?: string;
   users?: User;
+  orderType?: string;
   orderDetail?: OrderDetail[];
   product?: Product;
 }

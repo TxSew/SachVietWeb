@@ -4,15 +4,7 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
-import {
-  Badge,
-  Grid,
-  Stack,
-  styled,
-  TextField,
-  Modal,
-  ModalManager
-} from "@mui/material";
+import { Badge, Grid, Stack, TextField, styled } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
@@ -21,9 +13,20 @@ import { Link, NavLink } from "react-router-dom";
 import Image from "../../../components/Image/Image";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
+import { useEffect, useState } from "react";
+import { User } from "../../../submodules/models/UserModel/User";
 const Header = () => {
+  const [user, setUser] = useState<User>({} as User);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
   const { isMediumMD } = useMedia();
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    const getUser = JSON.parse(user!);
+    if (getUser) {
+      setUser(getUser);
+    }
+  }, []);
+
   const BoxIcon = styled(Box)`
     display: flex;
     flex-direction: column;
@@ -37,12 +40,12 @@ const Header = () => {
     }
   `;
   const style = {
-    position: 'absolute',
-    top: '20%',
+    position: "absolute",
+    top: "20%",
     left: "47%",
-    transform: 'translate(-50%, -50%)',
+    transform: "translate(-50%, -50%)",
     width: "600px",
-    bgcolor: 'background.paper',
+    bgcolor: "background.paper",
     boxShadow: 24,
     p: 4,
   };
@@ -52,7 +55,7 @@ const Header = () => {
         <>
           <Grid
             sx={{
-              backgroundColor: "#008c89"
+              backgroundColor: "#008c89",
             }}
           >
             <Container maxWidth={"xl"}>
@@ -66,7 +69,7 @@ const Header = () => {
           </Grid>
           <Box
             sx={{
-              py: "10px"
+              py: "10px",
             }}
           >
             <Container maxWidth="xl">
@@ -75,14 +78,14 @@ const Header = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Grid item xs={2}>
                   <Link to={"/"}>
                     <Box
                       sx={{
-                        mb: "15px"
+                        mb: "15px",
                       }}
                     >
                       <Image
@@ -101,12 +104,12 @@ const Header = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                 >
                   <Box
                     sx={{
-                      textAlign: "right"
+                      textAlign: "right",
                     }}
                   >
                     <Stack
@@ -114,7 +117,7 @@ const Header = () => {
                         display: "flex",
                         flexDirection: "row",
                         alignItems: "center",
-                        justifyContent: "center"
+                        justifyContent: "center",
                       }}
                     >
                       <FormatListBulletedOutlinedIcon
@@ -122,21 +125,23 @@ const Header = () => {
                           marginLeft: "auto",
                           width: "36px",
                           height: "36px",
-                          color: "gray"
+                          color: "gray",
                         }}
                       />
                       <ExpandMoreOutlinedIcon
                         sx={{
-                          color: "gray"
+                          color: "gray",
                         }}
                       />
                     </Stack>
                   </Box>
                 </Grid>
-                <Grid item xs={5.5}
-                sx={{
-                   position: "relative",
-                }} 
+                <Grid
+                  item
+                  xs={5.5}
+                  sx={{
+                    position: "relative",
+                  }}
                 >
                   <Stack
                     sx={{
@@ -147,13 +152,13 @@ const Header = () => {
                       justifyContent: "center",
                       border: "1px solid #ccc",
                       padding: "3px 10px",
-                      borderRadius: "5px"
+                      borderRadius: "5px",
                     }}
                   >
                     <TextField
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
-                        width: "100%"
+                        width: "100%",
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
@@ -166,16 +171,16 @@ const Header = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <SearchIcon
                         sx={{
-                          color: "#fff"
+                          color: "#fff",
                         }}
                       />
                     </Typography>
-                 </Stack>
+                  </Stack>
                 </Grid>
                 <Grid
                   item
@@ -184,7 +189,7 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    pl: "24px"
+                    pl: "24px",
                   }}
                 >
                   <BoxIcon>
@@ -201,12 +206,21 @@ const Header = () => {
                     </NavLink>
                     <Typography variant="caption">Giỏ hàng </Typography>
                   </BoxIcon>
-                  <BoxIcon>
-                    <NavLink to={"/auth"}>
-                      <PersonOutlineOutlinedIcon />
-                    </NavLink>
-                    <Typography variant="caption">Tài khoản </Typography>
-                  </BoxIcon>
+                  {user.id ? (
+                    <BoxIcon>
+                      <NavLink to={"/user"}>
+                        <PersonOutlineOutlinedIcon />
+                      </NavLink>
+                      <Typography variant="caption">Tài khoản </Typography>
+                    </BoxIcon>
+                  ) : (
+                    <BoxIcon>
+                      <NavLink to={"/auth"}>
+                        <PersonOutlineOutlinedIcon />
+                      </NavLink>
+                      <Typography variant="caption">Đăng nhập </Typography>
+                    </BoxIcon>
+                  )}
                   <Stack
                     sx={{
                       display: "flex",
@@ -214,7 +228,7 @@ const Header = () => {
                       alignItems: "center",
                       padding: "5px",
                       border: "1px solid #ccc",
-                      borderRadius: "3px"
+                      borderRadius: "3px",
                     }}
                   >
                     <Image
@@ -225,7 +239,7 @@ const Header = () => {
                     />
                     <ExpandMoreOutlinedIcon
                       sx={{
-                        color: "gray"
+                        color: "gray",
                       }}
                     />
                   </Stack>
@@ -239,7 +253,7 @@ const Header = () => {
           <Grid
             sx={{
               py: "10px",
-              backgroundColor: "#C92127"
+              backgroundColor: "#C92127",
             }}
           >
             <Container>
@@ -252,7 +266,7 @@ const Header = () => {
                       display: "flex",
                       justifyContent: "center",
                       maxWidth: "220px",
-                      mx: "auto"
+                      mx: "auto",
                     }}
                   >
                     <Image
@@ -269,7 +283,7 @@ const Header = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center"
+                  alignItems: "center",
                 }}
               >
                 <Grid
@@ -280,19 +294,19 @@ const Header = () => {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    paddingRight: "10px"
+                    paddingRight: "10px",
                   }}
                 >
                   <Box
                     sx={{
-                      textAlign: "right"
+                      textAlign: "right",
                     }}
                     color={"white"}
                   >
                     <FormatListBulletedOutlinedIcon
                       sx={{
                         width: "36px",
-                        height: "36px"
+                        height: "36px",
                       }}
                     />
                   </Box>
@@ -306,13 +320,13 @@ const Header = () => {
                       justifyContent: "center",
                       backgroundColor: "#fff",
                       border: "1px solid #ccc",
-                      borderRadius: "5px"
+                      borderRadius: "5px",
                     }}
                   >
                     <TextField
                       sx={{
                         width: "100%",
-                        "& fieldset": { border: "none", width: "100%" }
+                        "& fieldset": { border: "none", width: "100%" },
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
@@ -326,19 +340,19 @@ const Header = () => {
                     alignItems: "center",
                     color: "#fff",
                     pl: "24px",
-                    gap: "5px"
+                    gap: "5px",
                   }}
                 >
                   <ShoppingCartOutlinedIcon
                     sx={{
                       width: "30px",
-                      height: "30px"
+                      height: "30px",
                     }}
                   />
                   <PersonOutlineOutlinedIcon
                     sx={{
                       width: "30px",
-                      height: "30px"
+                      height: "30px",
                     }}
                   />
                 </Grid>

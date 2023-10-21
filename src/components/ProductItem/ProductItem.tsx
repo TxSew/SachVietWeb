@@ -10,12 +10,11 @@ import {
   NumberFormattingComponent,
   formatByPrice,
 } from "../../helpers/formatvalidate";
+import { numberFormat } from "../../helpers/formatPrice";
 interface ProductItem {
   products: Product;
 }
 const ProductItem = (Props: ProductItem) => {
-  console.log(Props.products);
-
   return (
     <Card
       variant="outlined"
@@ -23,7 +22,7 @@ const ProductItem = (Props: ProductItem) => {
         border: "1px solid #eee",
       }}
     >
-      <Link  to={`/products/${Props.products.slug}`}>
+      <Link to={`/products/${Props.products.slug}`}>
         <CardMedia
           component="img"
           height={"190px"}
@@ -39,26 +38,34 @@ const ProductItem = (Props: ProductItem) => {
       <CardContent>
         <Typography
           variant="body1"
-          color={color.text_color}
-          fontSize={16}
+          color={"#3333333"}
+          fontSize={"14px"}
           textTransform={"capitalize"}
+          sx={{
+            overflow: "hidden",
+            display: "-webkit-box",
+            lineClamp: 2,
+            "-webkit-line-clamp": 2,
+            "-webkit-box-orient": "vertical",
+          }}
         >
           {Props.products.title}
         </Typography>
-        <Stack direction={"row"} spacing={3} mt={2}>
+        <Stack direction={"row"} spacing={2} mt={"10px"}>
           <Typography
             className="price"
-            color={color.error}
-            fontSize={18}
+            color={"gray"}
+            fontSize={"16.5px"}
             fontWeight={"bold"}
           >
-           {`${NumberFormattingComponent(Props.products.price)}`}
+            {numberFormat(Number(Props.products.price))}
           </Typography>
           <Typography
             variant="caption"
-            bgcolor={color.error}
-            color={color.white}
-            p={"3px 10px"}
+            bgcolor={"lightBlue"}
+            color={color.error}
+            p={"1px 6px"}
+            fontSize={"16.5px"}
             borderRadius={"3px"}
             fontWeight={"bold"}
           >
@@ -66,17 +73,17 @@ const ProductItem = (Props: ProductItem) => {
           </Typography>
         </Stack>
         <Typography
-          color={color.text_color}
+          color={"#888888"}
           sx={{
             textDecoration: "line-through",
           }}
         >
-          {`${NumberFormattingComponent(Props.products.price_sale)} `}
+          {`${numberFormat(Number(Props.products.price_sale))} `}
         </Typography>
       </CardContent>
       <Rating
         sx={{
-          p: 2,
+          pl: 2,
         }}
         defaultChecked={true}
         defaultValue={2}

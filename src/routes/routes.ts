@@ -82,6 +82,7 @@ const PublicRouter = [
     path: "/user/mycart",
     component: UserMyCart,
   },
+  { path: "/admin", component: Auth },
 ];
 const PrivateRouter = [
   {

@@ -29,6 +29,7 @@ import HttpDiscountController from "../../../submodules/controllers/http/httpDis
 import DiscountIcon from "@mui/icons-material/Discount";
 import moment from "moment";
 import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
+import { numberFormat } from "../../../helpers/formatPrice";
 
 const http = new HttpDiscountController(BaseAPi);
 export default function AdminDiscount() {
@@ -141,7 +142,7 @@ export default function AdminDiscount() {
                     {NumberFormattingComponent(e.discount)}
                   </TableCell>
                   <TableCell align="right">
-                    {NumberFormattingComponent(e.payment_limit)}
+                    {numberFormat(Number(e.payment_limit))}
                   </TableCell>
                   <TableCell align="right">{e.limit_number}</TableCell>
 
