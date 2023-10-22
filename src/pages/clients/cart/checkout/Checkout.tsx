@@ -20,24 +20,21 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
 import { numberFormat } from "../../../../helpers/formatPrice";
-import {
-  clearCart,
-  getTotals,
-} from "../../../../redux/features/cart/CartProducer";
+import { getTotals } from "../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../redux/storeClient";
 import HttpCartController from "../../../../submodules/controllers/http/httpCartController";
 import HttpProviceController from "../../../../submodules/controllers/http/httpProvinceController";
+import HttpPaymentController from "../../../../submodules/controllers/http/httppaymentController";
 import { Order } from "../../../../submodules/models/OrderModel/Order";
 import { Product } from "../../../../submodules/models/ProductModel/Product";
 import {
   Province,
   district,
 } from "../../../../submodules/models/Province/Province";
-import HttpPaymentController from "../../../../submodules/controllers/http/httppaymentController";
+import { User } from "../../../../submodules/models/UserModel/User";
 const httpProvince = new HttpProviceController(BaseAPi);
 const httpPayment = new HttpPaymentController(BaseAPi);
 const httpOrder = new HttpCartController(BaseAPi);
@@ -45,6 +42,7 @@ function Checkout() {
   const redirect = useNavigate();
   const dispatch = useDispatch();
   const [value, setValue] = useState("COD");
+  const [user, setUser] = useState<User>({} as User);
   const { cartTotalAmount, cartItems } = useSelector(
     (state: RootState) => state.cart
   );
@@ -53,8 +51,13 @@ function Checkout() {
   useEffect(() => {
     fetchProvince();
     fetchDistrict();
+    fetchUser();
   }, []);
-
+  const fetchUser = () => {
+    const user = localStorage.getItem("user");
+    const DataUser = JSON.parse(user!);
+    setUser(DataUser);
+  };
   useEffect(() => {
     dispatch(getTotals());
   }, [dispatch, cart]);
@@ -84,6 +87,7 @@ function Checkout() {
 
     const orders = {
       ...data,
+      userID: user?.id ?? null,
       money: cartTotalAmount,
     };
 
@@ -93,25 +97,24 @@ function Checkout() {
       paymentMethod: data.orderType,
     };
 
-    const CreateOrder = await httpPayment.getPayment(orderData);
-    if (CreateOrder) {
-      window.location.assign(CreateOrder);
+    const payment = await httpPayment.getPayment(orderData);
+    console.log(payment);
+    if (payment.paymentMethod == "COD") {
+      window.location.assign("http://localhost:3000/checkout/payment");
     }
-    // if (CreateOrder) {
-    //   toast.success("Mua hàng thành công", {
-    //     position: "bottom-right",
-    //   });
-    //   dispatch(clearCart());
-    //   // redirect("/checkout/payment");
-    // }
+    if (payment.paymentMethod == "Visa") {
+      window.location.assign(payment.url);
+    }
   };
   const {
     handleSubmit,
+
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<Order>({
     defaultValues: {},
   });
+
   function handleChange(e: any) {
     setValue(e.target.value);
   }
@@ -467,7 +470,7 @@ function Checkout() {
                 Thành tiền
               </Typography>
               <Typography variant="body1" fontSize={"15.5px"}>
-                {cartTotalAmount}
+                {numberFormat(Number(cartTotalAmount))}
               </Typography>
             </Stack>
             <Stack direction={"row"} spacing={3} justifyContent={"flex-end"}>
@@ -492,7 +495,7 @@ function Checkout() {
                 fontWeight={"bold"}
                 color={"#F39801"}
               >
-                {cartTotalAmount + ` đ`}
+                {numberFormat(Number(cartTotalAmount + 19000))}
               </Typography>
             </Stack>
           </Box>
@@ -508,8 +511,9 @@ function Checkout() {
                 type="button"
                 onClick={handleSubmit(handleCheckout)}
                 variant="contained"
+                disabled={isSubmitting}
               >
-                Xác nhận thanh toán
+                {isSubmitting ? "Đang xử lý..." : "Thanh toán"}
               </Button>
             </Stack>
           </Box>
