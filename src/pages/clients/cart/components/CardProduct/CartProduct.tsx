@@ -13,11 +13,12 @@ import {
   addToCart,
   decreaseCart,
   getTotals,
-  removeFromCart,
+  removeFromCart
 } from "../../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../../redux/storeClient";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
 import { numberFormat } from "../../../../../helpers/formatPrice";
+import EditIcon from "@mui/icons-material/Edit";
 
 const CartProduct = () => {
   const dispatch = useDispatch();
@@ -57,40 +58,47 @@ const CartProduct = () => {
     <Container maxWidth="xl">
       <Grid container spacing={2}>
         <Grid item xs={12} md={8}>
-          <Stack
+          <Grid
+            display={"flex"}
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
             bgcolor={color.white}
-            direction={"row"}
-            justifyContent={"space-between"}
             p={2}
             borderRadius={"4px"}
           >
-            <Stack direction={"row"} spacing={3}>
+            <Grid item xs={6} md={6}>
               <Typography>
                 Tổng số lượng ({cartTotalQuantity} sản phẩm)
               </Typography>
-            </Stack>
-
-            <Stack direction={"row"} spacing={3} pr={4}>
+            </Grid>
+            <Grid item xs={2.5} md={3} textAlign={"center"}>
               <Typography>Số lượng</Typography>
+            </Grid>
+            <Grid item xs={2.5} md={2} textAlign={"center"}>
               <Typography>Thành tiền</Typography>
-            </Stack>
-          </Stack>
+            </Grid>
+            <Grid item xs={1} md={1}></Grid>
+          </Grid>
           <Box>
             {cart.map((element: Product) => {
               return (
-                <Stack
+                <Grid
                   className="cartItem"
-                  direction={"row"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  rowSpacing={1}
+                  columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+                  bgcolor={color.white}
                   mt={2}
                   p={2}
-                  borderRadius={2}
-                  bgcolor={color.white}
-                  justifyContent={"space-between"}
+                  borderRadius={"4px"}
                 >
-                  <Stack
+                  <Grid
                     className="cartItem_thumb"
                     direction={"row"}
                     spacing={2}
+                    xs={6}
+                    md={6}
                   >
                     <Stack direction={"row"} alignItems={"normal"} spacing={2}>
                       <Box maxWidth={"119px"}>
@@ -121,7 +129,7 @@ const CartProduct = () => {
                             variant="caption"
                             className="cartItem_PriceSale"
                             sx={{
-                              textDecoration: "underline",
+                              textDecoration: "underline"
                             }}
                           >
                             {`${numberFormat(Number(element.price_sale))} `}
@@ -129,11 +137,16 @@ const CartProduct = () => {
                         </Stack>
                       </Stack>
                     </Stack>
-                  </Stack>
-                  <Stack
+                  </Grid>
+                  <Grid
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
                     className="cartItem_action"
                     direction={"row"}
                     spacing={2}
+                    xs={2.5}
+                    md={3}
                   >
                     <Stack
                       direction={"row"}
@@ -141,31 +154,35 @@ const CartProduct = () => {
                       border={"1px solid #eee"}
                       p={"3px 10px"}
                       borderRadius={2}
+                      display={"flex"}
+                      textAlign={"center"}
+                      alignItems={"center"}
+                      justifyContent={"space-between"}
                     >
-                      <Box>
-                        <RemoveIcon
-                          sx={{
-                            fontSize: "17px",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => handleDes(element.id)}
-                        />
-                      </Box>
+                      <RemoveIcon
+                        sx={{
+                          fontSize: "17px",
+                          cursor: "pointer"
+                        }}
+                        onClick={() => handleDes(element.id)}
+                      />
                       <input
                         type="text"
                         value={element?.cartQuantity}
                         style={{
-                          width: "10px",
+                          width: "10px"
                         }}
                       />
                       <AddIcon
                         onClick={() => handleIncrement(element)}
                         sx={{
                           fontSize: "17px",
-                          cursor: "pointer",
+                          cursor: "pointer"
                         }}
                       />
                     </Stack>
+                  </Grid>
+                  <Grid xs={2.5} md={2} textAlign={"center"}>
                     <Typography color={"#F39801"}>
                       {
                         element?.price_sale !== undefined &&
@@ -176,15 +193,17 @@ const CartProduct = () => {
                           : "N/A" /* Replace "N/A" with your preferred placeholder */
                       }
                     </Typography>
+                  </Grid>
+                  <Grid xs={1} md={1} textAlign={"end"}>
                     <DeleteForeverIcon
                       onClick={() => handleRemove(element.id)}
                       sx={{
                         fontSize: "17px",
-                        cursor: "pointer",
+                        cursor: "pointer"
                       }}
                     />
-                  </Stack>
-                </Stack>
+                  </Grid>
+                </Grid>
               );
             })}
           </Box>
@@ -201,7 +220,7 @@ const CartProduct = () => {
                 <Typography variant="body1">KHUYẾN MÃI</Typography>
                 <LoyaltyIcon
                   sx={{
-                    fontSize: "17px",
+                    fontSize: "17px"
                   }}
                 />
               </Stack>
@@ -224,7 +243,7 @@ const CartProduct = () => {
                   placeholder="Nhập mã khuyến mãi/Quà tặng"
                   style={{
                     flex: 1,
-                    color: "inherit",
+                    color: "inherit"
                   }}
                 />
                 <Button variant="outlined">
@@ -288,7 +307,7 @@ const CartProduct = () => {
                   sx={{
                     marginTop: "10px",
                     bgcolor: "red",
-                    color: "#fff",
+                    color: "#fff"
                   }}
                   fullWidth
                 >

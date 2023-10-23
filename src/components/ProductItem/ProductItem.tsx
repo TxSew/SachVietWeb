@@ -8,7 +8,7 @@ import { color } from "../../Theme/color";
 import { Product } from "../../submodules/models/ProductModel/Product";
 import {
   NumberFormattingComponent,
-  formatByPrice,
+  formatByPrice
 } from "../../helpers/formatvalidate";
 import { numberFormat } from "../../helpers/formatPrice";
 interface ProductItem {
@@ -20,6 +20,7 @@ const ProductItem = (Props: ProductItem) => {
       variant="outlined"
       sx={{
         border: "1px solid #eee",
+        position: "relative"
       }}
     >
       <Link to={`/products/${Props.products.slug}`}>
@@ -28,7 +29,7 @@ const ProductItem = (Props: ProductItem) => {
           height={"190px"}
           sx={{
             p: 1,
-            objectFit: "cover",
+            objectFit: "cover"
           }}
           title=""
           image={Props.products.image}
@@ -36,6 +37,14 @@ const ProductItem = (Props: ProductItem) => {
       </Link>
 
       <CardContent>
+        <Rating
+          sx={{}}
+          defaultChecked={true}
+          defaultValue={5}
+          name="read-only"
+          size="medium"
+          readOnly
+        />
         <Typography
           variant="body1"
           color={"#3333333"}
@@ -46,7 +55,7 @@ const ProductItem = (Props: ProductItem) => {
             display: "-webkit-box",
             lineClamp: 2,
             "-webkit-line-clamp": 2,
-            "-webkit-box-orient": "vertical",
+            "-webkit-box-orient": "vertical"
           }}
         >
           {Props.products.title}
@@ -71,26 +80,30 @@ const ProductItem = (Props: ProductItem) => {
           >
             {`-${Props.products.sale}%`}
           </Typography>
+          <Typography
+            variant="caption"
+            bgcolor={"lightBlue"}
+            color={color.error}
+            p={"1px 6px"}
+            fontSize={"16.5px"}
+            borderRadius={"3px"}
+            fontWeight={"bold"}
+            position={"absolute"}
+            top={"8px"}
+            left={"-8px"}
+          >
+            tag
+          </Typography>
         </Stack>
         <Typography
           color={"#888888"}
           sx={{
-            textDecoration: "line-through",
+            textDecoration: "line-through"
           }}
         >
           {`${numberFormat(Number(Props.products.price_sale))} `}
         </Typography>
       </CardContent>
-      <Rating
-        sx={{
-          pl: 2,
-        }}
-        defaultChecked={true}
-        defaultValue={2}
-        name="read-only"
-        size="medium"
-        readOnly
-      />
     </Card>
   );
 };
