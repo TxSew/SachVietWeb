@@ -4,7 +4,15 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
-import { Badge, Grid, Stack, TextField, styled } from "@mui/material";
+import {
+  Badge,
+  Button,
+  Grid,
+  Modal,
+  Stack,
+  TextField,
+  styled
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
@@ -15,6 +23,7 @@ import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
 import { useEffect, useState } from "react";
 import { User } from "../../../submodules/models/UserModel/User";
+import * as React from "react";
 const Header = () => {
   const [user, setUser] = useState<User>({} as User);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
@@ -32,6 +41,7 @@ const Header = () => {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    color: gray;
     & > a {
       color: gray;
     }
@@ -41,21 +51,26 @@ const Header = () => {
   `;
   const style = {
     position: "absolute",
-    top: "20%",
-    left: "47%",
-    transform: "translate(-50%, -50%)",
-    width: "600px",
+    top: "00",
+    left: "00",
+    width: "300px",
+    height: "100vh",
     bgcolor: "background.paper",
+    borderRight: "1px solid #000",
     boxShadow: 24,
-    p: 4,
+    outline: "none",
+    p: 4
   };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Box>
       {!isMediumMD ? (
         <>
           <Grid
             sx={{
-              backgroundColor: "#008c89",
+              backgroundColor: "#008c89"
             }}
           >
             <Container maxWidth={"xl"}>
@@ -69,7 +84,7 @@ const Header = () => {
           </Grid>
           <Box
             sx={{
-              py: "10px",
+              py: "10px"
             }}
           >
             <Container maxWidth="xl">
@@ -78,14 +93,14 @@ const Header = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center",
+                  alignItems: "center"
                 }}
               >
                 <Grid item xs={2}>
                   <Link to={"/"}>
                     <Box
                       sx={{
-                        mb: "15px",
+                        mb: "15px"
                       }}
                     >
                       <Image
@@ -104,43 +119,50 @@ const Header = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
                   <Box
                     sx={{
-                      textAlign: "right",
+                      textAlign: "right"
                     }}
                   >
-                    <Stack
+                    <FormatListBulletedOutlinedIcon
+                      onClick={handleOpen}
                       sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center",
+                        marginLeft: "auto",
+                        width: "36px",
+                        height: "36px",
+                        color: "gray"
                       }}
+                    />
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
                     >
-                      <FormatListBulletedOutlinedIcon
-                        sx={{
-                          marginLeft: "auto",
-                          width: "36px",
-                          height: "36px",
-                          color: "gray",
-                        }}
-                      />
-                      <ExpandMoreOutlinedIcon
-                        sx={{
-                          color: "gray",
-                        }}
-                      />
-                    </Stack>
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Text in a modal
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          Duis mollis, est non commodo luctus, nisi erat
+                          porttitor ligula.
+                        </Typography>
+                      </Box>
+                    </Modal>
                   </Box>
                 </Grid>
                 <Grid
                   item
                   xs={5.5}
                   sx={{
-                    position: "relative",
+                    position: "relative"
                   }}
                 >
                   <Stack
@@ -152,13 +174,13 @@ const Header = () => {
                       justifyContent: "center",
                       border: "1px solid #ccc",
                       padding: "3px 10px",
-                      borderRadius: "5px",
+                      borderRadius: "5px"
                     }}
                   >
                     <TextField
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
-                        width: "100%",
+                        width: "100%"
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
@@ -171,12 +193,12 @@ const Header = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        borderRadius: "5px",
+                        borderRadius: "5px"
                       }}
                     >
                       <SearchIcon
                         sx={{
-                          color: "#fff",
+                          color: "#fff"
                         }}
                       />
                     </Typography>
@@ -189,37 +211,37 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    pl: "24px",
+                    pl: "24px"
                   }}
                 >
-                  <BoxIcon>
-                    <NavLink to={"/"}>
-                      <VolumeUpOutlinedIcon />
-                    </NavLink>
-                    <Typography variant="caption">Thông báo</Typography>
-                  </BoxIcon>
-                  <BoxIcon>
-                    <NavLink to={"/cart"}>
+                  <NavLink to={"/"}>
+                    <BoxIcon>
+                      <VolumeUpOutlinedIcon className="icon" />
+                      <Typography variant="caption">Thông báo</Typography>
+                    </BoxIcon>
+                  </NavLink>
+                  <NavLink to={"/cart"}>
+                    <BoxIcon>
                       <Badge badgeContent={cart.length} color="primary">
                         <ShoppingCartOutlinedIcon />
                       </Badge>
-                    </NavLink>
-                    <Typography variant="caption">Giỏ hàng </Typography>
-                  </BoxIcon>
+                      <Typography variant="caption">Giỏ hàng </Typography>
+                    </BoxIcon>
+                  </NavLink>
                   {user.id ? (
-                    <BoxIcon>
-                      <NavLink to={"/user"}>
+                    <NavLink to={"/user"}>
+                      <BoxIcon>
                         <PersonOutlineOutlinedIcon />
-                      </NavLink>
-                      <Typography variant="caption">Tài khoản </Typography>
-                    </BoxIcon>
+                        <Typography variant="caption">Tài khoản </Typography>
+                      </BoxIcon>
+                    </NavLink>
                   ) : (
-                    <BoxIcon>
-                      <NavLink to={"/auth"}>
+                    <NavLink to={"/auth"}>
+                      <BoxIcon>
                         <PersonOutlineOutlinedIcon />
-                      </NavLink>
-                      <Typography variant="caption">Đăng nhập </Typography>
-                    </BoxIcon>
+                        <Typography variant="caption">Đăng nhập </Typography>
+                      </BoxIcon>
+                    </NavLink>
                   )}
                   <Stack
                     sx={{
@@ -228,7 +250,7 @@ const Header = () => {
                       alignItems: "center",
                       padding: "5px",
                       border: "1px solid #ccc",
-                      borderRadius: "3px",
+                      borderRadius: "3px"
                     }}
                   >
                     <Image
@@ -239,7 +261,7 @@ const Header = () => {
                     />
                     <ExpandMoreOutlinedIcon
                       sx={{
-                        color: "gray",
+                        color: "gray"
                       }}
                     />
                   </Stack>
@@ -253,7 +275,7 @@ const Header = () => {
           <Grid
             sx={{
               py: "10px",
-              backgroundColor: "#C92127",
+              backgroundColor: "#C92127"
             }}
           >
             <Container>
@@ -266,7 +288,7 @@ const Header = () => {
                       display: "flex",
                       justifyContent: "center",
                       maxWidth: "220px",
-                      mx: "auto",
+                      mx: "auto"
                     }}
                   >
                     <Image
@@ -283,7 +305,7 @@ const Header = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center",
+                  alignItems: "center"
                 }}
               >
                 <Grid
@@ -294,21 +316,42 @@ const Header = () => {
                     flexDirection: "column",
                     justifyContent: "center",
                     alignItems: "center",
-                    paddingRight: "10px",
+                    paddingRight: "10px"
                   }}
                 >
                   <Box
                     sx={{
-                      textAlign: "right",
+                      textAlign: "right"
                     }}
                     color={"white"}
                   >
                     <FormatListBulletedOutlinedIcon
+                      onClick={handleOpen}
                       sx={{
                         width: "36px",
-                        height: "36px",
+                        height: "36px"
                       }}
                     />
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Text in a modal
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          Duis mollis, est non commodo luctus, nisi erat
+                          porttitor ligula.
+                        </Typography>
+                      </Box>
+                    </Modal>
                   </Box>
                 </Grid>
                 <Grid item xs={9}>
@@ -320,13 +363,13 @@ const Header = () => {
                       justifyContent: "center",
                       backgroundColor: "#fff",
                       border: "1px solid #ccc",
-                      borderRadius: "5px",
+                      borderRadius: "5px"
                     }}
                   >
                     <TextField
                       sx={{
                         width: "100%",
-                        "& fieldset": { border: "none", width: "100%" },
+                        "& fieldset": { border: "none", width: "100%" }
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
@@ -340,19 +383,19 @@ const Header = () => {
                     alignItems: "center",
                     color: "#fff",
                     pl: "24px",
-                    gap: "5px",
+                    gap: "5px"
                   }}
                 >
                   <ShoppingCartOutlinedIcon
                     sx={{
                       width: "30px",
-                      height: "30px",
+                      height: "30px"
                     }}
                   />
                   <PersonOutlineOutlinedIcon
                     sx={{
                       width: "30px",
-                      height: "30px",
+                      height: "30px"
                     }}
                   />
                 </Grid>
