@@ -7,7 +7,7 @@ import {
   FaFlag,
   FaHome,
   FaListUl,
-  FaSearch,
+  FaSearch
 } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import "./style.scss";

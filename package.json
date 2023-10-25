@@ -9,6 +9,7 @@
     "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^8.1.0",
     "@mui/icons-material": "^5.14.6",
+    "@mui/lab": "^5.0.0-alpha.149",
     "@mui/material": "^5.14.6",
     "@mui/styled-engine-sc": "^5.14.6",
     "@reduxjs/toolkit": "^1.9.5",

@@ -18,7 +18,6 @@ import Category from "../pages/clients/Category/Category";
 import HomePage from "../pages/clients/Home/Home";
 import User from "../pages/clients/User/DashboardUser";
 import Auth from "../pages/clients/auth/Auth";
-import ChangePassword from "../pages/clients/auth/changePassword";
 import { Cart } from "../pages/clients/cart/Cart";
 import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Payment from "../pages/clients/cart/payment/Payment";
@@ -35,10 +34,6 @@ const PublicRouter = [
   {
     path: "/auth",
     component: Auth,
-  },
-  {
-    path: "/changePass",
-    component: ChangePassword,
   },
   {
     path: "/cart",

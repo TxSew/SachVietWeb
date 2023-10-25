@@ -108,19 +108,6 @@ const Login = () => {
       <Typography variant="caption" color={color.error}>
         {errors.password && errors.password.message}
       </Typography>
-      <Link to="/changepass">
-        <Typography
-          color={color.error}
-          sx={{
-            mt: "20px",
-            mb: "10px",
-            float: "right"
-          }}
-        >
-          Quên mật khẩu?
-        </Typography>
-      </Link>
-
       <Box
         mt={2}
         sx={{

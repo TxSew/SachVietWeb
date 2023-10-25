@@ -4,7 +4,15 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import SearchIcon from "@mui/icons-material/Search";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
-import { Badge, Grid, Stack, TextField, styled } from "@mui/material";
+import {
+  Badge,
+  Button,
+  Grid,
+  Modal,
+  Stack,
+  TextField,
+  styled
+} from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
@@ -15,6 +23,7 @@ import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
 import { useEffect, useState } from "react";
 import { User } from "../../../submodules/models/UserModel/User";
+import * as React from "react";
 const Header = () => {
   const [user, setUser] = useState<User>({} as User);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
@@ -42,14 +51,19 @@ const Header = () => {
   `;
   const style = {
     position: "absolute",
-    top: "20%",
-    left: "47%",
-    transform: "translate(-50%, -50%)",
-    width: "600px",
+    top: "00",
+    left: "00",
+    width: "300px",
+    height: "100vh",
     bgcolor: "background.paper",
+    borderRight: "1px solid #000",
     boxShadow: 24,
+    outline: "none",
     p: 4
   };
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Box>
       {!isMediumMD ? (
@@ -113,28 +127,35 @@ const Header = () => {
                       textAlign: "right"
                     }}
                   >
-                    <Stack
+                    <FormatListBulletedOutlinedIcon
+                      onClick={handleOpen}
                       sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        justifyContent: "center"
+                        marginLeft: "auto",
+                        width: "36px",
+                        height: "36px",
+                        color: "gray"
                       }}
+                    />
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
                     >
-                      <FormatListBulletedOutlinedIcon
-                        sx={{
-                          marginLeft: "auto",
-                          width: "36px",
-                          height: "36px",
-                          color: "gray"
-                        }}
-                      />
-                      <ExpandMoreOutlinedIcon
-                        sx={{
-                          color: "gray"
-                        }}
-                      />
-                    </Stack>
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Text in a modal
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          Duis mollis, est non commodo luctus, nisi erat
+                          porttitor ligula.
+                        </Typography>
+                      </Box>
+                    </Modal>
                   </Box>
                 </Grid>
                 <Grid
@@ -305,11 +326,32 @@ const Header = () => {
                     color={"white"}
                   >
                     <FormatListBulletedOutlinedIcon
+                      onClick={handleOpen}
                       sx={{
                         width: "36px",
                         height: "36px"
                       }}
                     />
+                    <Modal
+                      open={open}
+                      onClose={handleClose}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={style}>
+                        <Typography
+                          id="modal-modal-title"
+                          variant="h6"
+                          component="h2"
+                        >
+                          Text in a modal
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          Duis mollis, est non commodo luctus, nisi erat
+                          porttitor ligula.
+                        </Typography>
+                      </Box>
+                    </Modal>
                   </Box>
                 </Grid>
                 <Grid item xs={9}>

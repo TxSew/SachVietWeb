@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import Login from "./components/Login";
 import { Register } from "./components/Register";
+import ChangePassword from "./components/changePassword";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -32,7 +33,7 @@ function CustomTabPanel(props: TabPanelProps) {
 function a11yProps(index: number) {
   return {
     id: `simple-tab-${index}`,
-    "aria-controls": `simple-tabpanel-${index}`,
+    "aria-controls": `simple-tabpanel-${index}`
   };
 }
 export default function Auth() {
@@ -47,39 +48,45 @@ export default function Auth() {
         maxWidth="xl"
         sx={{
           pt: 1,
-          pb: 2,
+          pb: 2
         }}
       >
         <Box bgcolor={"#fff"} pt={3} pb={3}>
           <Box maxWidth={"450px"} mx={"auto"}>
             <Box
               sx={{
-                width: "100%",
+                width: "100%"
               }}
             >
               <Box sx={{}}>
                 <Tabs
                   value={value}
-
                   onChange={handleChange}
                   aria-label="basic tabs example"
                   sx={{
-                    width: "100%",
+                    width: "100%"
                   }}
                 >
                   <Tab
                     sx={{
-                      width: "50%",
+                      width: "33.33%"
                     }}
                     label="Đăng nhập"
                     {...a11yProps(0)}
                   />
                   <Tab
                     sx={{
-                      width: "50%",
+                      width: "33.33%"
                     }}
                     label="Đăng kí"
                     {...a11yProps(1)}
+                  />
+                  <Tab
+                    sx={{
+                      width: "33.33%"
+                    }}
+                    label="Quên mật khẩu"
+                    {...a11yProps(2)}
                   />
                 </Tabs>
               </Box>
@@ -88,7 +95,7 @@ export default function Auth() {
               sx={{
                 display: "flex",
                 width: "100%",
-                padding: "20px",
+                padding: "20px"
               }}
             >
               <CustomTabPanel value={value} index={0}>
@@ -96,6 +103,9 @@ export default function Auth() {
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <Register />
+              </CustomTabPanel>
+              <CustomTabPanel value={value} index={2}>
+                <ChangePassword />
               </CustomTabPanel>
             </Grid>
           </Box>
