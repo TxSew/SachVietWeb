@@ -8,7 +8,7 @@ import {
   OutlinedInput,
   Pagination,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -71,8 +71,8 @@ export default function ProducerAdmin() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px",
-              },
+                p: "7px"
+              }
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
@@ -84,7 +84,7 @@ export default function ProducerAdmin() {
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800,
+              minWidth: 800
             }}
             aria-label="simple tablek w"
           >
@@ -92,8 +92,8 @@ export default function ProducerAdmin() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold",
-                  },
+                    fontWeight: "bold"
+                  }
                 }}
               >
                 <TableCell>ID</TableCell>
@@ -135,7 +135,7 @@ export default function ProducerAdmin() {
                       <Link to={`${e.id}`}>
                         <EditIcon
                           sx={{
-                            color: "green",
+                            color: "green"
                           }}
                         />
                       </Link>
@@ -143,7 +143,7 @@ export default function ProducerAdmin() {
                         <DeleteForeverIcon
                           onClick={() => handleRemove(Number(e.id))}
                           sx={{
-                            color: "red",
+                            color: "red"
                           }}
                         />
                       </Box>

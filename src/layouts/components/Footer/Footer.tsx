@@ -7,19 +7,20 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import StackCustom from "../../../components/CustomComponents/Stack/StackCustom";
 import { color } from "../../../Theme/color";
 import useMedia from "../../../hooks/useMedia/useMedia";
+import { Link } from "react-router-dom";
 
 function Footer() {
   const { isMediumMD } = useMedia();
   return (
     <Grid bgcolor={"#eee"}>
       <Container maxWidth={"xl"}>
-        <Box pt={5} bgcolor={color.white}>
+        <Box bgcolor={color.white}>
           <Grid container>
-            <Grid item xs={12} md={4} px={3}>
+            <Grid pt={5} item xs={12} md={4} px={3}>
               <Box
                 sx={{
                   paddingRight: "20px",
-                  borderRight: "1px solid #eee",
+                  borderRight: "1px solid #eee"
                 }}
               >
                 <Image
@@ -41,7 +42,7 @@ function Footer() {
                 </Box>
                 <Box
                   sx={{
-                    marginTop: "20px",
+                    marginTop: "20px"
                   }}
                 >
                   <Typography variant="subtitle1" color="initial" fontSize={13}>
@@ -54,7 +55,7 @@ function Footer() {
                 <Box
                   sx={{
                     maxWidth: "100px",
-                    my: "10px",
+                    my: "10px"
                   }}
                 >
                   <Image
@@ -69,7 +70,7 @@ function Footer() {
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    gap: "10px",
+                    gap: "10px"
                   }}
                   color={"gray"}
                 >
@@ -97,19 +98,17 @@ function Footer() {
               </Box>
             </Grid>
 
-            <Grid item xs={12} md={8} sx={{
-         
-            }}>
+            <Grid pt={5} item xs={12} md={8} sx={{}}>
               <Box
                 sx={{
-                  display: "flex",
+                  display: "flex"
                 }}
               >
                 <Grid item xs={4}>
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "bold",
+                      fontWeight: "bold"
                     }}
                     variant="h2"
                   >
@@ -120,21 +119,45 @@ function Footer() {
                       display: "flex",
                       flexDirection: "column",
                       rowGap: "10px",
-                      mt: "10px",
+                      mt: "10px"
                     }}
                   >
-                    <Typography variant="caption">
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Điều khoản sử dụng
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chính sách bảo mật thông tin cá nhân
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chính sách bảo mật thanh toán
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Hệ thống trung tâm nhà sách
-                    </Typography>
+                    </Link>
                   </Box>
                 </Grid>
 
@@ -143,7 +166,7 @@ function Footer() {
                     variant="h2"
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "bold",
+                      fontWeight: "bold"
                     }}
                   >
                     HỖ TRỢ
@@ -153,24 +176,54 @@ function Footer() {
                       display: "flex",
                       mt: "10px",
                       rowGap: "10px",
-                      flexDirection: "column",
+                      flexDirection: "column"
                     }}
                   >
-                    <Typography variant="caption">
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chính sách đổi - trả - hoàn tiền
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chính sách bảo hành - bồi hoàn
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chính sách vận chuyển
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chính sách khách sỉ
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Phương thức thanh toán và xuất hóa đơn
-                    </Typography>
+                    </Link>
                   </Box>
                 </Grid>
 
@@ -178,7 +231,7 @@ function Footer() {
                   <Typography
                     sx={{
                       fontSize: "20px",
-                      fontWeight: "bold",
+                      fontWeight: "bold"
                     }}
                     variant="h2"
                   >
@@ -189,19 +242,45 @@ function Footer() {
                       display: "flex",
                       flexDirection: "column",
                       rowGap: "10px",
-                      mt: "10px",
+                      mt: "10px"
                     }}
                   >
-                    <Typography variant="caption">
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Đăng nhập tạo tài khoản mới
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Thay đổi địa chỉ khách hàng
-                    </Typography>
-                    <Typography variant="caption">
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
                       Chi tiết khách hàng
-                    </Typography>
-                    <Typography variant="caption">Lịch sử mua hàng</Typography>
+                    </Link>
+                    <Link
+                      to=""
+                      style={{
+                        textDecoration: "none",
+                        color: "black"
+                      }}
+                    >
+                      Lịch sử mua hàng
+                    </Link>
                   </Box>
                 </Grid>
               </Box>
@@ -211,7 +290,7 @@ function Footer() {
                   sx={{
                     fontSize: "20px",
                     fontWeight: "bold",
-                    textTransform: "uppercase",
+                    textTransform: "uppercase"
                   }}
                 >
                   Liên hệ

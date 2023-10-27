@@ -12,7 +12,7 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -78,7 +78,7 @@ export default function AdminProduct() {
   const handleDelete = async (element: any) => {
     const destroy = await http.delete(element.id);
     toast.error("Delete item successfully", {
-      position: "bottom-right",
+      position: "bottom-right"
     });
 
     const product = Products.filter((e) => e.id !== element.id);
@@ -139,40 +139,42 @@ export default function AdminProduct() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px",
-              },
+                p: "7px"
+              }
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
             onChange={handleChangeValue}
           />
-          <Stack sx={{ minWidth: 300 }} direction={"row"}>
-            <Typography>Sắp xếp:</Typography>
-            <FormControl sx={{ m: 1, minWidth: 120 }}>
-              <Select
-                value={sort}
-                onChange={handleChangeSort}
-                displayEmpty
-                inputProps={{ "aria-label": "Without label" }}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={"old"}>Cũ nhất</MenuItem>
-                <MenuItem value={"new"}>Mới nhất</MenuItem>
-                <MenuItem value={"priceDown"}>Giá từ cao tới thấp</MenuItem>
-                <MenuItem value={"priceUp"}>Giá từ thấp tới cao</MenuItem>
-              </Select>
-            </FormControl>
-          </Stack>
-          <Link to={"/admin/createProduct"}>
-            <Button variant="contained">Thêm sản phẩm</Button>
-          </Link>
+        </Stack>
+        <Stack
+          sx={{ minWidth: 300 }}
+          direction={"row"}
+          display={"flex"}
+          justifyContent={"end"}
+        >
+          <Typography>Sắp xếp:</Typography>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <Select
+              value={sort}
+              onChange={handleChangeSort}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              <MenuItem value={"old"}>Cũ nhất</MenuItem>
+              <MenuItem value={"new"}>Mới nhất</MenuItem>
+              <MenuItem value={"priceDown"}>Giá từ cao tới thấp</MenuItem>
+              <MenuItem value={"priceUp"}>Giá từ thấp tới cao</MenuItem>
+            </Select>
+          </FormControl>
         </Stack>
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800,
+              minWidth: 800
             }}
             aria-label="simple tablek w"
           >
@@ -180,8 +182,8 @@ export default function AdminProduct() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold",
-                  },
+                    fontWeight: "bold"
+                  }
                 }}
               >
                 <TableCell>ID</TableCell>
@@ -237,14 +239,14 @@ export default function AdminProduct() {
                       <Link to={`/admin/product/${e.id}`}>
                         <EditCalendarIcon
                           sx={{
-                            color: "green",
+                            color: "green"
                           }}
                         />
                       </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{
-                            color: "red",
+                            color: "red"
                           }}
                         />
                       </Box>
@@ -255,7 +257,7 @@ export default function AdminProduct() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack mt={2} textAlign={"center"} justifyContent={"center"}>
+        <Stack mt={2} textAlign={"center"} justifyContent={"center"} alignItems={""}>
           <Pagination count={pageCount} page={page} onChange={handleChange} />
         </Stack>
       </Grid>
