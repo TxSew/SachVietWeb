@@ -2,18 +2,22 @@ import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SearchIcon from "@mui/icons-material/Search";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import {
+  Autocomplete,
   Badge,
   Button,
   Grid,
+  ListItem,
   Modal,
   Stack,
   TextField,
   styled
 } from "@mui/material";
 import Box from "@mui/material/Box";
+import CloseIcon from "@mui/icons-material/Close";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
 import { useSelector } from "react-redux";
@@ -24,6 +28,8 @@ import { RootState } from "../../../redux/storeClient";
 import { useEffect, useState } from "react";
 import { User } from "../../../submodules/models/UserModel/User";
 import * as React from "react";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { options } from "../../../pages/admin/Statistical/chart/ChartMoney";
 const Header = () => {
   const [user, setUser] = useState<User>({} as User);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
@@ -61,9 +67,28 @@ const Header = () => {
     outline: "none",
     p: 4
   };
+  const styles = {
+    position: "absolute",
+    top: "10%",
+    left: "50%",
+    transform: "translate(-50%, 0%)",
+    width: "700px",
+    bgcolor: "background.paper",
+    borderRight: "1px solid #000",
+    boxShadow: 24,
+    outline: "none",
+    p: 4,
+    pt: 2,
+    borderRadius: "8px"
+  };
+
   const [open, setOpen] = React.useState(false);
+  const [openSearch, setOpenSearch] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleOpenSearch = () => setOpenSearch(true);
+  const handleCloseSearch = () => setOpenSearch(false);
   return (
     <Box>
       {!isMediumMD ? (
@@ -177,13 +202,386 @@ const Header = () => {
                       borderRadius: "5px"
                     }}
                   >
+                    <Modal
+                      open={openSearch}
+                      onClose={handleCloseSearch}
+                      aria-labelledby="modal-modal-title"
+                      aria-describedby="modal-modal-description"
+                    >
+                      <Box sx={styles}>
+                        <Stack
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            borderBottom: "1px solid #ccc"
+                          }}
+                        >
+                          {" "}
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              border: "none",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center"
+                            }}
+                          >
+                            <SearchIcon
+                              sx={{
+                                color: "#0072E5"
+                              }}
+                            />
+                          </Typography>
+                          <TextField
+                            sx={{
+                              "& fieldset": {
+                                border: "none",
+                                width: "100%"
+                              },
+                              width: "100%"
+                            }}
+                            placeholder="Tìm kiếm sản phẩm mong muốn..."
+                          />
+                        </Stack>
+
+                        <Box
+                          sx={{ padding: "16px 0" }}
+                          borderBottom={"1px solid gray"}
+                        >
+                          <Typography
+                            display={"flex"}
+                            alignItems={"center"}
+                            justifyContent={"space-between"}
+                            variant="h2"
+                          >
+                            <Typography
+                              variant="h2"
+                              display={"block"}
+                              paddingBottom={"16px"}
+                              textTransform={"uppercase"}
+                              fontWeight={"bold"}
+                            >
+                              Gợi ý (5 sản phẩm)
+                            </Typography>
+                            <Link
+                              to=""
+                              // onClick={handleCloseSearch}
+                              style={{
+                                color: "gray"
+                              }}
+                            >
+                              <RefreshIcon
+                                style={{
+                                  fontSize: "16px"
+                                }}
+                              />
+                            </Link>
+                          </Typography>
+                          <Box
+                            display={"flex"}
+                            justifyContent={"space-between"}
+                            alignItems={"center"}
+                          >
+                            <Typography>gợi í 1</Typography>
+                            <Typography>gợi í 1</Typography>
+                            <Typography>gợi í 1</Typography>
+                            <Typography>gợi í 1</Typography>
+                            <Typography>gợi í 1</Typography>
+                          </Box>
+                        </Box>
+                        <Typography
+                          variant="h2"
+                          display={"block"}
+                          padding={"16px 0"}
+                          textTransform={"uppercase"}
+                          fontWeight={"bold"}
+                        >
+                          Được tìm kiếm nhiều nhất (6 sản phẩm)
+                        </Typography>
+                        <Box
+                          display={"flex"}
+                          textAlign={"center"}
+                          alignItems={"center"}
+                          padding={"8px 0"}
+                        >
+                          <Grid item xs={6} md={4}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9923"
+                              onClick={handleCloseSearch}
+                            >
+                              <Box display={"fex"} alignItems={"center"}>
+                                <Grid xs={12} md={3}>
+                                  <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                    alt=""
+                                  ></img>
+                                </Grid>
+                                <Grid
+                                  xs={12}
+                                  md={9}
+                                  textAlign={"left"}
+                                  paddingLeft={1}
+                                >
+                                  <Typography
+                                    sx={{ fontSize: "14px", color: "black" }}
+                                  >
+                                    Tìm kiếm nâng cao
+                                  </Typography>
+                                </Grid>
+                              </Box>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={4}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9jjjj923"
+                              onClick={handleCloseSearch}
+                            >
+                              <Box display={"fex"} alignItems={"center"}>
+                                <Grid xs={12} md={3}>
+                                  <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                    alt=""
+                                  ></img>
+                                </Grid>
+                                <Grid
+                                  xs={12}
+                                  md={9}
+                                  textAlign={"left"}
+                                  paddingLeft={1}
+                                >
+                                  <Typography
+                                    sx={{ fontSize: "14px", color: "black" }}
+                                  >
+                                    Tìm kiếm nâng cao
+                                  </Typography>
+                                </Grid>
+                              </Box>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={4}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9jjjj923"
+                              onClick={handleCloseSearch}
+                            >
+                              <Box display={"fex"} alignItems={"center"}>
+                                <Grid xs={12} md={3}>
+                                  <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                    alt=""
+                                  ></img>
+                                </Grid>
+                                <Grid
+                                  xs={12}
+                                  md={9}
+                                  textAlign={"left"}
+                                  paddingLeft={1}
+                                >
+                                  <Typography
+                                    sx={{ fontSize: "14px", color: "black" }}
+                                  >
+                                    Tìm kiếm nâng cao
+                                  </Typography>
+                                </Grid>
+                              </Box>
+                            </Link>
+                          </Grid>
+                        </Box>
+                        <Box
+                          display={"flex"}
+                          textAlign={"center"}
+                          alignItems={"center"}
+                          padding={"8px 0"}
+                        >
+                          <Grid item xs={6} md={4}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9923"
+                              onClick={handleCloseSearch}
+                            >
+                              <Box display={"fex"} alignItems={"center"}>
+                                <Grid xs={12} md={3}>
+                                  <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                    alt=""
+                                  ></img>
+                                </Grid>
+                                <Grid
+                                  xs={12}
+                                  md={9}
+                                  textAlign={"left"}
+                                  paddingLeft={1}
+                                >
+                                  <Typography
+                                    sx={{ fontSize: "14px", color: "black" }}
+                                  >
+                                    Tìm kiếm nâng cao
+                                  </Typography>
+                                </Grid>
+                              </Box>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={4}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9jjjj923"
+                              onClick={handleCloseSearch}
+                            >
+                              <Box display={"fex"} alignItems={"center"}>
+                                <Grid xs={12} md={3}>
+                                  <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                    alt=""
+                                  ></img>
+                                </Grid>
+                                <Grid
+                                  xs={12}
+                                  md={9}
+                                  textAlign={"left"}
+                                  paddingLeft={1}
+                                >
+                                  <Typography
+                                    sx={{ fontSize: "14px", color: "black" }}
+                                  >
+                                    Tìm kiếm nâng cao
+                                  </Typography>
+                                </Grid>
+                              </Box>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={4}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9jjjj923"
+                              onClick={handleCloseSearch}
+                            >
+                              <Box display={"fex"} alignItems={"center"}>
+                                <Grid xs={12} md={3}>
+                                  <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                    alt=""
+                                  ></img>
+                                </Grid>
+                                <Grid
+                                  xs={12}
+                                  md={9}
+                                  textAlign={"left"}
+                                  paddingLeft={1}
+                                >
+                                  <Typography
+                                    sx={{ fontSize: "14px", color: "black" }}
+                                  >
+                                    Tìm kiếm nâng cao
+                                  </Typography>
+                                </Grid>
+                              </Box>
+                            </Link>
+                          </Grid>
+                        </Box>
+                        <Typography
+                          variant="h2"
+                          display={"block"}
+                          padding={"16px 0"}
+                          textTransform={"uppercase"}
+                          fontWeight={"bold"}
+                        >
+                          Danh mục nổi bật (4 danh mục)
+                        </Typography>
+                        <Box
+                          display={"flex"}
+                          textAlign={"center"}
+                          alignItems={"center"}
+                        >
+                          <Grid item xs={6} md={3}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9923"
+                              onClick={handleCloseSearch}
+                              style={{
+                                textAlign: "center",
+                                margin: "0 auto"
+                              }}
+                            >
+                              <img
+                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                alt=""
+                                width={"50%"}
+                                style={{
+                                  margin: "0 auto"
+                                }}
+                              />
+                              <Typography>Tìm kiếm nâng cao</Typography>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={3}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9923"
+                              onClick={handleCloseSearch}
+                              style={{
+                                textAlign: "center",
+                                margin: "0 auto"
+                              }}
+                            >
+                              <img
+                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                alt=""
+                                width={"50%"}
+                                style={{
+                                  margin: "0 auto"
+                                }}
+                              />
+                              <Typography>Tìm kiếm nâng cao</Typography>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={3}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9923"
+                              onClick={handleCloseSearch}
+                              style={{
+                                textAlign: "center",
+                                margin: "0 auto"
+                              }}
+                            >
+                              <img
+                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                alt=""
+                                width={"50%"}
+                                style={{
+                                  margin: "0 auto"
+                                }}
+                              />
+                              <Typography>Tìm kiếm nâng cao</Typography>
+                            </Link>
+                          </Grid>
+                          <Grid item xs={6} md={3}>
+                            <Link
+                              to="http://localhost:3000/products/sach99jjj9923"
+                              onClick={handleCloseSearch}
+                              style={{
+                                textAlign: "center",
+                                margin: "0 auto"
+                              }}
+                            >
+                              <img
+                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
+                                alt=""
+                                width={"50%"}
+                                style={{
+                                  margin: "0 auto"
+                                }}
+                              />
+                              <Typography>Tìm kiếm nâng cao</Typography>
+                            </Link>
+                          </Grid>
+                        </Box>
+                      </Box>
+                    </Modal>
                     <TextField
+                      onClick={handleOpenSearch}
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
                         width: "100%"
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
+
                     <Typography
                       variant="caption"
                       sx={{

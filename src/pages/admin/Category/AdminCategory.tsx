@@ -90,10 +90,16 @@ export default function CategoryAdmin() {
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
           />
-          <Link to={"/admin/createCategory"}>
-            <Button variant="contained">Thêm Danh mục</Button>
-          </Link>
         </Stack>
+        <Link
+          to={"/admin/createCategory"}
+          style={{
+            display: "flex",
+            justifyContent: "end"
+          }}
+        >
+          <Button variant="contained">Thêm Danh mục</Button>
+        </Link>
         <TableContainer component={Paper}>
           <Table
             sx={{
