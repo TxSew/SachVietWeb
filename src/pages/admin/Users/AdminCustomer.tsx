@@ -134,14 +134,6 @@ export default function AdminCustomer() {
                           }}
                         />
                       </Link>
-                      <Box>
-                        <DeleteForeverIcon
-                          onClick={() => handleRemove(Number(e.id))}
-                          sx={{
-                            color: "red",
-                          }}
-                        />
-                      </Box>
                     </Stack>
                   </TableCell>
                 </TableRow>

@@ -172,7 +172,6 @@ const CreateCustomer = () => {
                     <em>Ngưng kinh doanh</em>
                   </MenuItem>
                 </Select>
-                {/* <FormHelperText>Without label</FormHelperText> */}
               </FormControl>
             )}
           />

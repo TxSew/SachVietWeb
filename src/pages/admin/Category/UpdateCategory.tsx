@@ -7,7 +7,7 @@ import {
   OutlinedInput,
   Select,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -24,18 +24,19 @@ var httpcategory = new HttpCategoryController(BaseAPi);
 const UpdateCategory = () => {
   const { id } = useParams();
 
-  console.log(id);
   const [category, setCategory] = useState([]);
-  const [detail, setdetail] = useState<Category>({});
+  const [detail, setDetail] = useState<Category>({});
   useEffect(() => {
     fetchCategory();
     fetchOneCategory();
   }, []);
+
   const fetchOneCategory = async () => {
     const categoryOne = await httpcategory.getOne(Number(id));
     console.log(categoryOne);
-    setdetail(categoryOne);
+    setDetail(categoryOne);
   };
+
   const fetchCategory = async () => {
     try {
       const category: any = await httpcategory.getCategory();
@@ -71,19 +72,20 @@ const UpdateCategory = () => {
     handleSubmit,
     control,
     register,
-    formState: { errors, isDirty, isValid }
+    formState: { errors, isDirty, isValid },
   } = useForm<Category>({
     defaultValues: {
       name: detail.name,
-      parentId: "1"
-    }
+      status: "1",
+      parentId: "1",
+    },
   });
   const handelUpdateCategory = async (data: Category) => {
     data.image = url;
     const categoryDto = await httpcategory.put(Number(id), data);
     if (categoryDto) {
       toast.success("category updated successfully", {
-        position: "bottom-right"
+        position: "bottom-right",
       });
     }
   };
@@ -112,9 +114,9 @@ const UpdateCategory = () => {
           <Controller
             control={control}
             name="name"
-            defaultValue="" // Set an initial value here
+            defaultValue=""
             rules={{
-              required: "Tên danh mục không được bỏ trống!"
+              required: "Tên danh mục không được bỏ trống!",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -123,8 +125,8 @@ const UpdateCategory = () => {
                 sx={{
                   mt: 1,
                   "& > input": {
-                    p: "7px"
-                  }
+                    p: "7px",
+                  },
                 }}
                 fullWidth
                 placeholder={detail.name}
@@ -144,7 +146,7 @@ const UpdateCategory = () => {
                 control={control}
                 name="parentId"
                 rules={{
-                  required: "Vui lòng nhập Danh mục sản phẩm!"
+                  required: "Vui lòng nhập Danh mục sản phẩm!",
                 }}
                 render={({ field }) => (
                   <FormControl fullWidth>
@@ -155,8 +157,8 @@ const UpdateCategory = () => {
                       sx={{
                         mt: 1,
                         "& > div": {
-                          p: "7px"
-                        }
+                          p: "7px",
+                        },
                       }}
                       defaultValue="2"
                     >
@@ -186,8 +188,8 @@ const UpdateCategory = () => {
             sx={{
               mt: 1,
               "& > input": {
-                p: "7px"
-              }
+                p: "7px",
+              },
             }}
             fullWidth
           />
@@ -201,7 +203,7 @@ const UpdateCategory = () => {
             control={control}
             name="status"
             rules={{
-              required: "Price is not"
+              required: "Price is not",
             }}
             render={({ field }) => (
               <FormControl fullWidth>
@@ -212,8 +214,8 @@ const UpdateCategory = () => {
                   sx={{
                     mt: 1,
                     "& > div": {
-                      p: "7px"
-                    }
+                      p: "7px",
+                    },
                   }}
                 >
                   <MenuItem value={""}>
@@ -226,7 +228,6 @@ const UpdateCategory = () => {
                     <em>Ngưng kinh doanh</em>
                   </MenuItem>
                 </Select>
-                {/* <FormHelperText>Without label</FormHelperText> */}
               </FormControl>
             )}
           />

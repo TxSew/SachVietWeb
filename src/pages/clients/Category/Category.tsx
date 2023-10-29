@@ -30,7 +30,7 @@ function Category() {
   useEffect(() => {
     fetchProducts(page);
   }, [page]);
-  const fetchProducts = async (page: number = 1 ) => {
+  const fetchProducts = async (page: number = 1) => {
     const products: any = await http.getAll(page);
     if (products) {
       setProducts(products.products);

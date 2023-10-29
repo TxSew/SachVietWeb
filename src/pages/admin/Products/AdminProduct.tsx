@@ -12,7 +12,7 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -78,7 +78,7 @@ export default function AdminProduct() {
   const handleDelete = async (element: any) => {
     const destroy = await http.delete(element.id);
     toast.error("Delete item successfully", {
-      position: "bottom-right"
+      position: "bottom-right",
     });
 
     const product = Products.filter((e) => e.id !== element.id);
@@ -139,8 +139,8 @@ export default function AdminProduct() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px"
-              }
+                p: "7px",
+              },
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
@@ -174,7 +174,7 @@ export default function AdminProduct() {
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800
+              minWidth: 800,
             }}
             aria-label="simple tablek w"
           >
@@ -182,8 +182,8 @@ export default function AdminProduct() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold"
-                  }
+                    fontWeight: "bold",
+                  },
                 }}
               >
                 <TableCell>ID</TableCell>
@@ -239,14 +239,14 @@ export default function AdminProduct() {
                       <Link to={`/admin/product/${e.id}`}>
                         <EditCalendarIcon
                           sx={{
-                            color: "green"
+                            color: "green",
                           }}
                         />
                       </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{
-                            color: "red"
+                            color: "red",
                           }}
                         />
                       </Box>
@@ -257,7 +257,12 @@ export default function AdminProduct() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack mt={2} textAlign={"center"} justifyContent={"center"} alignItems={""}>
+        <Stack
+          mt={2}
+          textAlign={"center"}
+          justifyContent={"center"}
+          alignItems={""}
+        >
           <Pagination count={pageCount} page={page} onChange={handleChange} />
         </Stack>
       </Grid>

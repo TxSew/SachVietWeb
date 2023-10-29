@@ -19,12 +19,9 @@ const UpdateDiscount = () => {
     handleSubmit,
     control,
     register,
-    watch,
     formState: { errors, isDirty, isValid },
   } = useForm<Discount>({});
 
-  // console.log(watch().desc);
-  //  upload image file base
   const handleAddDiscount = async (data: Discount) => {
     const addDiscount = await http.post(data);
     console.log(addDiscount);
@@ -55,7 +52,7 @@ const UpdateDiscount = () => {
             <Controller
               control={control}
               name="code"
-              defaultValue="" // Set an initial value here
+              defaultValue=""
               rules={{
                 required: "Vui lòng nhập mã giảm giá",
               }}

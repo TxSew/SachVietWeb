@@ -14,7 +14,9 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
+import ProductItem from "../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { numberFormat } from "../../../helpers/formatPrice";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
 import {
   decrement,
@@ -23,10 +25,9 @@ import {
 import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
-import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
-import ProductItem from "../../../components/ProductItem/ProductItem";
-import { numberFormat } from "../../../helpers/formatPrice";
-
+interface Detail {
+  desc: string; // Define the type for Detail.desc
+}
 const http = new HttpProductController(BaseAPi);
 export const Details = () => {
   const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
@@ -49,6 +50,7 @@ export const Details = () => {
       console.log(err);
     }
   };
+  const htmlContent = Detail ? Detail.desc : ""; // Ha
   const handleAddToCart = (detail: any) => {
     dispatch(addToCart(detail));
   };
@@ -362,7 +364,17 @@ export const Details = () => {
               Chính sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống
               Nhà sách Fahasa trên toàn quốc
             </Typography>
-            <Box></Box>
+            <Box>
+              {" "}
+              <div
+                style={{
+                  fontSize: "14px",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: htmlContent as unknown as TrustedHTML,
+                }}
+              />
+            </Box>
           </Box>
         </Box>
 

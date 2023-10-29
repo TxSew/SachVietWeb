@@ -399,7 +399,7 @@ function Checkout() {
                     <Stack direction={"row"} alignItems={"normal"} spacing={2}>
                       <Box maxWidth={"119px"}>
                         <img
-                          src={e.productImages ? e.productImages[0].image : ""}
+                          src={e.image ? e.image : ""}
                           alt=""
                           width={"100%"}
                         />

@@ -35,9 +35,9 @@ const UpdateProduct = () => {
   const [product, setProduct] = useState<Product>({});
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
-  const [isLoadings, setIsLoadings] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const editorRef = useRef<any>(null);
+  const [isLoadings, setIsLoadings] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false as boolean);
+  const editorRef = useRef<unknown>(null);
   const redirect = useNavigate();
   const id = useParams();
   const ID: any = id.id;
@@ -54,8 +54,8 @@ const UpdateProduct = () => {
   };
   const fetchProducer = async () => {
     try {
-     const producer: any = await http.getAll();
-     setProducer(producer.producers);
+      const producer: any = await http.getAll();
+      setProducer(producer.producers);
     } catch (error) {
       console.log(error);
     }
@@ -79,7 +79,7 @@ const UpdateProduct = () => {
       product: data,
       productImages: images,
     };
-   
+
     const storeProduct = await httpProduct.put(ID, ProductDto);
     if (storeProduct) {
       toast.success("created new product successfully", {
@@ -486,7 +486,6 @@ const UpdateProduct = () => {
                 <CircularProgress />
               </Box>
             ) : url.length > 0 ? (
-              // Nếu mảng urls có chứa hình ảnh
               url.map((url, index) => (
                 <img
                   key={index}
@@ -496,7 +495,6 @@ const UpdateProduct = () => {
                 />
               ))
             ) : (
-              // Nếu mảng urls không có hình ảnh
               <div></div>
             )}
 
@@ -523,9 +521,8 @@ const UpdateProduct = () => {
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
               {isLoadings ? (
-                <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
+                <CircularProgress />
               ) : urls.length > 0 ? (
-                // Nếu mảng urls có chứa hình ảnh
                 urls.map((url, index) => (
                   <img
                     key={index}
@@ -535,7 +532,6 @@ const UpdateProduct = () => {
                   />
                 ))
               ) : (
-                // Nếu mảng urls không có hình ảnh
                 <div></div>
               )}
             </Stack>

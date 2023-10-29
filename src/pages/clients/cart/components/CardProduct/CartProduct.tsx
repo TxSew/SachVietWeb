@@ -95,11 +95,7 @@ const CartProduct = () => {
                     <Stack direction={"row"} alignItems={"normal"} spacing={2}>
                       <Box maxWidth={"119px"}>
                         <img
-                          src={
-                            element.productImages
-                              ? element.productImages[0].image
-                              : ""
-                          }
+                          src={element.productImages ? element.image : ""}
                           alt=""
                           width={"100%"}
                         />
@@ -139,13 +135,13 @@ const CartProduct = () => {
                       direction={"row"}
                       spacing={3}
                       border={"1px solid #eee"}
-                      p={"3px 10px"}
+                      p={"3px 5px"}
                       borderRadius={2}
                     >
                       <Box>
                         <RemoveIcon
                           sx={{
-                            fontSize: "17px",
+                            fontSize: "14px",
                             cursor: "pointer",
                           }}
                           onClick={() => handleDes(element.id)}
@@ -155,13 +151,14 @@ const CartProduct = () => {
                         type="text"
                         value={element?.cartQuantity}
                         style={{
-                          width: "10px",
+                          width: "27px",
+                          textAlign: "center",
                         }}
                       />
                       <AddIcon
                         onClick={() => handleIncrement(element)}
                         sx={{
-                          fontSize: "17px",
+                          fontSize: "14px",
                           cursor: "pointer",
                         }}
                       />
@@ -225,6 +222,9 @@ const CartProduct = () => {
                   style={{
                     flex: 1,
                     color: "inherit",
+                  }}
+                  onChange={(event) => {
+                    console.log(event.target.value);
                   }}
                 />
                 <Button variant="outlined">

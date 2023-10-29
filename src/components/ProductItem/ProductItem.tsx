@@ -5,12 +5,9 @@ import Typography from "@mui/material/Typography";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import { color } from "../../Theme/color";
-import { Product } from "../../submodules/models/ProductModel/Product";
-import {
-  NumberFormattingComponent,
-  formatByPrice,
-} from "../../helpers/formatvalidate";
 import { numberFormat } from "../../helpers/formatPrice";
+import NumberStast from "../../hooks/useSpring/useSpring";
+import { Product } from "../../submodules/models/ProductModel/Product";
 interface ProductItem {
   products: Product;
 }

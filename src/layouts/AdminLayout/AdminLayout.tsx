@@ -13,13 +13,18 @@ import FileCopyIcon from "@mui/icons-material/FileCopyOutlined";
 import SaveIcon from "@mui/icons-material/Save";
 import PrintIcon from "@mui/icons-material/Print";
 import ShareIcon from "@mui/icons-material/Share";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import DiscountIcon from "@mui/icons-material/Discount";
+import GroupIcon from "@mui/icons-material/Group";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import {
   Avatar,
   MenuItem,
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 
@@ -27,7 +32,7 @@ const actions = [
   { icon: <FileCopyIcon />, name: "Copy" },
   { icon: <SaveIcon />, name: "Save" },
   { icon: <PrintIcon />, name: "Print" },
-  { icon: <ShareIcon />, name: "Share" }
+  { icon: <ShareIcon />, name: "Share" },
 ];
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -48,15 +53,38 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
             <h1>MUI</h1>
           </div>
           <ul className="k">
-            <li className="">
-              <NavLink to="">
+            <li
+              className=""
+              style={{
+                borderBottom: "1px solid #eee",
+              }}
+            >
+              <NavLink to="/admin/statistical">
                 <i>
-                  <FaHome />
+                  <BarChartIcon />
                 </i>
-                <span>Trang chủ</span>
+                <span>Thống kê</span>
               </NavLink>
             </li>
-            <li className="">
+            <li
+              className=""
+              style={{
+                borderBottom: "1px solid #eee",
+              }}
+            >
+              <NavLink to="/admin/producer">
+                <i>
+                  <PersonAddIcon />
+                </i>
+                <span>Nhà xuất bản</span>
+              </NavLink>
+            </li>
+            <li
+              className=""
+              style={{
+                borderBottom: "1px solid #eee",
+              }}
+            >
               <NavLink to="../admin/category">
                 <i>
                   <BiSolidCategoryAlt />
@@ -64,7 +92,12 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <span>Danh mục</span>
               </NavLink>
             </li>
-            <li className="">
+            <li
+              className=""
+              style={{
+                borderBottom: "1px solid #eee",
+              }}
+            >
               <NavLink to="../admin/product">
                 <i>
                   <FaBookOpen />
@@ -72,12 +105,38 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <span>Sản phẩm</span>
               </NavLink>
             </li>
-            <li className="">
-              <NavLink to="#">
+            <li
+              className=""
+              style={{
+                borderBottom: "1px solid #eee",
+              }}
+            >
+              <NavLink to="/admin/orders">
                 <i>
-                  <BiBookAdd />
+                  <ShoppingBasketIcon />
                 </i>
-                <span>...</span>
+                <span>Đơn hàng</span>
+              </NavLink>
+            </li>
+            <li
+              className=""
+              style={{
+                borderBottom: "1px solid #eee",
+              }}
+            >
+              <NavLink to="/admin/discount">
+                <i>
+                  <DiscountIcon />
+                </i>
+                <span>Mã giảm giá</span>
+              </NavLink>
+            </li>
+            <li className="">
+              <NavLink to="/admin/customer">
+                <i>
+                  <GroupIcon />
+                </i>
+                <span>Khách hàng</span>
               </NavLink>
             </li>
             <div className="active start"></div>
@@ -94,7 +153,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                   display: "flex",
                   alignItems: "center",
                   textAlign: "center",
-                  padding: "0 16px"
+                  padding: "0 16px",
                 }}
               >
                 <Typography sx={{ minWidth: 100 }}>Contact</Typography>
@@ -128,7 +187,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                       width: 32,
                       height: 32,
                       ml: -0.5,
-                      mr: 1
+                      mr: 1,
                     },
                     "&:before": {
                       content: '""',
@@ -140,9 +199,9 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                       height: 10,
                       bgcolor: "background.paper",
                       transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0
-                    }
-                  }
+                      zIndex: 0,
+                    },
+                  },
                 }}
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}

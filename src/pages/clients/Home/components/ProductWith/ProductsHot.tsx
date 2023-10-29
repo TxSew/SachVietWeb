@@ -26,8 +26,8 @@ interface PropsSort {
 
 function ProductsHot() {
   const http = new HttpProductController(BaseAPi);
-  const [alignment, setAlignment] = React.useState("web");
   const { isLoading, startLoading, stopLoading } = useLoading();
+  const [alignment, setAlignment] = React.useState("web");
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string
@@ -38,12 +38,12 @@ function ProductsHot() {
   const fetchData = async () => {
     try {
       const productData: any = await http.getAll();
-      const { products } = productData;
       startLoading();
+      const { products } = productData;
       if (products) {
         setTimeout(() => {
           stopLoading();
-        }, 600);
+        }, 1000);
       }
       setProducts(products);
     } catch (err) {

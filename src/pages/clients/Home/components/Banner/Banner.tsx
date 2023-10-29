@@ -20,7 +20,7 @@ function Banner() {
             <Swiper
               navigation
               pagination={{
-                clickable: true
+                clickable: true,
               }}
               modules={[Navigation]}
               className="mySwiper"
@@ -28,16 +28,16 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
-                    src="https://cdn0.fahasa.com/media/magentothem/banner7/AhamoveT8_840x320.png"
+                    src="https://cdn0.fahasa.com/media/magentothem/banner7/NCCDinhTiT1023_Diamond_BannerSlide_840x320.jpg"
                     alt=""
                     style={{
                       width: "100%",
                       borderRadius: "10px",
-                      height: "325px"
+                      height: "325px",
                     }}
                   />
                 </Box>
@@ -45,17 +45,17 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
-                    src="https://cdn0.fahasa.com/media/magentothem/banner7/MCbooks_PlatinumT723_Banner_Slide_840x320.jpg"
+                    src="https://cdn0.fahasa.com/media/magentothem/banner7/SaleThu3_W3_T1023_banner_Slide_840x320.jpg"
                     alt=""
                     style={{
                       borderRadius: "10px",
 
                       width: "100%",
-                      height: "325px"
+                      height: "325px",
                     }}
                   />
                 </Box>
@@ -69,7 +69,7 @@ function Banner() {
             <Swiper
               navigation
               pagination={{
-                clickable: true
+                clickable: true,
               }}
               modules={[Navigation]}
               className="mySwiper"
@@ -77,7 +77,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
@@ -86,7 +86,7 @@ function Banner() {
                     style={{
                       width: "100%",
                       borderRadius: "10px",
-                      height: "325px"
+                      height: "325px",
                     }}
                   />
                 </Box>
@@ -94,7 +94,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
@@ -104,7 +104,7 @@ function Banner() {
                       borderRadius: "10px",
 
                       width: "100%",
-                      height: "325px"
+                      height: "325px",
                     }}
                   />
                 </Box>
@@ -115,16 +115,16 @@ function Banner() {
             <Box
               sx={{
                 width: "100%",
-                height: "156px"
+                height: "156px",
               }}
             >
               <img
-                src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/VnpayT8_392156.png"
+                src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2023/392x156_sacombank.jpg"
                 alt=""
                 width={"100%"}
                 height={"100%"}
                 style={{
-                  borderRadius: "10px"
+                  borderRadius: "10px",
                 }}
               />
             </Box>
@@ -132,7 +132,7 @@ function Banner() {
               sx={{
                 width: "100%",
                 height: "156px",
-                mt: "10px"
+                mt: "10px",
               }}
             >
               <img
@@ -141,7 +141,7 @@ function Banner() {
                 width={"100%"}
                 height={"100%"}
                 style={{
-                  borderRadius: "10px"
+                  borderRadius: "10px",
                 }}
               />
             </Box>

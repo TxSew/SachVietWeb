@@ -1,17 +1,5 @@
 import PrintIcon from "@mui/icons-material/Print";
-import {
-  Box,
-  Button,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography
-} from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -21,7 +9,7 @@ import { BaseAPi } from "../../../configs/BaseApi";
 import HttpCartController from "../../../submodules/controllers/http/httpCartController";
 import {
   Order,
-  OrderDetail
+  OrderDetail,
 } from "../../../submodules/models/OrderModel/Order";
 
 const http = new HttpCartController(BaseAPi);
@@ -34,7 +22,6 @@ function DetailCarts() {
   }, []);
   const fetchOrderDetail = async () => {
     const detail = await http.getOrderDetail(Number(id));
-    console.log(detail);
     if (detail) {
       setDetailOrder(detail);
     }
@@ -42,7 +29,7 @@ function DetailCarts() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "emp-data",
-    onAfterPrint: () => alert("print success")
+    onAfterPrint: () => alert("print success"),
   });
 
   return (
@@ -55,7 +42,7 @@ function DetailCarts() {
         bgcolor={color.white}
         sx={{
           p: 2,
-          mt: 2
+          mt: 2,
         }}
       >
         <Typography
@@ -95,7 +82,7 @@ function DetailCarts() {
         </Box>
         <Box
           sx={{
-            mt: 2
+            mt: 2,
           }}
         >
           <Box border={"1px solid #eee"}>
@@ -128,12 +115,12 @@ function DetailCarts() {
                   <Stack width={"10%"}>{e.quantity} </Stack>
                   <Stack width={"10%"}>
                     {Intl.NumberFormat("en-US", {
-                      currency: "USD"
+                      currency: "USD",
                     }).format(Number(e.price))}
                   </Stack>
                   <Stack width={"20%"} textAlign={"right"}>
                     {Intl.NumberFormat("en-US", {
-                      currency: "USD"
+                      currency: "USD",
                     }).format(
                       Number(
                         e?.price && e?.quantity ? e.price * e.quantity : null
@@ -157,7 +144,7 @@ function DetailCarts() {
               </Typography>
               <Typography variant="body1" color="initial">
                 {Intl.NumberFormat("en-US", {
-                  currency: "USD"
+                  currency: "USD",
                 }).format(Number(DetailOrder.money))}
               </Typography>
             </Stack>
@@ -169,7 +156,7 @@ function DetailCarts() {
               sx={{
                 fontStyle: "italic",
                 fontSize: "13px",
-                mt: 1
+                mt: 1,
               }}
             >
               <Typography variant="body1" fontSize={"14px"} color="initial">
@@ -193,7 +180,7 @@ function DetailCarts() {
               </Typography>
               <Typography variant="body1" color="red">
                 {Intl.NumberFormat("en-US", {
-                  currency: "USD"
+                  currency: "USD",
                 }).format(Number(DetailOrder.money))}
               </Typography>
             </Stack>
@@ -206,12 +193,12 @@ function DetailCarts() {
         sx={{
           mt: 1,
           float: "right",
-          clear: "bold"
+          clear: "bold",
         }}
       >
         <PrintIcon
           sx={{
-            mr: 1
+            mr: 1,
           }}
         />{" "}
         In hoá đơn
