@@ -32,12 +32,11 @@ function Banner() {
                   }}
                 >
                   <img
-                    src="https://cdn0.fahasa.com/media/magentothem/banner7/AhamoveT8_840x320.png"
-                    alt=""
+                    src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
+                    alt="Banner tùy chỉnh"
                     style={{
                       width: "100%",
-                      borderRadius: "10px",
-                      height: "325px"
+                      borderRadius: "10px"
                     }}
                   />
                 </Box>
@@ -49,13 +48,11 @@ function Banner() {
                   }}
                 >
                   <img
-                    src="https://cdn0.fahasa.com/media/magentothem/banner7/MCbooks_PlatinumT723_Banner_Slide_840x320.jpg"
+                    src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
                     alt=""
                     style={{
                       borderRadius: "10px",
-
-                      width: "100%",
-                      height: "325px"
+                      width: "100%"
                     }}
                   />
                 </Box>
@@ -65,7 +62,7 @@ function Banner() {
         </Grid>
       ) : (
         <Grid container spacing={2} sx={{ "&.MuiGrid-root": { marginTop: 0 } }}>
-          <Grid item xs={8}>
+          <Grid item xs={12}>
             <Swiper
               navigation
               pagination={{
@@ -81,12 +78,11 @@ function Banner() {
                   }}
                 >
                   <img
-                    src="https://cdn0.fahasa.com/media/magentothem/banner7/AhamoveT8_840x320.png"
+                    src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
                     alt=""
                     style={{
                       width: "100%",
-                      borderRadius: "10px",
-                      height: "325px"
+                      borderRadius: "10px"
                     }}
                   />
                 </Box>
@@ -98,53 +94,16 @@ function Banner() {
                   }}
                 >
                   <img
-                    src="https://cdn0.fahasa.com/media/magentothem/banner7/MCbooks_PlatinumT723_Banner_Slide_840x320.jpg"
+                    src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
                     alt=""
                     style={{
                       borderRadius: "10px",
-
-                      width: "100%",
-                      height: "325px"
+                      width: "100%"
                     }}
                   />
                 </Box>
               </SwiperSlide>
             </Swiper>
-          </Grid>
-          <Grid item xs={4}>
-            <Box
-              sx={{
-                width: "100%",
-                height: "156px"
-              }}
-            >
-              <img
-                src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/VnpayT8_392156.png"
-                alt=""
-                width={"100%"}
-                height={"100%"}
-                style={{
-                  borderRadius: "10px"
-                }}
-              />
-            </Box>
-            <Box
-              sx={{
-                width: "100%",
-                height: "156px",
-                mt: "10px"
-              }}
-            >
-              <img
-                src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/PNJT8_392x156.png"
-                alt=""
-                width={"100%"}
-                height={"100%"}
-                style={{
-                  borderRadius: "10px"
-                }}
-              />
-            </Box>
           </Grid>
         </Grid>
       )}

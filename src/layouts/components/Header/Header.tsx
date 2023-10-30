@@ -5,6 +5,14 @@ import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
+import InfoIcon from "@mui/icons-material/Info";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
+import SellIcon from "@mui/icons-material/Sell";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import ShoppingBasketSharpIcon from "@mui/icons-material/ShoppingBasketSharp";
+import LoginSharpIcon from "@mui/icons-material/LoginSharp";
+import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
+
 import {
   Autocomplete,
   Badge,
@@ -12,6 +20,7 @@ import {
   Grid,
   ListItem,
   Modal,
+  Paper,
   Stack,
   TextField,
   styled
@@ -82,6 +91,22 @@ const Header = () => {
     borderRadius: "8px"
   };
 
+  const hditem = {
+    display: "flex",
+    alignItems: "center",
+    pt: 2,
+    pb: 2,
+    color: "#615c5c",
+    fonSize: "12px",
+    fontWeight: 400,
+    fontStyle: "normal",
+    lineHieght: "normal"
+  };
+
+  const hdicon = {
+    mr: 1
+  };
+
   const [open, setOpen] = React.useState(false);
   const [openSearch, setOpenSearch] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -89,6 +114,7 @@ const Header = () => {
 
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
+
   return (
     <Box>
       {!isMediumMD ? (
@@ -107,11 +133,60 @@ const Header = () => {
               />
             </Container>
           </Grid>
-          <Box
-            sx={{
-              py: "10px"
-            }}
-          >
+          <Box>
+            {" "}
+            <Container maxWidth="xl">
+              <Box
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"space-between"}
+              >
+                <Box display={"flex"} alignItems={"center"} gap={3}>
+                  <Box sx={hditem}>
+                    <InfoIcon sx={hdicon} />
+                    <Typography fontSize={"12px"}>Trợ giúp</Typography>
+                  </Box>
+                  <Box sx={hditem}>
+                    <NewspaperIcon sx={hdicon} />
+                    <Typography fontSize={"12px"}>Tin tức</Typography>
+                  </Box>
+                  <Box sx={hditem}>
+                    <SellIcon sx={hdicon} />
+                    <Typography fontSize={"12px"}>Khuyễn mãi</Typography>
+                  </Box>
+                </Box>
+                <Box display={"flex"} alignItems={"center"} gap={3}>
+                  <Box sx={hditem}>
+                    <CardGiftcardIcon sx={hdicon} />
+                    <Typography fontSize={"12px"}>Ưu đãi & tiện ích</Typography>
+                  </Box>
+                  <Box sx={hditem}>
+                    <ShoppingBasketSharpIcon sx={hdicon} />
+                    <Typography fontSize={"12px"}>Kiểm tra đơn hàng</Typography>
+                  </Box>
+                  {user.id ? (
+                    <Box sx={hditem}>
+                      <HowToRegSharpIcon sx={hdicon} />
+                      <Typography fontSize={"12px"}>Tài khoản</Typography>
+                    </Box>
+                  ) : (
+                    <Box display={"flex"} gap={2}>
+                      <Box sx={hditem}>
+                        <LoginSharpIcon sx={hdicon} />
+                        <Typography fontSize={"12px"}>Đăng nhập</Typography>
+                      </Box>
+                      <Box sx={hditem}>
+                        <HowToRegSharpIcon sx={hdicon} />
+                        <Typography fontSize={"12px"}>Đăng ký</Typography>
+                      </Box>
+                    </Box>
+                  )}
+                </Box>
+              </Box>
+            </Container>
+          </Box>
+
+          <Box>
             <Container maxWidth="xl">
               <Grid
                 container
@@ -128,12 +203,7 @@ const Header = () => {
                         mb: "15px"
                       }}
                     >
-                      <Image
-                        src="https://cdn0.fahasa.com/media/quiz-game-T7/Avatar_IconApp_SN47_logoSN47_1.png"
-                        alt=""
-                        width="220px"
-                        height="53.77px"
-                      />
+                      <Image src="" alt="Logo" width="194px" height="70px" />
                     </Box>
                   </Link>
                 </Grid>
@@ -151,37 +221,7 @@ const Header = () => {
                     sx={{
                       textAlign: "right"
                     }}
-                  >
-                    <FormatListBulletedOutlinedIcon
-                      onClick={handleOpen}
-                      sx={{
-                        marginLeft: "auto",
-                        width: "36px",
-                        height: "36px",
-                        color: "gray"
-                      }}
-                    />
-                    <Modal
-                      open={open}
-                      onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={style}>
-                        <Typography
-                          id="modal-modal-title"
-                          variant="h6"
-                          component="h2"
-                        >
-                          Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                          Duis mollis, est non commodo luctus, nisi erat
-                          porttitor ligula.
-                        </Typography>
-                      </Box>
-                    </Modal>
-                  </Box>
+                  ></Box>
                 </Grid>
                 <Grid
                   item
@@ -587,7 +627,7 @@ const Header = () => {
                       sx={{
                         p: "5px 20px",
                         border: "none",
-                        backgroundColor: "red",
+                        backgroundColor: "#008C89",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -605,64 +645,68 @@ const Header = () => {
                 <Grid
                   item
                   xs={3.5}
-                  justifyContent={"space-between"}
+                  justifyContent={"end"}
                   sx={{
                     display: "flex",
                     alignItems: "center",
                     pl: "24px"
                   }}
                 >
-                  <NavLink to={"/"}>
-                    <BoxIcon>
-                      <VolumeUpOutlinedIcon className="icon" />
-                      <Typography variant="caption">Thông báo</Typography>
-                    </BoxIcon>
-                  </NavLink>
-                  <NavLink to={"/cart"}>
-                    <BoxIcon>
-                      <Badge badgeContent={cart.length} color="primary">
-                        <ShoppingCartOutlinedIcon />
-                      </Badge>
-                      <Typography variant="caption">Giỏ hàng </Typography>
-                    </BoxIcon>
-                  </NavLink>
-                  {user.id ? (
-                    <NavLink to={"/user"}>
-                      <BoxIcon>
-                        <PersonOutlineOutlinedIcon />
-                        <Typography variant="caption">Tài khoản </Typography>
-                      </BoxIcon>
-                    </NavLink>
-                  ) : (
-                    <NavLink to={"/auth"}>
-                      <BoxIcon>
-                        <PersonOutlineOutlinedIcon />
-                        <Typography variant="caption">Đăng nhập </Typography>
-                      </BoxIcon>
-                    </NavLink>
-                  )}
-                  <Stack
-                    sx={{
+                  <NavLink
+                    to={"/lh"}
+                    style={{
                       display: "flex",
-                      flexDirection: "row",
                       alignItems: "center",
-                      padding: "5px",
-                      border: "1px solid #ccc",
-                      borderRadius: "3px"
+                      paddingLeft: "16px"
                     }}
                   >
-                    <Image
-                      src="	https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/default.svg"
-                      width="37px"
-                      height="24px"
-                      alt=""
-                    />
-                    <ExpandMoreOutlinedIcon
+                    <PersonOutlineOutlinedIcon
                       sx={{
-                        color: "gray"
+                        color: "#008C89"
                       }}
                     />
-                  </Stack>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        pl: 1,
+                        textAlign: "center",
+                        fontFamily: "Roboto",
+                        fontSize: "14px",
+                        fontStyle: "normal",
+                        fontWeight: 700,
+                        lineHeight: "normal",
+                        color: "red"
+                      }}
+                    >
+                      {" "}
+                      037412595{" "}
+                    </Typography>
+                  </NavLink>
+                  <NavLink
+                    to={"/cart"}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      paddingLeft: "16px"
+                    }}
+                  >
+                    <ShoppingCartOutlinedIcon
+                      sx={{
+                        color: "#008C89"
+                      }}
+                    />
+                    <Badge badgeContent={cart.length} color="primary">
+                      <Typography
+                        variant="caption"
+                        sx={{
+                          pl: 1,
+                          color: "#615C5C"
+                        }}
+                      >
+                        Giỏ hàng{" "}
+                      </Typography>
+                    </Badge>
+                  </NavLink>
                 </Grid>
               </Grid>
             </Container>
