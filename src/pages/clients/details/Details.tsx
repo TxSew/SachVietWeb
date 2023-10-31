@@ -8,27 +8,35 @@ import {
   Grid,
   Rating,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableRow,
   Typography,
+  tableCellClasses
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
 import {
   decrement,
-  increment,
+  increment
 } from "../../../redux/features/counter/CounterProducer";
 import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
-import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
 import ProductItem from "../../../components/ProductItem/ProductItem";
 import { numberFormat } from "../../../helpers/formatPrice";
+import styled from "@emotion/styled";
+import useMedia from "../../../hooks/useMedia/useMedia";
 
 const http = new HttpProductController(BaseAPi);
 export const Details = () => {
+  const { isMediumMD } = useMedia();
+
   const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
   const redirect = useNavigate();
   const { id } = useParams();
@@ -61,6 +69,26 @@ export const Details = () => {
   }, [id]);
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: "#f5f5f5",
+      color: "#fff"
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+      border: "none"
+    }
+  }));
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    "&:nth-of-type(odd)": {
+      backgroundColor: "#f5f5f5"
+    },
+    // hide last border
+    "&:last-child td, &:last-child th": {
+      border: "none"
+    }
+  }));
   return (
     <Box bgcolor={"#eee"}>
       <Container maxWidth="xl">
@@ -75,35 +103,65 @@ export const Details = () => {
           <Typography variant="caption">{Detail?.title}</Typography>
         </Stack>
         <Box pb={2}>
-          <Grid container bgcolor={"#fff"} p={3}>
-            <Grid item xs={5}>
+          <Grid container bgcolor={"#fff"} p={2}>
+            <Grid item xs={12} md={5} pb={3}>
               <Box mx={"auto"} display={"flex"}>
-                <Stack direction={"row"} spacing={2}>
-                  <Stack width={"20%"} direction={"column"} spacing={1}>
-                    {Detail?.productImages
-                      ? Detail?.productImages.map((e: any, i: number) => {
-                          return (
-                            <img
-                              key={i}
-                              src={e.image}
-                              alt=""
-                              width={"100px"}
-                              height={"70px"}
-                            />
-                          );
-                        })
-                      : ""}
-                  </Stack>
-                  <Stack flex={1} justifyContent={"center"} spacing={2}>
-                    <img
-                      src={Detail?.image}
-                      id={`/products/${Detail.slug}`}
-                      alt=""
-                      width={"100%"}
-                      height={"388px"}
-                    />
-                  </Stack>
-                </Stack>
+                <Grid container display={"flex"} margin={"auto"} spacing={2}>
+                  {!isMediumMD ? (
+                    <Grid
+                      direction={"column"}
+                      xs={12}
+                      md={3}
+                      spacing={1}
+                      margin={"auto"}
+                      p={2}
+                    >
+                      {Detail?.productImages
+                        ? Detail?.productImages.map((e: any, i: number) => {
+                            return (
+                              <img
+                                key={i}
+                                src={e.image}
+                                alt=""
+                                width={"100px"}
+                              />
+                            );
+                          })
+                        : ""}
+                    </Grid>
+                  ) : (
+                    <></>
+                  )}
+                  {!isMediumMD ? (
+                    <Grid
+                      justifyContent={"center"}
+                      xs={12}
+                      md={9}
+                      spacing={2}
+                      p={2}
+                    >
+                      <Box sx={{ padding: "0 64px 0 0" }}>
+                        <img
+                          src={Detail?.image}
+                          id={`/products/${Detail.slug}`}
+                          alt=""
+                          width={"100%"}
+                        />
+                      </Box>
+                    </Grid>
+                  ) : (
+                    <Grid justifyContent={"center"} xs={12} md={9} spacing={2}>
+                      <Box sx={{ padding: "0 64px" }}>
+                        <img
+                          src={Detail?.image}
+                          id={`/products/${Detail.slug}`}
+                          alt=""
+                          width={"100%"}
+                        />
+                      </Box>
+                    </Grid>
+                  )}
+                </Grid>
               </Box>
               <Stack
                 direction={"row"}
@@ -116,8 +174,14 @@ export const Details = () => {
                 <Button
                   variant="outlined"
                   sx={{
-                    color: "red",
-                    borderColor: "red",
+                    color: "#F7941E",
+                    borderColor: "#F7941E",
+                    fontWeight: "bold",
+                    "&:hover": {
+                      borderColor: "#008C89",
+                      backgroundColor: "#008C89",
+                      color: "white"
+                    }
                   }}
                   onClick={() => handleAddToCart(Detail)}
                 >
@@ -127,6 +191,11 @@ export const Details = () => {
                   onClick={() => handleOrder(Detail)}
                   sx={{
                     fontWeight: "bold",
+                    backgroundColor: "#008C89",
+                    "&:hover": {
+                      backgroundColor: "#F7941E",
+                      color: "white"
+                    }
                   }}
                   variant="contained"
                 >
@@ -134,13 +203,14 @@ export const Details = () => {
                 </Button>
               </Stack>
             </Grid>
-            <Grid item xs={6}>
-              <Box pl={4}>
+            <Grid item xs={12} md={7}>
+              <Box p={2}>
                 <Typography
                   variant="h2"
                   fontSize={"22.1px"}
                   textTransform={"capitalize"}
                   fontWeight={500}
+                  sx={{ textTransform: "capitalize" }}
                 >
                   {Detail?.title}
                 </Typography>
@@ -155,44 +225,87 @@ export const Details = () => {
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%",
+                        width: "50%"
                       }}
                     >
                       <Typography>Nhà cung cấp:</Typography>
                       <Typography fontWeight={"bold"} color={"primary"}>
-                        {Detail?.producer?.name}
+                        <NavLink
+                          to=""
+                          style={{
+                            color: "#1976D2"
+                          }}
+                        >
+                          {Detail?.producer?.name}
+                        </NavLink>
                       </Typography>
                     </Stack>
                     <Stack
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%",
+                        width: "50%"
                       }}
                     >
-                      <Typography>Thương hiệu:</Typography>
+                      <Typography>Tác giả:</Typography>
                       <Typography fontWeight={"bold"}>
-                        {Detail?.category?.name}
+                        <NavLink
+                          to=""
+                          style={{
+                            color: "#1976D2"
+                          }}
+                        >
+                          {Detail?.category?.name}
+                        </NavLink>
                       </Typography>
                     </Stack>
                     <Stack
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%",
+                        width: "50%"
                       }}
                     >
-                      <Typography>Xuất xứ</Typography>
-                      <Typography fontWeight={"bold"}>Việt Nam</Typography>
+                      <Typography>Nhà xuất bản</Typography>
+                      <Typography fontWeight={"bold"}>
+                        <NavLink
+                          to=""
+                          style={{
+                            color: "#1976D2"
+                          }}
+                        >
+                          ?
+                        </NavLink>
+                      </Typography>
+                    </Stack>
+                    <Stack
+                      direction={"row"}
+                      spacing={1}
+                      sx={{
+                        width: "50%"
+                      }}
+                    >
+                      <Typography>Hình thức bìa:</Typography>
+                      <Typography fontWeight={"bold"}>
+                        <NavLink
+                          to=""
+                          style={{
+                            color: "#1976D2"
+                          }}
+                        >
+                          {Detail?.category?.name}
+                        </NavLink>
+                      </Typography>
                     </Stack>
                   </Stack>
                 </Box>
                 <Box mt={1}>
                   <Rating
+                    name="custom-rating-filter-operator"
                     defaultChecked={true}
                     defaultValue={2}
-                    name="read-only"
                     size="medium"
+                    precision={0.5}
                     readOnly
                   />
                 </Box>
@@ -200,7 +313,7 @@ export const Details = () => {
                   <Stack direction={"row"} spacing={2} mt={2}>
                     <Typography
                       className="price"
-                      color={color.error}
+                      color={color.price}
                       fontSize={25}
                       fontWeight={"bold"}
                     >
@@ -210,7 +323,7 @@ export const Details = () => {
                       className="price"
                       fontSize={15}
                       sx={{
-                        textDecoration: "line-through",
+                        textDecoration: "line-through"
                       }}
                     >
                       {`${numberFormat(Number(Detail.price))} `}
@@ -218,11 +331,10 @@ export const Details = () => {
 
                     <Typography
                       variant="caption"
-                      bgcolor={color.error}
+                      bgcolor={color.sale}
                       color={color.white}
                       p={"3px 10px"}
                       borderRadius={"3px"}
-                      fontWeight={"bold"}
                     >
                       {`-${Detail?.sale}%`}
                     </Typography>
@@ -235,76 +347,158 @@ export const Details = () => {
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      rowGap: 1,
+                      rowGap: 1
                     }}
                   >
-                    <Stack direction={"row"} spacing={7}>
-                      <Typography variant="caption">
-                        Thời gian giao hàng
-                      </Typography>
-                      <Stack>
-                        <Stack direction={"row"} spacing={1} sx={{}}>
-                          <Typography>Giao hàng đến</Typography>
-                          <Typography color="primary" fontWeight={"bold"}>
-                            Thay đổi
-                          </Typography>
-                        </Stack>
-                      </Stack>
-                    </Stack>
-                    <Stack direction={"row"} spacing={7}>
-                      <Typography variant="caption">
-                        Chính sách đổi trả
-                      </Typography>
-                      <Stack>
-                        <Stack direction={"row"} spacing={1} sx={{}}>
-                          <Typography>
-                            Đổi trả sản phẩm trong 30 ngày
-                          </Typography>
-                          <Typography color="primary" fontWeight={"bold"}>
-                            Xem thêm
-                          </Typography>
-                        </Stack>
-                      </Stack>
-                    </Stack>
+                    <Grid direction={"row"} display={"flex"} spacing={7}>
+                      <Grid xs={4}>
+                        <Typography variant="caption">
+                          Thời gian giao hàng
+                        </Typography>
+                      </Grid>
+                      <Grid xs={8} display={"flex"} gap={1}>
+                        <Typography>Giao hàng đến</Typography>
+                        <Typography color="primary" fontWeight={"bold"}>
+                          Thay đổi
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid
+                      direction={"row"}
+                      display={"flex"}
+                      alignItems={"center"}
+                      spacing={7}
+                    >
+                      <Grid xs={4}>
+                        <Typography variant="caption">
+                          Chính sách đổi trả
+                        </Typography>
+                      </Grid>
+                      <Grid xs={8} display={"flex"} gap={1}>
+                        <Typography>Đổi trả sản phẩm trong 30 ngày</Typography>
+                        <Typography color="primary" fontWeight={"bold"}>
+                          Xem thêm
+                        </Typography>
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Box>
                 {/* quantity */}
-                <Box mt={3}>
-                  <Stack direction={"row"} spacing={7}>
-                    <Typography
-                      variant="caption"
-                      fontWeight={"bold"}
-                      fontSize={"18px"}
-                    >
-                      Số lượng
-                    </Typography>
-                    <Stack>
-                      <Stack direction={"row"} spacing={1} sx={{}}>
-                        <Stack
-                          direction={"row"}
-                          spacing={3}
-                          border={"1px solid #eee"}
-                          p={"3px 10px"}
-                          borderRadius={2}
+                {!isMediumMD ? (
+                  <Box mt={3}>
+                    <Grid direction={"row"} display={"flex"} spacing={7}>
+                      <Grid xs={4}>
+                        <Typography
+                          variant="caption"
+                          fontWeight={"bold"}
+                          fontSize={"18px"}
                         >
-                          <RemoveIcon
-                            onClick={() => dispatch(decrement())}
-                            sx={{
-                              fontSize: "17px",
-                            }}
-                          />
-                          <Typography variant="caption">{count}</Typography>
-                          <AddIcon
-                            onClick={() => dispatch(increment())}
-                            sx={{
-                              fontSize: "17px",
-                            }}
-                          />
+                          Số lượng
+                        </Typography>
+                      </Grid>
+                      <Grid xs={8}>
+                        <Stack direction={"row"} sx={{}}>
+                          <Stack
+                            direction={"row"}
+                            spacing={3}
+                            border={"1px solid #eee"}
+                            p={"3px 12px"}
+                            borderRadius={"5px"}
+                          >
+                            <RemoveIcon
+                              onClick={() => dispatch(decrement())}
+                              sx={{
+                                fontSize: "17px"
+                              }}
+                            />
+                            <Typography variant="caption">{count}</Typography>
+                            <AddIcon
+                              onClick={() => dispatch(increment())}
+                              sx={{
+                                fontSize: "17px"
+                              }}
+                            />
+                          </Stack>
                         </Stack>
-                      </Stack>
+                      </Grid>
+                    </Grid>
+                  </Box>
+                ) : (
+                  <Box
+                    position={"fixed"}
+                    bottom={0}
+                    left={0}
+                    width={"100%"}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                    sx={{
+                      background: "#008C89"
+                    }}
+                  >
+                    <Stack
+                      direction={"row"}
+                      spacing={3}
+                      p={"16px 8px"}
+                      borderRight={"1px solid white"}
+                    >
+                      <RemoveIcon
+                        onClick={() => dispatch(decrement())}
+                        sx={{
+                          fontSize: "20px",
+                          color: "whitesmoke",
+                          cursor: "pointer"
+                        }}
+                      />
+                      <Typography
+                        sx={{
+                          fontSize: "14px",
+                          fontWeight: "bold",
+                          color: "white",
+                          width: "30px",
+                          textAlign: "center"
+                        }}
+                        variant="caption"
+                      >
+                        {count}
+                      </Typography>
+                      <AddIcon
+                        onClick={() => dispatch(increment())}
+                        sx={{
+                          fontSize: "20px",
+                          color: "whitesmoke",
+                          cursor: "pointer"
+                        }}
+                      />
                     </Stack>
-                  </Stack>
-                </Box>
+                    <NavLink
+                      to={""}
+                      style={{
+                        fontWeight: "bold",
+                        color: "white",
+                        textAlign: "center",
+                        padding: "16px 24px"
+                      }}
+                    >
+                      Thêm vào giỏ hàng
+                    </NavLink>
+                    <Button
+                      sx={{
+                        padding: "16px 24px",
+                        borderRadius: "0",
+                        backgroundColor: "#F7941E",
+                        boxShadow: "none",
+                        "&:hover": {
+                          opacity: "0.9",
+                          boxShadow: "none",
+                          backgroundColor: "#F7941E"
+                        }
+                      }}
+                    >
+                      Mua ngay
+                    </Button>
+                  </Box>
+                )}
               </Box>
             </Grid>
           </Grid>
@@ -312,66 +506,130 @@ export const Details = () => {
 
         {/* chi tiet san pham */}
         <Box pb={2}>
-          <Box bgcolor={color.white} p={2}>
-            <Typography variant="h2" fontWeight={"bold"} fontSize={"18.85px"}>
-              Thông tin sản phẩm
+          <Box
+            bgcolor={color.white}
+            sx={{
+              p: 2,
+              pt: 0
+            }}
+          >
+            <Typography
+              variant="h2"
+              fontSize={"18px"}
+              textTransform={"uppercase"}
+              sx={{
+                p: "16px 0"
+              }}
+            >
+              Thông tin chi tiết
             </Typography>
-            <Grid container mt={2}>
-              <Grid item xs={3}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    rowGap: "5px",
-                  }}
-                >
-                  <Typography variant="h3">Mã hàng</Typography>
-                  <Typography variant="h3">Tên nhà cung cấp</Typography>
-                  <Typography variant="h3">Tác giả</Typography>
-                  <Typography variant="h3">Ngôn ngữ</Typography>
-                </Box>
-              </Grid>
-              <Grid item xs={9}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    rowGap: "5px",
-                  }}
-                >
-                  <Typography variant="h3">{Detail?.id}</Typography>
-                  <Typography
-                    variant="h3"
-                    fontWeight={"bold"}
-                    color={color.text_second}
-                  >
-                    {Detail?.producer?.name}
-                  </Typography>
-                  <Typography variant="h3">{Detail?.author}</Typography>
-                  <Typography variant="h3">Việt Nam</Typography>
-                </Box>
-              </Grid>
-            </Grid>
-            <Typography variant="body1" mt={2} fontSize={"15px"}>
-              Giá sản phẩm trên Fahasa.com đã bao gồm thuế theo luật hiện hành.
-              Bên cạnh đó, tuỳ vào loại sản phẩm, hình thức và địa chỉ giao hàng
-              mà có thể phát sinh thêm chi phí khác như Phụ phí đóng gói, phí
-              vận chuyển, phụ phí hàng cồng kềnh,...
+            <Table
+              sx={{ border: "1px solid #CCCCCC" }}
+              aria-label="customized table"
+            >
+              <TableBody>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Nhà sản xuất:
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    {Detail?.title}
+                  </StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Nhà xuất bản:
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    a
+                  </StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Nhà phát hành:
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    a
+                  </StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Kích thước:
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    a
+                  </StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Số trang:
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    a
+                  </StyledTableCell>
+                </StyledTableRow>
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">
+                    Trọng lượng:
+                  </StyledTableCell>
+                  <StyledTableCell component="th" scope="row">
+                    a
+                  </StyledTableCell>
+                </StyledTableRow>
+              </TableBody>
+            </Table>
+          </Box>
+          <Box
+            bgcolor={color.white}
+            sx={{
+              p: 2,
+              pt: 0
+            }}
+          >
+            <Typography
+              variant="h2"
+              fontSize={"18px"}
+              textTransform={"uppercase"}
+              sx={{
+                p: "16px 0"
+              }}
+            >
+              Giới thiệu sản phẩm
             </Typography>
-            <Typography variant="body1" color={color.error} mt={1}>
-              Chính sách khuyến mãi trên Fahasa.com không áp dụng cho Hệ thống
-              Nhà sách Fahasa trên toàn quốc
-            </Typography>
-            <Box></Box>
+            <Box p="2" textAlign={"center"}>
+              <Typography
+                textAlign={"center"}
+                fontSize={"16px"}
+                color={"#F7941E"}
+                textTransform={"capitalize"}
+                fontWeight={"bold"}
+                p={2}
+                variant="h2"
+              >
+                {Detail?.title}
+              </Typography>
+              <Typography variant="body2" textAlign={"justify"}>
+                {Detail?.desc}
+              </Typography>
+
+              <Button
+                style={{
+                  padding: "4px 48px",
+                  margin: "16px 0",
+                  textAlign: "center",
+                  background: "#F7941E"
+                }}
+              >
+                Mua ngay
+              </Button>
+            </Box>
           </Box>
         </Box>
-
         <Box pb={2}>
           <Box bgcolor={color.white} p={2}>
             <Typography variant="h2" fontWeight={"bold"} fontSize={"18.85px"}>
               Sản phẩm liên quan
             </Typography>
-
             <Grid container mt={2}>
               {RelatedProduct.map((e) => {
                 return (

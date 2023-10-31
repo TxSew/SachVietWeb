@@ -104,7 +104,12 @@ const Header = () => {
   };
 
   const hdicon = {
-    mr: 1
+    mr: 1,
+    fontSize: "24px"
+  };
+
+  const nicon = {
+    lineHeight: "normal"
   };
 
   const [open, setOpen] = React.useState(false);
@@ -142,42 +147,62 @@ const Header = () => {
                 justifyContent={"space-between"}
               >
                 <Box display={"flex"} alignItems={"center"} gap={3}>
-                  <Box sx={hditem}>
-                    <InfoIcon sx={hdicon} />
-                    <Typography fontSize={"12px"}>Trợ giúp</Typography>
-                  </Box>
-                  <Box sx={hditem}>
-                    <NewspaperIcon sx={hdicon} />
-                    <Typography fontSize={"12px"}>Tin tức</Typography>
-                  </Box>
+                  <NavLink to={""}>
+                    <Box sx={hditem}>
+                      <InfoIcon sx={hdicon} />
+                      <Typography fontSize={"12px"} style={nicon}>
+                        Trợ giúp
+                      </Typography>
+                    </Box>
+                  </NavLink>
+                  <NavLink to={""}>
+                    <Box sx={hditem}>
+                      <NewspaperIcon sx={hdicon} />
+                      <Typography fontSize={"12px"} style={nicon}>
+                        Tin tức
+                      </Typography>
+                    </Box>
+                  </NavLink>
                   <Box sx={hditem}>
                     <SellIcon sx={hdicon} />
-                    <Typography fontSize={"12px"}>Khuyễn mãi</Typography>
+                    <Typography fontSize={"12px"} style={nicon}>
+                      Khuyễn mãi
+                    </Typography>
                   </Box>
                 </Box>
                 <Box display={"flex"} alignItems={"center"} gap={3}>
                   <Box sx={hditem}>
                     <CardGiftcardIcon sx={hdicon} />
-                    <Typography fontSize={"12px"}>Ưu đãi & tiện ích</Typography>
+                    <Typography fontSize={"12px"} style={nicon}>
+                      Ưu đãi & tiện ích
+                    </Typography>
                   </Box>
                   <Box sx={hditem}>
                     <ShoppingBasketSharpIcon sx={hdicon} />
-                    <Typography fontSize={"12px"}>Kiểm tra đơn hàng</Typography>
+                    <Typography fontSize={"12px"} style={nicon}>
+                      Kiểm tra đơn hàng
+                    </Typography>
                   </Box>
                   {user.id ? (
                     <Box sx={hditem}>
                       <HowToRegSharpIcon sx={hdicon} />
-                      <Typography fontSize={"12px"}>Tài khoản</Typography>
+                      <Typography fontSize={"12px"} style={nicon}>
+                        Tài khoản
+                      </Typography>
                     </Box>
                   ) : (
                     <Box display={"flex"} gap={2}>
                       <Box sx={hditem}>
                         <LoginSharpIcon sx={hdicon} />
-                        <Typography fontSize={"12px"}>Đăng nhập</Typography>
+                        <Typography fontSize={"12px"} style={nicon}>
+                          Đăng nhập
+                        </Typography>
                       </Box>
                       <Box sx={hditem}>
                         <HowToRegSharpIcon sx={hdicon} />
-                        <Typography fontSize={"12px"}>Đăng ký</Typography>
+                        <Typography fontSize={"12px"} style={nicon}>
+                          Đăng ký
+                        </Typography>
                       </Box>
                     </Box>
                   )}
