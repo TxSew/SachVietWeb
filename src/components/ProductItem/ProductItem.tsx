@@ -6,10 +6,6 @@ import { memo } from "react";
 import { Link } from "react-router-dom";
 import { color } from "../../Theme/color";
 import { Product } from "../../submodules/models/ProductModel/Product";
-import {
-  NumberFormattingComponent,
-  formatByPrice,
-} from "../../helpers/formatvalidate";
 import { numberFormat } from "../../helpers/formatPrice";
 interface ProductItem {
   products: Product;
@@ -19,16 +15,16 @@ const ProductItem = (Props: ProductItem) => {
     <Card
       variant="outlined"
       sx={{
-        border: "1px solid #eee",
+        border: "1px solid #eee"
       }}
     >
       <Link to={`/products/${Props.products.slug}`}>
         <CardMedia
           component="img"
-          height={"190px"}
+          height={"170"}
           sx={{
-            p: 1,
-            objectFit: "cover",
+            p: "20px",
+            objectFit: "contain"
           }}
           title=""
           image={Props.products.image}
@@ -46,7 +42,7 @@ const ProductItem = (Props: ProductItem) => {
             display: "-webkit-box",
             lineClamp: 2,
             "-webkit-line-clamp": 2,
-            "-webkit-box-orient": "vertical",
+            "-webkit-box-orient": "vertical"
           }}
         >
           {Props.products.title}
@@ -75,7 +71,7 @@ const ProductItem = (Props: ProductItem) => {
         <Typography
           color={"#888888"}
           sx={{
-            textDecoration: "line-through",
+            textDecoration: "line-through"
           }}
         >
           {`${numberFormat(Number(Props.products.price_sale))} `}
@@ -83,7 +79,7 @@ const ProductItem = (Props: ProductItem) => {
       </CardContent>
       <Rating
         sx={{
-          pl: 2,
+          pl: 2
         }}
         defaultChecked={true}
         defaultValue={2}

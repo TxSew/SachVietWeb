@@ -1,10 +1,7 @@
-import ExpandMoreOutlinedIcon from "@mui/icons-material/ExpandMoreOutlined";
-import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import VolumeUpOutlinedIcon from "@mui/icons-material/VolumeUpOutlined";
 import InfoIcon from "@mui/icons-material/Info";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import SellIcon from "@mui/icons-material/Sell";
@@ -12,21 +9,24 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import ShoppingBasketSharpIcon from "@mui/icons-material/ShoppingBasketSharp";
 import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
-
+import MenuIcon from "@mui/icons-material/Menu";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import Person3Icon from "@mui/icons-material/Person3";
 import {
-  Autocomplete,
+  Avatar,
   Badge,
-  Button,
+  Divider,
   Grid,
-  ListItem,
+  IconButton,
+  ListItemIcon,
+  Menu,
+  MenuItem,
   Modal,
-  Paper,
   Stack,
   TextField,
-  styled
+  Tooltip
 } from "@mui/material";
 import Box from "@mui/material/Box";
-import CloseIcon from "@mui/icons-material/Close";
 import Container from "@mui/material/Container/Container";
 import Typography from "@mui/material/Typography/Typography";
 import { useSelector } from "react-redux";
@@ -37,8 +37,8 @@ import { RootState } from "../../../redux/storeClient";
 import { useEffect, useState } from "react";
 import { User } from "../../../submodules/models/UserModel/User";
 import * as React from "react";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { options } from "../../../pages/admin/Statistical/chart/ChartMoney";
+import List from "@mui/material/List";
+import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 const Header = () => {
   const [user, setUser] = useState<User>({} as User);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
@@ -51,31 +51,6 @@ const Header = () => {
     }
   }, []);
 
-  const BoxIcon = styled(Box)`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: gray;
-    & > a {
-      color: gray;
-    }
-    & > span {
-      color: gray;
-    }
-  `;
-  const style = {
-    position: "absolute",
-    top: "00",
-    left: "00",
-    width: "300px",
-    height: "100vh",
-    bgcolor: "background.paper",
-    borderRight: "1px solid #000",
-    boxShadow: 24,
-    outline: "none",
-    p: 4
-  };
   const styles = {
     position: "absolute",
     top: "10%",
@@ -89,6 +64,20 @@ const Header = () => {
     p: 4,
     pt: 2,
     borderRadius: "8px"
+  };
+
+  const boxmodal = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "35%",
+    height: "100%",
+    bgcolor: "background.paper",
+    borderRight: "1px solid #000",
+    boxShadow: 24,
+    outline: "none",
+    p: 4,
+    pt: 2
   };
 
   const hditem = {
@@ -107,110 +96,120 @@ const Header = () => {
     mr: 1,
     fontSize: "24px"
   };
+  const hdicon_mb = {
+    mr: 1,
+    fontSize: "24px",
+    lineHieght: "normal"
+  };
 
   const nicon = {
     lineHeight: "normal"
   };
 
-  const [open, setOpen] = React.useState(false);
   const [openSearch, setOpenSearch] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
-
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
-    <Box>
+    <>
+      <Box width={"100%"}>
+        <Image
+          src="https://bookbuy.vn/Images/frontend/sieu-sale-thang-10.jpg"
+          alt="logo"
+          width="100%"
+        />
+      </Box>
       {!isMediumMD ? (
-        <>
-          <Grid
-            sx={{
-              backgroundColor: "#008c89"
-            }}
-          >
-            <Container maxWidth={"xl"}>
-              <Image
-                src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/FahasaSaleT3_W3_T823_Banner_Header_1263x60.jpg"
-                alt="logo"
-                width="100%"
-                height="61px"
-              />
-            </Container>
-          </Grid>
-          <Box>
-            {" "}
-            <Container maxWidth="xl">
-              <Box
-                display={"flex"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-              >
-                <Box display={"flex"} alignItems={"center"} gap={3}>
-                  <NavLink to={""}>
-                    <Box sx={hditem}>
-                      <InfoIcon sx={hdicon} />
-                      <Typography fontSize={"12px"} style={nicon}>
-                        Trợ giúp
-                      </Typography>
-                    </Box>
-                  </NavLink>
-                  <NavLink to={""}>
-                    <Box sx={hditem}>
-                      <NewspaperIcon sx={hdicon} />
-                      <Typography fontSize={"12px"} style={nicon}>
-                        Tin tức
-                      </Typography>
-                    </Box>
-                  </NavLink>
+        <Box width={"100%"}>
+          <Container maxWidth="xl">
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+            >
+              <Box display={"flex"} alignItems={"center"} gap={3}>
+                <NavLink to={""}>
+                  <Box sx={hditem}>
+                    <InfoIcon sx={hdicon} />
+                    <Typography fontSize={"12px"} style={nicon}>
+                      Trợ giúp
+                    </Typography>
+                  </Box>
+                </NavLink>
+                <NavLink to={""}>
+                  <Box sx={hditem}>
+                    <NewspaperIcon sx={hdicon} />
+                    <Typography fontSize={"12px"} style={nicon}>
+                      Tin tức
+                    </Typography>
+                  </Box>
+                </NavLink>
+                <NavLink to={""}>
                   <Box sx={hditem}>
                     <SellIcon sx={hdicon} />
                     <Typography fontSize={"12px"} style={nicon}>
                       Khuyễn mãi
                     </Typography>
                   </Box>
-                </Box>
-                <Box display={"flex"} alignItems={"center"} gap={3}>
+                </NavLink>
+              </Box>
+              <Box display={"flex"} alignItems={"center"} gap={3}>
+                <NavLink to={""}>
                   <Box sx={hditem}>
                     <CardGiftcardIcon sx={hdicon} />
                     <Typography fontSize={"12px"} style={nicon}>
                       Ưu đãi & tiện ích
                     </Typography>
                   </Box>
+                </NavLink>
+                <NavLink to={""}>
                   <Box sx={hditem}>
                     <ShoppingBasketSharpIcon sx={hdicon} />
                     <Typography fontSize={"12px"} style={nicon}>
                       Kiểm tra đơn hàng
                     </Typography>
                   </Box>
-                  {user.id ? (
+                </NavLink>
+                {user.id ? (
+                  <NavLink to={""}>
                     <Box sx={hditem}>
                       <HowToRegSharpIcon sx={hdicon} />
                       <Typography fontSize={"12px"} style={nicon}>
                         Tài khoản
                       </Typography>
                     </Box>
-                  ) : (
-                    <Box display={"flex"} gap={2}>
+                  </NavLink>
+                ) : (
+                  <Box display={"flex"} gap={2}>
+                    <NavLink to={"/auth"}>
                       <Box sx={hditem}>
                         <LoginSharpIcon sx={hdicon} />
                         <Typography fontSize={"12px"} style={nicon}>
                           Đăng nhập
                         </Typography>
                       </Box>
+                    </NavLink>
+                    <NavLink to={"/auth"}>
                       <Box sx={hditem}>
                         <HowToRegSharpIcon sx={hdicon} />
                         <Typography fontSize={"12px"} style={nicon}>
                           Đăng ký
                         </Typography>
                       </Box>
-                    </Box>
-                  )}
-                </Box>
+                    </NavLink>
+                  </Box>
+                )}
               </Box>
-            </Container>
-          </Box>
-
+            </Box>
+          </Container>
           <Box>
             <Container maxWidth="xl">
               <Grid
@@ -736,142 +735,189 @@ const Header = () => {
               </Grid>
             </Container>
           </Box>
-        </>
+        </Box>
       ) : (
-        <>
-          <Grid
-            sx={{
-              py: "10px",
-              backgroundColor: "#008C89"
-            }}
-          >
-            <Container>
-              <Grid item xs={2}>
-                <Link to={"/"}>
-                  <Box
-                    sx={{
-                      mb: "15px",
-                      textAlign: "center",
-                      display: "flex",
-                      justifyContent: "center",
-                      maxWidth: "220px",
-                      mx: "auto"
-                    }}
-                  >
-                    <Image
-                      src="https://cdn0.fahasa.com/media/quiz-game-T7/Avatar_IconApp_SN47_logoSN47_1.png"
-                      alt=""
-                      width="100%"
-                      height="53.77px"
-                    />
-                  </Box>
-                </Link>
-              </Grid>
-              <Grid
-                container
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center"
-                }}
-              >
-                <Grid
-                  item
-                  xs={1}
+        <Box
+          position={"sticky"}
+          top={0}
+          left={0}
+          sx={{ background: "#e7e7e7", zIndex: "1" }}
+        >
+          <Container maxWidth={"xl"}>
+            <Box
+              display={"flex"}
+              alignItems={"center"}
+              justifyContent={"space-between"}
+              padding={" 8px 0"}
+              color={"white"}
+            >
+              <Box display={"flex"} alignItems={"center"} gap={2}>
+                <Box
+                  color={"#333"}
                   sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    paddingRight: "10px"
+                    cursor: "pointer"
                   }}
                 >
-                  <Box
-                    sx={{
-                      textAlign: "right"
-                    }}
-                    color={"white"}
+                  <Modal
+                    open={openSearch}
+                    onClose={handleCloseSearch}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
                   >
-                    <FormatListBulletedOutlinedIcon
-                      onClick={handleOpen}
+                    <Box sx={boxmodal}>
+                      <List>T</List>
+                      <List>T</List>
+                    </Box>
+                  </Modal>
+                  <MenuIcon onClick={handleOpenSearch} />
+                </Box>
+                <NavLink
+                  to={"/"}
+                  style={{
+                    cursor: "pointer"
+                  }}
+                >
+                  <Image
+                    src="https://bookbuy.vn/Images/frontend/base/mobile/logo-new.png"
+                    alt="logo"
+                    width="100px"
+                    height="24px"
+                  />
+                </NavLink>
+              </Box>
+              <Box
+                display={"flex"}
+                alignItems={"center"}
+                lineHeight={"normal"}
+                gap={2}
+              >
+                <NavLink
+                  to={"/cart"}
+                  style={{
+                    cursor: "pointer",
+                    color: "#F7941E"
+                  }}
+                >
+                  <Badge badgeContent={cart.length} color="primary">
+                    <ShoppingCartIcon sx={hdicon_mb} />
+                  </Badge>
+                </NavLink>
+                {user.id ? (
+                  <NavLink
+                    to={"/user"}
+                    style={{
+                      cursor: "pointer",
+                      color: "#F7941E"
+                    }}
+                  >
+                    <Person3Icon sx={hdicon_mb} />
+                  </NavLink>
+                ) : (
+                  <Box>
+                    <Box
                       sx={{
-                        width: "36px",
-                        height: "36px"
+                        display: "flex",
+                        alignItems: "center",
+                        textAlign: "center"
                       }}
-                    />
-                    <Modal
+                    >
+                      <Tooltip title="Account settings">
+                        <IconButton
+                          onClick={handleClick}
+                          aria-controls={open ? "account-menu" : undefined}
+                          aria-haspopup="true"
+                          aria-expanded={open ? "true" : undefined}
+                        >
+                          <Avatar
+                            sx={{
+                              width: 24,
+                              height: 24,
+                              background: "#F7941E",
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              textAlign: "center"
+                            }}
+                          >
+                            <Person3Icon
+                              sx={hdicon_mb}
+                              style={{
+                                margin: "0 auto"
+                              }}
+                            />
+                          </Avatar>
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                    <Menu
+                      anchorEl={anchorEl}
+                      id="account-menu"
                       open={open}
                       onClose={handleClose}
-                      aria-labelledby="modal-modal-title"
-                      aria-describedby="modal-modal-description"
-                    >
-                      <Box sx={style}>
-                        <Typography
-                          id="modal-modal-title"
-                          variant="h6"
-                          component="h2"
-                        >
-                          Text in a modal
-                        </Typography>
-                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                          Duis mollis, est non commodo luctus, nisi erat
-                          porttitor ligula.
-                        </Typography>
-                      </Box>
-                    </Modal>
-                  </Box>
-                </Grid>
-                <Grid item xs={9}>
-                  <Stack
-                    sx={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      backgroundColor: "#fff",
-                      border: "1px solid #ccc",
-                      borderRadius: "5px"
-                    }}
-                  >
-                    <TextField
-                      sx={{
-                        width: "100%",
-                        "& fieldset": { border: "none", width: "100%" }
+                      onClick={handleClose}
+                      PaperProps={{
+                        elevation: 0,
+                        sx: {
+                          overflow: "visible",
+                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                          mt: 1.5,
+                          "& .MuiAvatar-root": {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1
+                          },
+                          "&:before": {
+                            content: '""',
+                            display: "block",
+                            position: "absolute",
+                            top: 0,
+                            right: 14,
+                            width: 10,
+                            height: 10,
+                            bgcolor: "background.paper",
+                            transform: "translateY(-50%) rotate(45deg)",
+                            zIndex: 0
+                          }
+                        }
                       }}
-                      placeholder="Tìm kiếm sản phẩm mong muốn..."
-                    />
-                  </Stack>
-                </Grid>
-                <Grid
-                  item
-                  xs={2}
-                  sx={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#fff",
-                    pl: "24px",
-                    gap: "5px"
-                  }}
-                >
-                  <ShoppingCartOutlinedIcon
-                    sx={{
-                      width: "30px",
-                      height: "30px"
-                    }}
-                  />
-                  <PersonOutlineOutlinedIcon
-                    sx={{
-                      width: "30px",
-                      height: "30px"
-                    }}
-                  />
-                </Grid>
-              </Grid>
-            </Container>
-          </Grid>
-        </>
+                      transformOrigin={{ horizontal: "right", vertical: "top" }}
+                      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                    >
+                      <MenuItem onClick={handleClose}>
+                        <Avatar /> Profile
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <Avatar /> My account
+                      </MenuItem>
+                      <Divider />
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <PersonAdd fontSize="small" />
+                        </ListItemIcon>
+                        Add another account
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <Settings fontSize="small" />
+                        </ListItemIcon>
+                        Settings
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                      </MenuItem>
+                    </Menu>
+                  </Box>
+                )}
+              </Box>
+            </Box>
+          </Container>
+        </Box>
       )}
-    </Box>
+    </>
   );
 };
 export default Header;

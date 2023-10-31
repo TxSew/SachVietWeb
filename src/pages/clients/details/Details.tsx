@@ -171,36 +171,43 @@ export const Details = () => {
                 justifyContent={"center"}
                 mt={3}
               >
-                <Button
-                  variant="outlined"
-                  sx={{
-                    color: "#F7941E",
-                    borderColor: "#F7941E",
-                    fontWeight: "bold",
-                    "&:hover": {
-                      borderColor: "#008C89",
-                      backgroundColor: "#008C89",
-                      color: "white"
-                    }
-                  }}
-                  onClick={() => handleAddToCart(Detail)}
-                >
-                  Thêm vào giỏ hàng
-                </Button>
-                <Button
-                  onClick={() => handleOrder(Detail)}
-                  sx={{
-                    fontWeight: "bold",
-                    backgroundColor: "#008C89",
-                    "&:hover": {
-                      backgroundColor: "#F7941E",
-                      color: "white"
-                    }
-                  }}
-                  variant="contained"
-                >
-                  Mua ngay
-                </Button>
+                {isMediumMD ? (
+                  <></>
+                ) : (
+                  <>
+                    {" "}
+                    <Button
+                      variant="outlined"
+                      sx={{
+                        color: "#F7941E",
+                        borderColor: "#F7941E",
+                        fontWeight: "bold",
+                        "&:hover": {
+                          borderColor: "#008C89",
+                          backgroundColor: "#008C89",
+                          color: "white"
+                        }
+                      }}
+                      onClick={() => handleAddToCart(Detail)}
+                    >
+                      Thêm vào giỏ hàng
+                    </Button>
+                    <Button
+                      onClick={() => handleOrder(Detail)}
+                      sx={{
+                        fontWeight: "bold",
+                        backgroundColor: "#008C89",
+                        "&:hover": {
+                          backgroundColor: "#F7941E",
+                          color: "white"
+                        }
+                      }}
+                      variant="contained"
+                    >
+                      Mua ngay
+                    </Button>
+                  </>
+                )}
               </Stack>
             </Grid>
             <Grid item xs={12} md={7}>
@@ -433,7 +440,8 @@ export const Details = () => {
                     alignItems={"center"}
                     justifyContent={"space-between"}
                     sx={{
-                      background: "#008C89"
+                      background: "#008C89",
+                      zIndex: "1"
                     }}
                   >
                     <Stack
@@ -471,17 +479,18 @@ export const Details = () => {
                         }}
                       />
                     </Stack>
-                    <NavLink
-                      to={""}
+                    <Typography
                       style={{
                         fontWeight: "bold",
                         color: "white",
                         textAlign: "center",
-                        padding: "16px 24px"
+                        padding: "16px 24px",
+                        cursor: "pointer"
                       }}
+                      onClick={() => handleAddToCart(Detail)}
                     >
                       Thêm vào giỏ hàng
-                    </NavLink>
+                    </Typography>
                     <Button
                       sx={{
                         padding: "16px 24px",
@@ -494,6 +503,7 @@ export const Details = () => {
                           backgroundColor: "#F7941E"
                         }
                       }}
+                      onClick={() => handleOrder(Detail)}
                     >
                       Mua ngay
                     </Button>

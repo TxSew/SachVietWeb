@@ -1,5 +1,15 @@
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Container,
+  Grid,
+  ListItem,
+  Stack,
+  Typography
+} from "@mui/material";
 import Image from "../../../components/Image/Image";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import MailIcon from "@mui/icons-material/Mail";
+import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -7,16 +17,42 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import StackCustom from "../../../components/CustomComponents/Stack/StackCustom";
 import { color } from "../../../Theme/color";
 import useMedia from "../../../hooks/useMedia/useMedia";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import List from "@mui/material/List";
 
 function Footer() {
   const { isMediumMD } = useMedia();
+  const ftItemhd = {
+    padding: "24px 16px 0",
+    fontSize: "16px",
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    color: "black"
+  };
+  const ftItem = {
+    fontSize: "13px",
+    textTransform: "capitalize",
+    color: "black"
+  };
+  const ftItemhdmb = {
+    padding: "24px 0 0",
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    color: "black"
+  };
+  const ftItemmb = {
+    fontSize: "13px",
+    textTransform: "capitalize",
+    color: "black",
+    padding: "4px 0"
+  };
+
   return (
     <Grid bgcolor={"#eee"}>
       <Container maxWidth={"xl"}>
-        <Box bgcolor={color.white}>
+        <Box bgcolor={color.white} p={4}>
           <Grid container>
-            <Grid pt={5} item xs={12} md={4} px={3}>
+            <Grid item xs={12} md={4} sm={12}>
               <Box
                 sx={{
                   paddingRight: "20px",
@@ -98,205 +134,312 @@ function Footer() {
               </Box>
             </Grid>
 
-            <Grid pt={5} item xs={12} md={8} sx={{}}>
-              <Box
-                sx={{
-                  display: "flex"
-                }}
-              >
-                <Grid item xs={4}>
-                  <Typography
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: "bold"
-                    }}
-                    variant="h2"
-                  >
-                    DỊCH VỤ
+            {isMediumMD ? (
+              <Grid item xs={12} md={8} sm={12} display={"flex"} container>
+                <Grid md={4} xs={6}>
+                  {" "}
+                  <Typography sx={ftItemhdmb} variant="h2">
+                    tài khoản của tôi
                   </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      rowGap: "10px",
-                      mt: "10px"
-                    }}
-                  >
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Điều khoản sử dụng
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chính sách bảo mật thông tin cá nhân
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chính sách bảo mật thanh toán
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Hệ thống trung tâm nhà sách
-                    </Link>
-                  </Box>
+                  <List>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={"/auth"}
+                      >
+                        Đăng nhập /
+                      </NavLink>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={"/auth"}
+                      >
+                        Đăng ký{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Thay đổi địa chỉ khách hàng{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Chi tiết tài khoản{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Lịch sử mua hàng{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        {" "}
+                      </NavLink>
+                    </ListItem>
+                  </List>
                 </Grid>
-
-                <Grid item xs={4}>
-                  <Typography
-                    variant="h2"
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    HỖ TRỢ
+                <Grid md={4} xs={6}>
+                  {" "}
+                  <Typography sx={ftItemhdmb} variant="h2">
+                    Trang chủ
                   </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      mt: "10px",
-                      rowGap: "10px",
-                      flexDirection: "column"
-                    }}
-                  >
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chính sách đổi - trả - hoàn tiền
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chính sách bảo hành - bồi hoàn
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chính sách vận chuyển
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chính sách khách sỉ
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Phương thức thanh toán và xuất hóa đơn
-                    </Link>
-                  </Box>
+                  <List>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Danh mục
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Văn học{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Tâm lý - kỹ năng
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Nuôi dạy con
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Ngoại ngữ
+                      </NavLink>
+                    </ListItem>
+                  </List>
                 </Grid>
-
-                <Grid item xs={4}>
-                  <Typography
-                    sx={{
-                      fontSize: "20px",
-                      fontWeight: "bold"
-                    }}
-                    variant="h2"
-                  >
-                    TÀI KHOẢN CỦA TÔI
+                <Grid md={4} xs={12}>
+                  <Typography sx={ftItemhdmb} variant="h2">
+                    Liên Hệ
                   </Typography>
-                  <Box
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                      rowGap: "10px",
-                      mt: "10px"
-                    }}
-                  >
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Đăng nhập tạo tài khoản mới
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Thay đổi địa chỉ khách hàng
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Chi tiết khách hàng
-                    </Link>
-                    <Link
-                      to=""
-                      style={{
-                        textDecoration: "none",
-                        color: "black"
-                      }}
-                    >
-                      Lịch sử mua hàng
-                    </Link>
-                  </Box>
+                  <List>
+                    <ListItem sx={ftItemmb}>
+                      <LocationOnIcon />
+                      <Typography sx={{ cursor: "pointer" }} px={1}>
+                        259, Hà Huy Tập Tân Lợi, TP. BMT
+                      </Typography>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <MailIcon />
+                      <Typography sx={{ cursor: "pointer" }} px={1}>
+                        cskh@sachviet.com.vn
+                      </Typography>
+                    </ListItem>
+                    <ListItem sx={ftItemmb}>
+                      <LocalPhoneIcon />
+                      <Typography sx={{ cursor: "pointer" }} px={1}>
+                        0378529323
+                      </Typography>
+                    </ListItem>
+                  </List>
                 </Grid>
-              </Box>
-              <Grid container>
-                <Typography
-                  variant="h2"
-                  sx={{
-                    fontSize: "20px",
-                    fontWeight: "bold",
-                    textTransform: "uppercase"
-                  }}
-                >
-                  Liên hệ
-                </Typography>
               </Grid>
-            </Grid>
+            ) : (
+              <Grid item xs={12} md={8} display={"flex"} pl={3} container>
+                <Grid md={5} xs={6} sm={6}>
+                  <Typography sx={ftItemhd} variant="h2">
+                    Liên Hệ
+                  </Typography>
+                  <List>
+                    <ListItem sx={ftItem}>
+                      <LocationOnIcon />
+                      <Typography sx={{ cursor: "pointer" }} px={1}>
+                        259, Hà Huy Tập Tân Lợi, TP. BMT
+                      </Typography>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <MailIcon />
+                      <Typography sx={{ cursor: "pointer" }} px={1}>
+                        cskh@sachviet.com.vn
+                      </Typography>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <LocalPhoneIcon />
+                      <Typography sx={{ cursor: "pointer" }} px={1}>
+                        0378529323
+                      </Typography>
+                    </ListItem>
+                  </List>
+                </Grid>
+                <Grid md={3.5} xs={6} sm={6}>
+                  {" "}
+                  <Typography sx={ftItemhd} variant="h2">
+                    Trang chủ
+                  </Typography>
+                  <List>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Danh mục
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Văn học{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Tâm lý - kỹ năng
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Nuôi dạy con
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Ngoại ngữ
+                      </NavLink>
+                    </ListItem>
+                  </List>
+                </Grid>
+                <Grid md={3.5} xs={12} sm={12}>
+                  {" "}
+                  <Typography sx={ftItemhd} variant="h2">
+                    tài khoản của tôi
+                  </Typography>
+                  <List>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={"/auth"}
+                      >
+                        Đăng nhập
+                      </NavLink>
+                      <Typography>/ </Typography>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={"/auth"}
+                      >
+                        Đăng ký{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Thay đổi địa chỉ khách hàng{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Chi tiết tài khoản{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        Lịch sử mua hàng{" "}
+                      </NavLink>
+                    </ListItem>
+                    <ListItem sx={ftItem}>
+                      <NavLink
+                        style={{
+                          color: "black"
+                        }}
+                        to={""}
+                      >
+                        {" "}
+                      </NavLink>
+                    </ListItem>
+                  </List>
+                </Grid>
+              </Grid>
+            )}
           </Grid>
         </Box>
       </Container>

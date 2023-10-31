@@ -7,13 +7,13 @@ import ProductItem from "../../../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../../../configs/BaseApi";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
- interface PropsSort {
-  page: number 
-  search: string 
-  sortBy: string 
-  sortWith: string,
-  limit: number   
- }
+interface PropsSort {
+  page: number;
+  search: string;
+  sortBy: string;
+  sortWith: string;
+  limit: number;
+}
 function Products() {
   const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
@@ -26,7 +26,6 @@ function Products() {
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async () => {
     try {
-      
       const productData: any = await http.getAll();
       const { products } = productData;
       setProducts(products);
@@ -47,13 +46,13 @@ function Products() {
             sx={{
               borderTopLeftRadius: 3,
               borderBottom: " 1px solid #eee",
-              borderTopRightRadius: 3,
+              borderTopRightRadius: 3
             }}
           >
             <Stack
               sx={{
                 borderTopLeftRadius: 3,
-                borderTopRightRadius: 3,
+                borderTopRightRadius: 3
               }}
               direction={"row"}
               spacing={2}
@@ -68,7 +67,7 @@ function Products() {
               <Typography
                 variant="h3"
                 sx={{
-                  fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.25rem)",
+                  fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.25rem)"
                 }}
                 fontWeight={"bold"}
               >
@@ -83,7 +82,7 @@ function Products() {
               aria-label="Platform"
               sx={{
                 py: "10px",
-                pl: "10px",
+                pl: "10px"
               }}
             >
               <ToggleButton value={"web"}>Xu Hướng Theo Ngày</ToggleButton>
@@ -93,10 +92,10 @@ function Products() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          <Grid container spacing={1} mt={2} pb={2}>
+          <Grid container spacing={"20px"} mt={2} pb={2}>
             {Products.map((element: Product, i) => {
               return (
-                <Grid key={i} item md={4} lg={2.4} xs={12} sm={6}>
+                <Grid key={i} item md={3} xs={6} sm={6}>
                   <ProductItem key={i} products={element} />
                 </Grid>
               );

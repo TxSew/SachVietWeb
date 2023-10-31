@@ -4,7 +4,7 @@ import Header from "../components/Header/Header";
 
 function HeaderOnly({ children }: { children: React.ReactNode }) {
   return (
-    <Box className="App">
+    <Box className="App" position={"relative"}>
       <Header />
       {children}
     </Box>
