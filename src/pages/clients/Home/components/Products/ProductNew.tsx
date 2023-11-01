@@ -58,7 +58,7 @@ function ProductNews() {
               spacing={2}
               py={2}
               px={2}
-              bgcolor={color.new}
+              bgcolor={color.hot}
             >
               <img
                 src="https://cdn0.fahasa.com/skin/frontend/base/default/images/ico_dealhot.png"
@@ -72,7 +72,7 @@ function ProductNews() {
                 }}
                 fontWeight={"bold"}
               >
-                Sản phẩm mới
+                Sản phẩm được tìm kiếm nhiều nhất
               </Typography>
             </Stack>
             <ToggleButtonGroup
@@ -93,10 +93,10 @@ function ProductNews() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          <Grid container spacing={1} mt={2} pb={2}>
+          <Grid container p={"10px"}>
             {Products.map((element: Product, i) => {
               return (
-                <Grid key={i} item md={4} lg={2.4} xs={12} sm={6}>
+                <Grid key={i} item md={2.4} xs={6} sm={3} p={"10px"}>
                   <ProductItem key={i} products={element} />
                 </Grid>
               );

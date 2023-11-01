@@ -146,6 +146,10 @@ export const Details = () => {
                           id={`/products/${Detail.slug}`}
                           alt=""
                           width={"100%"}
+                          height={"255px"}
+                          style={{
+                            objectFit: "contain"
+                          }}
                         />
                       </Box>
                     </Grid>

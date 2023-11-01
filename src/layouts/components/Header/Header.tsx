@@ -699,7 +699,7 @@ const Header = () => {
                         fontStyle: "normal",
                         fontWeight: 700,
                         lineHeight: "normal",
-                        color: "red"
+                        color: "#F39801"
                       }}
                     >
                       {" "}

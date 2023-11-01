@@ -13,7 +13,7 @@ import {
   addToCart,
   decreaseCart,
   getTotals,
-  removeFromCart,
+  removeFromCart
 } from "../../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../../redux/storeClient";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
@@ -121,7 +121,7 @@ const CartProduct = () => {
                             variant="caption"
                             className="cartItem_PriceSale"
                             sx={{
-                              textDecoration: "underline",
+                              textDecoration: "underline"
                             }}
                           >
                             {`${numberFormat(Number(element.price_sale))} `}
@@ -146,7 +146,7 @@ const CartProduct = () => {
                         <RemoveIcon
                           sx={{
                             fontSize: "17px",
-                            cursor: "pointer",
+                            cursor: "pointer"
                           }}
                           onClick={() => handleDes(element.id)}
                         />
@@ -155,14 +155,15 @@ const CartProduct = () => {
                         type="text"
                         value={element?.cartQuantity}
                         style={{
-                          width: "10px",
+                          width: "30px",
+                          textAlign: "center"
                         }}
                       />
                       <AddIcon
                         onClick={() => handleIncrement(element)}
                         sx={{
                           fontSize: "17px",
-                          cursor: "pointer",
+                          cursor: "pointer"
                         }}
                       />
                     </Stack>
@@ -180,7 +181,7 @@ const CartProduct = () => {
                       onClick={() => handleRemove(element.id)}
                       sx={{
                         fontSize: "17px",
-                        cursor: "pointer",
+                        cursor: "pointer"
                       }}
                     />
                   </Stack>
@@ -197,15 +198,15 @@ const CartProduct = () => {
               py={2}
               borderBottom={"1px solid #eee"}
             >
-              <Stack color={color.text_second} direction={"row"} spacing={2}>
+              <Stack color={"#F39801"} direction={"row"} spacing={2}>
                 <Typography variant="body1">KHUYẾN MÃI</Typography>
                 <LoyaltyIcon
                   sx={{
-                    fontSize: "17px",
+                    fontSize: "17px"
                   }}
                 />
               </Stack>
-              <Stack color={color.text_second} direction={"row"}>
+              <Stack color={"#F39801"} direction={"row"}>
                 <Typography variant="body1"> Xem thêm</Typography>
                 <KeyboardArrowRightIcon />
               </Stack>
@@ -218,16 +219,26 @@ const CartProduct = () => {
                 p={1}
                 borderRadius={2}
                 fontSize={"14px"}
-                color={color.text_color}
+                color={"#F39801"}
               >
                 <input
                   placeholder="Nhập mã khuyến mãi/Quà tặng"
                   style={{
                     flex: 1,
-                    color: "inherit",
+                    color: "#F39801"
                   }}
                 />
-                <Button variant="outlined">
+                <Button
+                  variant="outlined"
+                  sx={{
+                    border: "1px solid #F39801",
+                    color: "#F39801",
+                    "&:hover": {
+                      border: "1px solid #008C89",
+                      color: "#008C89"
+                    }
+                  }}
+                >
                   <Typography variant="body1">Áp dụng</Typography>
                 </Button>
               </Stack>
@@ -249,11 +260,11 @@ const CartProduct = () => {
               py={2}
               borderBottom={"1px solid #eee"}
             >
-              <Stack color={color.text_color} direction={"row"} spacing={2}>
+              <Stack color={"#F39801"} direction={"row"} spacing={2}>
                 <Typography variant="body1">KHUYẾN MÃI</Typography>
               </Stack>
               <Stack color={color.text_color} direction={"row"}>
-                <Typography variant="body1"> 0d</Typography>
+                <Typography variant="body1"> 0,đ</Typography>
               </Stack>
             </Stack>
             <Box pt={2}>
@@ -277,7 +288,7 @@ const CartProduct = () => {
                   variant="body1"
                   fontSize={"15.8px"}
                   fontWeight={"bold"}
-                  color={color.error}
+                  color={"#F39801"}
                 >
                   {`${numberFormat(Number(cartTotalAmount))}`}
                 </Typography>
@@ -287,8 +298,11 @@ const CartProduct = () => {
                   variant="contained"
                   sx={{
                     marginTop: "10px",
-                    bgcolor: "red",
+                    bgcolor: "#008C89",
                     color: "#fff",
+                    "&:hover": {
+                      backgroundColor: "#F39801"
+                    }
                   }}
                   fullWidth
                 >

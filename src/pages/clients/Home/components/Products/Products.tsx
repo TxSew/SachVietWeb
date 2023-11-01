@@ -92,10 +92,10 @@ function Products() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Box>
-          <Grid container spacing={"20px"} mt={2} pb={2}>
+          <Grid container p={"10px"}>
             {Products.map((element: Product, i) => {
               return (
-                <Grid key={i} item md={3} xs={6} sm={6}>
+                <Grid key={i} item md={3} xs={6} sm={6} p={"10px"}>
                   <ProductItem key={i} products={element} />
                 </Grid>
               );
