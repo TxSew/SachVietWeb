@@ -30,8 +30,8 @@ function Category() {
   useEffect(() => {
     fetchProducts(page);
   }, [page]);
-  const fetchProducts = async (page: number = 1 ) => {
-    const products: any = await http.getAll(page);
+  const fetchProducts = async (page: number = 1) => {
+    const products: any = await http.getAll("filter");
     if (products) {
       setProducts(products.products);
       setCount(products.totalPage);

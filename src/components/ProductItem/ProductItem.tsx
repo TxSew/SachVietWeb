@@ -15,23 +15,41 @@ const ProductItem = (Props: ProductItem) => {
     <Card
       variant="outlined"
       sx={{
-        border: "1px solid #eee"
+        border: "1px solid #eee",
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
       }}
     >
-      <Link to={`/products/${Props.products.slug}`}>
+      <Link
+        to={`/products/${Props.products.slug}`}
+        style={{
+          height: "170px",
+          display: "flex",
+          justifyContent: "center",
+          flexShrink: 0,
+        }}
+      >
         <CardMedia
           component="img"
           height={"170"}
           sx={{
             p: "20px",
-            objectFit: "contain"
+            width: "180px",
+            objectFit: "contain",
           }}
           title=""
           image={Props.products.image}
         />
       </Link>
 
-      <CardContent>
+      <CardContent
+        sx={{
+          display: "flex",
+          flex: 1,
+          flexDirection: "column",
+        }}
+      >
         <Typography
           variant="body1"
           color={"#3333333"}
@@ -39,54 +57,45 @@ const ProductItem = (Props: ProductItem) => {
           textTransform={"capitalize"}
           sx={{
             overflow: "hidden",
+            textAlign: "center",
             display: "-webkit-box",
             lineClamp: 2,
             "-webkit-line-clamp": 2,
-            "-webkit-box-orient": "vertical"
+            "-webkit-box-orient": "vertical",
+            flexShrink: 0,
           }}
         >
           {Props.products.title}
         </Typography>
-        <Stack direction={"row"} spacing={2} mt={"10px"}>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          sx={{
+            marginTop: "auto",
+            paddingTop: "10px",
+            lineHeight: 1,
+          }}
+        >
           <Typography
             className="price"
-            color={"gray"}
+            color={color.btnRed}
             fontSize={"16.5px"}
             fontWeight={"bold"}
+            lineHeight={1}
           >
             {numberFormat(Number(Props.products.price))}
           </Typography>
           <Typography
-            variant="caption"
-            bgcolor={"lightBlue"}
-            color={color.error}
-            p={"1px 6px"}
-            fontSize={"16.5px"}
-            borderRadius={"3px"}
-            fontWeight={"bold"}
+            color={"#888888"}
+            lineHeight={1}
+            sx={{
+              textDecoration: "line-through",
+            }}
           >
-            {`-${Props.products.sale}%`}
+            {`${numberFormat(Number(Props.products.price_sale))} `}
           </Typography>
         </Stack>
-        <Typography
-          color={"#888888"}
-          sx={{
-            textDecoration: "line-through"
-          }}
-        >
-          {`${numberFormat(Number(Props.products.price_sale))} `}
-        </Typography>
       </CardContent>
-      <Rating
-        sx={{
-          pl: 2
-        }}
-        defaultChecked={true}
-        defaultValue={2}
-        name="read-only"
-        size="medium"
-        readOnly
-      />
     </Card>
   );
 };

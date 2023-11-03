@@ -1,3 +1,4 @@
+// [5:22 PM] Hung Nguyen
 // import { createTheme } from '@mui/material';
 // import { AiFillCaretLeft, AiFillCaretRight } from 'react-icons/ai';
 // import color from './Colors';
@@ -111,7 +112,7 @@
 //     },
 //     components: {
 //         MuiButton: {
-// styleOverrides: {
+//             styleOverrides: {
 //                 root: {
 //                     textTransform: 'none',
 //                     padding: '0.75rem 1rem',
@@ -186,7 +187,7 @@
 //                         backgroundColor: color.danger,
 //                         color: color.white,
 //                         borderWidth: 1,
-// borderStyle: 'solid',
+//                         borderStyle: 'solid',
 //                         '&:hover': {
 //                             backgroundColor: color.darkDanger,
 //                         },
@@ -259,7 +260,7 @@
 //                             borderStyle: 'solid',
 //                             borderColor: color.gold700,
 //                         },
-// },
+//                     },
 //                 },
 //                 {
 //                     props: { variant: 'cancelSmall' },
@@ -336,7 +337,8 @@
 //                                     // color: color.darkPrimary,
 //                                     backgroundColor: color.lightPrimary,
 //                                 },
-// // [breakpoints.down('sm')]: {
+
+//                                 // [breakpoints.down('sm')]: {
 //                                 //     padding:0
 //                                 // },
 //                             },
@@ -432,7 +434,7 @@
 //                     '&.MuiPaper-root': {
 //                         border: 'none',
 //                         background: color.grey100,
-// pt: 12,
+//                         pt: 12,
 //                         zIndex: 9,
 //                     },
 //                 },
@@ -529,7 +531,7 @@
 //                     },
 //                     '& #checkboxes-tags-demo': {
 //                         padding: '6px 4px',
-// },
+//                     },
 
 //                     '& .MuiAutocomplete-endAdornment': {
 //                         top: 'calc(50% - 12px)',

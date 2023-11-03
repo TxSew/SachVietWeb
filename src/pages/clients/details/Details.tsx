@@ -13,7 +13,7 @@ import {
   TableCell,
   TableRow,
   Typography,
-  tableCellClasses
+  tableCellClasses,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +23,7 @@ import { BaseAPi } from "../../../configs/BaseApi";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
 import {
   decrement,
-  increment
+  increment,
 } from "../../../redux/features/counter/CounterProducer";
 import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
@@ -32,7 +32,6 @@ import ProductItem from "../../../components/ProductItem/ProductItem";
 import { numberFormat } from "../../../helpers/formatPrice";
 import styled from "@emotion/styled";
 import useMedia from "../../../hooks/useMedia/useMedia";
-
 const http = new HttpProductController(BaseAPi);
 export const Details = () => {
   const { isMediumMD } = useMedia();
@@ -72,23 +71,24 @@ export const Details = () => {
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#f5f5f5",
-      color: "#fff"
+      color: "#fff",
     },
     [`&.${tableCellClasses.body}`]: {
       fontSize: 14,
-      border: "none"
-    }
+      border: "none",
+    },
   }));
 
   const StyledTableRow = styled(TableRow)(({ theme }) => ({
     "&:nth-of-type(odd)": {
-      backgroundColor: "#f5f5f5"
+      backgroundColor: "#f5f5f5",
     },
     // hide last border
     "&:last-child td, &:last-child th": {
-      border: "none"
-    }
+      border: "none",
+    },
   }));
+  const htmlContent = Detail ? Detail.desc : ""; // Ha
   return (
     <Box bgcolor={"#eee"}>
       <Container maxWidth="xl">
@@ -148,7 +148,7 @@ export const Details = () => {
                           width={"100%"}
                           height={"255px"}
                           style={{
-                            objectFit: "contain"
+                            objectFit: "contain",
                           }}
                         />
                       </Box>
@@ -189,8 +189,8 @@ export const Details = () => {
                         "&:hover": {
                           borderColor: "#008C89",
                           backgroundColor: "#008C89",
-                          color: "white"
-                        }
+                          color: "white",
+                        },
                       }}
                       onClick={() => handleAddToCart(Detail)}
                     >
@@ -203,10 +203,10 @@ export const Details = () => {
                         backgroundColor: "#008C89",
                         "&:hover": {
                           backgroundColor: "#F7941E",
-                          color: "white"
-                        }
+                          color: "white",
+                        },
                       }}
-                      variant="contained"
+                      variant="containedGreen"
                     >
                       Mua ngay
                     </Button>
@@ -236,7 +236,7 @@ export const Details = () => {
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%"
+                        width: "50%",
                       }}
                     >
                       <Typography>Nhà cung cấp:</Typography>
@@ -244,7 +244,7 @@ export const Details = () => {
                         <NavLink
                           to=""
                           style={{
-                            color: "#1976D2"
+                            color: "#1976D2",
                           }}
                         >
                           {Detail?.producer?.name}
@@ -255,7 +255,7 @@ export const Details = () => {
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%"
+                        width: "50%",
                       }}
                     >
                       <Typography>Tác giả:</Typography>
@@ -263,7 +263,7 @@ export const Details = () => {
                         <NavLink
                           to=""
                           style={{
-                            color: "#1976D2"
+                            color: "#1976D2",
                           }}
                         >
                           {Detail?.category?.name}
@@ -274,7 +274,7 @@ export const Details = () => {
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%"
+                        width: "50%",
                       }}
                     >
                       <Typography>Nhà xuất bản</Typography>
@@ -282,7 +282,7 @@ export const Details = () => {
                         <NavLink
                           to=""
                           style={{
-                            color: "#1976D2"
+                            color: "#1976D2",
                           }}
                         >
                           ?
@@ -293,7 +293,7 @@ export const Details = () => {
                       direction={"row"}
                       spacing={1}
                       sx={{
-                        width: "50%"
+                        width: "50%",
                       }}
                     >
                       <Typography>Hình thức bìa:</Typography>
@@ -301,7 +301,7 @@ export const Details = () => {
                         <NavLink
                           to=""
                           style={{
-                            color: "#1976D2"
+                            color: "#1976D2",
                           }}
                         >
                           {Detail?.category?.name}
@@ -334,7 +334,7 @@ export const Details = () => {
                       className="price"
                       fontSize={15}
                       sx={{
-                        textDecoration: "line-through"
+                        textDecoration: "line-through",
                       }}
                     >
                       {`${numberFormat(Number(Detail.price))} `}
@@ -358,7 +358,7 @@ export const Details = () => {
                     sx={{
                       display: "flex",
                       flexDirection: "column",
-                      rowGap: 1
+                      rowGap: 1,
                     }}
                   >
                     <Grid direction={"row"} display={"flex"} spacing={7}>
@@ -419,14 +419,14 @@ export const Details = () => {
                             <RemoveIcon
                               onClick={() => dispatch(decrement())}
                               sx={{
-                                fontSize: "17px"
+                                fontSize: "17px",
                               }}
                             />
                             <Typography variant="caption">{count}</Typography>
                             <AddIcon
                               onClick={() => dispatch(increment())}
                               sx={{
-                                fontSize: "17px"
+                                fontSize: "17px",
                               }}
                             />
                           </Stack>
@@ -445,7 +445,7 @@ export const Details = () => {
                     justifyContent={"space-between"}
                     sx={{
                       background: "#008C89",
-                      zIndex: "1"
+                      zIndex: "1",
                     }}
                   >
                     <Stack
@@ -459,7 +459,7 @@ export const Details = () => {
                         sx={{
                           fontSize: "20px",
                           color: "whitesmoke",
-                          cursor: "pointer"
+                          cursor: "pointer",
                         }}
                       />
                       <Typography
@@ -468,7 +468,7 @@ export const Details = () => {
                           fontWeight: "bold",
                           color: "white",
                           width: "30px",
-                          textAlign: "center"
+                          textAlign: "center",
                         }}
                         variant="caption"
                       >
@@ -479,7 +479,7 @@ export const Details = () => {
                         sx={{
                           fontSize: "20px",
                           color: "whitesmoke",
-                          cursor: "pointer"
+                          cursor: "pointer",
                         }}
                       />
                     </Stack>
@@ -489,7 +489,7 @@ export const Details = () => {
                         color: "white",
                         textAlign: "center",
                         padding: "16px 24px",
-                        cursor: "pointer"
+                        cursor: "pointer",
                       }}
                       onClick={() => handleAddToCart(Detail)}
                     >
@@ -504,8 +504,8 @@ export const Details = () => {
                         "&:hover": {
                           opacity: "0.9",
                           boxShadow: "none",
-                          backgroundColor: "#F7941E"
-                        }
+                          backgroundColor: "#F7941E",
+                        },
                       }}
                       onClick={() => handleOrder(Detail)}
                     >
@@ -524,7 +524,7 @@ export const Details = () => {
             bgcolor={color.white}
             sx={{
               p: 2,
-              pt: 0
+              pt: 0,
             }}
           >
             <Typography
@@ -532,7 +532,7 @@ export const Details = () => {
               fontSize={"18px"}
               textTransform={"uppercase"}
               sx={{
-                p: "16px 0"
+                p: "16px 0",
               }}
             >
               Thông tin chi tiết
@@ -597,7 +597,7 @@ export const Details = () => {
             bgcolor={color.white}
             sx={{
               p: 2,
-              pt: 0
+              pt: 0,
             }}
           >
             <Typography
@@ -605,7 +605,7 @@ export const Details = () => {
               fontSize={"18px"}
               textTransform={"uppercase"}
               sx={{
-                p: "16px 0"
+                p: "16px 0",
               }}
             >
               Giới thiệu sản phẩm
@@ -622,16 +622,21 @@ export const Details = () => {
               >
                 {Detail?.title}
               </Typography>
-              <Typography variant="body2" textAlign={"justify"}>
-                {Detail?.desc}
-              </Typography>
+              <div
+                style={{
+                  fontSize: "14px",
+                }}
+                dangerouslySetInnerHTML={{
+                  __html: htmlContent as unknown as TrustedHTML,
+                }}
+              />
 
               <Button
                 style={{
                   padding: "4px 48px",
                   margin: "16px 0",
                   textAlign: "center",
-                  background: "#F7941E"
+                  background: "#F7941E",
                 }}
               >
                 Mua ngay

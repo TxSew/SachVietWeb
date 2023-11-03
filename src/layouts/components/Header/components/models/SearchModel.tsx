@@ -12,7 +12,7 @@ export default function SearchModel() {
     fetchSearhcData();
   }, []);
   const fetchSearhcData = async () => {
-    const data = await http.getAll();
+    const data = await http.getAll("");
     console.log(data);
   };
   const options = ["Option 1", "Option 2"];

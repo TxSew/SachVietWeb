@@ -14,7 +14,7 @@ interface PropsSort {
   sortWith: string;
   limit: number;
 }
-function ProductHots() {
+function ProductHosts() {
   const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
   const handleChange = (
@@ -24,9 +24,9 @@ function ProductHots() {
     setAlignment(newAlignment);
   };
   const [Products, setProducts] = useState<Product[]>([]);
-  const fetchData = async () => {
+  const fetchData = async (props: any) => {
     try {
-      const productData: any = await http.getAll();
+      const productData: any = await http.getAll(props);
       const { products } = productData;
       setProducts(products);
     } catch (err) {
@@ -34,7 +34,8 @@ function ProductHots() {
     }
   };
   useEffect(() => {
-    fetchData();
+    const props = {};
+    fetchData(props);
   }, []);
 
   return (
@@ -46,19 +47,19 @@ function ProductHots() {
             sx={{
               borderTopLeftRadius: 3,
               borderBottom: " 1px solid #eee",
-              borderTopRightRadius: 3
+              borderTopRightRadius: 3,
             }}
           >
             <Stack
               sx={{
                 borderTopLeftRadius: 3,
-                borderTopRightRadius: 3
+                borderTopRightRadius: 3,
               }}
               direction={"row"}
               spacing={2}
               py={2}
               px={2}
-              bgcolor={color.hot}
+              borderBottom={"1px solid #eee"}
             >
               <img
                 src="https://cdn0.fahasa.com/skin/frontend/base/default/images/ico_dealhot.png"
@@ -68,30 +69,12 @@ function ProductHots() {
                 variant="h3"
                 sx={{
                   fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.25rem)",
-                  textTransform: "uppercase"
                 }}
                 fontWeight={"bold"}
               >
-                Sản phẩm được tìm kiếm nhiều nhất
+                XU HƯỚNG MUA SẮM
               </Typography>
             </Stack>
-            <ToggleButtonGroup
-              color="primary"
-              value={alignment}
-              exclusive
-              onChange={handleChange}
-              aria-label="Platform"
-              sx={{
-                py: "10px",
-                pl: "10px"
-              }}
-            >
-              <ToggleButton value={"web"}>Xu Hướng Theo Ngày</ToggleButton>
-              <ToggleButton value={"sale"}> Sách HOT - Giảm Sốc</ToggleButton>
-              <ToggleButton value={"bestSealer"}>
-                BestSeller - Ngoại văn
-              </ToggleButton>
-            </ToggleButtonGroup>
           </Box>
           <Grid container p={"10px"}>
             {Products.map((element: Product, i) => {
@@ -103,7 +86,7 @@ function ProductHots() {
             })}
           </Grid>
           <Stack>
-            <Button variant="outlined">Xem thêm</Button>
+            <Button variant="OutlinedRed">Xem thêm</Button>
           </Stack>
         </Box>
       </Container>
@@ -111,4 +94,4 @@ function ProductHots() {
   );
 }
 
-export default ProductHots;
+export default ProductHosts;

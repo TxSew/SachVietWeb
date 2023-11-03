@@ -12,7 +12,7 @@ import {
   Select,
   SelectChangeEvent,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -43,23 +43,18 @@ export default function AdminProduct() {
   const [sort, setSort] = React.useState("");
   const debounce = useDebounce(search, 400);
   React.useEffect(() => {
-    fetchData(page, debounce, sortBy, sortWith);
+    const props = {
+      page,
+      debounce,
+      sortBy,
+      sortWith,
+    };
+
+    fetchData(props);
   }, [page, debounce, sortBy, sortWith]);
-  const fetchData = async (
-    page: number,
-    search: string = debounce || "",
-    sortBy: string,
-    sortWith: string
-  ) => {
-    const limit = "6";
+  const fetchData = async (props: any) => {
     try {
-      const ProductData: any = await http.getAll(
-        page,
-        search,
-        sortBy,
-        sortWith,
-        limit
-      );
+      const ProductData: any = await http.getAll(props);
       const data: any = ProductData.products;
       setPageCount(ProductData.totalPage);
       setProducts(data);
@@ -78,7 +73,7 @@ export default function AdminProduct() {
   const handleDelete = async (element: any) => {
     const destroy = await http.delete(element.id);
     toast.error("Delete item successfully", {
-      position: "bottom-right"
+      position: "bottom-right",
     });
 
     const product = Products.filter((e) => e.id !== element.id);
@@ -139,8 +134,8 @@ export default function AdminProduct() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px"
-              }
+                p: "7px",
+              },
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
@@ -166,15 +161,15 @@ export default function AdminProduct() {
               </MenuItem>
               <MenuItem value={"old"}>Cũ nhất</MenuItem>
               <MenuItem value={"new"}>Mới nhất</MenuItem>
-              <MenuItem value={"priceDown"}>Giá từ cao tới thấp</MenuItem>
-              <MenuItem value={"priceUp"}>Giá từ thấp tới cao</MenuItem>
+              <MenuItem value={"priceDown"}>Giá từ thấp lên cao</MenuItem>
+              <MenuItem value={"priceUp"}>Giá từ cao xuống thấp</MenuItem>
             </Select>
           </FormControl>
         </Stack>
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800
+              minWidth: 800,
             }}
             aria-label="simple tablek w"
           >
@@ -182,8 +177,8 @@ export default function AdminProduct() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold"
-                  }
+                    fontWeight: "bold",
+                  },
                 }}
               >
                 <TableCell>ID</TableCell>
@@ -239,14 +234,14 @@ export default function AdminProduct() {
                       <Link to={`/admin/product/${e.id}`}>
                         <EditCalendarIcon
                           sx={{
-                            color: "green"
+                            color: "green",
                           }}
                         />
                       </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{
-                            color: "red"
+                            color: "red",
                           }}
                         />
                       </Box>
@@ -257,7 +252,12 @@ export default function AdminProduct() {
             </TableBody>
           </Table>
         </TableContainer>
-        <Stack mt={2} textAlign={"center"} justifyContent={"center"} alignItems={""}>
+        <Stack
+          mt={2}
+          textAlign={"center"}
+          justifyContent={"center"}
+          alignItems={""}
+        >
           <Pagination count={pageCount} page={page} onChange={handleChange} />
         </Stack>
       </Grid>

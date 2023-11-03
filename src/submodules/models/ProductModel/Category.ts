@@ -5,6 +5,7 @@ export interface Category extends BaseModel, Modified {
   name?: string;
   parentId?: string;
   level?: number;
+  slug?: string;
   orders?: number;
   status?: string | number;
   image?: string;

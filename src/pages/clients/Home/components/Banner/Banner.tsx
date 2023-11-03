@@ -20,7 +20,7 @@ function Banner() {
             <Swiper
               navigation
               pagination={{
-                clickable: true
+                clickable: true,
               }}
               modules={[Navigation]}
               className="mySwiper"
@@ -28,7 +28,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
@@ -36,7 +36,7 @@ function Banner() {
                     alt="Banner tùy chỉnh"
                     style={{
                       width: "100%",
-                      borderRadius: "10px"
+                      borderRadius: "10px",
                     }}
                   />
                 </Box>
@@ -44,7 +44,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
@@ -52,7 +52,7 @@ function Banner() {
                     alt=""
                     style={{
                       borderRadius: "10px",
-                      width: "100%"
+                      width: "100%",
                     }}
                   />
                 </Box>
@@ -66,7 +66,7 @@ function Banner() {
             <Swiper
               navigation
               pagination={{
-                clickable: true
+                clickable: true,
               }}
               modules={[Navigation]}
               className="mySwiper"
@@ -74,7 +74,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
@@ -82,7 +82,7 @@ function Banner() {
                     alt=""
                     style={{
                       width: "100%",
-                      borderRadius: "10px"
+                      borderRadius: "10px",
                     }}
                   />
                 </Box>
@@ -90,7 +90,7 @@ function Banner() {
               <SwiperSlide>
                 <Box
                   sx={{
-                    borderRadius: "10px"
+                    borderRadius: "10px",
                   }}
                 >
                   <img
@@ -98,7 +98,7 @@ function Banner() {
                     alt=""
                     style={{
                       borderRadius: "10px",
-                      width: "100%"
+                      width: "100%",
                     }}
                   />
                 </Box>

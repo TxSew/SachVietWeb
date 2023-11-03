@@ -30,17 +30,11 @@ class HttpProductController {
       }
     );
   }
-  async getAll(
-    page: number = 1,
-    search: string = "",
-    sortBy: string = "",
-    sortWith: string = "",
-    limit: string = "",
-  ): Promise<any> {
+  async getAll(props: any): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(
-        `products?page=${page}&keyword=${search}&sortBy=${sortBy}&sortWith=${sortWith}&limit=${limit}`
-      );
+      const response = await this.axiosInstance.post(`products/filter`, {
+        ...props,
+      });
       return response.data;
     } catch (error) {
       throw error;
@@ -54,7 +48,7 @@ class HttpProductController {
       throw err;
     }
   }
-    async getOneUpdate(id: number) {
+  async getOneUpdate(id: number) {
     try {
       const response = await this.axiosInstance.get(
         `products/currentUpdate/${id}`
@@ -66,15 +60,13 @@ class HttpProductController {
   }
   async getProductByCategory(slug: string): Promise<any> {
     try {
-       const response = await this.axiosInstance.post(
-          `products/category?slug=${slug}`
-       )
-        return response.data;
-    } 
-     catch (err) {
-       console.log(err);
-        
-     }
+      const response = await this.axiosInstance.post(
+        `products/category?slug=${slug}`
+      );
+      return response.data;
+    } catch (err) {
+      console.log(err);
+    }
   }
   async post(product: any): Promise<any> {
     try {

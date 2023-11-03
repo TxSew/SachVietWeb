@@ -1,17 +1,18 @@
-import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import SearchIcon from "@mui/icons-material/Search";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import InfoIcon from "@mui/icons-material/Info";
-import NewspaperIcon from "@mui/icons-material/Newspaper";
-import SellIcon from "@mui/icons-material/Sell";
+import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
-import ShoppingBasketSharpIcon from "@mui/icons-material/ShoppingBasketSharp";
-import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import HowToRegSharpIcon from "@mui/icons-material/HowToRegSharp";
+import InfoIcon from "@mui/icons-material/Info";
+import LoginSharpIcon from "@mui/icons-material/LoginSharp";
 import MenuIcon from "@mui/icons-material/Menu";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import NewspaperIcon from "@mui/icons-material/Newspaper";
 import Person3Icon from "@mui/icons-material/Person3";
+import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import SearchIcon from "@mui/icons-material/Search";
+import SellIcon from "@mui/icons-material/Sell";
+import ShoppingBasketSharpIcon from "@mui/icons-material/ShoppingBasketSharp";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import {
   Avatar,
   Badge,
@@ -24,21 +25,24 @@ import {
   Modal,
   Stack,
   TextField,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
+import List from "@mui/material/List";
 import Typography from "@mui/material/Typography/Typography";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import Image from "../../../components/Image/Image";
+import { BaseAPi } from "../../../configs/BaseApi";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
-import { useEffect, useState } from "react";
+import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { User } from "../../../submodules/models/UserModel/User";
-import * as React from "react";
-import List from "@mui/material/List";
-import { Logout, PersonAdd, Settings } from "@mui/icons-material";
+import useDebounce from "../../../hooks/useDebounce/useDebounce";
+const http = new HttpProductController(BaseAPi);
 const Header = () => {
   const [user, setUser] = useState<User>({} as User);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
@@ -63,7 +67,7 @@ const Header = () => {
     outline: "none",
     p: 4,
     pt: 2,
-    borderRadius: "8px"
+    borderRadius: "8px",
   };
 
   const boxmodal = {
@@ -77,7 +81,7 @@ const Header = () => {
     boxShadow: 24,
     outline: "none",
     p: 4,
-    pt: 2
+    pt: 2,
   };
 
   const hditem = {
@@ -89,27 +93,28 @@ const Header = () => {
     fonSize: "12px",
     fontWeight: 400,
     fontStyle: "normal",
-    lineHieght: "normal"
+    lineHieght: "normal",
   };
 
   const hdicon = {
     mr: 1,
-    fontSize: "24px"
+    fontSize: "24px",
   };
   const hdicon_mb = {
     mr: 1,
     fontSize: "24px",
-    lineHieght: "normal"
+    lineHieght: "normal",
   };
 
   const nicon = {
-    lineHeight: "normal"
+    lineHeight: "normal",
   };
 
   const [openSearch, setOpenSearch] = React.useState(false);
 
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
+  const [search, setSearch] = React.useState<string>("");
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -118,6 +123,14 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleChangeValue = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setSearch((pre) => event.target.value);
+    if (event.target.value) {
+    }
+  };
+
   return (
     <>
       <Box width={"100%"}>
@@ -217,17 +230,29 @@ const Header = () => {
                 sx={{
                   display: "flex",
                   flexDirection: "row",
-                  alignItems: "center"
+                  alignItems: "center",
+                  py: "10px",
                 }}
               >
-                <Grid item xs={2}>
+                <Grid
+                  item
+                  xs={2}
+                  sx={{
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
                   <Link to={"/"}>
                     <Box
                       sx={{
-                        mb: "15px"
+                        display: "flex",
+                        justifyContent: "center",
                       }}
                     >
-                      <Image src="" alt="Logo" width="194px" height="70px" />
+                      <Image
+                        src="https://bookbuy.vn/Images/frontend/base/mobile/logo-new.png"
+                        alt="Logo"
+                      />
                     </Box>
                   </Link>
                 </Grid>
@@ -238,12 +263,12 @@ const Header = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
                   }}
                 >
                   <Box
                     sx={{
-                      textAlign: "right"
+                      textAlign: "right",
                     }}
                   ></Box>
                 </Grid>
@@ -251,7 +276,7 @@ const Header = () => {
                   item
                   xs={5.5}
                   sx={{
-                    position: "relative"
+                    position: "relative",
                   }}
                 >
                   <Stack
@@ -263,7 +288,7 @@ const Header = () => {
                       justifyContent: "center",
                       border: "1px solid #ccc",
                       padding: "3px 10px",
-                      borderRadius: "5px"
+                      borderRadius: "5px",
                     }}
                   >
                     <Modal
@@ -279,7 +304,7 @@ const Header = () => {
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: "center",
-                            borderBottom: "1px solid #ccc"
+                            borderBottom: "1px solid #ccc",
                           }}
                         >
                           {" "}
@@ -289,12 +314,12 @@ const Header = () => {
                               border: "none",
                               display: "flex",
                               alignItems: "center",
-                              justifyContent: "center"
+                              justifyContent: "center",
                             }}
                           >
                             <SearchIcon
                               sx={{
-                                color: "#0072E5"
+                                color: "#0072E5",
                               }}
                             />
                           </Typography>
@@ -302,11 +327,13 @@ const Header = () => {
                             sx={{
                               "& fieldset": {
                                 border: "none",
-                                width: "100%"
+                                width: "100%",
                               },
-                              width: "100%"
+                              width: "100%",
                             }}
                             placeholder="Tìm kiếm sản phẩm mong muốn..."
+                            autoFocus={true}
+                            onInput={handleChangeValue}
                           />
                         </Stack>
 
@@ -333,12 +360,12 @@ const Header = () => {
                               to=""
                               // onClick={handleCloseSearch}
                               style={{
-                                color: "gray"
+                                color: "gray",
                               }}
                             >
                               <RefreshIcon
                                 style={{
-                                  fontSize: "16px"
+                                  fontSize: "16px",
                                 }}
                               />
                             </Link>
@@ -364,182 +391,52 @@ const Header = () => {
                         >
                           Được tìm kiếm nhiều nhất (6 sản phẩm)
                         </Typography>
-                        <Box
-                          display={"flex"}
-                          textAlign={"center"}
-                          alignItems={"center"}
-                          padding={"8px 0"}
-                        >
-                          <Grid item xs={6} md={4}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9923"
-                              onClick={handleCloseSearch}
-                            >
-                              <Box display={"fex"} alignItems={"center"}>
-                                <Grid xs={12} md={3}>
-                                  <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                    alt=""
-                                  ></img>
-                                </Grid>
-                                <Grid
-                                  xs={12}
-                                  md={9}
-                                  textAlign={"left"}
-                                  paddingLeft={1}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: "14px", color: "black" }}
+                        <Box padding={"8px 0"}>
+                          <Grid container>
+                            {/* {Products.slice(0, 6).map((e: any) => {
+                              return (
+                                <Grid item xs={6} md={4}>
+                                  <Link
+                                    to={`/products/${e.slug}`}
+                                    onClick={handleCloseSearch}
                                   >
-                                    Tìm kiếm nâng cao
-                                  </Typography>
+                                    <Box display={"fex"} alignItems={"center"}>
+                                      <Grid item xs={12} md={3}>
+                                        <img src={e.image} alt=""></img>
+                                      </Grid>
+                                      <Grid
+                                        xs={12}
+                                        md={9}
+                                        item
+                                        textAlign={"left"}
+                                        paddingLeft={1}
+                                      >
+                                        <Typography
+                                          variant="body1"
+                                          sx={{
+                                            fontSize: "14px",
+                                            color: "black",
+                                          }}
+                                        >
+                                          sản phẩm: {e.title}
+                                        </Typography>
+                                        <Typography
+                                          sx={{
+                                            fontSize: "14px",
+                                            color: "black",
+                                          }}
+                                        >
+                                          SL: {e.quantity}
+                                        </Typography>
+                                      </Grid>
+                                    </Box>
+                                  </Link>
                                 </Grid>
-                              </Box>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={4}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9jjjj923"
-                              onClick={handleCloseSearch}
-                            >
-                              <Box display={"fex"} alignItems={"center"}>
-                                <Grid xs={12} md={3}>
-                                  <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                    alt=""
-                                  ></img>
-                                </Grid>
-                                <Grid
-                                  xs={12}
-                                  md={9}
-                                  textAlign={"left"}
-                                  paddingLeft={1}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: "14px", color: "black" }}
-                                  >
-                                    Tìm kiếm nâng cao
-                                  </Typography>
-                                </Grid>
-                              </Box>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={4}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9jjjj923"
-                              onClick={handleCloseSearch}
-                            >
-                              <Box display={"fex"} alignItems={"center"}>
-                                <Grid xs={12} md={3}>
-                                  <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                    alt=""
-                                  ></img>
-                                </Grid>
-                                <Grid
-                                  xs={12}
-                                  md={9}
-                                  textAlign={"left"}
-                                  paddingLeft={1}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: "14px", color: "black" }}
-                                  >
-                                    Tìm kiếm nâng cao
-                                  </Typography>
-                                </Grid>
-                              </Box>
-                            </Link>
+                              );
+                            })} */}
                           </Grid>
                         </Box>
-                        <Box
-                          display={"flex"}
-                          textAlign={"center"}
-                          alignItems={"center"}
-                          padding={"8px 0"}
-                        >
-                          <Grid item xs={6} md={4}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9923"
-                              onClick={handleCloseSearch}
-                            >
-                              <Box display={"fex"} alignItems={"center"}>
-                                <Grid xs={12} md={3}>
-                                  <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                    alt=""
-                                  ></img>
-                                </Grid>
-                                <Grid
-                                  xs={12}
-                                  md={9}
-                                  textAlign={"left"}
-                                  paddingLeft={1}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: "14px", color: "black" }}
-                                  >
-                                    Tìm kiếm nâng cao
-                                  </Typography>
-                                </Grid>
-                              </Box>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={4}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9jjjj923"
-                              onClick={handleCloseSearch}
-                            >
-                              <Box display={"fex"} alignItems={"center"}>
-                                <Grid xs={12} md={3}>
-                                  <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                    alt=""
-                                  ></img>
-                                </Grid>
-                                <Grid
-                                  xs={12}
-                                  md={9}
-                                  textAlign={"left"}
-                                  paddingLeft={1}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: "14px", color: "black" }}
-                                  >
-                                    Tìm kiếm nâng cao
-                                  </Typography>
-                                </Grid>
-                              </Box>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={4}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9jjjj923"
-                              onClick={handleCloseSearch}
-                            >
-                              <Box display={"fex"} alignItems={"center"}>
-                                <Grid xs={12} md={3}>
-                                  <img
-                                    src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                    alt=""
-                                  ></img>
-                                </Grid>
-                                <Grid
-                                  xs={12}
-                                  md={9}
-                                  textAlign={"left"}
-                                  paddingLeft={1}
-                                >
-                                  <Typography
-                                    sx={{ fontSize: "14px", color: "black" }}
-                                  >
-                                    Tìm kiếm nâng cao
-                                  </Typography>
-                                </Grid>
-                              </Box>
-                            </Link>
-                          </Grid>
-                        </Box>
+
                         <Typography
                           variant="h2"
                           display={"block"}
@@ -560,7 +457,7 @@ const Header = () => {
                               onClick={handleCloseSearch}
                               style={{
                                 textAlign: "center",
-                                margin: "0 auto"
+                                margin: "0 auto",
                               }}
                             >
                               <img
@@ -568,7 +465,7 @@ const Header = () => {
                                 alt=""
                                 width={"50%"}
                                 style={{
-                                  margin: "0 auto"
+                                  margin: "0 auto",
                                 }}
                               />
                               <Typography>Tìm kiếm nâng cao</Typography>
@@ -580,7 +477,7 @@ const Header = () => {
                               onClick={handleCloseSearch}
                               style={{
                                 textAlign: "center",
-                                margin: "0 auto"
+                                margin: "0 auto",
                               }}
                             >
                               <img
@@ -588,7 +485,7 @@ const Header = () => {
                                 alt=""
                                 width={"50%"}
                                 style={{
-                                  margin: "0 auto"
+                                  margin: "0 auto",
                                 }}
                               />
                               <Typography>Tìm kiếm nâng cao</Typography>
@@ -600,7 +497,7 @@ const Header = () => {
                               onClick={handleCloseSearch}
                               style={{
                                 textAlign: "center",
-                                margin: "0 auto"
+                                margin: "0 auto",
                               }}
                             >
                               <img
@@ -608,7 +505,7 @@ const Header = () => {
                                 alt=""
                                 width={"50%"}
                                 style={{
-                                  margin: "0 auto"
+                                  margin: "0 auto",
                                 }}
                               />
                               <Typography>Tìm kiếm nâng cao</Typography>
@@ -620,7 +517,7 @@ const Header = () => {
                               onClick={handleCloseSearch}
                               style={{
                                 textAlign: "center",
-                                margin: "0 auto"
+                                margin: "0 auto",
                               }}
                             >
                               <img
@@ -628,7 +525,7 @@ const Header = () => {
                                 alt=""
                                 width={"50%"}
                                 style={{
-                                  margin: "0 auto"
+                                  margin: "0 auto",
                                 }}
                               />
                               <Typography>Tìm kiếm nâng cao</Typography>
@@ -641,7 +538,7 @@ const Header = () => {
                       onClick={handleOpenSearch}
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
-                        width: "100%"
+                        width: "100%",
                       }}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
@@ -655,12 +552,12 @@ const Header = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        borderRadius: "5px"
+                        borderRadius: "5px",
                       }}
                     >
                       <SearchIcon
                         sx={{
-                          color: "#fff"
+                          color: "#fff",
                         }}
                       />
                     </Typography>
@@ -673,7 +570,7 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    pl: "24px"
+                    pl: "24px",
                   }}
                 >
                   <NavLink
@@ -681,12 +578,12 @@ const Header = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingLeft: "16px"
+                      paddingLeft: "16px",
                     }}
                   >
                     <PersonOutlineOutlinedIcon
                       sx={{
-                        color: "#008C89"
+                        color: "#008C89",
                       }}
                     />
                     <Typography
@@ -699,7 +596,7 @@ const Header = () => {
                         fontStyle: "normal",
                         fontWeight: 700,
                         lineHeight: "normal",
-                        color: "#F39801"
+                        color: "#F39801",
                       }}
                     >
                       {" "}
@@ -711,12 +608,12 @@ const Header = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingLeft: "16px"
+                      paddingLeft: "16px",
                     }}
                   >
                     <ShoppingCartOutlinedIcon
                       sx={{
-                        color: "#008C89"
+                        color: "#008C89",
                       }}
                     />
                     <Badge badgeContent={cart.length} color="primary">
@@ -724,7 +621,7 @@ const Header = () => {
                         variant="caption"
                         sx={{
                           pl: 1,
-                          color: "#615C5C"
+                          color: "#615C5C",
                         }}
                       >
                         Giỏ hàng{" "}
@@ -755,7 +652,7 @@ const Header = () => {
                 <Box
                   color={"#333"}
                   sx={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   <Modal
@@ -774,7 +671,7 @@ const Header = () => {
                 <NavLink
                   to={"/"}
                   style={{
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   <Image
@@ -795,7 +692,7 @@ const Header = () => {
                   to={"/cart"}
                   style={{
                     cursor: "pointer",
-                    color: "#F7941E"
+                    color: "#F7941E",
                   }}
                 >
                   <Badge badgeContent={cart.length} color="primary">
@@ -807,7 +704,7 @@ const Header = () => {
                     to={"/user"}
                     style={{
                       cursor: "pointer",
-                      color: "#F7941E"
+                      color: "#F7941E",
                     }}
                   >
                     <Person3Icon sx={hdicon_mb} />
@@ -818,7 +715,7 @@ const Header = () => {
                       sx={{
                         display: "flex",
                         alignItems: "center",
-                        textAlign: "center"
+                        textAlign: "center",
                       }}
                     >
                       <Tooltip title="Account settings">
@@ -836,13 +733,13 @@ const Header = () => {
                               display: "flex",
                               justifyContent: "center",
                               alignItems: "center",
-                              textAlign: "center"
+                              textAlign: "center",
                             }}
                           >
                             <Person3Icon
                               sx={hdicon_mb}
                               style={{
-                                margin: "0 auto"
+                                margin: "0 auto",
                               }}
                             />
                           </Avatar>
@@ -865,7 +762,7 @@ const Header = () => {
                             width: 32,
                             height: 32,
                             ml: -0.5,
-                            mr: 1
+                            mr: 1,
                           },
                           "&:before": {
                             content: '""',
@@ -877,9 +774,9 @@ const Header = () => {
                             height: 10,
                             bgcolor: "background.paper",
                             transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0
-                          }
-                        }
+                            zIndex: 0,
+                          },
+                        },
                       }}
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}

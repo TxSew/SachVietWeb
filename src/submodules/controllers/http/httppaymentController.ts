@@ -28,7 +28,7 @@ class HttpPaymentController {
   async getPayment(data: any): Promise<any> {
     try {
       const response = await this.axiosInstance.post(
-        `/payment/payment-url`,
+        `/payment/stripe-payment`,
         data
       );
       return response.data;

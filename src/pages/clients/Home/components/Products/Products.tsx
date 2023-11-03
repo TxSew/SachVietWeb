@@ -24,9 +24,9 @@ function Products() {
     setAlignment(newAlignment);
   };
   const [Products, setProducts] = useState<Product[]>([]);
-  const fetchData = async () => {
+  const fetchData = async (props: any) => {
     try {
-      const productData: any = await http.getAll();
+      const productData: any = await http.getAll(props);
       const { products } = productData;
       setProducts(products);
     } catch (err) {
@@ -34,7 +34,10 @@ function Products() {
     }
   };
   useEffect(() => {
-    fetchData();
+    const props = {
+      categoryFilter: "sach-am-nhac",
+    };
+    fetchData(props);
   }, []);
 
   return (
@@ -46,19 +49,19 @@ function Products() {
             sx={{
               borderTopLeftRadius: 3,
               borderBottom: " 1px solid #eee",
-              borderTopRightRadius: 3
+              borderTopRightRadius: 3,
             }}
           >
             <Stack
               sx={{
                 borderTopLeftRadius: 3,
-                borderTopRightRadius: 3
+                borderTopRightRadius: 3,
               }}
               direction={"row"}
               spacing={2}
               py={2}
               px={2}
-              bgcolor={color.pink}
+              borderBottom={"1px solid #eee"}
             >
               <img
                 src="https://cdn0.fahasa.com/skin/frontend/base/default/images/ico_dealhot.png"
@@ -67,30 +70,13 @@ function Products() {
               <Typography
                 variant="h3"
                 sx={{
-                  fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.25rem)"
+                  fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.25rem)",
                 }}
                 fontWeight={"bold"}
               >
                 XU HƯỚNG MUA SẮM
               </Typography>
             </Stack>
-            <ToggleButtonGroup
-              color="primary"
-              value={alignment}
-              exclusive
-              onChange={handleChange}
-              aria-label="Platform"
-              sx={{
-                py: "10px",
-                pl: "10px"
-              }}
-            >
-              <ToggleButton value={"web"}>Xu Hướng Theo Ngày</ToggleButton>
-              <ToggleButton value={"sale"}> Sách HOT - Giảm Sốc</ToggleButton>
-              <ToggleButton value={"bestSealer"}>
-                BestSeller - Ngoại văn
-              </ToggleButton>
-            </ToggleButtonGroup>
           </Box>
           <Grid container p={"10px"}>
             {Products.map((element: Product, i) => {
@@ -102,7 +88,7 @@ function Products() {
             })}
           </Grid>
           <Stack>
-            <Button variant="outlined">Xem thêm</Button>
+            <Button variant="OutlinedRed">Xem thêm</Button>
           </Stack>
         </Box>
       </Container>

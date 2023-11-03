@@ -7,6 +7,7 @@ import { BaseAPi } from "../../../../../configs/BaseApi";
 import useMedia from "../../../../../hooks/useMedia/useMedia";
 import HttpCategoryController from "../../../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../../../submodules/models/ProductModel/Category";
+import { Link } from "react-router-dom";
 const http = new HttpCategoryController(BaseAPi);
 const CategoryNav = () => {
   const [category, SetCategory] = useState<Category[]>([]);
@@ -33,40 +34,6 @@ const CategoryNav = () => {
         mt: 3,
       }}
     >
-      <Grid container spacing={2}>
-        <Grid item xs={6} md={3}>
-          <Image
-            src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
-            alt=""
-            width="100%"
-            height="200px"
-          />
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <Image
-            src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
-            alt=""
-            width="100%"
-            height="200px"
-          />
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <Image
-            src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
-            alt=""
-            width="100%"
-            height="200px"
-          />
-        </Grid>
-        <Grid item xs={6} md={3}>
-          <Image
-            src="https://cdn0.fahasa.com/media/wysiwyg/Thang-08-2023/KDKS_Mainbanner_Smallbanner_310x210.png"
-            alt=""
-            width="100%"
-            height="200px"
-          />
-        </Grid>
-      </Grid>
       <Box mt={3} pb={2} borderRadius={3} bgcolor={"#fff"}>
         <Stack
           direction={"row"}
@@ -118,15 +85,17 @@ const CategoryNav = () => {
                     flexDirection: "column",
                   }}
                 >
-                  <img
-                    style={{
-                      flexShrink: 0,
-                    }}
-                    src={e.image}
-                    width={"100px"}
-                    height={"100px"}
-                    alt=""
-                  />
+                  <Link to={`/category/${e.slug}`}>
+                    <img
+                      style={{
+                        flexShrink: 0,
+                      }}
+                      src={e.image}
+                      width={"100px"}
+                      height={"100px"}
+                      alt=""
+                    />
+                  </Link>
 
                   <Typography
                     variant="body1"

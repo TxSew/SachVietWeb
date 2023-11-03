@@ -2,7 +2,6 @@ import { Grid } from "@mui/material";
 import Banner from "./components/Banner/Banner";
 import Products from "./components/Products/Products";
 import CategoryNav from "./components/Category/Category";
-import ProductNews from "./components/Products/ProductNew";
 import ProductHots from "./components/Products/ProductHot";
 
 function HomePage() {
@@ -12,7 +11,6 @@ function HomePage() {
       <CategoryNav />
       <Products />
       <ProductHots />
-      <ProductNews />
     </Grid>
   );
 }

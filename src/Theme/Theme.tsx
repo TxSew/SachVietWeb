@@ -1,5 +1,19 @@
 import { colors, createTheme } from "@mui/material";
 import { color } from "./color";
+declare module "@mui/material/Button" {
+  interface ButtonPropsVariantOverrides {
+    errorContained: true;
+    orangeContained: true;
+    errorOutlined: true;
+    cancel: true;
+    cancelSmall: true;
+    outlinedGreen: true;
+    cancelOutlined: true;
+    primary: true;
+    containedGreen: true;
+    OutlinedRed: true;
+  }
+}
 
 export const Theme = createTheme({
   palette: {
@@ -8,11 +22,71 @@ export const Theme = createTheme({
     },
   },
   typography: {
-    h1: {
-      fontSize: "30px",
+    htmlFontSize: 14,
+    fontSize: 14,
+    body1: {
+      fontSize: "0.875rem",
+      fontWeight: 400,
+      // color: color.textPrimary,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: pxToRem(12),
+      // },
     },
-    caption: {
-      fontSize: "14px",
+    body2: {
+      fontSize: "0.75rem",
+      // [breakpoints.down('xs')]: {
+      //     fontSize: pxToRem(12),
+      // },
+    },
+    h6: {
+      fontSize: "0.875rem",
+      fontWeight: 500,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: pxToRem(12),
+      // },
+    },
+    h5: {
+      fontSize: "1rem",
+      fontWeight: 500,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: pxToRem(14),
+      // },
+    },
+    h4: {
+      fontSize: "1.25rem",
+      fontWeight: 500,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: '1rem',
+      // },
+    },
+    h3: {
+      fontSize: "1.5rem",
+      fontWeight: 500,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: '1,25rem',
+      // },
+    },
+    h2: {
+      fontSize: "2rem",
+      fontWeight: 500,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: '1.5rem',
+      // },
+    },
+    h1: {
+      fontSize: "2.5rem",
+      fontWeight: 500,
+      // [breakpoints.down('xs')]: {
+      //     fontSize: '2rem',
+      // },
+    },
+    subtitle1: {
+      fontWeight: 500,
+      fontSize: "1.25rem",
+      color: "#333333",
+      // [breakpoints.down('xs')]: {
+      //     fontSize: '1.125rem',
+      // },
     },
   },
   components: {
@@ -63,20 +137,41 @@ export const Theme = createTheme({
         },
       },
     },
+
     MuiButton: {
-      defaultProps: {
-        variant: "contained",
-      },
       styleOverrides: {
         root: {},
       },
       variants: [
         {
-          props: { variant: "contained" },
+          props: { variant: "OutlinedRed" },
           style: {
-            backgroundColor: "red",
-            color: "white",
-            borderWidth: 1,
+            "&:hover": {
+              border: "1px solid red !important",
+            },
+            background: "transparent",
+            color: color.btnRed,
+            border: 1,
+            borderStyle: "solid",
+            padding: "4px 44px",
+            borderRadius: "10px",
+            borderColor: color.btnRed,
+          },
+        },
+
+        {
+          props: { variant: "containedGreen" },
+          style: {
+            "&:hover": {
+              background: color.BtnDartGreen,
+            },
+            background: color.BtnDartGreen,
+            border: 1,
+            color: color.white,
+            borderStyle: "solid",
+            padding: "9px 40px",
+            borderRadius: "10px",
+            borderColor: color.BtnDartGreen,
           },
         },
       ],
