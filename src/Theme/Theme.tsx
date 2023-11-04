@@ -1,4 +1,4 @@
-import { colors, createTheme } from "@mui/material";
+import { createTheme } from "@mui/material";
 import { color } from "./color";
 declare module "@mui/material/Button" {
   interface ButtonPropsVariantOverrides {

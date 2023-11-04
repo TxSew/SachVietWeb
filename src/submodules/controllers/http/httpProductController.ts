@@ -17,18 +17,6 @@ class HttpProductController {
         "Authorization"
       ] = `Bearer ${jwtToken}`;
     }
-
-    this.axiosInstance.interceptors.response.use(
-      (response) => {
-        return response;
-      },
-      (error) => {
-        if (error.response.status === 401) {
-          return (window.location.href = "/auth");
-        }
-        return Promise.reject(error);
-      }
-    );
   }
   async getAll(props: any): Promise<any> {
     try {
