@@ -142,12 +142,7 @@ export default function AdminProduct() {
             onChange={handleChangeValue}
           />
         </Stack>
-        <Stack
-          sx={{ minWidth: 300 }}
-          direction={"row"}
-          display={"flex"}
-          justifyContent={"end"}
-        >
+        <Stack sx={{ minWidth: 300 }} direction={"row"} display={"flex"}>
           <Typography>Sắp xếp:</Typography>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
             <Select

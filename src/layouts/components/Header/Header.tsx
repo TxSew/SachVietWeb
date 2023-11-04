@@ -7,7 +7,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NewspaperIcon from "@mui/icons-material/Newspaper";
 import Person3Icon from "@mui/icons-material/Person3";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
-import RefreshIcon from "@mui/icons-material/Refresh";
 import SearchIcon from "@mui/icons-material/Search";
 import SellIcon from "@mui/icons-material/Sell";
 import ShoppingBasketSharpIcon from "@mui/icons-material/ShoppingBasketSharp";
@@ -37,16 +36,43 @@ import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import Image from "../../../components/Image/Image";
 import { BaseAPi } from "../../../configs/BaseApi";
+import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { User } from "../../../submodules/models/UserModel/User";
-import useDebounce from "../../../hooks/useDebounce/useDebounce";
-const http = new HttpProductController(BaseAPi);
+import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
+import { el } from "@faker-js/faker";
 const Header = () => {
+  const http = new HttpProductController(BaseAPi);
+  const httpCategory = new HttpCategoryController(BaseAPi);
   const [user, setUser] = useState<User>({} as User);
+  const [search, setSearch] = React.useState<string>("");
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const cart = useSelector((state: RootState) => state.cart.cartItems);
+  const [Products, setProducts] = useState<any>([]);
+  const [categories, setCategories] = useState<any>([]);
+  const dataSearch = useDebounce(search, 300);
+
   const { isMediumMD } = useMedia();
+  useEffect(() => {
+    fetchValueSearch(dataSearch);
+  }, [dataSearch]);
+  async function fetchValueSearch(props: any) {
+    const data = await http.getAll({
+      keyword: props,
+    });
+    const dataCategory = await httpCategory.getCategory({});
+    const cate = await dataCategory.filter(
+      (category: any, i: any) => category.id !== 1
+    );
+    const results = cate.filter((item: any) =>
+      item.slug.includes(props.toLowerCase())
+    );
+    setCategories(results);
+    const { products } = data;
+    setProducts(products);
+  }
   useEffect(() => {
     const user = localStorage.getItem("user");
     const getUser = JSON.parse(user!);
@@ -54,7 +80,6 @@ const Header = () => {
       setUser(getUser);
     }
   }, []);
-
   const styles = {
     position: "absolute",
     top: "10%",
@@ -111,11 +136,8 @@ const Header = () => {
   };
 
   const [openSearch, setOpenSearch] = React.useState(false);
-
   const handleOpenSearch = () => setOpenSearch(true);
   const handleCloseSearch = () => setOpenSearch(false);
-  const [search, setSearch] = React.useState<string>("");
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -126,11 +148,11 @@ const Header = () => {
   const handleChangeValue = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSearch((pre) => event.target.value);
     if (event.target.value) {
+      setSearch(event.target.value);
     }
+    // setSearch(event.target.value);
   };
-
   return (
     <>
       <Box width={"100%"}>
@@ -165,7 +187,7 @@ const Header = () => {
                     </Typography>
                   </Box>
                 </NavLink>
-                <NavLink to={""}>
+                <NavLink to={"/sales"}>
                   <Box sx={hditem}>
                     <SellIcon sx={hdicon} />
                     <Typography fontSize={"12px"} style={nicon}>
@@ -192,7 +214,7 @@ const Header = () => {
                   </Box>
                 </NavLink>
                 {user.id ? (
-                  <NavLink to={""}>
+                  <NavLink to={"/user"}>
                     <Box sx={hditem}>
                       <HowToRegSharpIcon sx={hdicon} />
                       <Typography fontSize={"12px"} style={nicon}>
@@ -294,8 +316,16 @@ const Header = () => {
                     <Modal
                       open={openSearch}
                       onClose={handleCloseSearch}
+                      // hideBackdrop={true}
+                      disableAutoFocus={true}
                       aria-labelledby="modal-modal-title"
                       aria-describedby="modal-modal-description"
+                      sx={{
+                        "& .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop": {
+                          background: "transparent",
+                        },
+                        top: "130px",
+                      }}
                     >
                       <Box sx={styles}>
                         <Stack
@@ -304,10 +334,8 @@ const Header = () => {
                             flexDirection: "row",
                             alignItems: "center",
                             justifyContent: "center",
-                            borderBottom: "1px solid #ccc",
                           }}
                         >
-                          {" "}
                           <Typography
                             variant="caption"
                             sx={{
@@ -316,84 +344,21 @@ const Header = () => {
                               alignItems: "center",
                               justifyContent: "center",
                             }}
-                          >
-                            <SearchIcon
-                              sx={{
-                                color: "#0072E5",
-                              }}
-                            />
-                          </Typography>
-                          <TextField
-                            sx={{
-                              "& fieldset": {
-                                border: "none",
-                                width: "100%",
-                              },
-                              width: "100%",
-                            }}
-                            placeholder="Tìm kiếm sản phẩm mong muốn..."
-                            autoFocus={true}
-                            onInput={handleChangeValue}
-                          />
+                          ></Typography>
                         </Stack>
 
-                        <Box
-                          sx={{ padding: "16px 0" }}
-                          borderBottom={"1px solid gray"}
-                        >
-                          <Typography
-                            display={"flex"}
-                            alignItems={"center"}
-                            justifyContent={"space-between"}
-                            variant="h2"
-                          >
-                            <Typography
-                              variant="h2"
-                              display={"block"}
-                              paddingBottom={"16px"}
-                              textTransform={"uppercase"}
-                              fontWeight={"bold"}
-                            >
-                              Gợi ý (5 sản phẩm)
-                            </Typography>
-                            <Link
-                              to=""
-                              // onClick={handleCloseSearch}
-                              style={{
-                                color: "gray",
-                              }}
-                            >
-                              <RefreshIcon
-                                style={{
-                                  fontSize: "16px",
-                                }}
-                              />
-                            </Link>
-                          </Typography>
-                          <Box
-                            display={"flex"}
-                            justifyContent={"space-between"}
-                            alignItems={"center"}
-                          >
-                            <Typography>gợi í 1</Typography>
-                            <Typography>gợi í 1</Typography>
-                            <Typography>gợi í 1</Typography>
-                            <Typography>gợi í 1</Typography>
-                            <Typography>gợi í 1</Typography>
-                          </Box>
-                        </Box>
                         <Typography
                           variant="h2"
                           display={"block"}
-                          padding={"16px 0"}
+                          padding={"10px 0"}
                           textTransform={"uppercase"}
                           fontWeight={"bold"}
                         >
                           Được tìm kiếm nhiều nhất (6 sản phẩm)
                         </Typography>
                         <Box padding={"8px 0"}>
-                          <Grid container>
-                            {/* {Products.slice(0, 6).map((e: any) => {
+                          <Grid container spacing={2}>
+                            {Products.slice(0, 6).map((e: any) => {
                               return (
                                 <Grid item xs={6} md={4}>
                                   <Link
@@ -402,7 +367,11 @@ const Header = () => {
                                   >
                                     <Box display={"fex"} alignItems={"center"}>
                                       <Grid item xs={12} md={3}>
-                                        <img src={e.image} alt=""></img>
+                                        <img
+                                          src={e.image}
+                                          width={"40px"}
+                                          alt=""
+                                        ></img>
                                       </Grid>
                                       <Grid
                                         xs={12}
@@ -414,26 +383,25 @@ const Header = () => {
                                         <Typography
                                           variant="body1"
                                           sx={{
-                                            fontSize: "14px",
+                                            fontSize: "12px",
                                             color: "black",
+                                            overflow: "hidden",
+                                            textAlign: "center",
+                                            display: "-webkit-box",
+                                            lineClamp: 2,
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: "vertical",
+                                            flexShrink: 0,
                                           }}
                                         >
-                                          sản phẩm: {e.title}
-                                        </Typography>
-                                        <Typography
-                                          sx={{
-                                            fontSize: "14px",
-                                            color: "black",
-                                          }}
-                                        >
-                                          SL: {e.quantity}
+                                          {e.title}
                                         </Typography>
                                       </Grid>
                                     </Box>
                                   </Link>
                                 </Grid>
                               );
-                            })} */}
+                            })}
                           </Grid>
                         </Box>
 
@@ -446,92 +414,32 @@ const Header = () => {
                         >
                           Danh mục nổi bật (4 danh mục)
                         </Typography>
-                        <Box
-                          display={"flex"}
-                          textAlign={"center"}
-                          alignItems={"center"}
-                        >
-                          <Grid item xs={6} md={3}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9923"
-                              onClick={handleCloseSearch}
-                              style={{
-                                textAlign: "center",
-                                margin: "0 auto",
-                              }}
-                            >
-                              <img
-                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                alt=""
-                                width={"50%"}
-                                style={{
-                                  margin: "0 auto",
-                                }}
-                              />
-                              <Typography>Tìm kiếm nâng cao</Typography>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={3}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9923"
-                              onClick={handleCloseSearch}
-                              style={{
-                                textAlign: "center",
-                                margin: "0 auto",
-                              }}
-                            >
-                              <img
-                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                alt=""
-                                width={"50%"}
-                                style={{
-                                  margin: "0 auto",
-                                }}
-                              />
-                              <Typography>Tìm kiếm nâng cao</Typography>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={3}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9923"
-                              onClick={handleCloseSearch}
-                              style={{
-                                textAlign: "center",
-                                margin: "0 auto",
-                              }}
-                            >
-                              <img
-                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                alt=""
-                                width={"50%"}
-                                style={{
-                                  margin: "0 auto",
-                                }}
-                              />
-                              <Typography>Tìm kiếm nâng cao</Typography>
-                            </Link>
-                          </Grid>
-                          <Grid item xs={6} md={3}>
-                            <Link
-                              to="http://localhost:3000/products/sach99jjj9923"
-                              onClick={handleCloseSearch}
-                              style={{
-                                textAlign: "center",
-                                margin: "0 auto",
-                              }}
-                            >
-                              <img
-                                src="https://firebasestorage.googleapis.com/v0/b/bookscloud-3fd83.appspot.com/o/imageUpload%2F8934974180968_1.jpg?alt=media&token=9521d720-f7f7-4688-9204-48dc68108bc9"
-                                alt=""
-                                width={"50%"}
-                                style={{
-                                  margin: "0 auto",
-                                }}
-                              />
-                              <Typography>Tìm kiếm nâng cao</Typography>
-                            </Link>
-                          </Grid>
-                        </Box>
+                        <Grid container>
+                          {categories.map((e: any, i: number) => {
+                            return (
+                              <Grid item xs={6} md={3}>
+                                <Link
+                                  to="http://localhost:3000/products/sach99jjj9923"
+                                  onClick={handleCloseSearch}
+                                  style={{
+                                    textAlign: "center",
+                                    margin: "0 auto",
+                                  }}
+                                >
+                                  <img
+                                    src={e.image}
+                                    alt=""
+                                    width={"50%"}
+                                    style={{
+                                      margin: "0 auto",
+                                    }}
+                                  />
+                                  <Typography>{e.name}</Typography>
+                                </Link>
+                              </Grid>
+                            );
+                          })}
+                        </Grid>
                       </Box>
                     </Modal>
                     <TextField
@@ -540,6 +448,7 @@ const Header = () => {
                         "& fieldset": { border: "none", width: "100%" },
                         width: "100%",
                       }}
+                      onInput={handleChangeValue}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
                     />
 

@@ -54,15 +54,15 @@ const UpdateProduct = () => {
   };
   const fetchProducer = async () => {
     try {
-     const producer: any = await http.getAll();
-     setProducer(producer.producers);
+      const producer: any = await http.getAll();
+      setProducer(producer.producers);
     } catch (error) {
       console.log(error);
     }
   };
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getCategory();
+      const category: any = await httpcategory.getCategory({});
       setCategory(category);
     } catch (err) {
       console.error(err);
@@ -79,7 +79,7 @@ const UpdateProduct = () => {
       product: data,
       productImages: images,
     };
-   
+
     const storeProduct = await httpProduct.put(ID, ProductDto);
     if (storeProduct) {
       toast.success("created new product successfully", {

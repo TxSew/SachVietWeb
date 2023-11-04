@@ -10,7 +10,7 @@ import { numberFormat } from "../../helpers/formatPrice";
 interface ProductItem {
   products: Product;
 }
-const ProductItem = (Props: ProductItem) => {
+const ProductItemNew = (Props: ProductItem) => {
   return (
     <Card
       variant="outlined"
@@ -26,10 +26,10 @@ const ProductItem = (Props: ProductItem) => {
         <Box
           sx={{
             position: "absolute",
-            top: "5%",
-            right: "5%",
-            width: "40px",
-            height: "40px",
+            top: "3%",
+            right: "2%",
+            width: "35px",
+            height: "35px",
             color: "white",
             borderRadius: "50%",
             textAlign: "center",
@@ -43,6 +43,7 @@ const ProductItem = (Props: ProductItem) => {
           <Typography
             variant="body1"
             fontWeight={"bold"}
+            fontSize={"13px"}
           >{`${Props.products.sale}%`}</Typography>
         </Box>
       ) : (
@@ -122,11 +123,22 @@ const ProductItem = (Props: ProductItem) => {
             {numberFormat(Number(Props.products.price))}
           </Typography>
         </Stack>
+        <Box
+          sx={{
+            width: "100%",
+            textAlign: "center",
+            marginTop: "10px",
+            height: "20px",
+            borderRadius: "10px",
+            color: color.white,
+            backgroundColor: color.linePay,
+          }}
+        >
+          đã bán 0
+        </Box>
       </CardContent>
     </Card>
   );
 };
 
-ProductItem.propTypes = {};
-
-export default memo(ProductItem);
+export default memo(ProductItemNew);

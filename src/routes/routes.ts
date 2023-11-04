@@ -26,6 +26,7 @@ import UserInfo from "../pages/clients/User/UserInfo";
 import UserAdress from "../pages/clients/User/Useradress";
 import UserVi from "../pages/clients/User/Uservi";
 import UserMyCart from "../pages/clients/User/Usermycart";
+import Sales from "../pages/clients/sales/Sales";
 const PublicRouter = [
   {
     path: "/",
@@ -78,6 +79,7 @@ const PublicRouter = [
     component: UserMyCart,
   },
   { path: "/admin", component: Auth },
+  { path: "/sales", component: Sales },
 ];
 const PrivateRouter = [
   {

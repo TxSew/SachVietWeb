@@ -624,6 +624,7 @@ export const Details = () => {
               </Typography>
               <div
                 style={{
+                  textAlign: "left",
                   fontSize: "14px",
                 }}
                 dangerouslySetInnerHTML={{

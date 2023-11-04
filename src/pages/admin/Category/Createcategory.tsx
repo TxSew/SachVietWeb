@@ -1,13 +1,14 @@
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   Grid,
   MenuItem,
   OutlinedInput,
   Select,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
@@ -20,22 +21,18 @@ import HttpCategoryController from "../../../submodules/controllers/http/httpCat
 import { Category } from "../../../submodules/models/ProductModel/Category";
 
 var httpCategory = new HttpCategoryController(BaseAPi);
+
 const CreateCategory = () => {
   const [category, setCategory] = useState([]);
-  const [url, setUrl] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [url, setUrl] = useState<any>([]);
   useEffect(() => {
     fetchCategory();
   }, []);
-  const fetchCategory = async () => {
-    try {
-      const category: any = await httpCategory.getCategory();
-      console.log(category);
-      setCategory(category);
-    } catch (err) {
-      console.error(err);
-    }
-  };
   const loadImageFile = async (images: any) => {
+    if (images) {
+      setIsLoading(true);
+    }
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
       await uploadBytes(imageRef, images[i])
@@ -45,36 +42,50 @@ const CreateCategory = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              setUrl(url);
+              setUrl((prev: any) => [...prev, url]);
+              setIsLoading(false);
               return url;
             });
         })
-        .catch((err) => {
-          alert(err);
+        .catch((err) => {});
+    }
+  };
+
+  const fetchCategory = async () => {
+    try {
+      const category: any = await httpCategory.getCategory({});
+      setCategory(category);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleAddCategory = async (data: Category) => {
+    data.image = url[0];
+    const category: Category = data;
+    try {
+      const categoryDto = await httpCategory.store(category);
+      if (categoryDto) {
+        toast.success("category added successfully", {
+          position: "bottom-right",
         });
+      }
+    } catch (err) {
+      toast.error("tên danh mục đã tồn tại!", {
+        position: "bottom-right",
+      });
     }
   };
   const {
     handleSubmit,
     control,
     register,
-    formState: { errors, isDirty, isValid }
+    formState: { errors },
   } = useForm<Category>({
     defaultValues: {
-      status: "1"
-    }
+      status: "1",
+    },
   });
-
-  const handleAddCategory = async (data: Category) => {
-    data.image = url;
-    const category: Category = data;
-    const categoryDto = await httpCategory.store(category);
-    if (categoryDto) {
-      toast.success("category added successfully", {
-        position: "bottom-right"
-      });
-    }
-  };
 
   return (
     <Box>
@@ -102,7 +113,7 @@ const CreateCategory = () => {
             name="name"
             defaultValue="" // Set an initial value here
             rules={{
-              required: "Tên danh mục không được bỏ trống!"
+              required: "Tên danh mục không được bỏ trống!",
             }}
             render={({ field }) => (
               <OutlinedInput
@@ -111,8 +122,8 @@ const CreateCategory = () => {
                 sx={{
                   mt: 1,
                   "& > input": {
-                    p: "7px"
-                  }
+                    p: "7px",
+                  },
                 }}
                 fullWidth
                 placeholder="Vui lòng nhập Ten của bạn!"
@@ -132,7 +143,7 @@ const CreateCategory = () => {
                 control={control}
                 name="parentId"
                 rules={{
-                  required: "Vui lòng nhập Danh mục sản phẩm!"
+                  required: "Vui lòng nhập Danh mục sản phẩm!",
                 }}
                 render={({ field }) => (
                   <FormControl fullWidth>
@@ -144,8 +155,8 @@ const CreateCategory = () => {
                       sx={{
                         mt: 1,
                         "& > div": {
-                          p: "7px"
-                        }
+                          p: "7px",
+                        },
                       }}
                       defaultValue="2"
                     >
@@ -172,18 +183,31 @@ const CreateCategory = () => {
           </Typography>
           <OutlinedInput
             type="file"
-            onChange={(e: any) => loadImageFile(e.target.value)}
+            onChange={(e: any) => loadImageFile(e.target.files)}
             sx={{
               mt: 1,
               "& > input": {
-                p: "7px"
-              }
+                p: "7px",
+              },
             }}
             fullWidth
           />
-          <Stack direction={"row"} flexWrap={"wrap"}>
-            <img src={url} width={"150px"} alt="" />
-          </Stack>
+          {isLoading ? (
+            <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
+          ) : url.length > 0 ? (
+            // Nếu mảng urls có chứa hình ảnh
+            url.map((url: any, index: any) => (
+              <img
+                key={index}
+                src={url}
+                width={"100px"}
+                alt={`Image ${index}`}
+              />
+            ))
+          ) : (
+            // Nếu mảng urls không có hình ảnh
+            <div></div>
+          )}
           <Typography variant="caption" color={color.error}>
             {errors.level && errors.level.message}
           </Typography>
@@ -194,7 +218,7 @@ const CreateCategory = () => {
             control={control}
             name="status"
             rules={{
-              required: "Price is not"
+              required: "Price is not",
             }}
             render={({ field }) => (
               <FormControl fullWidth>
@@ -205,8 +229,8 @@ const CreateCategory = () => {
                   sx={{
                     mt: 1,
                     "& > div": {
-                      p: "7px"
-                    }
+                      p: "7px",
+                    },
                   }}
                 >
                   <MenuItem value={""}>
@@ -219,7 +243,6 @@ const CreateCategory = () => {
                     <em>Ngưng kinh doanh</em>
                   </MenuItem>
                 </Select>
-                {/* <FormHelperText>Without label</FormHelperText> */}
               </FormControl>
             )}
           />

@@ -53,7 +53,7 @@ const CreateProduct = () => {
   };
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getCategory();
+      const category: any = await httpcategory.getCategory({});
       setCategory(category);
     } catch (err) {
       console.error(err);

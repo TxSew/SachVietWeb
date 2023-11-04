@@ -1,10 +1,16 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Skeleton,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { color } from "../../../../../Theme/color";
 import ProductItem from "../../../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../../../configs/BaseApi";
+import useLoading from "../../../../../hooks/useLoading/useLoading";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
 interface PropsSort {
@@ -17,6 +23,7 @@ interface PropsSort {
 function Products() {
   const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
+  const { isLoading, startLoading, stopLoading } = useLoading();
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     newAlignment: string
@@ -28,15 +35,19 @@ function Products() {
     try {
       const productData: any = await http.getAll(props);
       const { products } = productData;
+      startLoading();
+      if (products) {
+        setTimeout(() => {
+          stopLoading();
+        }, 2000);
+      }
       setProducts(products);
     } catch (err) {
       console.log(err);
     }
   };
   useEffect(() => {
-    const props = {
-      categoryFilter: "sach-am-nhac",
-    };
+    const props = {};
     fetchData(props);
   }, []);
 
@@ -79,13 +90,35 @@ function Products() {
             </Stack>
           </Box>
           <Grid container p={"10px"}>
-            {Products.map((element: Product, i) => {
-              return (
-                <Grid key={i} item md={3} xs={6} sm={6} p={"10px"}>
-                  <ProductItem key={i} products={element} />
-                </Grid>
-              );
-            })}
+            {!isLoading
+              ? Products.map((element: Product, i) => {
+                  return (
+                    <Grid key={element.id} item md={3} xs={6} sm={6} p={"10px"}>
+                      <ProductItem key={i} products={element} />
+                    </Grid>
+                  );
+                })
+              : Array.from({ length: Products.length }).map((e, i) => {
+                  return (
+                    <Grid key={i} item md={3} paddingBottom={4}>
+                      <Skeleton
+                        variant="rectangular"
+                        width={"95%"}
+                        height={"170px"}
+                      />
+                      <Skeleton
+                        animation="wave"
+                        height={"50px"}
+                        width={"95%"}
+                        style={{ marginBottom: 6, marginTop: 6 }}
+                      />
+                      <Stack direction={"row"} justifyContent={"space-around"}>
+                        <Skeleton animation="wave" height={50} width="33%" />
+                        <Skeleton animation="wave" height={50} width="33%" />
+                      </Stack>
+                    </Grid>
+                  );
+                })}
           </Grid>
           <Stack>
             <Button variant="OutlinedRed">Xem thêm</Button>

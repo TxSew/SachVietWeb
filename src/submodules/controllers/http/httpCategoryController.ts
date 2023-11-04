@@ -20,9 +20,11 @@ class HttpCategoryController {
     }
   }
 
-  async getCategory(): Promise<any> {
+  async getCategory(props: any): Promise<any> {
     try {
-      const response = await this.axiosInstance.get("category/listCategory");
+      const response = await this.axiosInstance.post("category/filter", {
+        ...props,
+      });
       return response.data;
     } catch (error) {
       throw error;

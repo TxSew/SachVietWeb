@@ -13,6 +13,7 @@ import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
+import ProductitemNew from "../../../../../components/ProductItem/ProductitemNew";
 interface PropsSort {
   page: number;
   search: string;
@@ -20,7 +21,7 @@ interface PropsSort {
   sortWith: string;
   limit: number;
 }
-function ProductHots() {
+function ProductNew() {
   const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
   const { isLoading, startLoading, stopLoading } = useLoading();
@@ -47,9 +48,7 @@ function ProductHots() {
     }
   };
   useEffect(() => {
-    const props = {
-      categoryFilter: "thieu-nhi",
-    };
+    const props = {};
     fetchData(props);
   }, []);
 
@@ -86,8 +85,9 @@ function ProductHots() {
                   fontSize: "clamp(1rem, 0.95rem + 0.25vw, 1.25rem)",
                 }}
                 fontWeight={"bold"}
+                textTransform={"uppercase"}
               >
-                THẾ GIỚI SÁCH THIẾU NHI
+                Sách Mới Phát Hành
               </Typography>
             </Stack>
           </Box>
@@ -95,14 +95,21 @@ function ProductHots() {
             {!isLoading
               ? Products.map((element: Product, i) => {
                   return (
-                    <Grid key={element.id} item md={3} xs={6} sm={6} p={"10px"}>
-                      <ProductItem key={i} products={element} />
+                    <Grid
+                      key={element.id}
+                      item
+                      md={2.4}
+                      xs={6}
+                      sm={6}
+                      p={"10px"}
+                    >
+                      <ProductitemNew key={i} products={element} />
                     </Grid>
                   );
                 })
-              : Array.from({ length: Products.length }).map((e, i) => {
+              : Array.from({ length: Products.length }).map(() => {
                   return (
-                    <Grid item md={3} paddingBottom={4} key={i}>
+                    <Grid item md={2.4} paddingBottom={4}>
                       <Skeleton
                         variant="rectangular"
                         width={"95%"}
@@ -131,4 +138,4 @@ function ProductHots() {
   );
 }
 
-export default ProductHots;
+export default ProductNew;

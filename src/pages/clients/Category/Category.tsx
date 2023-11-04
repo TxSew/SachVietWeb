@@ -40,26 +40,7 @@ function Category() {
   const handleChanges = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
-  const handleChangeSort = (event: SelectChangeEvent) => {
-    if (event.target.value == "priceDown") {
-      setSortBy("price_sale");
-      setSortWith("desc");
-      setSort(event.target.value);
-    } else if (event.target.value == "priceUp") {
-      setSortBy("price_sale");
-      setSortWith("asc");
-      setSort(event.target.value);
-    }
-    if (event.target.value == "old") {
-      setSortBy("createdAt");
-      setSortWith("desc");
-      setSort(event.target.value);
-    } else if (event.target.value == "new") {
-      setSortBy("createdAt");
-      setSortWith("asc");
-      setSort(event.target.value);
-    }
-  };
+
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
@@ -77,7 +58,6 @@ function Category() {
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <Select
                     value={sort}
-                    onChange={handleChangeSort}
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
                   >
