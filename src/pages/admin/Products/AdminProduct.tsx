@@ -31,21 +31,26 @@ import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { numberFormat } from "../../../helpers/formatPrice";
+import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
+import { Category } from "../../../submodules/models/ProductModel/Category";
 
 const http = new HttpProductController(BaseAPi);
+const httpCategory = new HttpCategoryController(BaseAPi);
 export default function AdminProduct() {
   const [Products, setProducts] = React.useState<Product[]>([]);
+  const [Category, setCategory] = React.useState<Category[]>([]);
   const [pageCount, setPageCount] = React.useState<number>(1);
   const [page, setPage] = React.useState<number>(1);
   const [search, setSearch] = React.useState<string>("");
   const [sortBy, setSortBy] = React.useState("createdAt");
   const [sortWith, setSortWith] = React.useState("asc");
   const [sort, setSort] = React.useState("");
+  const [sortCategory, setSortCategory] = React.useState("");
   const debounce = useDebounce(search, 400);
   React.useEffect(() => {
     const props = {
       page,
-      debounce,
+      keyword: debounce,
       sortBy,
       sortWith,
     };
@@ -54,13 +59,21 @@ export default function AdminProduct() {
   }, [page, debounce, sortBy, sortWith]);
   const fetchData = async (props: any) => {
     try {
-      const ProductData: any = await http.getAll(props);
-      const data: any = ProductData.products;
-      setPageCount(ProductData.totalPage);
-      setProducts(data);
+      const product: any = await http.getAll(props);
+      const { products } = product;
+      setPageCount(product.totalPage);
+      setProducts(products);
     } catch (err) {
       console.log(err);
     }
+  };
+  React.useEffect(() => {
+    fetchCategory();
+  }, []);
+  const fetchCategory = async () => {
+    const props = {};
+    const category: Category[] = await httpCategory.getCategory(props);
+    setCategory(category);
   };
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
@@ -83,12 +96,16 @@ export default function AdminProduct() {
   const handleChangeValue = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setSearch((pre) => event.target.value);
-    if (event.target.value) {
-      setPage(1);
-    }
+    setSearch(event.target.value);
   };
 
+  const handleSortByCategory = async (event: SelectChangeEvent) => {
+    setSortCategory(event.target.value);
+    const categoryFilter = await http.getAll({
+      categoryFilter: event.target.value,
+    });
+    setProducts(categoryFilter.products);
+  };
   const handleChangeSort = (event: SelectChangeEvent) => {
     if (event.target.value == "priceDown") {
       setSortBy("price_sale");
@@ -152,12 +169,27 @@ export default function AdminProduct() {
               inputProps={{ "aria-label": "Without label" }}
             >
               <MenuItem value="">
-                <em>None</em>
+                <em>Tùy chọn</em>
               </MenuItem>
               <MenuItem value={"old"}>Cũ nhất</MenuItem>
               <MenuItem value={"new"}>Mới nhất</MenuItem>
               <MenuItem value={"priceDown"}>Giá từ thấp lên cao</MenuItem>
               <MenuItem value={"priceUp"}>Giá từ cao xuống thấp</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <Select
+              value={sortCategory}
+              onChange={handleSortByCategory}
+              displayEmpty
+              inputProps={{ "aria-label": "Without label" }}
+            >
+              <MenuItem value="">
+                <em>Chọn danh mục</em>
+              </MenuItem>
+              {Category.map((e: Category) => {
+                return <MenuItem value={e.slug}>{e.name}</MenuItem>;
+              })}
             </Select>
           </FormControl>
         </Stack>

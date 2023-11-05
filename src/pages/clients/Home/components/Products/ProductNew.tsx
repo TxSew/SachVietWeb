@@ -107,9 +107,9 @@ function ProductNew() {
                     </Grid>
                   );
                 })
-              : Array.from({ length: Products.length }).map(() => {
+              : Array.from({ length: Products.length }).map((e,i) => {
                   return (
-                    <Grid item md={2.4} paddingBottom={4}>
+                    <Grid item md={2.4} paddingBottom={4} key={i}>
                       <Skeleton
                         variant="rectangular"
                         width={"95%"}

@@ -1,5 +1,5 @@
 # Makefile for starting XAMPP
 start:
-    cd src
+     npm run start
 
 
