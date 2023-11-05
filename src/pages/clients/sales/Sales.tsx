@@ -1,8 +1,21 @@
-import { Discount } from "@mui/icons-material";
 import { Box, Grid, Stack } from "@mui/material";
-import React from "react";
+import { useEffect, useState } from "react";
+import DiscountItem from "../../../components/discount/Discount";
+import { BaseAPi } from "../../../configs/BaseApi";
+import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
+import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 
 function Sales() {
+  const [discount, setDiscount] = useState<Discount[]>([]);
+  const http = new HttpDiscountController(BaseAPi);
+  useEffect(() => {
+    discountFetch();
+  }, []);
+  const discountFetch = async () => {
+    const discounts = await http.getAll();
+    setDiscount(discounts);
+  };
+
   return (
     <Grid bgcolor={"#241a32"}>
       <Box>
@@ -31,8 +44,15 @@ function Sales() {
       </Grid>
       <Grid container maxWidth={"xl"}>
         <Stack margin={"0 auto"} direction={"row"} spacing={3}>
-          <Discount />
-          <Discount />
+          {discount.map((e: Discount) => {
+            return (
+              <DiscountItem
+                code={e.code}
+                expiration_date={e.expiration_date}
+                desc={e.desc}
+              />
+            );
+          })}
         </Stack>
       </Grid>
       <Box width={"10px"} height={"30px"}></Box>

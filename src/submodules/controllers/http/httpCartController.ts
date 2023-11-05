@@ -1,6 +1,6 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance } from "axios";
+import { TProductResponse } from "../../models/ProductModel/Product";
 import { AxiosConfig } from "../interface/axiosConfig";
-import { Product, TProductResponse } from "../../models/ProductModel/Product";
 class HttpCartController {
   get(): TProductResponse | PromiseLike<TProductResponse> {
     throw new Error("Method not implemented.");
@@ -35,9 +35,11 @@ class HttpCartController {
       throw err;
     }
   }
-  async getOrderbyUser(id: number): Promise<any> {
+  async getOrderbyUser(id: number, token: string): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(`order/current/${id}`);
+      const response = await this.axiosInstance.get(`order/current/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       return response.data;
     } catch (err) {
       throw err;

@@ -19,7 +19,7 @@ import {
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 
@@ -27,7 +27,7 @@ const actions = [
   { icon: <FileCopyIcon />, name: "Copy" },
   { icon: <SaveIcon />, name: "Save" },
   { icon: <PrintIcon />, name: "Print" },
-  { icon: <ShareIcon />, name: "Share" }
+  { icon: <ShareIcon />, name: "Share" },
 ];
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -94,7 +94,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                   display: "flex",
                   alignItems: "center",
                   textAlign: "center",
-                  padding: "0 16px"
+                  padding: "0 16px",
                 }}
               >
                 <Typography sx={{ minWidth: 100 }}>Contact</Typography>
@@ -128,7 +128,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                       width: 32,
                       height: 32,
                       ml: -0.5,
-                      mr: 1
+                      mr: 1,
                     },
                     "&:before": {
                       content: '""',
@@ -140,9 +140,9 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                       height: 10,
                       bgcolor: "background.paper",
                       transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0
-                    }
-                  }
+                      zIndex: 0,
+                    },
+                  },
                 }}
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}

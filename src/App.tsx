@@ -2,7 +2,7 @@ import {
   Route,
   BrowserRouter as Router,
   Routes,
-  useNavigate
+  useNavigate,
 } from "react-router-dom";
 import "./index.css";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";

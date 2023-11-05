@@ -1,6 +1,9 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { Box, Button, Modal, Stack, Tooltip, Typography } from "@mui/material";
 import { color } from "../../Theme/color";
+import { Discount } from "../../submodules/models/DiscountModel/Discount";
+import { formatDates } from "../../helpers/FortmatDate";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -12,13 +15,16 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-function Discount() {
-  const [textToCopy, setTextToCopy] = useState("H world!");
+
+function DiscountItem(props: Discount) {
+  const [textToCopy, setTextToCopy] = useState("");
   const [copySuccess, setCopySuccess] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const handleCopyToClipboard = () => {
+    console.log(textToCopy);
+
     navigator.clipboard
       .writeText(textToCopy)
       .then(() => {
@@ -51,11 +57,12 @@ function Discount() {
           display={"flex"}
           flexDirection={"column"}
           sx={{
+            backgroundColor: "white",
             borderRight: "4px solid orange",
           }}
         >
           <Typography variant="h2" fontWeight={"bold"}>
-            MÃ GIẢM 31K
+            {props.desc}
           </Typography>
           <Typography variant="caption">ĐH từ 100K</Typography>
 
@@ -91,16 +98,15 @@ function Discount() {
           padding={"10px"}
         >
           <Typography variant="caption" fontSize={"12px"}>
-            28/10/2023 09:00
+            {formatDates(props.expiration_date)}
           </Typography>
           <Typography
             variant="h2"
             fontWeight={"bold"}
             p={"8px"}
-            color={color.btnRed}
-            onChange={(e: any) => setTextToCopy(e.target.value)}
+            color={color.borderColor}
           >
-            FHS10KT10
+            {props.code}
           </Typography>
 
           <Button
@@ -121,4 +127,4 @@ function Discount() {
   );
 }
 
-export default Discount;
+export default DiscountItem;

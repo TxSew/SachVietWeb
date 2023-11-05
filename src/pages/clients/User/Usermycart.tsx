@@ -17,13 +17,21 @@ import TableRow from "@mui/material/TableRow";
 import CartUser from "../../../components/CartItemUser/CartUser";
 import { Box, Chip, Stack } from "@mui/material";
 import { toast } from "react-toastify";
+import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
+import CartNotFound from "../cart/components/CartNotFound/CartNotFound";
+import { formatDateYYYY, formatDates } from "../../../helpers/FortmatDate";
+import { numberFormat } from "../../../helpers/formatPrice";
 function UserMyCart() {
   const http = new HttpCartController(BaseAPi);
   const [user, setUser] = useState<any>({} as any);
   const [orderUser, setOrderUser] = useState<any>([]);
+  const [Token, setToken] = useState("");
   useEffect(() => {
     const getUser = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
     const convertUser = JSON.parse(getUser!);
+    const convertToken = JSON.parse(token!);
+    if (convertToken) setToken(convertToken);
     if (convertUser) {
       getOrderByUser(convertUser.id);
     }
@@ -32,7 +40,7 @@ function UserMyCart() {
 
   const getOrderByUser = async (id: any) => {
     if (user) {
-      const orderUserData = await http.getOrderbyUser(Number(id));
+      const orderUserData = await http.getOrderbyUser(Number(id), Token);
       console.log(orderUserData);
 
       if (orderUserData) {
@@ -54,61 +62,75 @@ function UserMyCart() {
           </div>
           <div className="main-waper-end pt-4 pb-5 ps-4 pe-4">
             <h1 className="info-acc-hd p-3">Đơn hàng của tôi</h1>
-            <div className="p-3">
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{
-                    minWidth: 800,
-                  }}
-                  aria-label="simple tablek w"
-                >
-                  <TableHead>
-                    <TableRow
-                      sx={{
-                        "& > th": {
-                          fontWeight: "bold",
-                        },
-                      }}
-                    >
-                      <TableCell>Mã đơn hàng</TableCell>
-                      <TableCell align="center">Ngày tạo hóa đơn</TableCell>
-                      <TableCell align="right">Thao tác</TableCell>
-                      <TableCell align="right">Tổng tiền</TableCell>
-                      <TableCell align="right">Trạng thái</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    <TableRow
-                      sx={{
-                        "&:last-child td, &:last-child th": { border: 0 },
-                      }}
-                    >
-                      <TableCell component="th" scope="row"></TableCell>
-                      <TableCell component="th" scope="row"></TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell align="right"></TableCell>
-                      <TableCell align="right"></TableCell>
+            {orderUser.length > 0 ? (
+              <div className="p-3">
+                <TableContainer component={Paper}>
+                  <Table
+                    sx={{
+                      minWidth: 800,
+                    }}
+                    aria-label="simple tablek w"
+                  >
+                    <TableHead>
+                      <TableRow
+                        sx={{
+                          "& > th": {
+                            fontWeight: "bold",
+                          },
+                        }}
+                      >
+                        <TableCell>Mã đơn hàng</TableCell>
+                        <TableCell align="center">Ngày mua</TableCell>
+                        <TableCell align="center">Người mua</TableCell>
+                        <TableCell align="right">Tổng tiền</TableCell>
+                        <TableCell align="right">Trạng thái</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {orderUser.map((e: Order) => {
+                        return (
+                          <TableRow
+                            sx={{
+                              "&:last-child td, &:last-child th": { border: 0 },
+                            }}
+                          >
+                            <TableCell component="th" scope="row">
+                              {e.id}
+                            </TableCell>
+                            <TableCell align="right">
+                              {formatDates(e.createdAt)}
+                            </TableCell>
+                            <TableCell align="right">{e.fullName}</TableCell>
+                            <TableCell align="right">
+                              {numberFormat(e.money)}
+                            </TableCell>
+                            <TableCell align="right">
+                              {e.status == null ? (
+                                <Chip label="Đang chờ duyệt" />
+                              ) : e.status == 1 ? (
+                                <Chip color="primary" label="Đang giao hàng" />
+                              ) : e.status == 2 ? (
+                                <Chip label=" Đã giao hàng" color="success" />
+                              ) : (
+                                <Chip label="Đã bị hủy" color="error" />
+                              )}
+                            </TableCell>
 
-                      <TableCell align="right">
-                        <Stack
-                          direction={"row"}
-                          spacing={2}
-                          justifyContent={"end"}
-                        ></Stack>
-                      </TableCell>
-
-                      <TableCell align="right">
-                        <Stack
-                          direction={"row"}
-                          spacing={2}
-                          justifyContent={"end"}
-                        ></Stack>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </div>
+                            <TableCell align="right">
+                              <Link to="">
+                                <Chip label=" Xem" color="primary" />
+                              </Link>
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            ) : (
+              <CartNotFound />
+            )}
           </div>
         </div>
       </div>

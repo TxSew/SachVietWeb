@@ -2,7 +2,6 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
   Box,
-  Button,
   Chip,
   FormControl,
   Grid,
@@ -23,21 +22,30 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
+import ToastModal from "../../../components/Modal/Modal";
 import { BaseAPi } from "../../../configs/BaseApi";
-import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
-import useDebounce from "../../../hooks/useDebounce/useDebounce";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
-import { Product } from "../../../submodules/models/ProductModel/Product";
 import { numberFormat } from "../../../helpers/formatPrice";
+import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
+import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
+import { Product } from "../../../submodules/models/ProductModel/Product";
 
 const http = new HttpProductController(BaseAPi);
 const httpCategory = new HttpCategoryController(BaseAPi);
 export default function AdminProduct() {
   const [Products, setProducts] = React.useState<Product[]>([]);
+  const [open, setOpen] = React.useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+  const handleChildButtonClick = (id: any) => {
+    // Handle the button click in the parent component.
+    // You can perform any actions you want here.
+    handleOpen();
+  };
   const [Category, setCategory] = React.useState<Category[]>([]);
   const [pageCount, setPageCount] = React.useState<number>(1);
   const [page, setPage] = React.useState<number>(1);
@@ -84,14 +92,12 @@ export default function AdminProduct() {
 
   // remove item
   const handleDelete = async (element: any) => {
-    const destroy = await http.delete(element.id);
-    toast.error("Delete item successfully", {
-      position: "bottom-right",
-    });
-
-    const product = Products.filter((e) => e.id !== element.id);
-
-    setProducts(product);
+    // const destroy = await http.delete(element.id);
+    // toast.error("Delete item successfully", {
+    //   position: "bottom-right",
+    // });
+    // const product = Products.filter((e) => e.id !== element.id);
+    // setProducts(product);
   };
   const handleChangeValue = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -265,13 +271,14 @@ export default function AdminProduct() {
                           }}
                         />
                       </Link>
-                      <Box onClick={() => handleDelete(e)}>
+                      <Box onClick={() => handleChildButtonClick(e.id)}>
                         <DeleteForeverIcon
                           sx={{
                             color: "red",
                           }}
                         />
                       </Box>
+                      <ToastModal onClose={handleClose} open={open} />
                     </Stack>
                   </TableCell>
                 </TableRow>
