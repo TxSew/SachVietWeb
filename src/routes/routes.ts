@@ -27,6 +27,10 @@ import UserAdress from "../pages/clients/User/Useradress";
 import UserVi from "../pages/clients/User/Uservi";
 import UserMyCart from "../pages/clients/User/Usermycart";
 import Sales from "../pages/clients/sales/Sales";
+import UserCartDetail from "../pages/clients/User/UsercardDetail";
+import StackCustom from "../components/CustomComponents/Stack/StackCustom";
+import HorizontalLinearAlternativeLabelStepper from "../pages/clients/User/Stepper";
+import CustomizedSteppers from "../pages/clients/User/Stepper";
 const PublicRouter = [
   {
     path: "/",
@@ -80,6 +84,14 @@ const PublicRouter = [
   },
   { path: "/admin", component: Auth },
   { path: "/sales", component: Sales },
+  {
+    path: "/user/mycart/:id",
+    component: UserCartDetail,
+  },
+  {
+    path: "/step",
+    component: CustomizedSteppers,
+  },
 ];
 const PrivateRouter = [
   {

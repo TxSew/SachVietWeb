@@ -15,6 +15,8 @@ import {
   Typography,
   tableCellClasses,
 } from "@mui/material";
+
+import "./style.scss";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
@@ -35,7 +37,7 @@ import useMedia from "../../../hooks/useMedia/useMedia";
 const http = new HttpProductController(BaseAPi);
 export const Details = () => {
   const { isMediumMD } = useMedia();
-
+  const [TextMore, setTextMore] = useState(false);
   const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
   const redirect = useNavigate();
   const { id } = useParams();
@@ -623,6 +625,7 @@ export const Details = () => {
                 {Detail?.title}
               </Typography>
               <div
+                className={`small-text ${TextMore && "long-text"} `}
                 style={{
                   textAlign: "left",
                   fontSize: "14px",
@@ -631,16 +634,20 @@ export const Details = () => {
                   __html: htmlContent as unknown as TrustedHTML,
                 }}
               />
-
               <Button
-                style={{
-                  padding: "4px 48px",
-                  margin: "16px 0",
-                  textAlign: "center",
-                  background: "#F7941E",
+                variant="OutlinedRed"
+                sx={{
+                  marginTop: "10px",
                 }}
+                onClick={() => setTextMore((pre) => !pre)}
               >
-                Mua ngay
+                <Typography
+                  sx={{
+                    textTransform: "capitalize",
+                  }}
+                >
+                  {!TextMore ? "Xem thêm" : "Rút gọn"}
+                </Typography>
               </Button>
             </Box>
           </Box>

@@ -1,0 +1,11 @@
+.small-text {
+     max-height: 300px;
+     overflow: hidden;
+      display: inline-block;
+     transition: linear max-height 0.5s;
+}
+ .long-text {
+    max-height: 200rem;
+     transition: linear max-height 1s;
+ }
+  
