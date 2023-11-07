@@ -124,14 +124,14 @@ function Footer() {
                 height="100%"
                 alt=""
               />
-              <Box mt={2}>
-                <Typography variant="body1" fontSize={13} textAlign={"left"}>
+              <Box mt={2} fontSize={12}>
+                <Typography variant="body1" textAlign={"left"}>
                   Lầu 5, 387-389 Hai Bà Trưng Quận 3 TP HCM
                 </Typography>
-                <Typography fontSize={13} variant="caption" color="initial">
+                <Typography variant="caption" color="initial">
                   Công Ty Cổ Phần Phát Hành Sách TP HCM - FAHASA
                 </Typography>
-                <Typography variant="caption" fontSize={13} color="initial">
+                <Typography variant="caption" color="initial">
                   60 - 62 Lê Lợi, Quận 1, TP. HCM, Việt Nam
                 </Typography>
               </Box>
@@ -140,7 +140,7 @@ function Footer() {
                   marginTop: "20px"
                 }}
               >
-                <Typography variant="subtitle1" color="initial" fontSize={13}>
+                <Typography variant="subtitle1" color="initial">
                   Fahasa.com nhận đặt hàng trực tuyến và giao hàng tận nơi.
                   KHÔNG hỗ trợ đặt mua và nhận hàng trực tiếp tại văn phòng cũng
                   như tất cả Hệ Thống Fahasa trên toàn quốc
