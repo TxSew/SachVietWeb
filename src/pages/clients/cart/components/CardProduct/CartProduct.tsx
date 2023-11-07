@@ -13,7 +13,7 @@ import {
   addToCart,
   decreaseCart,
   getTotals,
-  removeFromCart
+  removeFromCart,
 } from "../../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../../redux/storeClient";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
@@ -95,11 +95,7 @@ const CartProduct = () => {
                     <Stack direction={"row"} alignItems={"normal"} spacing={2}>
                       <Box maxWidth={"119px"}>
                         <img
-                          src={
-                            element.productImages
-                              ? element.productImages[0].image
-                              : ""
-                          }
+                          src={element.productImages ? element.image : ""}
                           alt=""
                           width={"100%"}
                         />
@@ -121,7 +117,7 @@ const CartProduct = () => {
                             variant="caption"
                             className="cartItem_PriceSale"
                             sx={{
-                              textDecoration: "underline"
+                              textDecoration: "underline",
                             }}
                           >
                             {`${numberFormat(Number(element.price_sale))} `}
@@ -139,14 +135,14 @@ const CartProduct = () => {
                       direction={"row"}
                       spacing={3}
                       border={"1px solid #eee"}
-                      p={"3px 10px"}
+                      p={"3px 5px"}
                       borderRadius={2}
                     >
                       <Box>
                         <RemoveIcon
                           sx={{
-                            fontSize: "17px",
-                            cursor: "pointer"
+                            fontSize: "14px",
+                            cursor: "pointer",
                           }}
                           onClick={() => handleDes(element.id)}
                         />
@@ -155,15 +151,15 @@ const CartProduct = () => {
                         type="text"
                         value={element?.cartQuantity}
                         style={{
-                          width: "30px",
-                          textAlign: "center"
+                          width: "27px",
+                          textAlign: "center",
                         }}
                       />
                       <AddIcon
                         onClick={() => handleIncrement(element)}
                         sx={{
-                          fontSize: "17px",
-                          cursor: "pointer"
+                          fontSize: "14px",
+                          cursor: "pointer",
                         }}
                       />
                     </Stack>
@@ -181,7 +177,7 @@ const CartProduct = () => {
                       onClick={() => handleRemove(element.id)}
                       sx={{
                         fontSize: "17px",
-                        cursor: "pointer"
+                        cursor: "pointer",
                       }}
                     />
                   </Stack>
@@ -198,15 +194,15 @@ const CartProduct = () => {
               py={2}
               borderBottom={"1px solid #eee"}
             >
-              <Stack color={"#F39801"} direction={"row"} spacing={2}>
+              <Stack color={color.text_second} direction={"row"} spacing={2}>
                 <Typography variant="body1">KHUYẾN MÃI</Typography>
                 <LoyaltyIcon
                   sx={{
-                    fontSize: "17px"
+                    fontSize: "17px",
                   }}
                 />
               </Stack>
-              <Stack color={"#F39801"} direction={"row"}>
+              <Stack color={color.text_second} direction={"row"}>
                 <Typography variant="body1"> Xem thêm</Typography>
                 <KeyboardArrowRightIcon />
               </Stack>
@@ -219,26 +215,19 @@ const CartProduct = () => {
                 p={1}
                 borderRadius={2}
                 fontSize={"14px"}
-                color={"#F39801"}
+                color={color.text_color}
               >
                 <input
                   placeholder="Nhập mã khuyến mãi/Quà tặng"
                   style={{
                     flex: 1,
-                    color: "#F39801"
+                    color: "inherit",
+                  }}
+                  onChange={(event) => {
+                    console.log(event.target.value);
                   }}
                 />
-                <Button
-                  variant="outlined"
-                  sx={{
-                    border: "1px solid #F39801",
-                    color: "#F39801",
-                    "&:hover": {
-                      border: "1px solid #008C89",
-                      color: "#008C89"
-                    }
-                  }}
-                >
+                <Button variant="outlined">
                   <Typography variant="body1">Áp dụng</Typography>
                 </Button>
               </Stack>
@@ -260,11 +249,11 @@ const CartProduct = () => {
               py={2}
               borderBottom={"1px solid #eee"}
             >
-              <Stack color={"#F39801"} direction={"row"} spacing={2}>
+              <Stack color={color.text_color} direction={"row"} spacing={2}>
                 <Typography variant="body1">KHUYẾN MÃI</Typography>
               </Stack>
               <Stack color={color.text_color} direction={"row"}>
-                <Typography variant="body1"> 0,đ</Typography>
+                <Typography variant="body1"> 0d</Typography>
               </Stack>
             </Stack>
             <Box pt={2}>
@@ -288,7 +277,7 @@ const CartProduct = () => {
                   variant="body1"
                   fontSize={"15.8px"}
                   fontWeight={"bold"}
-                  color={"#F39801"}
+                  color={color.error}
                 >
                   {`${numberFormat(Number(cartTotalAmount))}`}
                 </Typography>
@@ -298,11 +287,8 @@ const CartProduct = () => {
                   variant="contained"
                   sx={{
                     marginTop: "10px",
-                    bgcolor: "#008C89",
+                    bgcolor: "red",
                     color: "#fff",
-                    "&:hover": {
-                      backgroundColor: "#F39801"
-                    }
                   }}
                   fullWidth
                 >
