@@ -14,7 +14,7 @@ import {
   RadioGroup,
   Select,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ import { Order } from "../../../../submodules/models/OrderModel/Order";
 import { Product } from "../../../../submodules/models/ProductModel/Product";
 import {
   Province,
-  district
+  district,
 } from "../../../../submodules/models/Province/Province";
 import { User } from "../../../../submodules/models/UserModel/User";
 const httpProvince = new HttpProviceController(BaseAPi);
@@ -75,26 +75,25 @@ function Checkout() {
     }
   };
   const handleCheckout = async (data: any) => {
-    console.log(data);
     const detailData = cart.map((e: Product) => {
       return {
         productId: e.id,
         quantity: e.cartQuantity,
         price: e.price_sale,
-        image: e.image
+        image: e.image,
       };
     });
 
     const orders = {
       ...data,
       userID: user?.id ?? null,
-      money: cartTotalAmount
+      money: cartTotalAmount,
     };
 
     const orderData = {
       orders: orders,
       orderDetail: detailData,
-      paymentMethod: data.orderType
+      paymentMethod: data.orderType,
     };
 
     const payment = await httpPayment.getPayment(orderData);
@@ -110,9 +109,9 @@ function Checkout() {
     handleSubmit,
 
     control,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useForm<Order>({
-    defaultValues: {}
+    defaultValues: {},
   });
 
   function handleChange(e: any) {
@@ -125,7 +124,7 @@ function Checkout() {
         maxWidth="xl"
         sx={{
           pt: 2,
-          pb: 2
+          pb: 2,
         }}
       >
         <Box bgcolor={color.white} p={2}>
@@ -143,7 +142,7 @@ function Checkout() {
                 <FormGroup
                   sx={{
                     maxWidth: "649px",
-                    margin: "auto"
+                    margin: "auto",
                   }}
                 >
                   <FormControl>
@@ -153,7 +152,7 @@ function Checkout() {
                       defaultValue="" // Set an initial value here
                       name="fullName"
                       rules={{
-                        required: "Tên của bạn không được bỏ trống!"
+                        required: "Tên của bạn không được bỏ trống!",
                       }}
                       render={({ field }) => (
                         <OutlinedInput
@@ -176,7 +175,7 @@ function Checkout() {
                       defaultValue="" // Set an initial value here
                       name="phone"
                       rules={{
-                        required: "Vui lòng nhập số điện thoại"
+                        required: "Vui lòng nhập số điện thoại",
                       }}
                       render={({ field }) => (
                         <OutlinedInput
@@ -200,7 +199,7 @@ function Checkout() {
                       defaultValue="" // Set an initial value here
                       name="province"
                       rules={{
-                        required: "Vui lòng nhập Tỉnh/ Thành phố"
+                        required: "Vui lòng nhập Tỉnh/ Thành phố",
                       }}
                       render={({ field }) => (
                         <Select
@@ -231,7 +230,7 @@ function Checkout() {
                       defaultValue="" // Set an initial value here
                       name="district"
                       rules={{
-                        required: "Vui lòng nhập Quận /Huyện"
+                        required: "Vui lòng nhập Quận /Huyện",
                       }}
                       render={({ field }) => (
                         <Select
@@ -262,7 +261,7 @@ function Checkout() {
                       defaultValue="" // Set an initial value here
                       name="address"
                       rules={{
-                        required: "Vui lòng nhập địa chỉ nhận hàng!"
+                        required: "Vui lòng nhập địa chỉ nhận hàng!",
                       }}
                       render={({ field }) => (
                         <OutlinedInput
@@ -300,8 +299,8 @@ function Checkout() {
                 sx={{
                   color: "pink[800]",
                   "&.Mui-checked": {
-                    color: "pink[600]"
-                  }
+                    color: "pink[600]",
+                  },
                 }}
               />
               <Typography variant="body1" color="initial" fontWeight={"bold"}>
@@ -335,14 +334,14 @@ function Checkout() {
                       value="COD"
                       control={<Radio />}
                       sx={{
-                        fontWeight: "bold"
+                        fontWeight: "bold",
                       }}
                       label="Thanh toán bằng tiền mặt khi nhận hàng COD"
                     />
                     <FormControlLabel
                       value="Visa"
                       sx={{
-                        fontWeight: "bold"
+                        fontWeight: "bold",
                       }}
                       control={<Radio />}
                       label="Thanh toán bằng thẻ Visa"
@@ -459,7 +458,7 @@ function Checkout() {
           boxShadow: 2,
           width: "100%",
           zIndex: 10,
-          bottom: "0px"
+          bottom: "0px",
         }}
       >
         <Container maxWidth="xl">
@@ -469,7 +468,7 @@ function Checkout() {
               display: "flex",
               flexDirection: "column",
               rowGap: "3px",
-              borderBottom: "1px solid #eee"
+              borderBottom: "1px solid #eee",
             }}
           >
             <Stack direction={"row"} spacing={3} justifyContent={"flex-end"}>

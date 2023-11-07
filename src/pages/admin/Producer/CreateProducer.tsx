@@ -15,6 +15,7 @@ import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
 import { Producer } from "../../../submodules/models/producerModel/producer";
+import { validateForm } from "../../../helpers/validateForm";
 
 var http = new HttpProducerController(BaseAPi);
 const UpdateProducer = () => {
@@ -68,6 +69,7 @@ const UpdateProducer = () => {
             defaultValue="" // Set an initial value here
             rules={{
               required: "Tên nhà cung cấp không được bỏ trống",
+              validate: validateForm,
             }}
             render={({ field }) => (
               <OutlinedInput

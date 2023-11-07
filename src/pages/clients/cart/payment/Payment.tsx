@@ -1,6 +1,8 @@
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
+import { useParams } from "react-router-dom";
 
 function Payment() {
+  const { id } = useParams();
   return (
     <Box bgcolor={"#eee"} py={2}>
       <Container maxWidth="xl">

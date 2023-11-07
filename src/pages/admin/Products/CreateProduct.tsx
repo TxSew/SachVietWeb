@@ -25,6 +25,7 @@ import HttpProductController from "../../../submodules/controllers/http/httpProd
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
+import { validateForm } from "../../../helpers/validateForm";
 
 var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
@@ -38,6 +39,7 @@ const CreateProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const editorRef = useRef<any>(null);
   const redirect = useNavigate();
+
   useEffect(() => {
     fetchProducer();
     fetchCategory();
@@ -164,7 +166,8 @@ const CreateProduct = () => {
               name="title"
               defaultValue="" // Set an initial value here
               rules={{
-                required: "Tên sản phẩm không được bỏ trống!",
+                validate: validateForm,
+                // required: "Tên sản phẩm không được bỏ trống!",
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -405,7 +408,6 @@ const CreateProduct = () => {
                   value: 1,
                   message: "Nhập số giảm giá trên 1%",
                 },
-           
               }}
               render={({ field }) => (
                 <OutlinedInput

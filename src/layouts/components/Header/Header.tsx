@@ -39,10 +39,9 @@ import { BaseAPi } from "../../../configs/BaseApi";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
+import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { User } from "../../../submodules/models/UserModel/User";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import { el } from "@faker-js/faker";
 const Header = () => {
   const http = new HttpProductController(BaseAPi);
   const httpCategory = new HttpCategoryController(BaseAPi);
@@ -521,21 +520,21 @@ const Header = () => {
                     }}
                   >
                     <Badge badgeContent={cart.length} color="primary">
-                    <ShoppingCartOutlinedIcon
-                      sx={{
-                        color: "#008C89",
-                      }}
-                    />
-                    </Badge>
-                      <Typography
-                        variant="caption"
+                      <ShoppingCartOutlinedIcon
                         sx={{
-                          pl: 1,
-                          color: "#615C5C",
+                          color: "#008C89",
                         }}
-                      >
-                        Giỏ hàng{" "}
-                      </Typography>
+                      />
+                    </Badge>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        pl: 1,
+                        color: "#615C5C",
+                      }}
+                    >
+                      Giỏ hàng{" "}
+                    </Typography>
                   </NavLink>
                 </Grid>
               </Grid>

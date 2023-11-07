@@ -12,6 +12,7 @@ import { color } from "../../../Theme/color";
 import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { validateForm } from "../../../helpers/validateForm";
 const http = new HttpDiscountController(BaseAPi);
 const CreateDiscount = () => {
   const redirect = useNavigate();
@@ -63,6 +64,7 @@ const CreateDiscount = () => {
               defaultValue="" // Set an initial value here
               rules={{
                 required: "Vui lòng nhập mã giảm giá",
+                validate: validateForm,
               }}
               render={({ field }) => (
                 <OutlinedInput
