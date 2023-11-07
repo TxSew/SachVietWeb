@@ -19,7 +19,7 @@ import {
   SpeedDial,
   SpeedDialAction,
   SpeedDialIcon,
-  Tooltip,
+  Tooltip
 } from "@mui/material";
 import { Logout, PersonAdd, Settings } from "@mui/icons-material";
 
@@ -27,7 +27,7 @@ const actions = [
   { icon: <FileCopyIcon />, name: "Copy" },
   { icon: <SaveIcon />, name: "Save" },
   { icon: <PrintIcon />, name: "Print" },
-  { icon: <ShareIcon />, name: "Share" },
+  { icon: <ShareIcon />, name: "Share" }
 ];
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -47,39 +47,63 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
           <div className="dasb-sidebar-logo">
             <h1>MUI</h1>
           </div>
-          <ul className="k">
-            <li className="">
-              <NavLink to="">
+          <ul className="">
+            <NavLink to="/admin/statistical">
+              <li className="">
                 <i>
                   <FaHome />
                 </i>
                 <span>Trang chủ</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="../admin/category">
+              </li>
+            </NavLink>
+            <NavLink to="/admin/category">
+              <li className="">
                 <i>
                   <BiSolidCategoryAlt />
                 </i>
                 <span>Danh mục</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="../admin/product">
+              </li>
+            </NavLink>
+            <NavLink to="/admin/product">
+              <li className="">
                 <i>
                   <FaBookOpen />
                 </i>
                 <span>Sản phẩm</span>
-              </NavLink>
-            </li>
-            <li className="">
-              <NavLink to="#">
+              </li>
+            </NavLink>
+            <NavLink to="/admin/orders">
+              <li className="">
+                <i>
+                  <FaBookOpen />
+                </i>
+                <span>Đơn hàng</span>
+              </li>
+            </NavLink>
+            <NavLink to="/admin/producer">
+              <li className="">
                 <i>
                   <BiBookAdd />
                 </i>
-                <span>...</span>
-              </NavLink>
-            </li>
+                <span>Cung cấp</span>
+              </li>
+            </NavLink>
+            <NavLink to="/admin/discount">
+              <li className="">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>Giảm giá</span>
+              </li>
+            </NavLink>
+            <NavLink to="/admin/customer">
+              <li className="">
+                <i>
+                  <BiBookAdd />
+                </i>
+                <span>Khách hàng</span>
+              </li>
+            </NavLink>
             <div className="active start"></div>
           </ul>
         </div>
@@ -94,7 +118,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                   display: "flex",
                   alignItems: "center",
                   textAlign: "center",
-                  padding: "0 16px",
+                  padding: "0 16px"
                 }}
               >
                 <Typography sx={{ minWidth: 100 }}>Contact</Typography>
@@ -128,7 +152,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                       width: 32,
                       height: 32,
                       ml: -0.5,
-                      mr: 1,
+                      mr: 1
                     },
                     "&:before": {
                       content: '""',
@@ -140,9 +164,9 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                       height: 10,
                       bgcolor: "background.paper",
                       transform: "translateY(-50%) rotate(45deg)",
-                      zIndex: 0,
-                    },
-                  },
+                      zIndex: 0
+                    }
+                  }
                 }}
                 transformOrigin={{ horizontal: "right", vertical: "top" }}
                 anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
