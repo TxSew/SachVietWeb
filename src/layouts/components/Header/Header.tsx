@@ -321,7 +321,7 @@ const Header = () => {
                       aria-describedby="modal-modal-description"
                       sx={{
                         "& .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop": {
-                          background: "transparent",
+                          background: "transparent !important",
                         },
                         top: "130px",
                       }}
