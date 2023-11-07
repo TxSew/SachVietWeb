@@ -16,12 +16,15 @@ import {
   tableCellClasses,
 } from "@mui/material";
 
-import "./style.scss";
+import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
+import ProductItem from "../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { numberFormat } from "../../../helpers/formatPrice";
+import useMedia from "../../../hooks/useMedia/useMedia";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
 import {
   decrement,
@@ -30,10 +33,7 @@ import {
 import { RootState } from "../../../redux/storeClient";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
-import ProductItem from "../../../components/ProductItem/ProductItem";
-import { numberFormat } from "../../../helpers/formatPrice";
-import styled from "@emotion/styled";
-import useMedia from "../../../hooks/useMedia/useMedia";
+import "./style.scss";
 const http = new HttpProductController(BaseAPi);
 export const Details = () => {
   const { isMediumMD } = useMedia();
@@ -125,7 +125,12 @@ export const Details = () => {
                                 key={i}
                                 src={e.image}
                                 alt=""
-                                width={"100px"}
+                                 style={{
+                                   border:"2px solid gray",
+                                  marginBottom:"2px"
+                                 }}
+                                width={"60px"}
+                                height={"60px"}
                               />
                             );
                           })
@@ -339,9 +344,11 @@ export const Details = () => {
                         textDecoration: "line-through",
                       }}
                     >
-                      {`${numberFormat(Number(Detail.price))} `}
+                      {Detail.sale?`${numberFormat(Number(Detail.price))} `:""}
                     </Typography>
 
+{
+  Detail.sale ? 
                     <Typography
                       variant="caption"
                       bgcolor={color.sale}
@@ -350,7 +357,8 @@ export const Details = () => {
                       borderRadius={"3px"}
                     >
                       {`-${Detail?.sale}%`}
-                    </Typography>
+                    </Typography> : ""
+}
                   </Stack>
                 </Box>
                 {/* order by */}

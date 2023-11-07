@@ -57,19 +57,21 @@ export default function AdminProduct() {
   const debounce = useDebounce(search, 400);
   React.useEffect(() => {
     const props = {
+      limit:4,
       page,
       keyword: debounce,
       sortBy,
       sortWith,
+      categoryFilter:sortCategory,
     };
 
     fetchData(props);
-  }, [page, debounce, sortBy, sortWith]);
+  }, [page, debounce, sortBy, sortWith, sortCategory]);
   const fetchData = async (props: any) => {
     try {
       const product: any = await http.getAll(props);
       const { products } = product;
-      setPageCount(product.totalPage);
+      setPageCount( product.totalPage);
       setProducts(products);
     } catch (err) {
       console.log(err);
@@ -107,10 +109,6 @@ export default function AdminProduct() {
 
   const handleSortByCategory = async (event: SelectChangeEvent) => {
     setSortCategory(event.target.value);
-    const categoryFilter = await http.getAll({
-      categoryFilter: event.target.value,
-    });
-    setProducts(categoryFilter.products);
   };
   const handleChangeSort = (event: SelectChangeEvent) => {
     if (event.target.value == "priceDown") {
@@ -131,6 +129,7 @@ export default function AdminProduct() {
       setSortWith("asc");
       setSort(event.target.value);
     }
+
   };
 
   return (

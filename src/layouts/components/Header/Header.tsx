@@ -520,12 +520,13 @@ const Header = () => {
                       paddingLeft: "16px",
                     }}
                   >
+                    <Badge badgeContent={cart.length} color="primary">
                     <ShoppingCartOutlinedIcon
                       sx={{
                         color: "#008C89",
                       }}
                     />
-                    <Badge badgeContent={cart.length} color="primary">
+                    </Badge>
                       <Typography
                         variant="caption"
                         sx={{
@@ -535,7 +536,6 @@ const Header = () => {
                       >
                         Giỏ hàng{" "}
                       </Typography>
-                    </Badge>
                   </NavLink>
                 </Grid>
               </Grid>

@@ -97,7 +97,7 @@ const ProductItemNew = (Props: ProductItem) => {
         </Typography>
         <Stack
           direction={"row"}
-          justifyContent={"space-between"}
+          justifyContent={Props.products.sale ?"space-between":"center"}
           sx={{
             marginTop: "auto",
             paddingTop: "10px",
@@ -120,7 +120,7 @@ const ProductItemNew = (Props: ProductItem) => {
               textDecoration: "line-through",
             }}
           >
-            {numberFormat(Number(Props.products.price))}
+            {Props.products.sale?numberFormat(Number(Props.products.price)):""}
           </Typography>
         </Stack>
         <Box

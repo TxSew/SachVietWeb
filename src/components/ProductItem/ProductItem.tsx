@@ -96,12 +96,15 @@ const ProductItem = (Props: ProductItem) => {
         </Typography>
         <Stack
           direction={"row"}
-          justifyContent={"space-between"}
+          justifyContent={Props.products.sale?"space-between":"center"}
           sx={{
-            marginTop: "auto",
+          
+       marginTop: "auto",
             paddingTop: "10px",
+          
             lineHeight: 1,
           }}
+        
         >
           <Typography
             className="price"
@@ -109,6 +112,7 @@ const ProductItem = (Props: ProductItem) => {
             fontSize={"16.5px"}
             fontWeight={"bold"}
             lineHeight={1}
+        
           >
             {`${numberFormat(Number(Props.products.price_sale))} `}
           </Typography>
@@ -119,7 +123,7 @@ const ProductItem = (Props: ProductItem) => {
               textDecoration: "line-through",
             }}
           >
-            {numberFormat(Number(Props.products.price))}
+            { Props.products.sale  && numberFormat(Number(Props.products.price))}
           </Typography>
         </Stack>
       </CardContent>

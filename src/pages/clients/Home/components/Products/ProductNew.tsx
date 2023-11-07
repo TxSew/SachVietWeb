@@ -8,12 +8,11 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import ProductItem from "../../../../../components/ProductItem/ProductItem";
+import ProductitemNew from "../../../../../components/ProductItem/ProductitemNew";
 import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
-import ProductitemNew from "../../../../../components/ProductItem/ProductitemNew";
 interface PropsSort {
   page: number;
   search: string;
@@ -33,6 +32,7 @@ function ProductNew() {
   };
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async (props: any) => {
+    props.limit=10
     try {
       const productData: any = await http.getAll(props);
       const { products } = productData;

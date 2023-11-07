@@ -92,13 +92,13 @@ const CreateProduct = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              setUrls((prev) => [...prev, url]);
+              setUrl((prev) => [...prev, url]);
               setIsLoadings(false);
               return url;
             });
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
         });
     }
   };
@@ -115,7 +115,7 @@ const CreateProduct = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              setUrl((prev) => [...prev, url]);
+              setUrls((prev) => [...prev, url]);
               setIsLoading(false);
               return url;
             });
@@ -356,7 +356,14 @@ const CreateProduct = () => {
               control={control}
               name="price"
               rules={{
-                required: "Vui lòng nhập giá gốc",
+                required: {
+                  value: true,
+                  message: "Vui lòng nhâp giá gốc",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Nhập số tiền gốc phải bắt buộc 3 số trở lên",
+                },
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -389,7 +396,16 @@ const CreateProduct = () => {
               control={control}
               name="sale"
               rules={{
-                required: "Price is not",
+                maxLength: {
+                  value: 2,
+                  message: "Nhập số giảm giá không được nhập quá 99%",
+                },
+
+                minLength: {
+                  value: 1,
+                  message: "Nhập số giảm giá trên 1%",
+                },
+           
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -462,7 +478,7 @@ const CreateProduct = () => {
               fullWidth
               placeholder="Vui lòng nhập Ten của bạn!"
             />
-            {isLoading ? (
+            {isLoadings ? (
               <Box
                 sx={{
                   ml: 2,
@@ -508,7 +524,7 @@ const CreateProduct = () => {
               placeholder="Vui lòng nhập Ten của bạn!"
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
-              {isLoadings ? (
+              {isLoading ? (
                 <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
               ) : urls.length > 0 ? (
                 // Nếu mảng urls có chứa hình ảnh
