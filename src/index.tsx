@@ -8,6 +8,9 @@ import { Theme } from "./Theme/Theme";
 import { Provider } from "react-redux";
 import { store } from "./redux/storeClient";
 import { ToastContainer } from "react-toastify";
+import { inject } from '@vercel/analytics';
+ 
+inject();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

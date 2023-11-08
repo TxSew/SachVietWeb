@@ -75,6 +75,7 @@ function Checkout() {
     }
   };
   const handleCheckout = async (data: any) => {
+    console.log(data);
     const detailData = cart.map((e: Product) => {
       return {
         productId: e.id,
@@ -136,151 +137,144 @@ function Checkout() {
           >
             ĐỊA CHỈ GIAO HÀNG
           </Typography>
-          <Grid container>
-            <Grid xs={8}>
-              <Box maxWidth="100%" pt={"16px"}>
-                <FormGroup
-                  sx={{
-                    maxWidth: "649px",
-                    margin: "auto",
-                  }}
-                >
-                  <FormControl>
-                    <Typography>Họ và tên người nhận</Typography>
-                    <Controller
-                      control={control}
-                      defaultValue="" // Set an initial value here
-                      name="fullName"
-                      rules={{
-                        required: "Tên của bạn không được bỏ trống!",
-                      }}
-                      render={({ field }) => (
-                        <OutlinedInput
-                          key={1}
-                          {...field}
-                          fullWidth
-                          placeholder="Vui lòng nhập tên của bạn!"
-                        />
-                      )}
-                    />
+          <FormGroup
+            sx={{
+              mt: 2,
+              maxWidth: "600px",
+            }}
+          >
+            <FormControl>
+              <Typography>Họ và tên người nhận</Typography>
+              <Controller
+                control={control}
+                defaultValue="" // Set an initial value here
+                name="fullName"
+                rules={{
+                  required: "Tên của bạn không được bỏ trống!",
+                }}
+                render={({ field }) => (
+                  <OutlinedInput
+                    key={1}
+                    {...field}
+                    fullWidth
+                    placeholder="Vui lòng nhập tên của bạn!"
+                  />
+                )}
+              />
 
-                    <FormHelperText sx={{ color: color.error }}>
-                      {errors.fullName && errors.fullName.message}
-                    </FormHelperText>
-                  </FormControl>
-                  <FormControl>
-                    <Typography>Số điện thoại</Typography>
-                    <Controller
-                      control={control}
-                      defaultValue="" // Set an initial value here
-                      name="phone"
-                      rules={{
-                        required: "Vui lòng nhập số điện thoại",
-                      }}
-                      render={({ field }) => (
-                        <OutlinedInput
-                          key={1}
-                          {...field}
-                          fullWidth
-                          placeholder="Vui lòng nhập tên của bạn!"
-                        />
-                      )}
-                    />
+              <FormHelperText sx={{ color: color.error }}>
+                {errors.fullName && errors.fullName.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl>
+              <Typography>Số điện thoại</Typography>
+              <Controller
+                control={control}
+                defaultValue="" // Set an initial value here
+                name="phone"
+                rules={{
+                  required: "Vui lòng nhập số điện thoại",
+                }}
+                render={({ field }) => (
+                  <OutlinedInput
+                    key={1}
+                    {...field}
+                    fullWidth
+                    placeholder="Vui lòng nhập tên của bạn!"
+                  />
+                )}
+              />
 
-                    <FormHelperText sx={{ color: color.error }}>
-                      {errors.phone && errors.phone.message}
-                    </FormHelperText>
-                  </FormControl>
-                  <FormControl>
-                    <Typography>Tỉnh/Thành Phố</Typography>
+              <FormHelperText sx={{ color: color.error }}>
+                {errors.phone && errors.phone.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl>
+              <Typography>Tỉnh/Thành Phố</Typography>
 
-                    <Controller
-                      control={control}
-                      defaultValue="" // Set an initial value here
-                      name="province"
-                      rules={{
-                        required: "Vui lòng nhập Tỉnh/ Thành phố",
-                      }}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          displayEmpty
-                          inputProps={{ "aria-label": "Without label" }}
-                        >
-                          {province.map((e: Province) => {
-                            return (
-                              <MenuItem value={e.id}>
-                                <em>{e.name}</em>
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      )}
-                    />
+              <Controller
+                control={control}
+                defaultValue="" // Set an initial value here
+                name="province"
+                rules={{
+                  required: "Vui lòng nhập Tỉnh/ Thành phố",
+                }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    {province.map((e: Province) => {
+                      return (
+                        <MenuItem value={e.id}>
+                          <em>{e.name}</em>
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                )}
+              />
 
-                    <FormHelperText sx={{ color: color.error }}>
-                      {errors.province && errors.province.message}
-                    </FormHelperText>
-                  </FormControl>
-                  <FormControl>
-                    <Typography>Quận/Huyện</Typography>
+              <FormHelperText sx={{ color: color.error }}>
+                {errors.province && errors.province.message}
+              </FormHelperText>
+            </FormControl>
+            <FormControl>
+              <Typography>Quận/Huyện</Typography>
 
-                    <Controller
-                      control={control}
-                      defaultValue="" // Set an initial value here
-                      name="district"
-                      rules={{
-                        required: "Vui lòng nhập Quận /Huyện",
-                      }}
-                      render={({ field }) => (
-                        <Select
-                          {...field}
-                          displayEmpty
-                          inputProps={{ "aria-label": "Without label" }}
-                        >
-                          {district.map((e: district) => {
-                            return (
-                              <MenuItem value={e.id}>
-                                <em>{e.name}</em>
-                              </MenuItem>
-                            );
-                          })}
-                        </Select>
-                      )}
-                    />
+              <Controller
+                control={control}
+                defaultValue="" // Set an initial value here
+                name="district"
+                rules={{
+                  required: "Vui lòng nhập Quận /Huyện",
+                }}
+                render={({ field }) => (
+                  <Select
+                    {...field}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    {district.map((e: district) => {
+                      return (
+                        <MenuItem value={e.id}>
+                          <em>{e.name}</em>
+                        </MenuItem>
+                      );
+                    })}
+                  </Select>
+                )}
+              />
 
-                    <FormHelperText sx={{ color: color.error }}>
-                      {errors.district && errors.district.message}
-                    </FormHelperText>
-                  </FormControl>
+              <FormHelperText sx={{ color: color.error }}>
+                {errors.district && errors.district.message}
+              </FormHelperText>
+            </FormControl>
 
-                  <FormControl>
-                    <Typography>Địa chỉ nhận hàng</Typography>
-                    <Controller
-                      control={control}
-                      defaultValue="" // Set an initial value here
-                      name="address"
-                      rules={{
-                        required: "Vui lòng nhập địa chỉ nhận hàng!",
-                      }}
-                      render={({ field }) => (
-                        <OutlinedInput
-                          key={1}
-                          {...field}
-                          fullWidth
-                          placeholder="Vui lòng nhập tên của bạn!"
-                        />
-                      )}
-                    />
-                    <FormHelperText sx={{ color: color.error }}>
-                      {errors.address && errors.address.message}
-                    </FormHelperText>
-                  </FormControl>
-                </FormGroup>
-              </Box>
-            </Grid>
-            <Grid xs={4}>2</Grid>
-          </Grid>
+            <FormControl>
+              <Typography>Địa chỉ nhận hàng</Typography>
+              <Controller
+                control={control}
+                defaultValue="" // Set an initial value here
+                name="address"
+                rules={{
+                  required: "Vui lòng nhập địa chỉ nhận hàng!",
+                }}
+                render={({ field }) => (
+                  <OutlinedInput
+                    key={1}
+                    {...field}
+                    fullWidth
+                    placeholder="Vui lòng nhập tên của bạn!"
+                  />
+                )}
+              />
+              <FormHelperText sx={{ color: color.error }}>
+                {errors.address && errors.address.message}
+              </FormHelperText>
+            </FormControl>
+          </FormGroup>
         </Box>
 
         <Box bgcolor={color.white} mt={2} p={2}>
@@ -405,7 +399,7 @@ function Checkout() {
                     <Stack direction={"row"} alignItems={"normal"} spacing={2}>
                       <Box maxWidth={"119px"}>
                         <img
-                          src={e.productImages ? e.productImages[0].image : ""}
+                          src={e.image ? e.image : ""}
                           alt=""
                           width={"100%"}
                         />
@@ -529,4 +523,3 @@ function Checkout() {
   );
 }
 
-export default Checkout;
