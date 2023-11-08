@@ -102,7 +102,7 @@ function ProductHots() {
                 })
               : Array.from({ length: Products.length }).map((e, i) => {
                   return (
-                    <Grid item md={3} paddingBottom={4} key={i}>
+                    <Grid item md={3} xs={6} sm={6} paddingBottom={4} key={i}>
                       <Skeleton
                         variant="rectangular"
                         width={"95%"}

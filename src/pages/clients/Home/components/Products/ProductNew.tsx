@@ -32,7 +32,7 @@ function ProductNew() {
   };
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async (props: any) => {
-    props.limit=10
+    props.limit = 10;
     try {
       const productData: any = await http.getAll(props);
       const { products } = productData;
@@ -107,9 +107,9 @@ function ProductNew() {
                     </Grid>
                   );
                 })
-              : Array.from({ length: Products.length }).map((e,i) => {
+              : Array.from({ length: Products.length }).map((e, i) => {
                   return (
-                    <Grid item md={2.4} paddingBottom={4} key={i}>
+                    <Grid item md={2.4} xs={6} sm={6} paddingBottom={4} key={i}>
                       <Skeleton
                         variant="rectangular"
                         width={"95%"}

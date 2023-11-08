@@ -100,7 +100,7 @@ function Products() {
                 })
               : Array.from({ length: Products.length }).map((e, i) => {
                   return (
-                    <Grid key={i} item md={3} paddingBottom={4} >
+                    <Grid key={i} item md={3} xs={6} sm={6} paddingBottom={4}>
                       <Skeleton
                         variant="rectangular"
                         width={"95%"}
