@@ -35,7 +35,11 @@ function Footer() {
   const ftItem = {
     fontSize: "13px",
     textTransform: "capitalize",
-    color: "black"
+    color: "black",
+    transition: "color .2s ease-in-out",
+    "&:hover": {
+      color: "#008C89"
+    }
   };
   const ftItemhdmb = {
     padding: "24px 0 0",
@@ -52,58 +56,62 @@ function Footer() {
 
   return (
     <Grid bgcolor={"#eee"}>
-      <Stack bgcolor={"#ccc"}>
-        <Box display={"flex"} alignItems={"center"} p={2} gap={"48px"}>
-          <Stack
-            display={"flex"}
-            direction={"row"}
-            spacing={2}
-            fontSize={"48px"}
-            style={{
-              color: "white"
-            }}
-          >
-            <EmailIcon />
-            <Typography fontSize={"20px"} fontWeight={"bold"}>
-              Đăng ký nhận bản tin
-            </Typography>
-          </Stack>
-          <Stack
-            direction={"row"}
-            border={"1px solid #eee"}
-            spacing={2}
-            p={1}
-            borderRadius={2}
-            fontSize={"14px"}
-            color={"#F39801"}
-            bgcolor={"#fff"}
-            width={"566px"}
-          >
-            <input
-              placeholder="Nhập email của bạn!"
+      {isMediumMD ? (
+        <></>
+      ) : (
+        <Stack bgcolor={"#ccc"}>
+          <Box display={"flex"} alignItems={"center"} p={2} gap={"48px"}>
+            <Stack
+              display={"flex"}
+              direction={"row"}
+              spacing={2}
+              fontSize={"48px"}
               style={{
-                flex: 1,
-                color: "#F39801",
-                fontSize: "16px"
-              }}
-            />
-            <Button
-              variant="outlined"
-              sx={{
-                border: "1px solid #F39801",
-                background: "#F39801",
-                color: "#FFF",
-                "&:hover": {
-                  border: "1px solid #008C89",
-                  color: "#008C89"
-                }
+                color: "white"
               }}
             >
-              <Typography variant="body1">Đăng ký</Typography>
-            </Button>
-          </Stack>
-        </Box>
-      </Stack>
+              <EmailIcon />
+              <Typography fontSize={"20px"} fontWeight={"bold"}>
+                Đăng ký nhận bản tin
+              </Typography>
+            </Stack>
+            <Stack
+              direction={"row"}
+              border={"1px solid #eee"}
+              spacing={2}
+              p={1}
+              borderRadius={2}
+              fontSize={"14px"}
+              color={"#F39801"}
+              bgcolor={"#fff"}
+              width={"566px"}
+            >
+              <input
+                placeholder="Nhập email của bạn!"
+                style={{
+                  flex: 1,
+                  color: "#F39801",
+                  fontSize: "16px"
+                }}
+              />
+              <Button
+                variant="outlined"
+                sx={{
+                  border: "1px solid #F39801",
+                  background: "#F39801",
+                  color: "#FFF",
+                  "&:hover": {
+                    border: "1px solid #008C89",
+                    color: "#008C89"
+                  }
+                }}
+              >
+                <Typography variant="body1">Đăng ký</Typography>
+              </Button>
+            </Stack>
+          </Box>
+        </Stack>
+      )}
       <Box
         bgcolor={color.white}
         p={4}
@@ -160,20 +168,6 @@ function Footer() {
                 <FacebookIcon />
                 <InstagramIcon />
               </Stack>
-              <StackCustom mt={"10px"} gap={3}>
-                <Image
-                  src="https://cdn0.fahasa.com/media/wysiwyg/Logo-NCC/android1.png"
-                  alt=""
-                  width="100px"
-                  height="30px"
-                />
-                <Image
-                  src="https://cdn0.fahasa.com/media/wysiwyg/Logo-NCC/android1.png"
-                  alt=""
-                  width="100px"
-                  height="30px"
-                />
-              </StackCustom>
             </Box>
           </Grid>
 
@@ -203,46 +197,40 @@ function Footer() {
                       Đăng ký{" "}
                     </NavLink>
                   </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>
                       Thay đổi địa chỉ khách hàng{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Chi tiết tài khoản{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Lịch sử mua hàng{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      {" "}
-                    </NavLink>
-                  </ListItem>
+                    </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Chi tiết tài khoản </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Lịch sử mua hàng </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}> </ListItem>
+                  </NavLink>
                 </List>
               </Grid>
               <Grid md={4} xs={6}>
@@ -251,56 +239,46 @@ function Footer() {
                   Trang chủ
                 </Typography>
                 <List>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Danh mục
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Văn học{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Tâm lý - kỹ năng
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Nuôi dạy con
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Ngoại ngữ
-                    </NavLink>
-                  </ListItem>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Danh mục</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Văn học </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Tâm lý - kỹ năng</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Nuôi dạy con</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItemmb}>Ngoại ngữ</ListItem>
+                  </NavLink>
                 </List>
               </Grid>
               <Grid md={4} xs={12}>
@@ -362,56 +340,46 @@ function Footer() {
                   Trang chủ
                 </Typography>
                 <List>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Danh mục
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Văn học{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Tâm lý - kỹ năng
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Nuôi dạy con
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Ngoại ngữ
-                    </NavLink>
-                  </ListItem>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Danh mục</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Văn học </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Tâm lý - kỹ năng</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Nuôi dạy con</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Ngoại ngữ</ListItem>
+                  </NavLink>
                 </List>
               </Grid>
               <Grid md={3.5} xs={12} sm={12}>
@@ -420,65 +388,84 @@ function Footer() {
                   tài khoản của tôi
                 </Typography>
                 <List>
-                  <ListItem sx={ftItem}>
+                  <ListItem>
                     <NavLink
                       style={{
                         color: "black"
                       }}
                       to={"/auth"}
                     >
-                      Đăng nhập
+                      <ListItem
+                        sx={{
+                          padding: "0",
+                          color: "#000",
+                          fontSize: "13px",
+                          transition: "color .3s ease-in-out",
+                          "&:hover": {
+                            color: "#008C89"
+                          }
+                        }}
+                      >
+                        Đăng nhập
+                      </ListItem>
                     </NavLink>
-                    <Typography>/ </Typography>
+                    <Typography px={1}>/</Typography>
                     <NavLink
                       style={{
                         color: "black"
                       }}
                       to={"/auth"}
                     >
-                      Đăng ký{" "}
+                      <ListItem
+                        sx={{
+                          padding: "0",
+                          color: "#000",
+                          fontSize: "13px",
+                          transition: "color .3s ease-in-out",
+                          "&:hover": {
+                            color: "#008C89"
+                          }
+                        }}
+                      >
+                        {" "}
+                        Đăng ký{" "}
+                      </ListItem>
                     </NavLink>
                   </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>
                       Thay đổi địa chỉ khách hàng{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Chi tiết tài khoản{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      Lịch sử mua hàng{" "}
-                    </NavLink>
-                  </ListItem>
-                  <ListItem sx={ftItem}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={""}
-                    >
-                      {" "}
-                    </NavLink>
-                  </ListItem>
+                    </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Chi tiết tài khoản </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}>Lịch sử mua hàng </ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={""}
+                  >
+                    <ListItem sx={ftItem}> </ListItem>
+                  </NavLink>
                 </List>
               </Grid>
             </Grid>

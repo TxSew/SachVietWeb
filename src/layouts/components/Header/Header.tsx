@@ -12,6 +12,9 @@ import SellIcon from "@mui/icons-material/Sell";
 import ShoppingBasketSharpIcon from "@mui/icons-material/ShoppingBasketSharp";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import LockOpenIcon from "@mui/icons-material/LockOpen";
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import SegmentIcon from "@mui/icons-material/Segment";
 import {
   Avatar,
   Badge,
@@ -24,7 +27,7 @@ import {
   Modal,
   Stack,
   TextField,
-  Tooltip,
+  Tooltip
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
@@ -59,7 +62,7 @@ const Header = () => {
   }, [dataSearch]);
   async function fetchValueSearch(props: any) {
     const data = await http.getAll({
-      keyword: props,
+      keyword: props
     });
     const dataCategory = await httpCategory.getCategory({});
     const cate = await dataCategory.filter(
@@ -91,7 +94,7 @@ const Header = () => {
     outline: "none",
     p: 4,
     pt: 2,
-    borderRadius: "8px",
+    borderRadius: "8px"
   };
 
   const boxmodal = {
@@ -105,7 +108,7 @@ const Header = () => {
     boxShadow: 24,
     outline: "none",
     p: 4,
-    pt: 2,
+    pt: 2
   };
 
   const hditem = {
@@ -118,20 +121,24 @@ const Header = () => {
     fontWeight: 400,
     fontStyle: "normal",
     lineHieght: "normal",
+    transition: "all .3s ease-in-out",
+    "&:hover": {
+      color: "#008C89"
+    }
   };
 
   const hdicon = {
     mr: 1,
-    fontSize: "24px",
+    fontSize: "24px"
   };
   const hdicon_mb = {
     mr: 1,
     fontSize: "24px",
-    lineHieght: "normal",
+    lineHieght: "normal"
   };
 
   const nicon = {
-    lineHeight: "normal",
+    lineHeight: "normal"
   };
 
   const [openSearch, setOpenSearch] = React.useState(false);
@@ -252,7 +259,7 @@ const Header = () => {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  py: "10px",
+                  py: "10px"
                 }}
               >
                 <Grid
@@ -260,14 +267,14 @@ const Header = () => {
                   xs={2}
                   sx={{
                     display: "flex",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
                   <Link to={"/"}>
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "center",
+                        justifyContent: "center"
                       }}
                     >
                       <Image
@@ -284,20 +291,28 @@ const Header = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
                   <Box
                     sx={{
-                      textAlign: "right",
+                      textAlign: "right"
                     }}
-                  ></Box>
+                  >
+                    <SegmentIcon
+                      sx={{
+                        color: "#008C89",
+                        cursor: "pointer",
+                        fontSize: "48px"
+                      }}
+                    />
+                  </Box>
                 </Grid>
                 <Grid
                   item
                   xs={5.5}
                   sx={{
-                    position: "relative",
+                    position: "relative"
                   }}
                 >
                   <Stack
@@ -309,7 +324,7 @@ const Header = () => {
                       justifyContent: "center",
                       border: "1px solid #ccc",
                       padding: "3px 10px",
-                      borderRadius: "5px",
+                      borderRadius: "5px"
                     }}
                   >
                     <Modal
@@ -320,10 +335,12 @@ const Header = () => {
                       aria-labelledby="modal-modal-title"
                       aria-describedby="modal-modal-description"
                       sx={{
+
                         "& .css-919eu4": {
                           background: "transparent !important",
+
                         },
-                        top: "130px",
+                        top: "130px"
                       }}
                     >
                       <Box sx={styles}>
@@ -332,7 +349,7 @@ const Header = () => {
                             display: "flex",
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "center",
+                            justifyContent: "center"
                           }}
                         >
                           <Typography
@@ -341,7 +358,7 @@ const Header = () => {
                               border: "none",
                               display: "flex",
                               alignItems: "center",
-                              justifyContent: "center",
+                              justifyContent: "center"
                             }}
                           ></Typography>
                         </Stack>
@@ -390,7 +407,7 @@ const Header = () => {
                                             lineClamp: 2,
                                             WebkitLineClamp: 2,
                                             WebkitBoxOrient: "vertical",
-                                            flexShrink: 0,
+                                            flexShrink: 0
                                           }}
                                         >
                                           {e.title}
@@ -422,7 +439,7 @@ const Header = () => {
                                   onClick={handleCloseSearch}
                                   style={{
                                     textAlign: "center",
-                                    margin: "0 auto",
+                                    margin: "0 auto"
                                   }}
                                 >
                                   <img
@@ -430,7 +447,7 @@ const Header = () => {
                                     alt=""
                                     width={"50%"}
                                     style={{
-                                      margin: "0 auto",
+                                      margin: "0 auto"
                                     }}
                                   />
                                   <Typography>{e.name}</Typography>
@@ -445,7 +462,7 @@ const Header = () => {
                       onClick={handleOpenSearch}
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
-                        width: "100%",
+                        width: "100%"
                       }}
                       onInput={handleChangeValue}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
@@ -460,12 +477,12 @@ const Header = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        borderRadius: "5px",
+                        borderRadius: "5px"
                       }}
                     >
                       <SearchIcon
                         sx={{
-                          color: "#fff",
+                          color: "#fff"
                         }}
                       />
                     </Typography>
@@ -478,7 +495,7 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    pl: "24px",
+                    pl: "24px"
                   }}
                 >
                   <NavLink
@@ -486,12 +503,12 @@ const Header = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingLeft: "16px",
+                      paddingLeft: "16px"
                     }}
                   >
                     <PersonOutlineOutlinedIcon
                       sx={{
-                        color: "#008C89",
+                        color: "#008C89"
                       }}
                     />
                     <Typography
@@ -505,6 +522,9 @@ const Header = () => {
                         fontWeight: 700,
                         lineHeight: "normal",
                         color: "#F39801",
+                        "&:hover": {
+                          color: "#008C89"
+                        }
                       }}
                     >
                       {" "}
@@ -516,12 +536,13 @@ const Header = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingLeft: "16px",
+                      paddingLeft: "16px"
                     }}
                   >
                     <Badge badgeContent={cart.length} color="primary">
                       <ShoppingCartOutlinedIcon
                         sx={{
+
                           color: "#008C89",
                         }}
                       />
@@ -531,6 +552,10 @@ const Header = () => {
                       sx={{
                         pl: 1,
                         color: "#615C5C",
+
+                        "&:hover": {
+                          color: "#008C89"
+
                       }}
                     >
                       Giỏ hàng{" "}
@@ -560,7 +585,7 @@ const Header = () => {
                 <Box
                   color={"#333"}
                   sx={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   <Modal
@@ -579,7 +604,7 @@ const Header = () => {
                 <NavLink
                   to={"/"}
                   style={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   <Image
@@ -600,60 +625,51 @@ const Header = () => {
                   to={"/cart"}
                   style={{
                     cursor: "pointer",
-                    color: "#F7941E",
+                    color: "#F7941E"
                   }}
                 >
                   <Badge badgeContent={cart.length} color="primary">
                     <ShoppingCartIcon sx={hdicon_mb} />
                   </Badge>
                 </NavLink>
-                {user.id ? (
-                  <NavLink
-                    to={"/user"}
-                    style={{
-                      cursor: "pointer",
-                      color: "#F7941E",
+
+                <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      textAlign: "center"
                     }}
                   >
-                    <Person3Icon sx={hdicon_mb} />
-                  </NavLink>
-                ) : (
-                  <Box>
-                    <Box
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        textAlign: "center",
-                      }}
-                    >
-                      <Tooltip title="Account settings">
-                        <IconButton
-                          onClick={handleClick}
-                          aria-controls={open ? "account-menu" : undefined}
-                          aria-haspopup="true"
-                          aria-expanded={open ? "true" : undefined}
+                    <Tooltip title="Account settings">
+                      <IconButton
+                        onClick={handleClick}
+                        aria-controls={open ? "account-menu" : undefined}
+                        aria-haspopup="true"
+                        aria-expanded={open ? "true" : undefined}
+                      >
+                        <Avatar
+                          sx={{
+                            width: 24,
+                            height: 24,
+                            background: "#F7941E",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            textAlign: "center"
+                          }}
                         >
-                          <Avatar
-                            sx={{
-                              width: 24,
-                              height: 24,
-                              background: "#F7941E",
-                              display: "flex",
-                              justifyContent: "center",
-                              alignItems: "center",
-                              textAlign: "center",
+                          <Person3Icon
+                            sx={hdicon_mb}
+                            style={{
+                              margin: "0 auto"
                             }}
-                          >
-                            <Person3Icon
-                              sx={hdicon_mb}
-                              style={{
-                                margin: "0 auto",
-                              }}
-                            />
-                          </Avatar>
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
+                          />
+                        </Avatar>
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                  {user.id ? (
                     <Menu
                       anchorEl={anchorEl}
                       id="account-menu"
@@ -670,7 +686,7 @@ const Header = () => {
                             width: 32,
                             height: 32,
                             ml: -0.5,
-                            mr: 1,
+                            mr: 1
                           },
                           "&:before": {
                             content: '""',
@@ -682,9 +698,9 @@ const Header = () => {
                             height: 10,
                             bgcolor: "background.paper",
                             transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0,
-                          },
-                        },
+                            zIndex: 0
+                          }
+                        }
                       }}
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
@@ -715,8 +731,82 @@ const Header = () => {
                         Logout
                       </MenuItem>
                     </Menu>
-                  </Box>
-                )}
+                  ) : (
+                    <Menu
+                      anchorEl={anchorEl}
+                      id="account-menu"
+                      open={open}
+                      onClose={handleClose}
+                      onClick={handleClose}
+                      PaperProps={{
+                        elevation: 0,
+                        sx: {
+                          overflow: "visible",
+                          filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                          mt: 1.5,
+                          "& .MuiAvatar-root": {
+                            width: 32,
+                            height: 32,
+                            ml: -0.5,
+                            mr: 1
+                          },
+                          "&:before": {
+                            content: '""',
+                            display: "block",
+                            position: "absolute",
+                            top: 0,
+                            right: 14,
+                            width: 10,
+                            height: 10,
+                            bgcolor: "background.paper",
+                            transform: "translateY(-50%) rotate(45deg)",
+                            zIndex: 0
+                          }
+                        }
+                      }}
+                      transformOrigin={{ horizontal: "right", vertical: "top" }}
+                      anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+                    >
+                      <NavLink to={"/auth"}>
+                        <MenuItem
+                          onClick={handleClose}
+                          sx={{
+                            color: "gray"
+                          }}
+                        >
+                          <LockOpenIcon
+                            sx={{
+                              marginRight: "8px"
+                            }}
+                          />{" "}
+                          Login
+                        </MenuItem>
+                      </NavLink>
+                      <NavLink to={"/auth"}>
+                        <MenuItem
+                          onClick={handleClose}
+                          sx={{
+                            color: "gray"
+                          }}
+                        >
+                          <HowToRegIcon
+                            sx={{
+                              marginRight: "8px"
+                            }}
+                          />{" "}
+                          Register
+                        </MenuItem>
+                      </NavLink>
+                      <Divider />
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <PersonAdd fontSize="small" />
+                        </ListItemIcon>
+                        Add another account
+                      </MenuItem>
+                    </Menu>
+                  )}
+                </Box>
               </Box>
             </Box>
           </Container>
