@@ -25,7 +25,7 @@ import { BaseAPi } from "../../../../configs/BaseApi";
 import { numberFormat } from "../../../../helpers/formatPrice";
 import { getTotals } from "../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../redux/storeClient";
-import HttpCartController from "../../../../submodules/controllers/http/httpCartController";
+
 import HttpProviceController from "../../../../submodules/controllers/http/httpProvinceController";
 import HttpPaymentController from "../../../../submodules/controllers/http/httppaymentController";
 import { Order } from "../../../../submodules/models/OrderModel/Order";
@@ -37,7 +37,6 @@ import {
 import { User } from "../../../../submodules/models/UserModel/User";
 const httpProvince = new HttpProviceController(BaseAPi);
 const httpPayment = new HttpPaymentController(BaseAPi);
-const httpOrder = new HttpCartController(BaseAPi);
 function Checkout() {
   const redirect = useNavigate();
   const dispatch = useDispatch();
@@ -100,7 +99,7 @@ function Checkout() {
     const payment = await httpPayment.getPayment(orderData);
     console.log(payment);
     if (payment.paymentMethod == "COD") {
-      window.location.assign("http://localhost:3000/checkout/payment");
+      window.location.assign("http://ww.sachviet.click/checkout/payment");
     }
     if (payment.paymentMethod == "Visa") {
       window.location.assign(payment.url);
@@ -522,4 +521,4 @@ function Checkout() {
     </Grid>
   );
 }
-
+export default Checkout;
