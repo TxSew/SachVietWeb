@@ -99,7 +99,7 @@ function Checkout() {
     const payment = await httpPayment.getPayment(orderData);
     console.log(payment);
     if (payment.paymentMethod == "COD") {
-      window.location.assign("http://wwww.sachviet.click/checkout/payment");
+      window.location.assign("http://www.sachviet.click/checkout/payment");
     }
     if (payment.paymentMethod == "Visa") {
       window.location.assign(payment.url);
