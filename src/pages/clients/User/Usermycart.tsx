@@ -1,12 +1,4 @@
-import React, { useEffect, useState } from "react";
-import "./style.scss";
-import "./index.scss";
-import { Link } from "react-router-dom";
-import NavUser from "./layout/NavUser";
-import HttpCartController from "../../../submodules/controllers/http/httpCartController";
-import { BaseAPi } from "../../../configs/BaseApi";
-import { features } from "process";
-import { Order, OrderDto } from "../../../submodules/models/OrderModel/Order";
+import { Chip } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -14,13 +6,17 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import CartUser from "../../../components/CartItemUser/CartUser";
-import { Box, Chip, Stack } from "@mui/material";
-import { toast } from "react-toastify";
-import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
-import CartNotFound from "../cart/components/CartNotFound/CartNotFound";
-import { formatDateYYYY, formatDates } from "../../../helpers/FortmatDate";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { BaseAPi } from "../../../configs/BaseApi";
+import { formatDates } from "../../../helpers/FortmatDate";
 import { numberFormat } from "../../../helpers/formatPrice";
+import HttpCartController from "../../../submodules/controllers/http/httpCartController";
+import { Order } from "../../../submodules/models/OrderModel/Order";
+import CartNotFound from "../cart/components/CartNotFound/CartNotFound";
+import "./index.scss";
+import NavUser from "./layout/NavUser";
+import "./style.scss";
 function UserMyCart() {
   const http = new HttpCartController(BaseAPi);
   const [user, setUser] = useState<any>({} as any);
@@ -40,9 +36,7 @@ function UserMyCart() {
 
   const getOrderByUser = async (id: any) => {
     if (user) {
-      const orderUserData = await http.getOrderbyUser(Number(id), Token);
-      console.log(orderUserData);
-
+      const orderUserData = await http.getOrderbyUser(Number(id));
       if (orderUserData) {
         setOrderUser(orderUserData);
       }
@@ -117,7 +111,7 @@ function UserMyCart() {
                             </TableCell>
 
                             <TableCell align="right">
-                              <Link to="">
+                              <Link to={`/user/mycart/${e.userID}`}>
                                 <Chip label=" Xem" color="primary" />
                               </Link>
                             </TableCell>

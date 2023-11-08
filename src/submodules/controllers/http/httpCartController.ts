@@ -35,11 +35,9 @@ class HttpCartController {
       throw err;
     }
   }
-  async getOrderbyUser(id: number, token: string): Promise<any> {
+  async getOrderbyUser(id: number): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(`order/current/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await this.axiosInstance.get(`order/current/${id}`);
       return response.data;
     } catch (err) {
       throw err;

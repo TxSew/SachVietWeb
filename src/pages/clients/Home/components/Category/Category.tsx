@@ -1,20 +1,12 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Skeleton,
-  Stack,
-  Typography,
-} from "@mui/material";
-import Image from "../../../../../components/Image/Image";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
+import { Box, Container, Skeleton, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { color } from "../../../../../Theme/color";
 import { BaseAPi } from "../../../../../configs/BaseApi";
+import useLoading from "../../../../../hooks/useLoading/useLoading";
 import useMedia from "../../../../../hooks/useMedia/useMedia";
 import HttpCategoryController from "../../../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../../../submodules/models/ProductModel/Category";
-import useLoading from "../../../../../hooks/useLoading/useLoading";
 const http = new HttpCategoryController(BaseAPi);
 const CategoryNav = () => {
   const [category, SetCategory] = useState<Category[]>([]);
@@ -27,10 +19,6 @@ const CategoryNav = () => {
     startLoading();
     try {
       const category = await http.getCategory({});
-      console.log(
-        "🚀 ~ file: Category.tsx:30 ~ fetchcategory ~ category:",
-        category
-      );
       const filteredData = category.filter(
         (item: any) => item.parentId !== null
       );
@@ -82,11 +70,21 @@ const CategoryNav = () => {
           {isLoading
             ? Array.from({ length: category.length }).map((e) => {
                 return (
-                  <Stack width={"10%"}>
+                  <Stack
+                    sx={
+                      isMediumMD
+                        ? {
+                            width: "20%",
+                          }
+                        : {
+                            width: "10%",
+                          }
+                    }
+                  >
                     <Skeleton
                       variant="rectangular"
                       width={"100px"}
-                      height={118}
+                      height={"100px"}
                       sx={{
                         borderRadius: "5px",
                       }}

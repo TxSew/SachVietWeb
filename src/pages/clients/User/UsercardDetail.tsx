@@ -1,8 +1,35 @@
-import { Box, Button, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Grid,
+  Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography,
+} from "@mui/material";
 import { color } from "../../../Theme/color";
 import NavUser from "./layout/NavUser";
-
+import { numberFormat } from "../../../helpers/formatPrice";
+import { useParams } from "react-router-dom";
+import HttpCartController from "../../../submodules/controllers/http/httpCartController";
+import { BaseAPi } from "../../../configs/BaseApi";
+import { useEffect, useState } from "react";
+const http = new HttpCartController(BaseAPi);
 function UserCartDetail() {
+  const { id } = useParams();
+  const [orderCurrent, setOrderCurrent] = useState<any>([]);
+  useEffect(() => {
+    getOrderUser();
+  }, []);
+
+  const getOrderUser = async () => {
+    const orderByUser = await http.getOrderbyUser(Number(id));
+    if (orderByUser) setOrderCurrent(orderByUser[0].orderDetail);
+  };
   return (
     <NavUser>
       <Box
@@ -185,7 +212,115 @@ function UserCartDetail() {
             </Box>
           </Grid>
         </Grid>
-        <Box></Box>
+        <Box
+          sx={{
+            marginTop: "10px",
+            backgroundColor: color.white,
+            padding: "20px",
+          }}
+        >
+          <Stack direction={"row"}>
+            <Typography variant="body1">Đơn hàng:</Typography>
+            <Typography variant="body1">103335433</Typography>
+          </Stack>
+          <Box
+            sx={{
+              display: "inline-block",
+              backgroundColor: "#F6BA71",
+              borderRadius: "30px",
+              fontSize: "14px",
+              padding: "10px 15px",
+              marginTop: "10px",
+              fontWeight: "bold",
+              color: "#F7941E",
+            }}
+          >
+            Đơn hàng chờ xác nhận
+          </Box>
+
+          <Stack direction={"row"} mt={"18px"}>
+            <Typography variant="body1">Tổng tiền:</Typography>
+            <Typography variant="body1" fontWeight={"bold"}>
+              {numberFormat(99.888)}
+            </Typography>
+          </Stack>
+
+          <Stack direction={"row"} mt={"18px"}>
+            <Typography variant="body1">Số lượng:</Typography>
+            <Typography variant="body1" fontWeight={"bold"}>
+              1
+            </Typography>
+          </Stack>
+
+          <TableContainer>
+            <Table
+              sx={{
+                minWidth: 800,
+              }}
+              aria-label="simple tablek w"
+            >
+              <TableHead>
+                <TableRow
+                  sx={{
+                    "& > th": {
+                      fontWeight: "bold",
+                    },
+                  }}
+                >
+                  <TableCell>Hình ảnh</TableCell>
+                  <TableCell align="center">Tên sản phẩm</TableCell>
+                  <TableCell align="center">SKU</TableCell>
+                  <TableCell align="center">Giá bán</TableCell>
+                  <TableCell align="right"> SL</TableCell>
+                  <TableCell align="center">Thành tiền</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orderCurrent.map((order: any) => {
+                  return (
+                    <TableRow>
+                      <TableCell>
+                        <img width={"100px"} src={order.product.image} alt="" />
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.product.title}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.product.id}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.product.price_sale}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.quantity}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {numberFormat(
+                            order.quantity * order.product.price_sale
+                          )}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
     </NavUser>
   );
