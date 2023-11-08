@@ -31,6 +31,7 @@ import UserCartDetail from "../pages/clients/User/UsercardDetail";
 import StackCustom from "../components/CustomComponents/Stack/StackCustom";
 import HorizontalLinearAlternativeLabelStepper from "../pages/clients/User/Stepper";
 import CustomizedSteppers from "../pages/clients/User/Stepper";
+import ChangePassword from "../pages/clients/auth/components/changePassword";
 const PublicRouter = [
   {
     path: "/",
@@ -81,6 +82,10 @@ const PublicRouter = [
   {
     path: "/user/mycart",
     component: UserMyCart,
+  },
+  {
+    path: "/auth/ChangePassword",
+    component: ChangePassword,
   },
   { path: "/admin", component: Auth },
   { path: "/sales", component: Sales },

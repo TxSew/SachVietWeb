@@ -69,24 +69,17 @@ export default function Auth() {
                 >
                   <Tab
                     sx={{
-                      width: "33.33%"
+                      width: "50%"
                     }}
                     label="Đăng nhập"
                     {...a11yProps(0)}
                   />
                   <Tab
                     sx={{
-                      width: "33.33%"
+                      width: "50%"
                     }}
                     label="Đăng kí"
                     {...a11yProps(1)}
-                  />
-                  <Tab
-                    sx={{
-                      width: "33.33%"
-                    }}
-                    label="Quên mật khẩu"
-                    {...a11yProps(2)}
                   />
                 </Tabs>
               </Box>
@@ -103,9 +96,6 @@ export default function Auth() {
               </CustomTabPanel>
               <CustomTabPanel value={value} index={1}>
                 <Register />
-              </CustomTabPanel>
-              <CustomTabPanel value={value} index={2}>
-                <ChangePassword />
               </CustomTabPanel>
             </Grid>
           </Box>

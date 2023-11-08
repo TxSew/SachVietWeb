@@ -15,7 +15,8 @@ const color = {
   price: "#F7941E",
   sale: "#F5BD00",
   button: "#008C89",
+  text: "#008C89",
   buttonh: "#F7941E",
-  linePay: "#EDA6A6",
+  linePay: "#EDA6A6"
 };
 export { color };
