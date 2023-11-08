@@ -19,7 +19,6 @@ import HomePage from "../pages/clients/Home/Home";
 import User from "../pages/clients/User/DashboardUser";
 import Auth from "../pages/clients/auth/Auth";
 import { Cart } from "../pages/clients/cart/Cart";
-import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Payment from "../pages/clients/cart/payment/Payment";
 import { Details } from "../pages/clients/details/Details";
 import UserInfo from "../pages/clients/User/UserInfo";
@@ -31,7 +30,11 @@ import UserCartDetail from "../pages/clients/User/UsercardDetail";
 import StackCustom from "../components/CustomComponents/Stack/StackCustom";
 import HorizontalLinearAlternativeLabelStepper from "../pages/clients/User/Stepper";
 import CustomizedSteppers from "../pages/clients/User/Stepper";
+
 import ChangePassword from "../pages/clients/auth/components/changePassword";
+
+import Checkout from "../pages/clients/cart/checkout/Checkout";
+
 const PublicRouter = [
   {
     path: "/",

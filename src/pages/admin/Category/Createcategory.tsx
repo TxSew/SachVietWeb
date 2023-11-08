@@ -19,6 +19,7 @@ import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
+import { validateForm } from "../../../helpers/validateForm";
 
 var httpCategory = new HttpCategoryController(BaseAPi);
 
@@ -114,6 +115,7 @@ const CreateCategory = () => {
             defaultValue="" // Set an initial value here
             rules={{
               required: "Tên danh mục không được bỏ trống!",
+              validate: validateForm,
             }}
             render={({ field }) => (
               <OutlinedInput

@@ -2,6 +2,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
   Box,
+  Button,
   Chip,
   FormControl,
   Grid,
@@ -31,6 +32,7 @@ import HttpCategoryController from "../../../submodules/controllers/http/httpCat
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
+import { useDownloadExcel } from "react-export-table-to-excel";
 
 const http = new HttpProductController(BaseAPi);
 const httpCategory = new HttpCategoryController(BaseAPi);
@@ -46,6 +48,12 @@ export default function AdminProduct() {
     // You can perform any actions you want here.
     handleOpen();
   };
+  const tableRef = React.useRef<any>(null);
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: "Product",
+    sheet: "products",
+  });
   const [Category, setCategory] = React.useState<Category[]>([]);
   const [pageCount, setPageCount] = React.useState<number>(1);
   const [page, setPage] = React.useState<number>(1);
@@ -57,12 +65,12 @@ export default function AdminProduct() {
   const debounce = useDebounce(search, 400);
   React.useEffect(() => {
     const props = {
-      limit:4,
+      limit: 5,
       page,
       keyword: debounce,
       sortBy,
       sortWith,
-      categoryFilter:sortCategory,
+      categoryFilter: sortCategory,
     };
 
     fetchData(props);
@@ -71,7 +79,7 @@ export default function AdminProduct() {
     try {
       const product: any = await http.getAll(props);
       const { products } = product;
-      setPageCount( product.totalPage);
+      setPageCount(product.totalPage);
       setProducts(products);
     } catch (err) {
       console.log(err);
@@ -129,7 +137,6 @@ export default function AdminProduct() {
       setSortWith("asc");
       setSort(event.target.value);
     }
-
   };
 
   return (
@@ -197,8 +204,17 @@ export default function AdminProduct() {
               })}
             </Select>
           </FormControl>
+          <Button
+            onClick={onDownload}
+            variant="outlinedGreen"
+            sx={{
+              border: "1px solid #ccc",
+            }}
+          >
+            <Typography textTransform={"capitalize"}>Xuất Exel</Typography>
+          </Button>
         </Stack>
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} ref={tableRef}>
           <Table
             sx={{
               minWidth: 800,

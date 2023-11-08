@@ -42,10 +42,9 @@ import { BaseAPi } from "../../../configs/BaseApi";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { RootState } from "../../../redux/storeClient";
+import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { User } from "../../../submodules/models/UserModel/User";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import { el } from "@faker-js/faker";
 const Header = () => {
   const http = new HttpProductController(BaseAPi);
   const httpCategory = new HttpCategoryController(BaseAPi);
@@ -336,8 +335,10 @@ const Header = () => {
                       aria-labelledby="modal-modal-title"
                       aria-describedby="modal-modal-description"
                       sx={{
-                        "& .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop": {
-                          background: "transparent"
+
+                        "& .css-919eu4": {
+                          background: "transparent !important",
+
                         },
                         top: "130px"
                       }}
@@ -541,7 +542,8 @@ const Header = () => {
                     <Badge badgeContent={cart.length} color="primary">
                       <ShoppingCartOutlinedIcon
                         sx={{
-                          color: "#008C89"
+
+                          color: "#008C89",
                         }}
                       />
                     </Badge>
@@ -550,9 +552,10 @@ const Header = () => {
                       sx={{
                         pl: 1,
                         color: "#615C5C",
+
                         "&:hover": {
                           color: "#008C89"
-                        }
+
                       }}
                     >
                       Giỏ hàng{" "}
@@ -813,3 +816,10 @@ const Header = () => {
   );
 };
 export default Header;
+
+
+
+
+
+
+

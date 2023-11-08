@@ -1,14 +1,6 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  Stack,
-  Stepper,
-  Typography,
-} from "@mui/material";
-import NavUser from "./layout/NavUser";
+import { Box, Button, Grid, Stack, Typography } from "@mui/material";
 import { color } from "../../../Theme/color";
+import NavUser from "./layout/NavUser";
 
 function UserCartDetail() {
   return (
