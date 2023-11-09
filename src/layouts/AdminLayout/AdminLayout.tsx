@@ -177,6 +177,11 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <MenuItem onClick={handleClose}>
                   <Avatar /> My account
                 </MenuItem>
+                <NavLink to={"/"}>
+                  <MenuItem onClick={handleClose}>
+                    <Avatar /> My account
+                  </MenuItem>
+                </NavLink>
                 <Divider />
                 <MenuItem onClick={handleClose}>
                   <ListItemIcon>

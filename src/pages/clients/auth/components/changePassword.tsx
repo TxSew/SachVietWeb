@@ -121,7 +121,7 @@ const ChangePassword = () => {
                 </FormControl>
                 <Typography variant="caption" color={color.error}></Typography>
                 <Box
-                  mt={2}
+                  mt={4}
                   sx={{
                     clear: "both",
                     display: "flex",
@@ -129,7 +129,19 @@ const ChangePassword = () => {
                     justifyContent: "center"
                   }}
                 >
-                  <Button type="submit" variant="outlined">
+                  <Button
+                    // type="submit"
+                    variant="outlined"
+                    style={{
+                      width: "100%",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      background: "#BDB5B5",
+                      color: "#000",
+                      border: "none",
+                      padding: "8px 0"
+                    }}
+                  >
                     Gửi
                   </Button>
                 </Box>

@@ -115,7 +115,7 @@ const Login = () => {
         justifyContent={"end"}
         pt={2}
       >
-        <Link to={"ChangePassword"} color={color.error}>
+        <Link to={"ChangePassword"} style={{ color: "red" }}>
           Đổi mật khẩu
         </Link>
       </Typography>
@@ -128,8 +128,45 @@ const Login = () => {
           justifyContent: "center"
         }}
       >
-        <Button type="submit" variant="outlined">
+        <Button
+          type="submit"
+          variant="outlined"
+          style={{
+            width: "100%",
+            fontSize: "12px",
+            fontWeight: "bold",
+            background: "#BDB5B5",
+            color: "#000",
+            border: "none",
+            padding: "8px 0"
+          }}
+        >
           Đăng nhập
+        </Button>
+      </Box>
+      <Box
+        mt={2}
+        sx={{
+          clear: "both",
+          display: "flex",
+          direction: "column",
+          justifyContent: "center"
+        }}
+      >
+        <Button
+          type="submit"
+          variant="outlined"
+          style={{
+            width: "100%",
+            fontSize: "12px",
+            fontWeight: "bold",
+            background: "#2489F4",
+            color: "#fff",
+            border: "none",
+            padding: "8px 0"
+          }}
+        >
+          Đăng nhập bằng facebook
         </Button>
       </Box>
     </form>
