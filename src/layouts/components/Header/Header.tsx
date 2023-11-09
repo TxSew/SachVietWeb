@@ -101,7 +101,7 @@ const Header = () => {
     position: "absolute",
     top: 0,
     left: 0,
-    width: "35%",
+    width: "240px",
     height: "100%",
     bgcolor: "background.paper",
     borderRight: "1px solid #000",
@@ -109,6 +109,10 @@ const Header = () => {
     outline: "none",
     p: 4,
     pt: 2,
+<<<<<<< HEAD
+=======
+    transition: "all 2s ease-in-out"
+>>>>>>> 86fb9c437c20c357a6da55c1df880e498649451f
   };
 
   const hditem = {
@@ -252,7 +256,7 @@ const Header = () => {
             </Box>
           </Container>
           <Box>
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" sx={{ position: "relative" }}>
               <Grid
                 container
                 sx={{
@@ -498,7 +502,7 @@ const Header = () => {
                   }}
                 >
                   <NavLink
-                    to={"/lh"}
+                    to={"/"}
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -561,6 +565,26 @@ const Header = () => {
                   </NavLink>
                 </Grid>
               </Grid>
+              <Box
+                sx={{
+                  background: "#fff",
+                  width: "52%",
+                  left: "18%",
+                  height: "450px",
+                  position: "absolute",
+                  zIndex: 10,
+                  // boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
+                  // boxShadow:
+                  // "rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px",
+                  boxShadow:
+                    " rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
+                  border: "1px solid #eee",
+                  borderRadius: "12px",
+                  p: 4,
+                  mt: 1,
+                  display: "none"
+                }}
+              ></Box>
             </Container>
           </Box>
         </Box>
@@ -591,6 +615,9 @@ const Header = () => {
                     onClose={handleCloseSearch}
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
+                    sx={{
+                      transition: "all 2s ease-in-out"
+                    }}
                   >
                     <Box sx={boxmodal}>
                       <List>T</List>
@@ -617,7 +644,7 @@ const Header = () => {
                 display={"flex"}
                 alignItems={"center"}
                 lineHeight={"normal"}
-                gap={2}
+                gap={1}
               >
                 <NavLink
                   to={"/cart"}
@@ -703,30 +730,42 @@ const Header = () => {
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
                     >
-                      <MenuItem onClick={handleClose}>
-                        <Avatar /> Profile
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <Avatar /> My account
-                      </MenuItem>
+                      <NavLink to={"/auth"}>
+                        <MenuItem
+                          onClick={handleClose}
+                          sx={{
+                            color: "gray"
+                          }}
+                        >
+                          <LockOpenIcon
+                            sx={{
+                              marginRight: "8px"
+                            }}
+                          />{" "}
+                          Login
+                        </MenuItem>
+                      </NavLink>
+                      <NavLink to={"/auth"}>
+                        <MenuItem
+                          onClick={handleClose}
+                          sx={{
+                            color: "gray"
+                          }}
+                        >
+                          <HowToRegIcon
+                            sx={{
+                              marginRight: "8px"
+                            }}
+                          />{" "}
+                          Register
+                        </MenuItem>
+                      </NavLink>
                       <Divider />
                       <MenuItem onClick={handleClose}>
                         <ListItemIcon>
                           <PersonAdd fontSize="small" />
                         </ListItemIcon>
                         Add another account
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                          <Settings fontSize="small" />
-                        </ListItemIcon>
-                        Settings
-                      </MenuItem>
-                      <MenuItem onClick={handleClose}>
-                        <ListItemIcon>
-                          <Logout fontSize="small" />
-                        </ListItemIcon>
-                        Logout
                       </MenuItem>
                     </Menu>
                   ) : (
@@ -801,6 +840,18 @@ const Header = () => {
                           <PersonAdd fontSize="small" />
                         </ListItemIcon>
                         Add another account
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <Settings fontSize="small" />
+                        </ListItemIcon>
+                        Settings
+                      </MenuItem>
+                      <MenuItem onClick={handleClose}>
+                        <ListItemIcon>
+                          <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
                       </MenuItem>
                     </Menu>
                   )}

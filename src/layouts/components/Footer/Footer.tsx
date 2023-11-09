@@ -1,12 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  ListItem,
-  Stack,
-  Typography
-} from "@mui/material";
+import { Box, Button, Grid, ListItem, Stack, Typography } from "@mui/material";
 import Image from "../../../components/Image/Image";
 import EmailIcon from "@mui/icons-material/Email";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -14,14 +6,10 @@ import MailIcon from "@mui/icons-material/Mail";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import YouTubeIcon from "@mui/icons-material/YouTube";
-import TwitterIcon from "@mui/icons-material/Twitter";
-import StackCustom from "../../../components/CustomComponents/Stack/StackCustom";
 import { color } from "../../../Theme/color";
 import useMedia from "../../../hooks/useMedia/useMedia";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import List from "@mui/material/List";
-import IconButton from "@mui/material/IconButton";
 
 function Footer() {
   const { isMediumMD } = useMedia();
@@ -51,7 +39,11 @@ function Footer() {
     fontSize: "13px",
     textTransform: "capitalize",
     color: "black",
-    padding: "4px 0"
+    padding: "4px 0",
+    transition: "color .2s ease-in-out",
+    "&:hover": {
+      color: "#008C89"
+    }
   };
 
   return (
@@ -175,28 +167,26 @@ function Footer() {
             <Grid item xs={12} md={8} sm={12} display={"flex"} container>
               <Grid md={4} xs={6}>
                 {" "}
-                <Typography sx={ftItemhdmb} variant="h2">
+                <Typography sx={ftItemhdmb} variant="h2" height={"50px"}>
                   tài khoản của tôi
                 </Typography>
                 <List>
-                  <ListItem sx={ftItemmb}>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={"/auth"}
-                    >
-                      Đăng nhập /
-                    </NavLink>
-                    <NavLink
-                      style={{
-                        color: "black"
-                      }}
-                      to={"/auth"}
-                    >
-                      Đăng ký{" "}
-                    </NavLink>
-                  </ListItem>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={"/auth"}
+                  >
+                    <ListItem sx={ftItemmb}>Đăng nhập</ListItem>
+                  </NavLink>
+                  <NavLink
+                    style={{
+                      color: "black"
+                    }}
+                    to={"/auth"}
+                  >
+                    <ListItem sx={ftItemmb}>Đăng ký </ListItem>
+                  </NavLink>
                   <NavLink
                     style={{
                       color: "black"
@@ -235,7 +225,7 @@ function Footer() {
               </Grid>
               <Grid md={4} xs={6}>
                 {" "}
-                <Typography sx={ftItemhdmb} variant="h2">
+                <Typography sx={ftItemhdmb} variant="h2" height={"50px"}>
                   Trang chủ
                 </Typography>
                 <List>
