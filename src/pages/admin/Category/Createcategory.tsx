@@ -213,42 +213,7 @@ const CreateCategory = () => {
           <Typography variant="caption" color={color.error}>
             {errors.level && errors.level.message}
           </Typography>
-          <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
-            Trạng thái
-          </Typography>
-          <Controller
-            control={control}
-            name="status"
-            rules={{
-              required: "Price is not",
-            }}
-            render={({ field }) => (
-              <FormControl fullWidth>
-                <Select
-                  {...field}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                  sx={{
-                    mt: 1,
-                    "& > div": {
-                      p: "7px",
-                    },
-                  }}
-                >
-                  <MenuItem value={""}>
-                    <em>[--Chọn trạng thái--]</em>
-                  </MenuItem>
-                  <MenuItem value={1}>
-                    <em>Đang kinh doanh</em>
-                  </MenuItem>
-                  <MenuItem value={0}>
-                    <em>Ngưng kinh doanh</em>
-                  </MenuItem>
-                </Select>
-              </FormControl>
-            )}
-          />
-        </Grid>
+       </Grid>
       </form>
     </Box>
   );

@@ -222,7 +222,7 @@ export default function AdminProduct() {
               border: "1px solid #ccc",
             }}
           >
-            <Typography textTransform={"capitalize"}>Xuất Exel</Typography>
+            <Typography textTransform={"capitalize"} fontSize={"12px"} color={"#333"}>Xuất EXEL</Typography>
           </Button>
         </Stack>
         <TableContainer component={Paper} ref={tableRef}>
