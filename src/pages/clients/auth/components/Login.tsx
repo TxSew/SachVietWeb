@@ -3,7 +3,7 @@ import {
   Button,
   FormControl,
   OutlinedInput,
-  Typography
+  Typography,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -19,16 +19,16 @@ const Login = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm<User>({
-    mode: "all"
+    mode: "all",
   });
   const handleLogin = async (data: User) => {
     try {
       const login = await http.login(data);
       if (login) {
         toast.success("Login successful", {
-          position: "bottom-right"
+          position: "bottom-right",
         });
         const { account, token } = login;
         localStorage.setItem("user", JSON.stringify(account));
@@ -38,12 +38,12 @@ const Login = () => {
     } catch (err: any) {
       if (err.response.data.message === "invalid email") {
         toast.error("Invalid email exits", {
-          position: "bottom-right"
+          position: "bottom-right",
         });
       }
       if (err.response.data.message === "Invalid password.") {
         toast.error("sai password", {
-          position: "bottom-right"
+          position: "bottom-right",
         });
       }
     }
@@ -52,7 +52,7 @@ const Login = () => {
     <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
       <FormControl
         sx={{
-          mt: "10px"
+          mt: "10px",
         }}
         fullWidth
       >
@@ -62,11 +62,11 @@ const Login = () => {
           name="email"
           defaultValue="" // Set an initial value here
           rules={{
-            required: "Email is required",
+            required: "Vui lòng nhập email của bạn!",
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-              message: "Invalid email address"
-            }
+              message: "Invalid email address",
+            },
           }}
           render={({ field }) => (
             <OutlinedInput
@@ -83,7 +83,7 @@ const Login = () => {
       </Typography>
       <FormControl
         sx={{
-          mt: "20px"
+          mt: "20px",
         }}
         fullWidth
       >
@@ -93,7 +93,7 @@ const Login = () => {
           defaultValue="" // Set an initial value here
           name="password"
           rules={{
-            required: "Passwords must be at least"
+            required: "Vui lòng nhập mật khẩu của bạn!",
           }}
           render={({ field }) => (
             <OutlinedInput
@@ -125,7 +125,7 @@ const Login = () => {
           clear: "both",
           display: "flex",
           direction: "column",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Button
@@ -138,7 +138,7 @@ const Login = () => {
             background: "#BDB5B5",
             color: "#000",
             border: "none",
-            padding: "8px 0"
+            padding: "8px 0",
           }}
         >
           Đăng nhập
@@ -150,7 +150,7 @@ const Login = () => {
           clear: "both",
           display: "flex",
           direction: "column",
-          justifyContent: "center"
+          justifyContent: "center",
         }}
       >
         <Button
@@ -163,7 +163,7 @@ const Login = () => {
             background: "#2489F4",
             color: "#fff",
             border: "none",
-            padding: "8px 0"
+            padding: "8px 0",
           }}
         >
           Đăng nhập bằng facebook
