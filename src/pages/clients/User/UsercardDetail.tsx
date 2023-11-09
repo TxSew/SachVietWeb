@@ -21,14 +21,14 @@ import { useEffect, useState } from "react";
 const http = new HttpCartController(BaseAPi);
 function UserCartDetail() {
   const { id } = useParams();
-  const [orderCurrent, setOrderCurrent] = useState<any>([]);
+  const [orderCurrent, setOrderCurrent] = useState<any>({});
   useEffect(() => {
     getOrderUser();
   }, []);
 
   const getOrderUser = async () => {
-    const orderByUser = await http.getOrderbyUser(Number(id));
-    if (orderByUser) setOrderCurrent(orderByUser[0].orderDetail);
+    const orderByUser = await http.getOrderDetail(Number(id));
+    if (orderByUser) setOrderCurrent(orderByUser);
   };
   return (
     <NavUser>
@@ -72,17 +72,21 @@ function UserCartDetail() {
               <Box>
                 <Stack direction={"row"} mt={"10px"}>
                   <Typography>Mã đơn hàng:</Typography>
-                  <Typography fontWeight={"bold"}>103335433</Typography>
+                  <Typography fontWeight={"bold"}>{orderCurrent.id}</Typography>
                 </Stack>
 
                 <Stack direction={"row"} mt={"10px"}>
                   <Typography>Ngày mua:</Typography>
-                  <Typography fontWeight={"bold"}>05/11/2023</Typography>
+                  <Typography fontWeight={"bold"}>
+                    {orderCurrent.createdAt}
+                  </Typography>
                 </Stack>
 
                 <Stack direction={"row"} mt={"10px"}>
                   <Typography>Tổng tiền: </Typography>
-                  <Typography fontWeight={"bold"}>99.800</Typography>
+                  <Typography fontWeight={"bold"}>
+                    {numberFormat(orderCurrent.money)}
+                  </Typography>
                 </Stack>
 
                 <Stack direction={"row"} mt={"10px"}>
@@ -124,7 +128,7 @@ function UserCartDetail() {
         </Grid>
       </Box>
 
-      <Box mt={"20px"}>
+      <Box mt={"20px"} mb={"20px"}>
         <Grid
           container
           justifyContent={"space-between"}
@@ -154,12 +158,10 @@ function UserCartDetail() {
                   rowGap: "5px",
                 }}
               >
-                <Typography variant="body1">Đỗ Thanh</Typography>
-                <Typography variant="body1">0383476296</Typography>
-                <Typography variant="body1">
-                  Phường An Dương, Quận Lê Chân, Hải Phòng, Việt Nam
-                </Typography>
-                <Typography>Tel:03948546748</Typography>
+                <Typography variant="body1">{orderCurrent.fullName}</Typography>
+                <Typography variant="body1">{orderCurrent.phone}</Typography>
+                <Typography variant="body1">{orderCurrent.address}</Typography>
+                <Typography>Tel:{orderCurrent.phone}</Typography>
               </Box>
             </Box>
           </Grid>
@@ -221,7 +223,7 @@ function UserCartDetail() {
         >
           <Stack direction={"row"}>
             <Typography variant="body1">Đơn hàng:</Typography>
-            <Typography variant="body1">103335433</Typography>
+            <Typography variant="body1">{`#${orderCurrent.id}`}</Typography>
           </Stack>
           <Box
             sx={{
@@ -241,14 +243,14 @@ function UserCartDetail() {
           <Stack direction={"row"} mt={"18px"}>
             <Typography variant="body1">Tổng tiền:</Typography>
             <Typography variant="body1" fontWeight={"bold"}>
-              {numberFormat(99.888)}
+              {numberFormat(orderCurrent.money)}
             </Typography>
           </Stack>
 
           <Stack direction={"row"} mt={"18px"}>
             <Typography variant="body1">Số lượng:</Typography>
             <Typography variant="body1" fontWeight={"bold"}>
-              1
+              {orderCurrent.quantity}
             </Typography>
           </Stack>
 
@@ -276,11 +278,16 @@ function UserCartDetail() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {orderCurrent.map((order: any) => {
+                {orderCurrent?.orderDetail?.map((order: any) => {
                   return (
                     <TableRow>
                       <TableCell>
-                        <img width={"100px"} src={order.product.image} alt="" />
+                        <img
+                          width={"80px"}
+                          height={"70px"}
+                          src={order.product.image}
+                          alt=""
+                        />
                       </TableCell>
 
                       <TableCell>

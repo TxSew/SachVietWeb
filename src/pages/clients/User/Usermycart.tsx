@@ -111,7 +111,7 @@ function UserMyCart() {
                             </TableCell>
 
                             <TableCell align="right">
-                              <Link to={`/user/mycart/${e.userID}`}>
+                              <Link to={`/user/mycart/${e.id}`}>
                                 <Chip label=" Xem" color="primary" />
                               </Link>
                             </TableCell>

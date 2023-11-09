@@ -170,6 +170,17 @@ export default function AdminProduct() {
             placeholder="Tìm kiếm sản phẩm..."
             onChange={handleChangeValue}
           />
+
+          <Button variant="contained">
+            <Link
+              style={{
+                color: color.white,
+              }}
+              to={`/admin/createProduct`}
+            >
+              Thêm sản phẩm
+            </Link>
+          </Button>
         </Stack>
         <Stack sx={{ minWidth: 300 }} direction={"row"} display={"flex"}>
           <Typography>Sắp xếp:</Typography>
