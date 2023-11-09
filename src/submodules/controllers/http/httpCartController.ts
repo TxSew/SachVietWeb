@@ -19,9 +19,11 @@ class HttpCartController {
     }
   }
 
-  async getAll(page: number = 1): Promise<any> {
+  async getAll(props: any): Promise<any> {
     try {
-      const response = await this.axiosInstance.get(`/order?page=${page}`);
+      const response = await this.axiosInstance.post(`/order`, {
+        ...props,
+      });
       return response.data;
     } catch (error) {
       throw error;

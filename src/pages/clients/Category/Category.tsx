@@ -11,7 +11,6 @@ import {
   Typography,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import ProductItem from "../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../configs/BaseApi";
@@ -28,10 +27,18 @@ function Category() {
   const [sortWith, setSortWith] = React.useState("asc");
   const [sort, setSort] = React.useState("");
   useEffect(() => {
-    fetchProducts(page);
-  }, [page]);
-  const fetchProducts = async (page: number = 1) => {
-    const products: any = await http.getAll("filter");
+    const props = {
+      sortBy,
+      sortWith,
+      page,
+      limit: 1,
+    };
+    fetchProducts(props);
+  }, [page, sortBy, sortWith]);
+
+  useEffect(() => {}, []);
+  const fetchProducts = async (props: any) => {
+    const products: any = await http.getAll(props);
     if (products) {
       setProducts(products.products);
       setCount(products.totalPage);
@@ -44,6 +51,27 @@ function Category() {
   const handleChange = (event: SelectChangeEvent) => {
     setAge(event.target.value as string);
   };
+  const handleChangeSort = (event: SelectChangeEvent) => {
+    if (event.target.value == "priceDown") {
+      setSortBy("price_sale");
+      setSortWith("desc");
+      setSort(event.target.value);
+    } else if (event.target.value == "priceUp") {
+      setSortBy("price_sale");
+      setSortWith("asc");
+      setSort(event.target.value);
+    }
+    if (event.target.value == "old") {
+      setSortBy("createdAt");
+      setSortWith("desc");
+      setSort(event.target.value);
+    } else if (event.target.value == "new") {
+      setSortBy("createdAt");
+      setSortWith("asc");
+      setSort(event.target.value);
+    }
+  };
+
   return (
     <Box bgcolor={"#eee"} py={3}>
       <Container maxWidth={"xl"}>
@@ -58,6 +86,7 @@ function Category() {
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                   <Select
                     value={sort}
+                    onChange={handleChangeSort}
                     displayEmpty
                     inputProps={{ "aria-label": "Without label" }}
                   >

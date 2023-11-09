@@ -5,9 +5,12 @@ import {
   Box,
   Button,
   Chip,
+  FormControl,
   Grid,
+  MenuItem,
   OutlinedInput,
   Pagination,
+  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -79,6 +82,17 @@ export default function AdminCarts() {
             />
             Danh sách đơn hàng
           </Typography>
+          <FormControl sx={{ m: 1, minWidth: 120 }}>
+            <Select displayEmpty inputProps={{ "aria-label": "Without label" }}>
+              <MenuItem value="">
+                <em>Tất cả</em>
+              </MenuItem>
+              <MenuItem value={"old"}>Đang chờ duyệt</MenuItem>
+              <MenuItem value={"new"}>Đang giao hàng </MenuItem>
+              <MenuItem value={"priceUp"}>Đã giao hàng</MenuItem>
+            </Select>
+          </FormControl>
+
           <OutlinedInput
             sx={{
               maxWidth: "300px",

@@ -30,6 +30,9 @@ export interface TOrders {
   limit?: number;
   orders?: Order[];
 }
+export enum orderStatus {
+  cancelOrder,
+}
 export type OrderHistory = Omit<
   Order,
   "province" | "district" | "orderDate" | "price_ship"
