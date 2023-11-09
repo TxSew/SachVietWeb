@@ -109,10 +109,6 @@ const Header = () => {
     outline: "none",
     p: 4,
     pt: 2,
-<<<<<<< HEAD
-=======
-    transition: "all 2s ease-in-out"
->>>>>>> 86fb9c437c20c357a6da55c1df880e498649451f
   };
 
   const hditem = {
@@ -582,7 +578,7 @@ const Header = () => {
                   borderRadius: "12px",
                   p: 4,
                   mt: 1,
-                  display: "none"
+                  display: "none",
                 }}
               ></Box>
             </Container>
@@ -616,7 +612,7 @@ const Header = () => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                     sx={{
-                      transition: "all 2s ease-in-out"
+                      transition: "all 2s ease-in-out",
                     }}
                   >
                     <Box sx={boxmodal}>
@@ -734,12 +730,12 @@ const Header = () => {
                         <MenuItem
                           onClick={handleClose}
                           sx={{
-                            color: "gray"
+                            color: "gray",
                           }}
                         >
                           <LockOpenIcon
                             sx={{
-                              marginRight: "8px"
+                              marginRight: "8px",
                             }}
                           />{" "}
                           Login
@@ -749,12 +745,12 @@ const Header = () => {
                         <MenuItem
                           onClick={handleClose}
                           sx={{
-                            color: "gray"
+                            color: "gray",
                           }}
                         >
                           <HowToRegIcon
                             sx={{
-                              marginRight: "8px"
+                              marginRight: "8px",
                             }}
                           />{" "}
                           Register
