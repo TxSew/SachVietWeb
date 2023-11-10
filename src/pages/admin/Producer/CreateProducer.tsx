@@ -25,7 +25,6 @@ const UpdateProducer = () => {
     formState: { errors },
   } = useForm<Producer>({
     defaultValues: {
-      status: "1",
     },
   });
 

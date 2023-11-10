@@ -167,7 +167,7 @@ const CreateProduct = () => {
               defaultValue="" // Set an initial value here
               rules={{
                 validate: validateForm,
-                // required: "Tên sản phẩm không được bỏ trống!",
+                required: "Tên sản phẩm không được bỏ trống!",
               }}
               render={({ field }) => (
                 <OutlinedInput

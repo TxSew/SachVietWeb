@@ -2,7 +2,7 @@ import PrintIcon from "@mui/icons-material/Print";
 import {
   Box,
   Button,
-  Paper,
+  Grid,
   Stack,
   Table,
   TableBody,
@@ -12,23 +12,19 @@ import {
   TableRow,
   Typography
 } from "@mui/material";
-import moment from "moment";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { numberFormat } from "../../../helpers/formatPrice";
 import HttpCartController from "../../../submodules/controllers/http/httpCartController";
-import {
-  Order,
-  OrderDetail
-} from "../../../submodules/models/OrderModel/Order";
 
 const http = new HttpCartController(BaseAPi);
 function DetailCarts() {
   const componentRef: any = useRef();
   const { id } = useParams();
-  const [DetailOrder, setDetailOrder] = useState<Order>({});
+  const [orderCurrent, setDetailOrder] = useState<any>({});
   useEffect(() => {
     fetchOrderDetail();
   }, []);
@@ -47,159 +43,192 @@ function DetailCarts() {
 
   return (
     <Box bgcolor={color.text_color}>
-      <Typography variant="h2" fontSize={"25px"}>
-        Chi tiết đơn hàng
-      </Typography>
+    
       <Box
-        ref={componentRef}
-        bgcolor={color.white}
         sx={{
-          p: 2,
-          mt: 2
+          marginTop: "18px",
         }}
       >
-        <Typography
-          variant="h2"
-          fontSize={"30px"}
-          color={color.error}
-          textTransform={"uppercase"}
-          textAlign={"center"}
-        >
-          Chi tiết đơn hàng
-        </Typography>
-        <Box>
-          <Stack direction={"row"} spacing={1}>
-            <Typography>Tên khách hàng:</Typography>
-            <Typography fontWeight={"bold"}>{DetailOrder?.fullName}</Typography>
-          </Stack>
-          <Stack direction={"row"} spacing={1}>
-            <Typography>Điện thoại:</Typography>
-            <Typography fontWeight={"bold"}>{DetailOrder.phone}</Typography>
-          </Stack>
-
-          <Stack direction={"row"} spacing={1}>
-            <Typography> Thời gian đặt hàng:</Typography>
-            <Typography fontWeight={"bold"}>
-              {moment(DetailOrder.createdAt).format("DD MMM YYYY  HH:mm:ss")}
-            </Typography>
-          </Stack>
-
-          <Stack direction={"row"} spacing={1}>
-            <Typography> Địa chỉ:</Typography>
-            <Typography fontWeight={"bold"}>{DetailOrder.address}</Typography>
-          </Stack>
-          <Stack direction={"row"} spacing={1}>
-            <Typography> Mã đơn hàng:</Typography>
-            <Typography fontWeight={"bold"}>{DetailOrder.id}</Typography>
-          </Stack>
-        </Box>
-        <Box
+        <Grid
+          container
+          maxWidth="xl"
           sx={{
-            mt: 2
+            backgroundColor: color.white,
+            padding: "20px",
           }}
         >
-          <Box border={"1px solid #eee"}>
-            <Stack
-              borderBottom={"1px solid #eee"}
-              p={2}
-              direction={"row"}
-              width={"100%"}
-              fontWeight={"bold"}
-            >
-              <Stack width={"10%"}>STT</Stack>
-              <Stack width={"50%"}>Tên sản phẩm</Stack>
-              <Stack width={"10%"}>Số lượng </Stack>
-              <Stack width={"10%"}>Giá bán</Stack>
-              <Stack width={"20%"} textAlign={"right"}>
-                Thành tiền
-              </Stack>
-            </Stack>
-
-            {DetailOrder.orderDetail?.map((e: OrderDetail, i: number) => {
-              return (
-                <Stack
-                  direction={"row"}
-                  borderBottom={"1px solid #eee"}
-                  p={2}
-                  width={"100%"}
-                >
-                  <Stack width={"10%"}>{i++}</Stack>
-                  <Stack width={"50%"}>{e.product?.title}</Stack>
-                  <Stack width={"10%"}>{e.quantity} </Stack>
-                  <Stack width={"10%"}>
-                    {Intl.NumberFormat("en-US", {
-                      currency: "USD"
-                    }).format(Number(e.price))}
-                  </Stack>
-                  <Stack width={"20%"} textAlign={"right"}>
-                    {Intl.NumberFormat("en-US", {
-                      currency: "USD"
-                    }).format(
-                      Number(
-                        e?.price && e?.quantity ? e.price * e.quantity : null
-                      )
-                    )}
-                  </Stack>
+          <Grid item xs={9}>
+            <Box>
+              <Typography
+                variant="h2"
+                fontSize={"25px"}
+                fontWeight={"bold"}
+                pt={"20px"}
+              >
+                Chi tiết đơn hàng
+              </Typography>
+              <Box
+                sx={{
+                  display: "inline-block",
+                  backgroundColor: "#F6BA71",
+                  borderRadius: "30px",
+                  fontSize: "14px",
+                  padding: "10px 15px",
+                  marginTop: "10px",
+                  fontWeight: "bold",
+                  color: "#F7941E",
+                }}
+              >
+                Đơn hàng chờ xác nhận
+              </Box>
+              <Box>
+                <Stack direction={"row"} mt={"10px"}>
+                  <Typography>Mã đơn hàng:</Typography>
+                  <Typography fontWeight={"bold"}>{orderCurrent.id}</Typography>
                 </Stack>
-              );
-            })}
-          </Box>
-          <Box>
-            <Stack
-              direction={"row"}
-              mt={2}
-              fontSize={"19px"}
-              justifyContent={"end"}
-              spacing={1}
-            >
-              <Typography variant="body1" color="initial">
-                Tổng cộng:
-              </Typography>
-              <Typography variant="body1" color="initial">
-                {Intl.NumberFormat("en-US", {
-                  currency: "USD"
-                }).format(Number(DetailOrder.money))}
-              </Typography>
-            </Stack>
-            <Stack
-              direction={"row"}
-              fontSize={"19px"}
-              justifyContent={"end"}
-              spacing={1}
-              sx={{
-                fontStyle: "italic",
-                fontSize: "13px",
-                mt: 1
-              }}
-            >
-              <Typography variant="body1" fontSize={"14px"} color="initial">
-                Phí vận chuyển:
-              </Typography>
-              <Typography variant="body1" color="initial" fontSize={"14px"}>
-                19.00
-              </Typography>
-            </Stack>
 
-            <Stack
-              direction={"row"}
-              mt={"3px"}
-              fontSize={"19px"}
-              justifyContent={"end"}
-              spacing={1}
-              color={color.error}
-            >
-              <Typography variant="body1" color="red">
-                Thành tiền
-              </Typography>
-              <Typography variant="body1" color="red">
-                {Intl.NumberFormat("en-US", {
-                  currency: "USD"
-                }).format(Number(DetailOrder.money))}
-              </Typography>
-            </Stack>
-          </Box>
-        </Box>
+                <Stack direction={"row"} mt={"10px"}>
+                  <Typography>Ngày mua:</Typography>
+                  <Typography fontWeight={"bold"}>
+                    {orderCurrent.createdAt}
+                  </Typography>
+                </Stack>
+
+                <Stack direction={"row"} mt={"10px"}>
+                  <Typography>Tổng tiền: </Typography>
+                  <Typography fontWeight={"bold"}>
+                    {numberFormat(orderCurrent.money)}
+                  </Typography>
+                </Stack>
+
+                <Stack direction={"row"} mt={"10px"}>
+                  <Typography>Thông tin xuất hóa đơn: </Typography>
+                  <Typography fontWeight={"bold"}>không có</Typography>
+                </Stack>
+              </Box>
+            </Box>
+          </Grid>
+
+          <Grid item xs={3}>
+            <Box mt={"60px"}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: color.borderColor,
+                  borderRadius: "15px",
+                  padding: "7px 30px",
+                }}
+              >
+                <Typography textTransform={"capitalize"}>
+                  Đặt hàng lại
+                </Typography>
+              </Button>
+              <Button
+                variant="OutlinedRed"
+                sx={{
+                  mt: "10px",
+                  borderRadius: "15px",
+                  padding: "7px 27px",
+                }}
+              >
+                <Typography textTransform={"capitalize"}>
+                  Hủy đơn hàng
+                </Typography>
+              </Button>
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
+
+      <Box mt={"20px"} mb={"20px"}>
+    
+        <Box
+          sx={{
+            backgroundColor: color.white,
+            padding: "20px",
+          }}
+        >
+     
+
+      
+
+      
+
+          <TableContainer>
+            <Table
+              sx={{
+                minWidth: 800,
+              }}
+              aria-label="simple tablek w"
+            >
+              <TableHead>
+                <TableRow
+                  sx={{
+                    "& > th": {
+                      fontWeight: "bold",
+                    },
+                  }}
+                >
+                  <TableCell>Hình ảnh</TableCell>
+                  <TableCell align="center">Tên sản phẩm</TableCell>
+                  <TableCell align="center">SKU</TableCell>
+                  <TableCell align="center">Giá bán</TableCell>
+                  <TableCell align="right"> SL</TableCell>
+                  <TableCell align="center">Thành tiền</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {orderCurrent?.orderDetail?.map((order: any) => {
+                  return (
+                    <TableRow>
+                      <TableCell>
+                        <img
+                          width={"80px"}
+                          height={"70px"}
+                          src={order.product.image}
+                          alt=""
+                        />
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.product.title}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.product.id}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.product.price_sale}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {order.quantity}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell>
+                        <Typography fontSize={"12px"}>
+                          {numberFormat(
+                            order.quantity * order.product.price_sale
+                          )}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
+      </Box> 
       <Button
         variant="contained"
         onClick={handlePrint}

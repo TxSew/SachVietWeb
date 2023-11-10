@@ -195,13 +195,16 @@ export default function AdminCarts() {
                   </TableCell>
                   <TableCell align="right">
                     {e.status == null ? (
-                      <Chip label="Đang chờ duyệt" />
+                    <Typography sx={{color:"gray" , fontSize:"13px"}}>Đang chờ duyệt</Typography>
                     ) : e.status == 1 ? (
-                      <Chip color="primary" label="Đang giao hàng" />
+                      <Typography sx={{
+                      color:"blue",
+                      fontSize:"13px"
+                      }}> Đang giao hàng</Typography>
                     ) : e.status == 2 ? (
-                      <Chip label=" Đã giao hàng" color="success" />
+                      <Typography  color={'green'}> Đã giao  </Typography>
                     ) : (
-                      <Chip label="Đã bị hủy" color="error" />
+                      <Typography color={"red"}>Đã bị hủy</Typography>
                     )}
                   </TableCell>
                   <TableCell align="center">
@@ -214,6 +217,10 @@ export default function AdminCarts() {
                       {e.status == null ? (
                         <>
                           <Stack
+
+                            sx={{
+                               cursor:"pointer",
+                            }}
                             onClick={async () => {
                               const updated = await http.put(Number(e.id), {
                                 status: 1,
@@ -229,6 +236,9 @@ export default function AdminCarts() {
                           </Stack>
                           <Box>
                             <Stack
+                            sx={{
+                               cursor:"pointer",
+                            }}
                               onClick={async () => {
                                 const updated = await http.put(Number(e.id), {
                                   status: 0,
@@ -240,14 +250,18 @@ export default function AdminCarts() {
                                 });
                               }}
                             >
-                              <Chip color="error" label="Hủy đơn" />
+                              <Chip color="error" label="Hủy đơn" sx={{
+                                                             cursor: "pointer"
+                              }} />
                             </Stack>
                           </Box>
                         </>
                       ) : e.status == 1 ? (
                         <>
                           <Stack onClick={() => handleUpdateOrder(e.id)}>
-                            <Chip color="success" label="Xác nhận thanh toán" />
+                            <Chip color="success" label="Xác nhận thanh toán" sx={{
+                                                        cursor: "pointer"
+                            }}/>
                           </Stack>
                           <Box>
                             <Stack
@@ -261,7 +275,10 @@ export default function AdminCarts() {
                                 });
                               }}
                             >
-                              <Chip color="error" label="Hủy đơn" />
+                              <Chip color="error" label="Hủy đơn" sx={{
+                            cursor: "pointer"
+                                 
+                              }} />
                             </Stack>
                           </Box>
                         </>
@@ -273,6 +290,9 @@ export default function AdminCarts() {
 
                   <TableCell align="center">
                     <Stack
+                            sx={{
+                               cursor:"pointer",
+                            }}
                       direction={"row"}
                       color={color.text_color}
                       spacing={2}
@@ -289,6 +309,7 @@ export default function AdminCarts() {
                         <DeleteForeverIcon
                           sx={{
                             color: "red",
+                            cursor: "pointer"
                           }}
                         />
                       </Box>
