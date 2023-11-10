@@ -9,6 +9,7 @@ export interface User extends Modified, BaseModel, Model {
   userGroup?: number;
   email?: string;
   address?: string;
+  confirmPassword?: string;
 }
 
 export interface TUser {

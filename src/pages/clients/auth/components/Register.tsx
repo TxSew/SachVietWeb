@@ -2,9 +2,14 @@ import {
   Box,
   Button,
   FormControl,
+  IconButton,
+  InputAdornment,
   OutlinedInput,
   Typography,
 } from "@mui/material";
+import TextField from '@mui/material/TextField';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -12,7 +17,16 @@ import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
 import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
 import { User } from "../../../../submodules/models/UserModel/User";
+import { useState } from "react";
+
 export const Register = () => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
   const http = new HttpAccountController(BaseAPi);
   const redirect = useNavigate();
   const {
@@ -146,13 +160,73 @@ export const Register = () => {
               {...field}
               fullWidth
               placeholder="Vui lòng nhập mật khẩu"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff sx={{
+                      fontSize:"14px"
+                    }}/> : <Visibility sx={{
+                      fontSize:"14px"
+                    }} />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
           )}
         />
-      </FormControl>
       <Typography variant="caption" color={color.error}>
         {errors.password && errors.password.message}
       </Typography>
+      </FormControl>
+
+      <FormControl
+        sx={{
+          mt: "16px",
+        }}
+        fullWidth
+      >
+        <Typography>Nhập lại mật khẩu</Typography>
+        <Controller
+          control={control}
+          defaultValue="" // Set an initial value here
+          name="confirmPassword"
+          rules={{
+            required: "Mật khẩu không được để trống!",
+          }}
+          render={({ field }) => (
+            <OutlinedInput
+              key={1}
+              {...field}
+              fullWidth
+              placeholder="Vui lòng nhập mật khẩu"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <VisibilityOff sx={{
+                      fontSize:"14px"
+                    }}/> : <Visibility sx={{
+                      fontSize:"14px"
+                    }} />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          )}
+        />
+      <Typography variant="caption" color={color.error}>
+        {errors.confirmPassword && errors.confirmPassword.message}
+      </Typography>
+      </FormControl>
       <Box mx={"auto"} textAlign={"center"}>
         <Button
           sx={{
@@ -184,3 +258,7 @@ export const Register = () => {
     </form>
   );
 };
+
+
+
+
