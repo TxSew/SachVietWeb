@@ -8,7 +8,8 @@ import "./index.css";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import HeaderOnly from "./layouts/HeaderOnly/HeaderOnly";
-import { PrivateRouter, PublicRouter } from "./routes";
+import { PrivateRouter, PublicRouter, moreNotFound } from "./routes";
+import Error from "./pages/clients/notFound/notFound";
 
 function isUserAuthenticated() {
   // Replace this with your actual logic to check if the user is authenticated and the token is valid
@@ -62,6 +63,10 @@ function App() {
             } else {
               return;
             }
+          })}
+          {moreNotFound?.map((e, i) => {
+            const Component = e.component;
+            return <Route key={i} path={e.path} element={<Component />} />;
           })}
         </Routes>
       </Router>

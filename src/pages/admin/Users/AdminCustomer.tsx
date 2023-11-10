@@ -1,5 +1,7 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import {
   Box,
   Button,
@@ -127,8 +129,8 @@ export default function AdminCustomer() {
                       spacing={2}
                       justifyContent={"end"}
                     >
-                      <Link to={`${e.id}`}>
-                        <EditIcon
+                      <Link to={`/admin/orders/detail/${e.id}`}>
+                        <VisibilityIcon
                           sx={{
                             color: "green",
                           }}

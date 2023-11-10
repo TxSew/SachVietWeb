@@ -25,6 +25,7 @@ import HttpProductController from "../../../submodules/controllers/http/httpProd
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
+import { validateForm } from "../../../helpers/validateForm";
 
 var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
@@ -32,26 +33,23 @@ const httpProduct = new HttpProductController(BaseAPi);
 const UpdateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);
   const [url, setUrl] = useState<string[]>([]);
-  const [product, setProduct] = useState<Product>({});
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
   const [isLoadings, setIsLoadings] = useState(false);
+  const [product, setProduct] = useState<Product>({});
+
   const [isLoading, setIsLoading] = useState(false);
   const editorRef = useRef<any>(null);
-  const redirect = useNavigate();
   const id = useParams();
   const ID: any = id.id;
+  const redirect = useNavigate();
+
   useEffect(() => {
     fetchProducer();
     fetchCategory();
     fetchProduct();
   }, []);
-  const fetchProduct = async () => {
-    const product: Product = await httpProduct.getOneUpdate(ID);
-    if (product) {
-      setProduct(product);
-    }
-  };
+
   const fetchProducer = async () => {
     try {
       const producer: any = await http.getAll();
@@ -66,6 +64,12 @@ const UpdateProduct = () => {
       setCategory(category);
     } catch (err) {
       console.error(err);
+    }
+  };
+  const fetchProduct = async () => {
+    const product: Product = await httpProduct.getOneUpdate(ID);
+    if (product) {
+      setProduct(product);
     }
   };
   const handleUpdateProduct = async (data: any) => {
@@ -101,13 +105,13 @@ const UpdateProduct = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              setUrls((prev) => [...prev, url]);
+              setUrl((prev) => [...prev, url]);
               setIsLoadings(false);
               return url;
             });
         })
         .catch((err) => {
-          alert(err);
+          console.log(err);
         });
     }
   };
@@ -124,7 +128,7 @@ const UpdateProduct = () => {
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
-              setUrl((prev) => [...prev, url]);
+              setUrls((prev) => [...prev, url]);
               setIsLoading(false);
               return url;
             });
@@ -138,7 +142,8 @@ const UpdateProduct = () => {
     handleSubmit,
     control,
     register,
-    formState: { errors },
+    watch,
+    formState: { errors, isDirty, isValid },
   } = useForm<Product>({
     defaultValues: {
       producerID: undefined,
@@ -150,7 +155,7 @@ const UpdateProduct = () => {
       <form action="" onSubmit={handleSubmit(handleUpdateProduct)}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
-            Cập nhật sản phẩm {ID}
+            Cập nhật sản phẩm
           </Typography>
           <Button type="submit" variant="contained">
             Lưu
@@ -172,7 +177,8 @@ const UpdateProduct = () => {
               name="title"
               defaultValue="" // Set an initial value here
               rules={{
-                required: "Tên sản phẩm không được bỏ trống!",
+                validate: validateForm,
+                // required: "Tên sản phẩm không được bỏ trống!",
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -184,7 +190,7 @@ const UpdateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={product.title}
+                  placeholder="Vui lòng nhập Ten của bạn!"
                 />
               )}
             />
@@ -359,15 +365,19 @@ const UpdateProduct = () => {
           <Grid xs={12} md={3.8}>
             <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
               Giá gốc
-              <Typography color={"red"} fontWeight={"bold"}>
-                (*)
-              </Typography>
             </Typography>
             <Controller
               control={control}
               name="price"
               rules={{
-                required: "Vui lòng nhập giá gốc",
+                required: {
+                  value: true,
+                  message: "Vui lòng nhâp giá gốc",
+                },
+                minLength: {
+                  value: 3,
+                  message: "Nhập số tiền gốc phải bắt buộc 3 số trở lên",
+                },
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -380,7 +390,7 @@ const UpdateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={String(product?.price)}
+                  placeholder="Giá không được để trống!"
                 />
               )}
             />
@@ -394,16 +404,21 @@ const UpdateProduct = () => {
               fontSize={"18px"}
               fontWeight={"bold"}
             >
-              Khuyến mãi{" "}
-              <Typography color={"red"} fontWeight={"bold"}>
-                (*)
-              </Typography>
+              Khuyến mãi
             </Typography>
             <Controller
               control={control}
               name="sale"
               rules={{
-                required: "Vui lòng nhập % khuyến mãi",
+                maxLength: {
+                  value: 2,
+                  message: "Nhập số giảm giá không được nhập quá 99%",
+                },
+
+                minLength: {
+                  value: 1,
+                  message: "Nhập số giảm giá trên 1%",
+                },
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -416,7 +431,7 @@ const UpdateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={String(product.sale)}
+                  placeholder="Giá không được để trống!"
                 />
               )}
             />
@@ -448,7 +463,7 @@ const UpdateProduct = () => {
                     },
                   }}
                   fullWidth
-                  placeholder={String(product.quantity)}
+                  placeholder="Vui lòng nhập Ten của bạn!"
                 />
               )}
             />
@@ -476,7 +491,7 @@ const UpdateProduct = () => {
               fullWidth
               placeholder="Vui lòng nhập Ten của bạn!"
             />
-            {isLoading ? (
+            {isLoadings ? (
               <Box
                 sx={{
                   ml: 2,
@@ -522,7 +537,7 @@ const UpdateProduct = () => {
               placeholder="Vui lòng nhập Ten của bạn!"
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
-              {isLoadings ? (
+              {isLoading ? (
                 <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
               ) : urls.length > 0 ? (
                 // Nếu mảng urls có chứa hình ảnh
