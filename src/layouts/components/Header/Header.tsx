@@ -36,7 +36,12 @@ import Typography from "@mui/material/Typography/Typography";
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, NavLink } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  createSearchParams,
+  useNavigate,
+} from "react-router-dom";
 import Image from "../../../components/Image/Image";
 import { BaseAPi } from "../../../configs/BaseApi";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
@@ -45,6 +50,8 @@ import { RootState } from "../../../redux/storeClient";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { User } from "../../../submodules/models/UserModel/User";
+import { convertText } from "../../../helpers/convertText";
+
 const Header = () => {
   const http = new HttpProductController(BaseAPi);
   const httpCategory = new HttpCategoryController(BaseAPi);
@@ -158,6 +165,27 @@ const Header = () => {
       setSearch(event.target.value);
     }
     // setSearch(event.target.value);
+  };
+  const navigate = useNavigate();
+  const handleKeydown = async (event: any) => {
+    const value = convertText(event.target.value);
+    if (event.key === "Enter") {
+      navigate({
+        pathname: "/category",
+        search: createSearchParams({
+          q: value,
+        }).toString(),
+      });
+      handleCloseSearch();
+    }
+  };
+  const handleSearch = () => {
+    navigate({
+      pathname: "/category",
+      search: createSearchParams({
+        q: search,
+      }).toString(),
+    });
   };
   return (
     <>
@@ -465,10 +493,12 @@ const Header = () => {
                       }}
                       onInput={handleChangeValue}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
+                      onKeyDown={handleKeydown}
                     />
 
                     <Typography
                       variant="caption"
+                      onClick={handleSearch}
                       sx={{
                         p: "5px 20px",
                         border: "none",
@@ -477,6 +507,7 @@ const Header = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         borderRadius: "5px",
+                        cursor: "pointer",
                       }}
                     >
                       <SearchIcon
@@ -569,9 +600,6 @@ const Header = () => {
                   height: "450px",
                   position: "absolute",
                   zIndex: 10,
-                  // boxShadow: " rgba(100, 100, 111, 0.2) 0px 7px 29px 0px",
-                  // boxShadow:
-                  // "rgba(17, 17, 26, 0.1) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 48px",
                   boxShadow:
                     " rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px",
                   border: "1px solid #eee",

@@ -11,6 +11,7 @@ import {
   OutlinedInput,
   Pagination,
   Select,
+  SelectChangeEvent,
   Stack,
   Typography,
 } from "@mui/material";
@@ -28,13 +29,16 @@ import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpCartController from "../../../submodules/controllers/http/httpCartController";
-import { Order, TOrders } from "../../../submodules/models/OrderModel/Order";
+import { Order } from "../../../submodules/models/OrderModel/Order";
+import { Label } from "@mui/icons-material";
 
 const http = new HttpCartController(BaseAPi);
 export default function AdminCarts() {
   const [carts, setCarts] = React.useState<Order[]>([] as Order[]);
   const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = React.useState<number>(1);
+  const [search, setSearch] = React.useState<string>("");
+
   React.useEffect(() => {
     fetchData(page);
   }, [page]);
@@ -63,7 +67,19 @@ export default function AdminCarts() {
   const handleDelete = async (element: any) => {
     const sss = await http.delete(Number(element.id));
   };
+  const handleChangeSort = (event: SelectChangeEvent) => {
+    console.log(event.target.value);
+    let status = event.target.value;
 
+    const props = {
+      status: event.target.value,
+    };
+    http.getAll(props).then((result) => {
+      if (result.orders) {
+        setCarts(result.orders);
+      }
+    });
+  };
   return (
     <Grid>
       <Grid mt={0} width={"100%"}>
@@ -83,27 +99,22 @@ export default function AdminCarts() {
             Danh sách đơn hàng
           </Typography>
           <FormControl sx={{ m: 1, minWidth: 120 }}>
-            <Select displayEmpty inputProps={{ "aria-label": "Without label" }}>
+            <Label>Sắp xếp:</Label>
+            <Select
+              displayEmpty
+              defaultValue={""}
+              inputProps={{ "aria-label": "Without label" }}
+              onChange={handleChangeSort}
+            >
               <MenuItem value="">
                 <em>Tất cả</em>
               </MenuItem>
-              <MenuItem value={"old"}>Đang chờ duyệt</MenuItem>
-              <MenuItem value={"new"}>Đang giao hàng </MenuItem>
-              <MenuItem value={"priceUp"}>Đã giao hàng</MenuItem>
+              <MenuItem value={`${null}`}>Đang chờ duyệt</MenuItem>
+              <MenuItem value={1}>Đang giao hàng </MenuItem>
+              <MenuItem value={2}>Đã giao hàng</MenuItem>
             </Select>
           </FormControl>
 
-          <OutlinedInput
-            sx={{
-              maxWidth: "300px",
-              mt: 1,
-              "& > input": {
-                p: "7px",
-              },
-            }}
-            fullWidth
-            placeholder="Tìm kiếm sản phẩm..."
-          />
           <Link to={"/admijk/"}>
             <Button variant="contained">Thùng rác</Button>
           </Link>
@@ -115,7 +126,11 @@ export default function AdminCarts() {
             }}
             aria-label="simple tablek w"
           >
-            <TableHead>
+            <TableHead
+              sx={{
+                border: "1px solid #eee",
+              }}
+            >
               <TableRow
                 sx={{
                   "& > th": {
@@ -123,8 +138,34 @@ export default function AdminCarts() {
                   },
                 }}
               >
-                <TableCell>Mã đơn hàng</TableCell>
-                <TableCell align="center">Khách hàng</TableCell>
+                <TableCell>
+                  Mã đơn hàng
+                  <OutlinedInput
+                    sx={{
+                      display: "block",
+                      maxWidth: "100px",
+                      mt: 1,
+                      "& > input": {
+                        p: "7px",
+                      },
+                    }}
+                    fullWidth
+                  />
+                </TableCell>
+                <TableCell>
+                  Khách hàng
+                  <OutlinedInput
+                    sx={{
+                      display: "block",
+                      maxWidth: "100px",
+                      mt: 1,
+                      "& > input": {
+                        p: "7px",
+                      },
+                    }}
+                    fullWidth
+                  />
+                </TableCell>
                 <TableCell align="center">Tổng tiền</TableCell>
                 <TableCell align="center">Ngày tạo hóa đơn</TableCell>
                 <TableCell align="right">Trạng thái</TableCell>

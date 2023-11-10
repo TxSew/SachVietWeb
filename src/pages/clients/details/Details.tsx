@@ -43,10 +43,15 @@ export const Details = () => {
   const { id } = useParams();
   const [Detail, setDetail] = useState<Product>({});
   const Id: any = id;
+  const [image, setImage] = useState<string>("");
+
   useEffect(() => {
-    // 👇️ scroll to top on page load
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [id]);
+  useEffect(() => {
+    FetchProductOne();
+  }, [id]);
+
   const FetchProductOne = async () => {
     try {
       const detailValue = await http.getOne(Id);
@@ -58,16 +63,19 @@ export const Details = () => {
       console.log(err);
     }
   };
+
   const handleAddToCart = (detail: any) => {
     dispatch(addToCart(detail));
   };
+
   const handleOrder = (detail: any) => {
     dispatch(addToCart(detail));
     redirect("/cart");
   };
-  useEffect(() => {
-    FetchProductOne();
-  }, [id]);
+  const handleChangeImage = (e: any) => {
+    setImage(e.image);
+    // e.image = image;
+  };
   const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -129,6 +137,7 @@ export const Details = () => {
                                   border: "2px solid gray",
                                   marginBottom: "2px",
                                 }}
+                                onClick={() => handleChangeImage(e)}
                                 width={"60px"}
                                 height={"60px"}
                               />
@@ -149,7 +158,7 @@ export const Details = () => {
                     >
                       <Box sx={{ padding: "0 64px 0 0" }}>
                         <img
-                          src={Detail?.image}
+                          src={image ? image : Detail?.image}
                           id={`/products/${Detail.slug}`}
                           alt=""
                           width={"100%"}

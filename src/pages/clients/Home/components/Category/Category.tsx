@@ -7,14 +7,28 @@ import useLoading from "../../../../../hooks/useLoading/useLoading";
 import useMedia from "../../../../../hooks/useMedia/useMedia";
 import HttpCategoryController from "../../../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../../../submodules/models/ProductModel/Category";
+import {
+  createSearchParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 const http = new HttpCategoryController(BaseAPi);
 const CategoryNav = () => {
+  const redirect = useNavigate();
   const [category, SetCategory] = useState<Category[]>([]);
   const { isLoading, startLoading, stopLoading } = useLoading();
   useEffect(() => {
     fetchcategory();
   }, []);
 
+  const RedirectProductPage = (props: any) => {
+    redirect({
+      pathname: "/category",
+      search: createSearchParams({
+        category: props,
+      }).toString(),
+    });
+  };
   const fetchcategory = async () => {
     startLoading();
     try {
@@ -104,11 +118,14 @@ const CategoryNav = () => {
                       isMediumMD
                         ? {
                             width: "20%",
+                            cursor: "pointer",
                           }
                         : {
                             width: "10%",
+                            cursor: "pointer",
                           }
                     }
+                    onClick={() => RedirectProductPage(e.slug)}
                   >
                     <Box
                       sx={{

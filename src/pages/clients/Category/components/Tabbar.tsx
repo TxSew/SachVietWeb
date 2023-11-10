@@ -1,14 +1,8 @@
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import {
   Box,
   Checkbox,
-  Collapse,
   FormControlLabel,
   FormGroup,
-  List,
-  ListItemButton,
-  ListItemText,
-  ListSubheader,
   Typography,
 } from "@mui/material";
 import React from "react";

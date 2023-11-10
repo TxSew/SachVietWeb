@@ -10,33 +10,43 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+
 import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import ProductItem from "../../../components/ProductItem/ProductItem";
 import { BaseAPi } from "../../../configs/BaseApi";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import Tabbar from "./components/Tabbar";
+import { convertText } from "../../../helpers/convertText";
 const http = new HttpProductController(BaseAPi);
 function Category() {
-  const [age, setAge] = React.useState("");
-  const [page, setPage] = React.useState(1);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [categoryParams, setCategoryParams] = useSearchParams();
+
+  const [page, setPage] = React.useState<number>(1);
   const [count, setCount] = useState<number>(1);
   const [products, setProducts] = React.useState<Product[]>([] as Product[]);
   const [sortBy, setSortBy] = React.useState("createdAt");
   const [sortWith, setSortWith] = React.useState("asc");
   const [sort, setSort] = React.useState("");
+
   useEffect(() => {
+    const value: any = searchParams.get("q");
+    const searchValue = convertText(value);
+    const categorySearch = searchParams.get("category");
     const props = {
       sortBy,
       sortWith,
       page,
-      limit: 1,
+      limit: 12,
+      keyword: searchValue,
+      categoryFilter: categorySearch,
     };
     fetchProducts(props);
-  }, [page, sortBy, sortWith]);
+  }, [page, sortBy, sortWith, searchParams, categoryParams]);
 
-  useEffect(() => {}, []);
   const fetchProducts = async (props: any) => {
     const products: any = await http.getAll(props);
     if (products) {
@@ -44,13 +54,11 @@ function Category() {
       setCount(products.totalPage);
     }
   };
+
   const handleChanges = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value as string);
-  };
   const handleChangeSort = (event: SelectChangeEvent) => {
     if (event.target.value == "priceDown") {
       setSortBy("price_sale");
@@ -91,7 +99,7 @@ function Category() {
                     inputProps={{ "aria-label": "Without label" }}
                   >
                     <MenuItem value="">
-                      <em>None</em>
+                      <em>Tất cả</em>
                     </MenuItem>
                     <MenuItem value={"old"}>Cũ nhất</MenuItem>
                     <MenuItem value={"new"}>Mới nhất</MenuItem>
@@ -105,7 +113,7 @@ function Category() {
               <Stack direction={"row"} flexWrap={"wrap"}>
                 {products.map((item: Product, index) => {
                   return (
-                    <Grid item xs={3}>
+                    <Grid key={item.id} item xs={3}>
                       <ProductItem products={item} />
                     </Grid>
                   );
