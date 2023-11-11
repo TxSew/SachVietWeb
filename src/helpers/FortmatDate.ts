@@ -9,6 +9,7 @@ export function formatDate(inputDate: any) {
     minute: "numeric",
     second: "numeric",
   };
+
   return new Date(inputDate).toLocaleDateString(undefined, options);
 }
 
