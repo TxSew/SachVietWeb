@@ -11,6 +11,13 @@ export interface User extends Modified, BaseModel, Model {
   address?: string;
   confirmPassword?: string;
 }
+export interface ForgotPassword {
+  otp: string;
+  email: string;
+  token?: string;
+  password: string;
+  confirmPassword?: string;
+}
 
 export interface TUser {
   totalPage: number;

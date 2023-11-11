@@ -1,15 +1,16 @@
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import {
   Box,
   Button,
+  CircularProgress,
   FormControl,
   IconButton,
   InputAdornment,
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import TextField from '@mui/material/TextField';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -17,14 +18,18 @@ import { color } from "../../../../Theme/color";
 import { BaseAPi } from "../../../../configs/BaseApi";
 import HttpAccountController from "../../../../submodules/controllers/http/httpAccountController";
 import { User } from "../../../../submodules/models/UserModel/User";
-import { useState } from "react";
 
 export const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+  const handelClickShowConfirmPassword = () =>
+    setShowConfirmPassword((show) => !show);
 
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
   };
   const http = new HttpAccountController(BaseAPi);
@@ -32,26 +37,34 @@ export const Register = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    watch,
   } = useForm<User>({
     mode: "all",
   });
+
+  const validatePasswordConfirmation = (value: any) => {
+    const password = control._getWatch("password");
+    return value === password || "Mật khẩu nhập lại không khớp!";
+  };
   const RegisterSubmit = async (register: User) => {
-    console.log(register);
     try {
       const Sign = await http.register(register);
       if (Sign) {
-        toast.success("Register Success", {
-          position: "bottom-right",
+        toast.success("Đăng kí tài khoản thành công", {
+          position: "top-right",
         });
         localStorage.setItem("user", JSON.stringify(register));
-        redirect("/");
       }
     } catch (err: any) {
-      if (err.response.data.message === "Email already exists") {
-        toast.error("Tai khoan email ton tai", {
-          position: "bottom-right",
-        });
+      if (err.response.data.message === "email already exists") {
+        toast.error(
+          "Tài khoản email của bạn đã tồn tại, vui lòng thử lại tài khoản khác!",
+          {
+            position: "top-right",
+            delay: 1,
+          }
+        );
       }
     }
   };
@@ -126,6 +139,10 @@ export const Register = () => {
           name="phone"
           rules={{
             required: "Vui lòng nhập số diện thoại!",
+            pattern: {
+              value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+              message: "Số điện thoại không hợp lệ!",
+            },
           }}
           render={({ field }) => (
             <OutlinedInput
@@ -153,6 +170,14 @@ export const Register = () => {
           name="password"
           rules={{
             required: "Mật khẩu không được để trống!",
+            minLength: {
+              value: 5,
+              message: "Mật khẩu yêu cầu 5 kí tự trở lên!",
+            },
+            maxLength: {
+              value: 30,
+              message: "Mật khẩu yêu cầu 30 kí tự trở xuống!",
+            },
           }}
           render={({ field }) => (
             <OutlinedInput
@@ -160,7 +185,7 @@ export const Register = () => {
               {...field}
               fullWidth
               placeholder="Vui lòng nhập mật khẩu"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -168,20 +193,28 @@ export const Register = () => {
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
-                    {showPassword ? <VisibilityOff sx={{
-                      fontSize:"14px"
-                    }}/> : <Visibility sx={{
-                      fontSize:"14px"
-                    }} />}
+                    {showPassword ? (
+                      <VisibilityOff
+                        sx={{
+                          fontSize: "14px",
+                        }}
+                      />
+                    ) : (
+                      <Visibility
+                        sx={{
+                          fontSize: "14px",
+                        }}
+                      />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
             />
           )}
         />
-      <Typography variant="caption" color={color.error}>
-        {errors.password && errors.password.message}
-      </Typography>
+        <Typography variant="caption" color={color.error}>
+          {errors.password && errors.password.message}
+        </Typography>
       </FormControl>
 
       <FormControl
@@ -196,7 +229,8 @@ export const Register = () => {
           defaultValue="" // Set an initial value here
           name="confirmPassword"
           rules={{
-            required: "Mật khẩu không được để trống!",
+            required: "Mật khẩu không được để  trống!",
+            validate: validatePasswordConfirmation,
           }}
           render={({ field }) => (
             <OutlinedInput
@@ -204,28 +238,36 @@ export const Register = () => {
               {...field}
               fullWidth
               placeholder="Vui lòng nhập mật khẩu"
-              type={showPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
+                    onClick={handelClickShowConfirmPassword}
                     onMouseDown={handleMouseDownPassword}
                   >
-                    {showPassword ? <VisibilityOff sx={{
-                      fontSize:"14px"
-                    }}/> : <Visibility sx={{
-                      fontSize:"14px"
-                    }} />}
+                    {showPassword ? (
+                      <VisibilityOff
+                        sx={{
+                          fontSize: "14px",
+                        }}
+                      />
+                    ) : (
+                      <Visibility
+                        sx={{
+                          fontSize: "14px",
+                        }}
+                      />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
             />
           )}
         />
-      <Typography variant="caption" color={color.error}>
-        {errors.confirmPassword && errors.confirmPassword.message}
-      </Typography>
+        <Typography variant="caption" color={color.error}>
+          {errors.confirmPassword && errors.confirmPassword.message}
+        </Typography>
       </FormControl>
       <Box mx={"auto"} textAlign={"center"}>
         <Button
@@ -234,8 +276,9 @@ export const Register = () => {
           }}
           type="submit"
           variant="outlined"
+          disabled={isSubmitting}
         >
-          Đăng kí
+          {isSubmitting ? <CircularProgress size={24} /> : "Đăng kí"}
         </Button>
         <br />
         <Box pt={3} sx={{}}>
@@ -258,7 +301,3 @@ export const Register = () => {
     </form>
   );
 };
-
-
-
-

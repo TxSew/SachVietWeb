@@ -1,19 +1,14 @@
-import {
-  Route,
-  BrowserRouter as Router,
-  Routes,
-  useNavigate,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./index.css";
 import AdminLayout from "./layouts/AdminLayout/AdminLayout";
 import DefaultLayout from "./layouts/DefaultLayout/DefaultLayout";
 import HeaderOnly from "./layouts/HeaderOnly/HeaderOnly";
 import { PrivateRouter, PublicRouter, moreNotFound } from "./routes";
-import Error from "./pages/clients/notFound/notFound";
+import { useEffect, useState } from "react";
 
 function isUserAuthenticated() {
   // Replace this with your actual logic to check if the user is authenticated and the token is valid
-  const token = localStorage.getItem("token"); // Retrieve the JWT token from storage
+  const token = localStorage.getItem("role"); // Retrieve the JWT token from storage
   if (token) {
     // Verify the token's validity using your JWT library
     return true;
@@ -22,6 +17,11 @@ function isUserAuthenticated() {
 }
 
 function App() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // Retrieve the JWT token from storage
+  }, []);
+
   return (
     <div className="App">
       <Router>

@@ -7,7 +7,7 @@ class HttpAccountController {
     // Create an Axios instance with the provided configuration
     this.axiosInstance = axios.create(axiosConfig);
     const token: any = localStorage.getItem("token");
-    const jwtToken = JSON.parse(token);
+    const jwtToken = JSON.parse(token!);
     if (jwtToken) {
       this.axiosInstance.defaults.headers.common[
         "Authorization"
@@ -54,6 +54,33 @@ class HttpAccountController {
       return response.data;
     } catch (error) {
       throw error;
+    }
+  }
+  async sendOtp(props: string) {
+    try {
+      const response = await this.axiosInstance.post(
+        `forgotPassword/send-otp-email`,
+        {
+          email: props,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+  async verifyOtpAndResetPassword(props: any) {
+    try {
+      const response = await this.axiosInstance.post(
+        `forgotPassword/verify-otp-email-resetPassword`,
+        {
+          ...props,
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.log(error);
     }
   }
 }

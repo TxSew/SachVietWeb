@@ -2,7 +2,6 @@ import { Box, Container, Grid, Tab, Tabs } from "@mui/material";
 import React from "react";
 import Login from "./components/Login";
 import { Register } from "./components/Register";
-import ChangePassword from "./components/changePassword";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -69,24 +68,18 @@ export default function Auth() {
                 >
                   <Tab
                     sx={{
-
-                      width: "50%"
-
+                      width: "50%",
                     }}
                     label="Đăng nhập"
                     {...a11yProps(0)}
                   />
                   <Tab
                     sx={{
-
-                      width: "50%"
-
+                      width: "50%",
                     }}
                     label="Đăng kí"
                     {...a11yProps(1)}
                   />
-
-
                 </Tabs>
               </Box>
             </Box>

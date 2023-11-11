@@ -9,7 +9,7 @@ class HttpDiscountController {
   constructor(axiosConfig: AxiosConfig) {
     // Create an Axios instance with the provided configuration
     this.axiosInstance = axios.create(axiosConfig);
-    const token: any = localStorage.getItem("token");
+    const token: any = localStorage.getItem("token"!);
     const jwtToken = JSON.parse(token);
     if (jwtToken) {
       this.axiosInstance.defaults.headers.common[

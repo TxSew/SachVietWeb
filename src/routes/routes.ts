@@ -29,8 +29,7 @@ import Payment from "../pages/clients/cart/payment/Payment";
 import { Details } from "../pages/clients/details/Details";
 import Sales from "../pages/clients/sales/Sales";
 
-import ChangePassword from "../pages/clients/auth/components/changePassword";
-
+import ForgotPasswordPage from "../pages/clients/auth/components/forgotPassword";
 import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Error from "../pages/clients/notFound/notFound";
 
@@ -87,7 +86,7 @@ const PublicRouter = [
   },
   {
     path: "/auth/ChangePassword",
-    component: ChangePassword,
+    component: ForgotPasswordPage,
   },
   { path: "/admin", component: Auth },
   { path: "/sales", component: Sales },
