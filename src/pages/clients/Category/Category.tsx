@@ -34,7 +34,7 @@ function Category() {
 
   useEffect(() => {
     const value: any = searchParams.get("q");
-    const searchValue = convertText(value);
+    const searchValue = (value);
     const categorySearch = searchParams.get("category");
     const props = {
       sortBy,
@@ -44,11 +44,13 @@ function Category() {
       keyword: searchValue,
       categoryFilter: categorySearch,
     };
+    console.log( props)
     fetchProducts(props);
   }, [page, sortBy, sortWith, searchParams, categoryParams]);
 
   const fetchProducts = async (props: any) => {
     const products: any = await http.getAll(props);
+    console.log("🚀 ~ file: Category.tsx:53 ~ fetchProducts ~ products:", products)
     if (products) {
       setProducts(products.products);
       setCount(products.totalPage);

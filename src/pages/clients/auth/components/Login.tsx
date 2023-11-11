@@ -159,9 +159,6 @@ const Login = () => {
           {errors.password && errors.password.message}
         </Typography>
       </FormControl>
-      <Typography variant="caption" color={color.error}>
-        {errors.password && errors.password.message}
-      </Typography>
       <Typography
         variant="caption"
         display={"flex"}
