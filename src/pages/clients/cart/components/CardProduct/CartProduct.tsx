@@ -18,6 +18,23 @@ import {
 import { RootState } from "../../../../../redux/storeClient";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
 import { numberFormat } from "../../../../../helpers/formatPrice";
+import * as React from "react";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Slide from "@mui/material/Slide";
+import { TransitionProps } from "@mui/material/transitions";
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const CartProduct = () => {
   const dispatch = useDispatch();
@@ -51,6 +68,15 @@ const CartProduct = () => {
   };
   const handleIncrement = (id: any) => {
     dispatch(addToCart(id));
+  };
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   return (
@@ -177,13 +203,81 @@ const CartProduct = () => {
                           : "N/A" /* Replace "N/A" with your preferred placeholder */
                       }
                     </Typography>
-                    <DeleteForeverIcon
-                      onClick={() => handleRemove(element.id)}
-                      sx={{
-                        fontSize: "17px",
-                        cursor: "pointer"
-                      }}
-                    />
+                    <React.Fragment>
+                      <DeleteForeverIcon
+                        onClick={handleClickOpen}
+                        sx={{
+                          fontSize: "17px",
+                          cursor: "pointer"
+                        }}
+                      />
+                      <Dialog
+                        open={open}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={handleClose}
+                        aria-labelledby="customized-dialog-title"
+                      >
+                        <DialogContent>
+                          <DialogContentText
+                            id="alert-dialog-slide-description"
+                            textAlign={"center"}
+                            padding={"0 24px "}
+                            sx={{
+                              color: "red"
+                            }}
+                          >
+                            <DeleteForeverIcon
+                              sx={{
+                                fontSize: "56px",
+                                color: "rgb(201, 33, 39)"
+                              }}
+                            />
+                            <DialogTitle fontSize={"16px"}>
+                              {"Bạn chắc chắn muốn xóa sản phẩm này ?"}
+                            </DialogTitle>
+                          </DialogContentText>
+                        </DialogContent>
+                        <Box
+                          display={"flex"}
+                          paddingBottom={"24px"}
+                          justifyContent={"space-around"}
+                        >
+                          <Button
+                            sx={{
+                              padding: "8px 16px",
+                              border: "1px solid #ccc",
+                              borderRadius: "12px",
+                              color: "black",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              width: "96px"
+                            }}
+                            onClick={handleClose}
+                          >
+                            Hủy
+                          </Button>
+                          <Button
+                            sx={{
+                              padding: "8px 16px",
+                              border: "1px solid red",
+                              borderRadius: "12px",
+                              background: "red",
+                              color: "white",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              width: "96px",
+                              ":hover": {
+                                backgroundColor: "rgb(201, 33, 39)"
+                              }
+                            }}
+                            onClick={() => handleRemove(element.id)}
+                          >
+                            Đồng ý
+                          </Button>
+                        </Box>
+                      </Dialog>
+                    </React.Fragment>
                   </Stack>
                 </Stack>
               );
