@@ -33,6 +33,8 @@ import HttpProductController from "../../../submodules/controllers/http/httpProd
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { useDownloadExcel } from "react-export-table-to-excel";
+import DialogConfirm from "../../../components/Dialog/Dialog";
+import { toast } from "react-toastify";
 
 const http = new HttpProductController(BaseAPi);
 const httpCategory = new HttpCategoryController(BaseAPi);
@@ -40,14 +42,10 @@ export default function AdminProduct() {
   const [Products, setProducts] = React.useState<Product[]>([]);
   const [open, setOpen] = React.useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // const handleOpen = () => setOpen(true);
+  const handleToggle = () => setOpen(pre => !pre);
 
-  const handleChildButtonClick = (id: any) => {
-    // Handle the button click in the parent component.
-    // You can perform any actions you want here.
-    handleOpen();
-  };
+
   const tableRef = React.useRef<any>(null);
   const { onDownload } = useDownloadExcel({
     currentTableRef: tableRef.current,
@@ -102,12 +100,12 @@ export default function AdminProduct() {
 
   // remove item
   const handleDelete = async (element: any) => {
-    // const destroy = await http.delete(element.id);
-    // toast.error("Delete item successfully", {
-    //   position: "bottom-right",
-    // });
-    // const product = Products.filter((e) => e.id !== element.id);
-    // setProducts(product);
+    const destroy = await http.delete(element);
+    toast.error("Delete item successfully", {
+      position: "bottom-right",
+    });
+    const product = Products.filter((e) => e.id !== element);
+    setProducts(product);
   };
   const handleChangeValue = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -297,14 +295,15 @@ export default function AdminProduct() {
                           }}
                         />
                       </Link>
-                      <Box onClick={() => handleChildButtonClick(e.id)}>
+                      <Box>
                         <DeleteForeverIcon
                           sx={{
                             color: "red",
                           }}
+                          onClick={() => handleToggle()}
                         />
                       </Box>
-                      <ToastModal onClose={handleClose} open={open} />
+                      <DialogConfirm message="Bạn chắc chắn muốn xóa sản phẩm này ?" open={open}   onClose={handleToggle} onDelete={handleDelete} />
                     </Stack>
                   </TableCell>
                 </TableRow>

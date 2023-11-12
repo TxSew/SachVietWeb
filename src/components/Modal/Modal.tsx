@@ -20,7 +20,9 @@ const style = {
 
 const ToastModal: React.FC<ToastModalProps> = (props) => {
   const { open, onClose } = props;
-  const handelDelete = () => {};
+  const handelDelete = () => {
+    
+  };
   return (
     <div>
       <Modal
