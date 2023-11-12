@@ -7,36 +7,63 @@ import {
   Typography,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 const http = new HttpDiscountController(BaseAPi);
 const UpdateDiscount = () => {
+  const [discount, setDiscount] = useState<Discount>({});
+  const { id } = useParams();
   const redirect = useNavigate();
   const {
     handleSubmit,
     control,
-    register,
-    watch,
+    setValue,
     formState: { errors, isDirty, isValid },
   } = useForm<Discount>({
     defaultValues: {
       status: "1",
     },
   });
+  useEffect(() => {
+    setValue("code", discount.code);
+    setValue("discount", discount.discount);
+    setValue("expiration_date", discount.expiration_date);
+    setValue("limit_number", discount.limit_number);
+    setValue("payment_limit", discount.payment_limit);
+    setValue("desc", discount.desc);
+  }, [
+    discount.code,
+    discount.desc,
+    discount.limit_number,
+    discount.number_used,
+    discount.expiration_date,
+    setValue,
+  ]);
+  useEffect(() => {
+    http.getOne(Number(id)).then((res) => {
+      if (res) setDiscount(res);
+    });
+  }, []);
 
   // console.log(watch().desc);
   //  upload image file base
-  const handleAddDiscount = async (data: Discount) => {
-    const addDiscount = await http.post(data);
-    console.log(addDiscount);
+  const handelUpdateDiscount = async (data: Discount) => {
+    await http.put(Number(id), data);
+
+    toast.success("Cập nhật mã giảm giá thành công", {
+      position: "top-right",
+    });
+    redirect("/admin/discount");
   };
 
   return (
     <Box>
-      <form action="" onSubmit={handleSubmit(handleAddDiscount)}>
+      <form action="" onSubmit={handleSubmit(handelUpdateDiscount)}>
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
             Cập nhật Mã giảm giá
@@ -66,6 +93,9 @@ const UpdateDiscount = () => {
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -99,6 +129,9 @@ const UpdateDiscount = () => {
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -130,6 +163,9 @@ const UpdateDiscount = () => {
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -161,6 +197,9 @@ const UpdateDiscount = () => {
               render={({ field }) => (
                 <OutlinedInput
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -190,6 +229,9 @@ const UpdateDiscount = () => {
                 <OutlinedInput
                   type="date"
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -221,8 +263,11 @@ const UpdateDiscount = () => {
               }}
               render={({ field }) => (
                 <OutlinedInput
-                  type="number"
+                  type="text"
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {

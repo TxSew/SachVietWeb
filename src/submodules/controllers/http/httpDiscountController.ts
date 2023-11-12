@@ -36,9 +36,9 @@ class HttpDiscountController {
       throw error;
     }
   }
-  async getOne(slug: string): Promise<any> {
+  async getOne(id: number) {
     try {
-      const response = await this.axiosInstance.get(`products/${slug}`);
+      const response = await this.axiosInstance.get(`discount/${id}`);
       return response.data;
     } catch (err) {
       throw err;
@@ -68,7 +68,7 @@ class HttpDiscountController {
   async put(id: number, data: any): Promise<any> {
     try {
       const response = await this.axiosInstance.put(
-        `products/update/${id}`,
+        `discount/update/${id}`,
         data
       );
       return response.data;

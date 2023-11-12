@@ -25,20 +25,35 @@ const UpdateProducer = () => {
   useEffect(() => {
     fetchProducerDetail();
   }, []);
+
   const fetchProducerDetail = async () => {
     const detailProducer = await http.getOne(Number(id));
-    console.log(detailProducer);
     setProducer(detailProducer);
   };
+
   const {
     handleSubmit,
     control,
     formState: { errors },
+    setValue,
   } = useForm<Producer>({
     defaultValues: {
       status: "1",
     },
   });
+
+  useEffect(() => {
+    setValue("name", Producer.name);
+    setValue("code", Producer.code);
+    setValue("keyword", Producer.keyword);
+    setValue("status", Producer.status);
+  }, [
+    Producer.name,
+    Producer.code,
+    Producer.keyword,
+    Producer.status,
+    setValue,
+  ]);
 
   const handleUpdate = async (data: Producer) => {
     const producerUpdate = await http.put(Number(id), data);
@@ -90,6 +105,9 @@ const UpdateProducer = () => {
                     p: "7px",
                   },
                 }}
+                onChange={(e) => {
+                  field.onChange(e);
+                }}
                 fullWidth
                 placeholder={Producer?.name}
               />
@@ -112,6 +130,9 @@ const UpdateProducer = () => {
               <OutlinedInput
                 type="text"
                 {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                }}
                 sx={{
                   mt: 1,
                   "& > input": {
@@ -139,6 +160,9 @@ const UpdateProducer = () => {
               <OutlinedInput
                 type="text"
                 {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                }}
                 sx={{
                   mt: 1,
                   "& > input": {
@@ -173,6 +197,9 @@ const UpdateProducer = () => {
                     "& > div": {
                       p: "7px",
                     },
+                  }}
+                  onChange={(e) => {
+                    field.onChange(e);
                   }}
                 >
                   <MenuItem value={""}>

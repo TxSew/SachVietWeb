@@ -5,7 +5,7 @@ import CreateCategory from "../pages/admin/Category/Createcategory";
 import UpdateCategory from "../pages/admin/Category/UpdateCategory";
 import AdminDiscount from "../pages/admin/Discount/AdminDiscount";
 import CreateDiscount from "../pages/admin/Discount/CreateDiscount";
-import UpdateDiscount from "../pages/admin/Discount/UpdateProduct";
+import UpdateDiscount from "../pages/admin/Discount/UpdateDiscount";
 import ProducerAdmin from "../pages/admin/Producer/AdminProducer";
 import CreateProducer from "../pages/admin/Producer/CreateProducer";
 import UpdateProducer from "../pages/admin/Producer/UpdateProducer";

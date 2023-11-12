@@ -19,18 +19,18 @@ import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
+import { validateForm } from "../../../helpers/validateForm";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
-import { validateForm } from "../../../helpers/validateForm";
 
 var http = new HttpProducerController(BaseAPi);
 var httpcategory = new HttpCategoryController(BaseAPi);
 const httpProduct = new HttpProductController(BaseAPi);
-const UpdateProduct = () => {
+const UpdateProduct = ({ productId, initialTitle }: any) => {
   const [urls, setUrls] = useState<string[]>([]);
   const [url, setUrl] = useState<string[]>([]);
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
@@ -69,7 +69,16 @@ const UpdateProduct = () => {
   const fetchProduct = async () => {
     const product: Product = await httpProduct.getOneUpdate(ID);
     if (product) {
-      setProduct(product);
+      reset({
+        producerID: product.producerID,
+        categoryId: product.categoryId,
+        price: product.price,
+        sale: product.sale,
+        desc: product.desc,
+        quantity: product.quantity,
+        title: product.title,
+      });
+      // setProduct(product);
     }
   };
   const handleUpdateProduct = async (data: any) => {
@@ -86,8 +95,8 @@ const UpdateProduct = () => {
 
     const storeProduct = await httpProduct.put(ID, ProductDto);
     if (storeProduct) {
-      toast.success("created new product successfully", {
-        position: "bottom-right",
+      toast.success("Cập nhật sản phẩm thành công", {
+        position: "top-right",
       });
       redirect("/admin/product");
     }
@@ -138,18 +147,28 @@ const UpdateProduct = () => {
         });
     }
   };
+
   const {
     handleSubmit,
     control,
     register,
-    watch,
+    setValue,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm<Product>({
-    defaultValues: {
-      producerID: undefined,
-      categoryId: undefined,
-    },
+    defaultValues: {},
   });
+
+  // useEffect(() => {
+  //   setValue("title", product.title);
+  //   setValue("categoryId", product.categoryId);
+  //   setValue("producerID", product.producerID);
+  //   setValue("quantity", product.quantity);
+  //   setValue("desc", product.desc);
+  //   setValue("sale", product.sale);
+  //   setValue("price", product.price);
+  // }, [product, setValue]);
+
   return (
     <Box>
       <form action="" onSubmit={handleSubmit(handleUpdateProduct)}>
@@ -175,10 +194,9 @@ const UpdateProduct = () => {
             <Controller
               control={control}
               name="title"
-              defaultValue="" // Set an initial value here
               rules={{
                 validate: validateForm,
-                // required: "Tên sản phẩm không được bỏ trống!",
+                required: "Tên sản phẩm không được bỏ trống!",
               }}
               render={({ field }) => (
                 <OutlinedInput
@@ -190,6 +208,9 @@ const UpdateProduct = () => {
                     },
                   }}
                   fullWidth
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   placeholder="Vui lòng nhập Ten của bạn!"
                 />
               )}
@@ -209,28 +230,25 @@ const UpdateProduct = () => {
                     required: "Vui lòng nhập Danh mục sản phẩm!",
                   }}
                   render={({ field }) => (
-                    <FormControl fullWidth>
-                      <Select
-                        {...field}
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                        sx={{
-                          mt: 1,
-                          "& > div": {
-                            p: "7px",
-                          },
-                        }}
-                      >
-                        {Category.map((e: any, i) => {
-                          return (
-                            <MenuItem key={e.id} value={e.id}>
-                              <em>{e.name}</em>
-                            </MenuItem>
-                          );
-                        })}
-                      </Select>
-                      {/* <FormHelperText>Without label</FormHelperText> */}
-                    </FormControl>
+                    <select
+                      className=""
+                      onChange={field.onChange}
+                      value={field.value}
+                      style={{
+                        marginTop: "10px",
+                        width: "100%",
+                        border: "1px solid #ccc",
+                        padding: "8px 20px",
+                        borderRadius: "3px",
+                        fontSize: "14px",
+                        color: "gray",
+                      }}
+                    >
+                      <option value="">-- Chọn Danh Mục --</option>
+                      {Category.map((e) => {
+                        return <option value={e.id}>{e.name}</option>;
+                      })}
+                    </select>
                   )}
                 />
                 <Typography variant="caption" color={color.error}>
@@ -250,25 +268,25 @@ const UpdateProduct = () => {
                   }}
                   render={({ field }) => (
                     <FormControl fullWidth>
-                      <Select
-                        {...field}
-                        displayEmpty
-                        inputProps={{ "aria-label": "Without label" }}
-                        sx={{
-                          mt: 1,
-                          "& > div": {
-                            p: "7px",
-                          },
+                      <select
+                        className=""
+                        onChange={field.onChange}
+                        value={field.value}
+                        style={{
+                          marginTop: "10px",
+                          width: "100%",
+                          border: "1px solid #ccc",
+                          padding: "8px 20px",
+                          borderRadius: "3px",
+                          fontSize: "14px",
+                          color: "gray",
                         }}
                       >
-                        {Producer.map((e: Producer) => {
-                          return (
-                            <MenuItem key={e.id} value={e.id}>
-                              <em>{e.name}</em>
-                            </MenuItem>
-                          );
+                        <option value="">-- Chọn Nhà cung cấp --</option>
+                        {Producer.map((e) => {
+                          return <option value={e.id}>{e.name}</option>;
                         })}
-                      </Select>
+                      </select>
                       {/* <FormHelperText>Without label</FormHelperText> */}
                     </FormControl>
                   )}
@@ -383,6 +401,9 @@ const UpdateProduct = () => {
                 <OutlinedInput
                   type="number"
                   {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {
@@ -456,6 +477,9 @@ const UpdateProduct = () => {
                 <OutlinedInput
                   {...field}
                   type="number"
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
                   sx={{
                     mt: 1,
                     "& > input": {

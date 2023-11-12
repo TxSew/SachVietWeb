@@ -67,13 +67,13 @@ const CreateCategory = () => {
     try {
       const categoryDto = await httpCategory.store(category);
       if (categoryDto) {
-        toast.success("category added successfully", {
+        toast.success("Thêm danh mục sản phẩm thành công", {
           position: "bottom-right",
         });
       }
     } catch (err) {
       toast.error("tên danh mục đã tồn tại!", {
-        position: "bottom-right",
+        position: "top-right",
       });
     }
   };
@@ -85,6 +85,7 @@ const CreateCategory = () => {
   } = useForm<Category>({
     defaultValues: {
       status: "1",
+      parentId: "1",
     },
   });
 
@@ -213,7 +214,7 @@ const CreateCategory = () => {
           <Typography variant="caption" color={color.error}>
             {errors.level && errors.level.message}
           </Typography>
-       </Grid>
+        </Grid>
       </form>
     </Box>
   );

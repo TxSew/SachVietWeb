@@ -9,42 +9,45 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { ref, uploadBytes } from "firebase/storage";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { storage } from "../../../configs/fireBaseConfig";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
-import { ref, uploadBytes } from "firebase/storage";
-import { storage } from "../../../configs/fireBaseConfig";
 
 var httpcategory = new HttpCategoryController(BaseAPi);
 const UpdateCategory = () => {
   const { id } = useParams();
 
-  console.log(id);
   const [category, setCategory] = useState([]);
   const [detail, setdetail] = useState<Category>({});
   useEffect(() => {
     fetchCategory();
     fetchOneCategory();
   }, []);
+
   const fetchOneCategory = async () => {
     const categoryOne = await httpcategory.getOne(Number(id));
-    console.log(categoryOne);
+    reset({
+      parentId: categoryOne.parentId,
+    });
     setdetail(categoryOne);
   };
+
   const fetchCategory = async () => {
     try {
       const category: any = await httpcategory.getCategory({});
-      console.log(category);
       setCategory(category);
     } catch (err) {
       console.error(err);
     }
   };
+
   const [url, setUrl] = useState<string>("");
   const loadImageFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
@@ -71,19 +74,34 @@ const UpdateCategory = () => {
     handleSubmit,
     control,
     register,
-    formState: { errors, isDirty, isValid },
+    setValue,
+    reset,
+    formState: { errors },
   } = useForm<Category>({
     defaultValues: {
-      name: detail.name,
-      parentId: "1",
+      status: "1",
     },
   });
+
+  useEffect(() => {
+    setValue("name", detail.name);
+    setValue("parentName", detail.parentName);
+    setValue("parentId", detail.parentId);
+    setValue("status", detail.status);
+  }, [
+    detail.name,
+    detail.parentName,
+    detail.status,
+    detail.parentId,
+    setValue,
+  ]);
+
   const handelUpdateCategory = async (data: Category) => {
     data.image = url;
     const categoryDto = await httpcategory.put(Number(id), data);
     if (categoryDto) {
-      toast.success("category updated successfully", {
-        position: "bottom-right",
+      toast.success("Danh mục cập nhật thành công", {
+        position: "top-right",
       });
     }
   };
@@ -120,6 +138,9 @@ const UpdateCategory = () => {
               <OutlinedInput
                 {...register("name")}
                 {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                }}
                 sx={{
                   mt: 1,
                   "& > input": {
@@ -148,26 +169,25 @@ const UpdateCategory = () => {
                 }}
                 render={({ field }) => (
                   <FormControl fullWidth>
-                    <Select
-                      {...field}
-                      displayEmpty
-                      inputProps={{ "aria-label": "Without label" }}
-                      sx={{
-                        mt: 1,
-                        "& > div": {
-                          p: "7px",
-                        },
+                    <select
+                      className=""
+                      onChange={field.onChange}
+                      value={field.value}
+                      style={{
+                        marginTop: "10px",
+                        width: "100%",
+                        border: "1px solid #ccc",
+                        padding: "8px 20px",
+                        borderRadius: "3px",
+                        fontSize: "14px",
+                        color: "gray",
                       }}
-                      defaultValue="2"
                     >
+                      <option value="">-- Chọn Danh Mục --</option>
                       {category.map((e: any) => {
-                        return (
-                          <MenuItem value={e.id}>
-                            <em>{e.name}</em>
-                          </MenuItem>
-                        );
+                        return <option value={e.id}>{e.name}</option>;
                       })}
-                    </Select>
+                    </select>
                   </FormControl>
                 )}
               />
@@ -194,42 +214,49 @@ const UpdateCategory = () => {
           <Stack direction={"row"} flexWrap={"wrap"}>
             <img src={url} width={"150px"} alt="" />
           </Stack>
-          <Typography variant="h2" mt={2} fontSize={"18px"} fontWeight={"bold"}>
-            Trạng thái
-          </Typography>
-          <Controller
-            control={control}
-            name="status"
-            rules={{
-              required: "Price is not",
-            }}
-            render={({ field }) => (
-              <FormControl fullWidth>
-                <Select
-                  {...field}
-                  displayEmpty
-                  inputProps={{ "aria-label": "Without label" }}
-                  sx={{
-                    mt: 1,
-                    "& > div": {
-                      p: "7px",
-                    },
-                  }}
-                >
-                  <MenuItem value={""}>
-                    <em>[--Chọn trạng thái--]</em>
-                  </MenuItem>
-                  <MenuItem value={1}>
-                    <em>Đang kinh doanh</em>
-                  </MenuItem>
-                  <MenuItem value={0}>
-                    <em>Ngưng kinh doanh</em>
-                  </MenuItem>
-                </Select>
-                {/* <FormHelperText>Without label</FormHelperText> */}
-              </FormControl>
-            )}
-          />
+          <Box width={"100%"}>
+            <Typography
+              variant="h2"
+              mt={2}
+              fontSize={"18px"}
+              fontWeight={"bold"}
+            >
+              Trạng thái
+            </Typography>
+            <Controller
+              control={control}
+              name="status"
+              render={({ field }) => (
+                <FormControl fullWidth>
+                  <Select
+                    {...field}
+                    displayEmpty
+                    inputProps={{ "aria-label": "Without label" }}
+                    sx={{
+                      mt: 1,
+                      "& > div": {
+                        p: "7px",
+                      },
+                    }}
+                    onChange={(e) => {
+                      field.onChange(e);
+                    }}
+                  >
+                    <MenuItem value={""}>
+                      <em>[--Chọn trạng thái--]</em>
+                    </MenuItem>
+                    <MenuItem value={1}>
+                      <em>Đang kinh doanh</em>
+                    </MenuItem>
+                    <MenuItem value={0}>
+                      <em>Ngưng kinh doanh</em>
+                    </MenuItem>
+                  </Select>
+                  {/* <FormHelperText>Without label</FormHelperText> */}
+                </FormControl>
+              )}
+            />
+          </Box>
         </Grid>
       </form>
     </Box>
