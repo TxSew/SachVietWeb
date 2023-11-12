@@ -248,14 +248,69 @@ const Header = () => {
                   </Box>
                 </NavLink>
                 {user.id ? (
-                  <NavLink to={"/user"}>
-                    <Box sx={hditem}>
+                  <Box
+                    position={"relative"}
+                    sx={{
+                      "&:hover .user-view": {
+                        visibility: "visible",
+                      },
+                    }}
+                  >
+                    <NavLink to={"/user"} style={hditem}>
                       <HowToRegSharpIcon sx={hdicon} />
                       <Typography fontSize={"12px"} style={nicon}>
                         Tài khoản
                       </Typography>
-                    </Box>
-                  </NavLink>
+                    </NavLink>
+                    <Stack
+                      className="user-view"
+                      sx={{
+                        position: "absolute",
+                        visibility: "hidden",
+                        p: "5px",
+                        top: "100%",
+                        background: "white",
+                        width: "190px",
+                        zIndex: 5,
+                        border: "1px solid #eee",
+                        borderRadius: "10px",
+                        "& > ul> li": {
+                          listStyle: "none",
+                          padding: "5px 0px",
+                          borderBottom: "1px solid #eee",
+                          "&:hover": {
+                            color: "#008C89",
+                          },
+                        },
+                      }}
+                    >
+                      <ul>
+                        <li>
+                          <Link
+                            style={{
+                              color: "inherit",
+                            }}
+                            to="/user/mycart"
+                          >
+                            Xem thông tin cá nhân
+                          </Link>
+                        </li>
+                        <li>
+                          <Typography
+                            onClick={() => {
+                              localStorage.clear();
+                              window.location.reload();
+                            }}
+                            sx={{
+                              cursor: "pointer",
+                            }}
+                          >
+                            Đăng xuất
+                          </Typography>
+                        </li>
+                      </ul>
+                    </Stack>
+                  </Box>
                 ) : (
                   <Box display={"flex"} gap={2}>
                     <NavLink to={"/auth"}>

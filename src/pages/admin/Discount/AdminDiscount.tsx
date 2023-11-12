@@ -35,11 +35,12 @@ const http = new HttpDiscountController(BaseAPi);
 export default function AdminDiscount() {
   const [discount, setDiscount] = React.useState<Discount[]>([]);
   React.useEffect(() => {
-    fetchData();
+    const props = {};
+    fetchData(props);
   }, []);
-  const fetchData = async () => {
+  const fetchData = async (props: any) => {
     try {
-      const discountData = await http.getAll();
+      const discountData = await http.getAll(props);
       console.log(discountData);
       if (discountData) {
         setDiscount(discountData);

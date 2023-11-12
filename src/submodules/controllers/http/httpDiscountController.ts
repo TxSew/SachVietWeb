@@ -28,9 +28,11 @@ class HttpDiscountController {
     //   }
     // );
   }
-  async getAll(): Promise<any> {
+  async getAll(props: any): Promise<any> {
     try {
-      const response = await this.axiosInstance.get("discount");
+      const response = await this.axiosInstance.post("discount", {
+        ...props,
+      });
       return response.data;
     } catch (error) {
       throw error;

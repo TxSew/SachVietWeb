@@ -9,10 +9,11 @@ function Sales() {
   const [discount, setDiscount] = useState<Discount[]>([]);
   const http = new HttpDiscountController(BaseAPi);
   useEffect(() => {
-    discountFetch();
+    const props = {};
+    discountFetch(props);
   }, []);
-  const discountFetch = async () => {
-    const discounts = await http.getAll();
+  const discountFetch = async (props: any) => {
+    const discounts = await http.getAll(props);
     setDiscount(discounts);
   };
 
