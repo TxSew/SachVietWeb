@@ -68,7 +68,6 @@ export default function AdminCarts() {
     const sss = await http.delete(Number(element.id));
   };
   const handleChangeSort = (event: SelectChangeEvent) => {
-    console.log(event.target.value);
     let status = event.target.value;
 
     const props = {
@@ -195,14 +194,21 @@ export default function AdminCarts() {
                   </TableCell>
                   <TableCell align="right">
                     {e.status == null ? (
-                    <Typography sx={{color:"gray" , fontSize:"13px"}}>Đang chờ duyệt</Typography>
+                      <Typography sx={{ color: "gray", fontSize: "13px" }}>
+                        Đang chờ duyệt
+                      </Typography>
                     ) : e.status == 1 ? (
-                      <Typography sx={{
-                      color:"blue",
-                      fontSize:"13px"
-                      }}> Đang giao hàng</Typography>
+                      <Typography
+                        sx={{
+                          color: "blue",
+                          fontSize: "13px",
+                        }}
+                      >
+                        {" "}
+                        Đang giao hàng
+                      </Typography>
                     ) : e.status == 2 ? (
-                      <Typography  color={'green'}> Đã giao  </Typography>
+                      <Typography color={"green"}> Đã giao </Typography>
                     ) : (
                       <Typography color={"red"}>Đã bị hủy</Typography>
                     )}
@@ -217,9 +223,8 @@ export default function AdminCarts() {
                       {e.status == null ? (
                         <>
                           <Stack
-
                             sx={{
-                               cursor:"pointer",
+                              cursor: "pointer",
                             }}
                             onClick={async () => {
                               const updated = await http.put(Number(e.id), {
@@ -236,9 +241,9 @@ export default function AdminCarts() {
                           </Stack>
                           <Box>
                             <Stack
-                            sx={{
-                               cursor:"pointer",
-                            }}
+                              sx={{
+                                cursor: "pointer",
+                              }}
                               onClick={async () => {
                                 const updated = await http.put(Number(e.id), {
                                   status: 0,
@@ -250,18 +255,26 @@ export default function AdminCarts() {
                                 });
                               }}
                             >
-                              <Chip color="error" label="Hủy đơn" sx={{
-                                                             cursor: "pointer"
-                              }} />
+                              <Chip
+                                color="error"
+                                label="Hủy đơn"
+                                sx={{
+                                  cursor: "pointer",
+                                }}
+                              />
                             </Stack>
                           </Box>
                         </>
                       ) : e.status == 1 ? (
                         <>
                           <Stack onClick={() => handleUpdateOrder(e.id)}>
-                            <Chip color="success" label="Xác nhận thanh toán" sx={{
-                                                        cursor: "pointer"
-                            }}/>
+                            <Chip
+                              color="success"
+                              label="Xác nhận thanh toán"
+                              sx={{
+                                cursor: "pointer",
+                              }}
+                            />
                           </Stack>
                           <Box>
                             <Stack
@@ -275,10 +288,13 @@ export default function AdminCarts() {
                                 });
                               }}
                             >
-                              <Chip color="error" label="Hủy đơn" sx={{
-                            cursor: "pointer"
-                                 
-                              }} />
+                              <Chip
+                                color="error"
+                                label="Hủy đơn"
+                                sx={{
+                                  cursor: "pointer",
+                                }}
+                              />
                             </Stack>
                           </Box>
                         </>
@@ -290,9 +306,9 @@ export default function AdminCarts() {
 
                   <TableCell align="center">
                     <Stack
-                            sx={{
-                               cursor:"pointer",
-                            }}
+                      sx={{
+                        cursor: "pointer",
+                      }}
                       direction={"row"}
                       color={color.text_color}
                       spacing={2}
@@ -309,7 +325,7 @@ export default function AdminCarts() {
                         <DeleteForeverIcon
                           sx={{
                             color: "red",
-                            cursor: "pointer"
+                            cursor: "pointer",
                           }}
                         />
                       </Box>

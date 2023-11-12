@@ -10,7 +10,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -30,7 +30,6 @@ function DetailCarts() {
   }, []);
   const fetchOrderDetail = async () => {
     const detail = await http.getOrderDetail(Number(id));
-    console.log(detail);
     if (detail) {
       setDetailOrder(detail);
     }
@@ -38,12 +37,11 @@ function DetailCarts() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "emp-data",
-    onAfterPrint: () => alert("print success")
+    onAfterPrint: () => alert("print success"),
   });
 
   return (
     <Box bgcolor={color.text_color}>
-    
       <Box
         sx={{
           marginTop: "18px",
@@ -141,19 +139,12 @@ function DetailCarts() {
       </Box>
 
       <Box mt={"20px"} mb={"20px"}>
-    
         <Box
           sx={{
             backgroundColor: color.white,
             padding: "20px",
           }}
         >
-     
-
-      
-
-      
-
           <TableContainer>
             <Table
               sx={{
@@ -228,19 +219,19 @@ function DetailCarts() {
             </Table>
           </TableContainer>
         </Box>
-      </Box> 
+      </Box>
       <Button
         variant="contained"
         onClick={handlePrint}
         sx={{
           mt: 1,
           float: "right",
-          clear: "bold"
+          clear: "bold",
         }}
       >
         <PrintIcon
           sx={{
-            mr: 1
+            mr: 1,
           }}
         />{" "}
         In hoá đơn

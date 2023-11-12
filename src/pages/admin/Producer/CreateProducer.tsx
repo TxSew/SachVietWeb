@@ -24,8 +24,7 @@ const UpdateProducer = () => {
     control,
     formState: { errors },
   } = useForm<Producer>({
-    defaultValues: {
-    },
+    defaultValues: {},
   });
 
   const handleAddProducer = async (data: Producer) => {

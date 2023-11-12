@@ -8,7 +8,7 @@ import {
   OutlinedInput,
   Pagination,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -60,7 +60,7 @@ export default function CategoryAdmin() {
     });
     if (destroy) {
       toast.error("Delete item successfully", {
-        position: "bottom-right"
+        position: "bottom-right",
       });
       setCategory(filter);
     }
@@ -84,8 +84,8 @@ export default function CategoryAdmin() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px"
-              }
+                p: "7px",
+              },
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
@@ -95,7 +95,7 @@ export default function CategoryAdmin() {
           to={"/admin/createCategory"}
           style={{
             display: "flex",
-            justifyContent: "end"
+            justifyContent: "end",
           }}
         >
           <Button variant="contained">Thêm Danh mục</Button>
@@ -103,7 +103,7 @@ export default function CategoryAdmin() {
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800
+              minWidth: 800,
             }}
             aria-label="simple tablek w"
           >
@@ -111,8 +111,8 @@ export default function CategoryAdmin() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold"
-                  }
+                    fontWeight: "bold",
+                  },
                 }}
               >
                 <TableCell>ID</TableCell>
@@ -163,14 +163,14 @@ export default function CategoryAdmin() {
                       <Link to={`${e.id}`}>
                         <EditIcon
                           sx={{
-                            color: "green"
+                            color: "green",
                           }}
                         />
                       </Link>
                       <Box onClick={() => handleDelete(e)}>
                         <DeleteForeverIcon
                           sx={{
-                            color: "red"
+                            color: "red",
                           }}
                         />
                       </Box>

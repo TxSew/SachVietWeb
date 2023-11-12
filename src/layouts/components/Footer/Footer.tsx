@@ -18,7 +18,7 @@ function Footer() {
     fontSize: "16px",
     fontWeight: "bold",
     textTransform: "capitalize",
-    color: "black"
+    color: "black",
   };
   const ftItem = {
     fontSize: "13px",
@@ -26,14 +26,14 @@ function Footer() {
     color: "black",
     transition: "color .2s ease-in-out",
     "&:hover": {
-      color: "#008C89"
-    }
+      color: "#008C89",
+    },
   };
   const ftItemhdmb = {
     padding: "24px 0 0",
     fontWeight: "bold",
     textTransform: "capitalize",
-    color: "black"
+    color: "black",
   };
   const ftItemmb = {
     fontSize: "13px",
@@ -42,8 +42,8 @@ function Footer() {
     padding: "4px 0",
     transition: "color .2s ease-in-out",
     "&:hover": {
-      color: "#008C89"
-    }
+      color: "#008C89",
+    },
   };
 
   return (
@@ -59,7 +59,7 @@ function Footer() {
               spacing={2}
               fontSize={"48px"}
               style={{
-                color: "white"
+                color: "white",
               }}
             >
               <EmailIcon />
@@ -83,7 +83,7 @@ function Footer() {
                 style={{
                   flex: 1,
                   color: "#F39801",
-                  fontSize: "16px"
+                  fontSize: "16px",
                 }}
               />
               <Button
@@ -94,8 +94,8 @@ function Footer() {
                   color: "#FFF",
                   "&:hover": {
                     border: "1px solid #008C89",
-                    color: "#008C89"
-                  }
+                    color: "#008C89",
+                  },
                 }}
               >
                 <Typography variant="body1">Đăng ký</Typography>
@@ -115,7 +115,7 @@ function Footer() {
             <Box
               sx={{
                 paddingRight: "20px",
-                borderRight: "1px solid #eee"
+                borderRight: "1px solid #eee",
               }}
             >
               <Image
@@ -137,7 +137,7 @@ function Footer() {
               </Box>
               <Box
                 sx={{
-                  marginTop: "20px"
+                  marginTop: "20px",
                 }}
               >
                 <Typography variant="subtitle1" color="initial">
@@ -153,7 +153,7 @@ function Footer() {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  gap: "10px"
+                  gap: "10px",
                 }}
                 color={"gray"}
               >
@@ -173,7 +173,7 @@ function Footer() {
                 <List>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={"/auth"}
                   >
@@ -181,7 +181,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={"/auth"}
                   >
@@ -189,7 +189,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -199,7 +199,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -207,7 +207,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -215,7 +215,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -231,7 +231,7 @@ function Footer() {
                 <List>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -239,7 +239,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -247,7 +247,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -255,7 +255,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -263,7 +263,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -332,7 +332,7 @@ function Footer() {
                 <List>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -340,7 +340,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -348,7 +348,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -356,7 +356,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -364,7 +364,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -381,7 +381,7 @@ function Footer() {
                   <ListItem>
                     <NavLink
                       style={{
-                        color: "black"
+                        color: "black",
                       }}
                       to={"/auth"}
                     >
@@ -392,8 +392,8 @@ function Footer() {
                           fontSize: "13px",
                           transition: "color .3s ease-in-out",
                           "&:hover": {
-                            color: "#008C89"
-                          }
+                            color: "#008C89",
+                          },
                         }}
                       >
                         Đăng nhập
@@ -402,7 +402,7 @@ function Footer() {
                     <Typography px={1}>/</Typography>
                     <NavLink
                       style={{
-                        color: "black"
+                        color: "black",
                       }}
                       to={"/auth"}
                     >
@@ -413,8 +413,8 @@ function Footer() {
                           fontSize: "13px",
                           transition: "color .3s ease-in-out",
                           "&:hover": {
-                            color: "#008C89"
-                          }
+                            color: "#008C89",
+                          },
                         }}
                       >
                         {" "}
@@ -424,7 +424,7 @@ function Footer() {
                   </ListItem>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -434,7 +434,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -442,7 +442,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
@@ -450,7 +450,7 @@ function Footer() {
                   </NavLink>
                   <NavLink
                     style={{
-                      color: "black"
+                      color: "black",
                     }}
                     to={""}
                   >
