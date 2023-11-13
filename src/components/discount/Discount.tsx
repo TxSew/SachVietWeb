@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { Box, Button, Modal, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import React from "react";
 import { color } from "../../Theme/color";
-import { Discount } from "../../submodules/models/DiscountModel/Discount";
 import { formatDates } from "../../helpers/FortmatDate";
+import { Discount } from "../../submodules/models/DiscountModel/Discount";
+import HttpVoucherController from "../../submodules/controllers/http/httpVoucherController";
+import { BaseAPi } from "../../configs/BaseApi";
 const style = {
   position: "absolute" as "absolute",
   top: "50%",
@@ -15,26 +16,10 @@ const style = {
   boxShadow: 24,
   p: 4,
 };
-
+const http = new HttpVoucherController(BaseAPi);
 function DiscountItem(props: Discount) {
-  const [textToCopy, setTextToCopy] = useState("");
-  const [copySuccess, setCopySuccess] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const handleCopyToClipboard = () => {
-    console.log(textToCopy);
-
-    navigator.clipboard
-      .writeText(textToCopy)
-      .then(() => {
-        setCopySuccess(true);
-        setOpen(true);
-      })
-      .catch((error) => {
-        console.error("Error copying text to clipboard:", error);
-      });
-  };
+  const handleSave = () => {};
   return (
     <Box
       bgcolor={color.white}
@@ -105,6 +90,7 @@ function DiscountItem(props: Discount) {
             fontWeight={"bold"}
             p={"8px"}
             color={color.borderColor}
+            textTransform={"uppercase"}
           >
             {props.code}
           </Typography>
@@ -117,9 +103,9 @@ function DiscountItem(props: Discount) {
               fontSize: "12px",
               fontWeight: "bold",
             }}
-            onClick={handleCopyToClipboard}
+            onClick={() => handleSave()}
           >
-            Coppy mã
+            Lưu
           </Button>
         </Box>
       </Stack>
