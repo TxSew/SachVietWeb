@@ -48,6 +48,7 @@ function Sales() {
           {discount.map((e: Discount) => {
             return (
               <DiscountItem
+                id={e.id}
                 code={e.code}
                 expiration_date={e.expiration_date}
                 desc={e.desc}

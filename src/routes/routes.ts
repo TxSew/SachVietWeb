@@ -22,7 +22,6 @@ import UserInfo from "../pages/clients/User/UserInfo";
 import UserAdress from "../pages/clients/User/Useradress";
 import UserCartDetail from "../pages/clients/User/UsercardDetail";
 import UserMyCart from "../pages/clients/User/Usermycart";
-import UserVi from "../pages/clients/User/Uservi";
 import Auth from "../pages/clients/auth/Auth";
 import { Cart } from "../pages/clients/cart/Cart";
 import Payment from "../pages/clients/cart/payment/Payment";
@@ -32,6 +31,7 @@ import Sales from "../pages/clients/sales/Sales";
 import ForgotPasswordPage from "../pages/clients/auth/components/forgotPassword";
 import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Error from "../pages/clients/notFound/notFound";
+import VoucherUser from "../pages/clients/User/UserVoucher";
 
 const PublicRouter = [
   {
@@ -77,8 +77,8 @@ const PublicRouter = [
     component: UserAdress,
   },
   {
-    path: "/user/vi",
-    component: UserVi,
+    path: "/user/myvoucher",
+    component: VoucherUser,
   },
   {
     path: "/user/mycart",
@@ -88,7 +88,6 @@ const PublicRouter = [
     path: "/auth/ChangePassword",
     component: ForgotPasswordPage,
   },
-  { path: "/admin", component: Auth },
   { path: "/sales", component: Sales },
   {
     path: "/user/mycart/:id",

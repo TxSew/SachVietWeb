@@ -50,7 +50,7 @@ function UserMyCart() {
           <div className="main-waper-top pt-2 pb-2 ps-4">
             <i className="fa fa-exclamation-triangle"></i>
             <p>
-              Bạn vui lòng cập nhật thông tin tài khoản:{" "}
+              Bạn vui lòng cập nhật thông tin tài khoản:
               <Link to="">Cập nhật thông tin ngay</Link>
             </p>
           </div>

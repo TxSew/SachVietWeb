@@ -5,21 +5,26 @@ import { formatDates } from "../../helpers/FortmatDate";
 import { Discount } from "../../submodules/models/DiscountModel/Discount";
 import HttpVoucherController from "../../submodules/controllers/http/httpVoucherController";
 import { BaseAPi } from "../../configs/BaseApi";
-const style = {
-  position: "absolute" as "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
+import { toast } from "react-toastify";
+
 const http = new HttpVoucherController(BaseAPi);
 function DiscountItem(props: Discount) {
-  const [open, setOpen] = React.useState(false);
-  const handleSave = () => {};
+  const handleSave = (ele: any) => {
+    http
+      .addVoucherUser(ele)
+      .then((response) => {
+        if (response) {
+          toast.success("Mã giảm giá đã được thêm vào ví voucher thành công", {
+            position: "top-right",
+          });
+        }
+      })
+      .catch((error) => {
+        if (error.response.data.message == "voucher already exists") {
+          toast.warning("Mã giảm giá đã tồn tại trong ví voucher!");
+        }
+      });
+  };
   return (
     <Box
       bgcolor={color.white}
@@ -103,7 +108,13 @@ function DiscountItem(props: Discount) {
               fontSize: "12px",
               fontWeight: "bold",
             }}
-            onClick={() => handleSave()}
+            onClick={() =>
+              handleSave({
+                discountId: props.id,
+                userId: 3,
+                code: 45345,
+              })
+            }
           >
             Lưu
           </Button>

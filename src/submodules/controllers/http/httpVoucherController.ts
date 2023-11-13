@@ -19,10 +19,10 @@ class HttpVoucherController {
       ] = `Bearer ${jwtToken}`;
     }
   }
-  async getAllVoucherByUser(props: any) {
+  async getAllVoucherByUser(userId: number) {
     try {
-      const response = await this.axiosInstance.post("/voucher", {
-        ...props,
+      const response = await this.axiosInstance.post("/voucher/", {
+        userId: userId,
       });
       return response.data;
     } catch (error) {
@@ -30,6 +30,7 @@ class HttpVoucherController {
     }
   }
   async addVoucherUser(props: Voucher) {
+    console.log(props);
     try {
       const response = await this.axiosInstance.post("/voucher/add-voucher", {
         ...props,

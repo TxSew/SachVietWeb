@@ -98,6 +98,7 @@ export const Details = () => {
       border: "none",
     },
   }));
+
   const htmlContent = Detail ? Detail.desc : ""; // Ha
   return (
     <Box bgcolor={"#eee"}>
@@ -607,30 +608,38 @@ export const Details = () => {
                     {Detail.producer?.name}
                   </StyledTableCell>
                 </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Tác giả
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {Detail.author}
-                  </StyledTableCell>
-                </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Kích thước:
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {Detail.size}
-                  </StyledTableCell>
-                </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Số trang:
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    {Detail.size}
-                  </StyledTableCell>
-                </StyledTableRow>
+                {Detail.author && (
+                  <StyledTableRow>
+                    <StyledTableCell component="th" scope="row">
+                      Tác giả
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {Detail.author}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                )}
+                {Detail.size && (
+                  <StyledTableRow>
+                    <StyledTableCell component="th" scope="row">
+                      Kích thước:
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {Detail.size}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                )}
+                {Detail?.pageNumber !== null && Detail.pageNumber !== 0 ? (
+                  <StyledTableRow>
+                    <StyledTableCell component="th" scope="row">
+                      Số trang:
+                    </StyledTableCell>
+                    <StyledTableCell component="th" scope="row">
+                      {Detail.pageNumber}
+                    </StyledTableCell>
+                  </StyledTableRow>
+                ) : (
+                  ""
+                )}
               </TableBody>
             </Table>
           </Box>
