@@ -255,7 +255,7 @@ export const Details = () => {
                         width: "50%",
                       }}
                     >
-                      <Typography>Nhà cung cấp:</Typography>
+                      <Typography>Nhà xuất bản</Typography>
                       <Typography fontWeight={"bold"} color={"primary"}>
                         <NavLink
                           to=""
@@ -282,7 +282,7 @@ export const Details = () => {
                             color: "#1976D2",
                           }}
                         >
-                          {Detail?.category?.name}
+                          {Detail?.author}
                         </NavLink>
                       </Typography>
                     </Stack>
@@ -312,7 +312,7 @@ export const Details = () => {
                         width: "50%",
                       }}
                     >
-                      <Typography>Hình thức bìa:</Typography>
+                      <Typography>Loại sản phẩm:</Typography>
                       <Typography fontWeight={"bold"}>
                         <NavLink
                           to=""
@@ -593,7 +593,7 @@ export const Details = () => {
               <TableBody>
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    Nhà sản xuất:
+                    Tên sản phẩm:
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
                     {Detail?.title}
@@ -604,15 +604,15 @@ export const Details = () => {
                     Nhà xuất bản:
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    a
+                    {Detail.producer?.name}
                   </StyledTableCell>
                 </StyledTableRow>
                 <StyledTableRow>
                   <StyledTableCell component="th" scope="row">
-                    Nhà phát hành:
+                    Tác giả
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    a
+                    {Detail.author}
                   </StyledTableCell>
                 </StyledTableRow>
                 <StyledTableRow>
@@ -620,7 +620,7 @@ export const Details = () => {
                     Kích thước:
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    a
+                    {Detail.size}
                   </StyledTableCell>
                 </StyledTableRow>
                 <StyledTableRow>
@@ -628,15 +628,7 @@ export const Details = () => {
                     Số trang:
                   </StyledTableCell>
                   <StyledTableCell component="th" scope="row">
-                    a
-                  </StyledTableCell>
-                </StyledTableRow>
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">
-                    Trọng lượng:
-                  </StyledTableCell>
-                  <StyledTableCell component="th" scope="row">
-                    a
+                    {Detail.size}
                   </StyledTableCell>
                 </StyledTableRow>
               </TableBody>

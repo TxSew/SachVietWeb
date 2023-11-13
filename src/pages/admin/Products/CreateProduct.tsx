@@ -228,7 +228,7 @@ const CreateProduct = () => {
               </Grid>
               <Grid xs={5.8}>
                 <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
-                  Nhà cung cấp
+                  Nhà xuất bản
                 </Typography>
                 {/* Producer */}
                 <Controller
@@ -267,7 +267,67 @@ const CreateProduct = () => {
                 </Typography>
               </Grid>
             </Grid>
-
+            <Grid container mt={2} justifyContent={"space-between"}>
+              <Grid xs={5.8}>
+                <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+                  Tên Tác giả
+                </Typography>
+                <Controller
+                  control={control}
+                  name="author"
+                  rules={{
+                    required: "Vui lòng nhập tên tác giả!",
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      type="text"
+                      {...field}
+                      sx={{
+                        mt: 1,
+                        "& > input": {
+                          p: "7px",
+                        },
+                      }}
+                      fullWidth
+                      placeholder="Vui lòng nhập tên tác giả!"
+                    />
+                  )}
+                />
+                <Typography variant="caption" color={color.error}>
+                  {errors.author && errors.author.message}
+                </Typography>
+              </Grid>
+              <Grid xs={5.8}>
+                <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+                  Số trang
+                </Typography>
+                {/* Producer */}
+                <Controller
+                  control={control}
+                  name="pageNumber"
+                  rules={{
+                    required: "Vui lòng nhập số trang cho sản phẩm",
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      type="number"
+                      {...field}
+                      sx={{
+                        mt: 1,
+                        "& > input": {
+                          p: "7px",
+                        },
+                      }}
+                      fullWidth
+                      placeholder="Vui lòng nhập số trang cho sản phẩm"
+                    />
+                  )}
+                />
+                <Typography variant="caption" color={color.error}>
+                  {errors.pageNumber && errors.pageNumber.message}
+                </Typography>
+              </Grid>
+            </Grid>
             <Box>
               <Controller
                 control={control}
@@ -353,6 +413,35 @@ const CreateProduct = () => {
           </Grid>
           <Grid xs={12} md={3.8}>
             <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+              Kích thước
+            </Typography>
+            <Controller
+              control={control}
+              name="size"
+              render={({ field }) => (
+                <OutlinedInput
+                  type="text"
+                  {...field}
+                  sx={{
+                    mt: 1,
+                    "& > input": {
+                      p: "7px",
+                    },
+                  }}
+                  fullWidth
+                  placeholder="Vui lòng nhập kích thước sản phẩm"
+                />
+              )}
+            />
+            <Typography variant="caption" color={color.error}>
+              {errors.size && errors.size.message}
+            </Typography>
+            <Typography
+              variant="h2"
+              fontSize={"18px"}
+              fontWeight={"bold"}
+              mt={2}
+            >
               Giá gốc
             </Typography>
             <Controller

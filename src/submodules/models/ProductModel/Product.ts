@@ -16,6 +16,8 @@ export interface Product extends BaseModel, Modified {
   quantity?: number;
   image?: string;
   listImage?: string;
+  pageNumber?: number;
+  size?: string;
   productId?: number;
   author?: string;
   cartQuantity?: number;

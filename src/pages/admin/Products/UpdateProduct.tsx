@@ -4,9 +4,7 @@ import {
   CircularProgress,
   FormControl,
   Grid,
-  MenuItem,
   OutlinedInput,
-  Select,
   Stack,
   Typography,
 } from "@mui/material";
@@ -36,7 +34,6 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
   const [isLoadings, setIsLoadings] = useState(false);
-  const [product, setProduct] = useState<Product>({});
 
   const [isLoading, setIsLoading] = useState(false);
   const editorRef = useRef<any>(null);
@@ -77,6 +74,9 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
         desc: product.desc,
         quantity: product.quantity,
         title: product.title,
+        author: product.author,
+        pageNumber: product.pageNumber,
+        size: product.size,
       });
       // setProduct(product);
     }
@@ -152,22 +152,11 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
     handleSubmit,
     control,
     register,
-    setValue,
     reset,
     formState: { errors, isDirty, isValid },
   } = useForm<Product>({
     defaultValues: {},
   });
-
-  // useEffect(() => {
-  //   setValue("title", product.title);
-  //   setValue("categoryId", product.categoryId);
-  //   setValue("producerID", product.producerID);
-  //   setValue("quantity", product.quantity);
-  //   setValue("desc", product.desc);
-  //   setValue("sale", product.sale);
-  //   setValue("price", product.price);
-  // }, [product, setValue]);
 
   return (
     <Box>
@@ -296,7 +285,73 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
                 </Typography>
               </Grid>
             </Grid>
-
+            <Grid container mt={2} justifyContent={"space-between"}>
+              <Grid xs={5.8}>
+                <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+                  Tên Tác giả
+                </Typography>
+                <Controller
+                  control={control}
+                  name="author"
+                  rules={{
+                    required: "Vui lòng nhập tên tác giả!",
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      type="text"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                      }}
+                      sx={{
+                        mt: 1,
+                        "& > input": {
+                          p: "7px",
+                        },
+                      }}
+                      fullWidth
+                      placeholder="Vui lòng nhập tên tác giả!"
+                    />
+                  )}
+                />
+                <Typography variant="caption" color={color.error}>
+                  {errors.author && errors.author.message}
+                </Typography>
+              </Grid>
+              <Grid xs={5.8}>
+                <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+                  Số trang
+                </Typography>
+                {/* Producer */}
+                <Controller
+                  control={control}
+                  name="pageNumber"
+                  rules={{
+                    required: "Vui lòng nhập số trang cho sản phẩm",
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      type="number"
+                      {...field}
+                      onChange={(e) => {
+                        field.onChange(e);
+                      }}
+                      sx={{
+                        mt: 1,
+                        "& > input": {
+                          p: "7px",
+                        },
+                      }}
+                      fullWidth
+                      placeholder="Vui lòng nhập số trang cho sản phẩm"
+                    />
+                  )}
+                />
+                <Typography variant="caption" color={color.error}>
+                  {errors.pageNumber && errors.pageNumber.message}
+                </Typography>
+              </Grid>
+            </Grid>
             <Box>
               <Controller
                 control={control}
@@ -382,6 +437,38 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
           </Grid>
           <Grid xs={12} md={3.8}>
             <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+              Kích thước
+            </Typography>
+            <Controller
+              control={control}
+              name="size"
+              render={({ field }) => (
+                <OutlinedInput
+                  type="text"
+                  {...field}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
+                  sx={{
+                    mt: 1,
+                    "& > input": {
+                      p: "7px",
+                    },
+                  }}
+                  fullWidth
+                  placeholder="Vui lòng nhập kích thước sản phẩm"
+                />
+              )}
+            />
+            <Typography variant="caption" color={color.error}>
+              {errors.size && errors.size.message}
+            </Typography>
+            <Typography
+              variant="h2"
+              fontSize={"18px"}
+              fontWeight={"bold"}
+              mt={2}
+            >
               Giá gốc
             </Typography>
             <Controller
