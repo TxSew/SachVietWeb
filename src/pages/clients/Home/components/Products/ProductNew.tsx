@@ -13,28 +13,15 @@ import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
-interface PropsSort {
-  page: number;
-  search: string;
-  sortBy: string;
-  sortWith: string;
-  limit: number;
-}
+import { httpProduct } from "../../../../../submodules/controllers/http/axiosController";
+
 function ProductNew() {
-  const http = new HttpProductController(BaseAPi);
-  const [alignment, setAlignment] = React.useState("web");
   const { isLoading, startLoading, stopLoading } = useLoading();
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
-    setAlignment(newAlignment);
-  };
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async (props: any) => {
     props.limit = 10;
     try {
-      const productData: any = await http.getAll(props);
+      const productData: any = await httpProduct.getAll(props);
       const { products } = productData;
       startLoading();
       if (products) {

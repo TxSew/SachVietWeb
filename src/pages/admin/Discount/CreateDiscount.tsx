@@ -7,33 +7,24 @@ import {
   Typography,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { Discount } from "../../../submodules/models/DiscountModel/Discount";
-import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { validateForm } from "../../../helpers/validateForm";
-const http = new HttpDiscountController(BaseAPi);
-const CreateDiscount = () => {
-  const redirect = useNavigate();
+import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
+import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 
+const CreateDiscount = () => {
   const {
     handleSubmit,
     control,
-    register,
-    watch,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm<Discount>({
     defaultValues: {
       status: "1",
     },
   });
 
-  // console.log(watch().desc);
-  //  upload image file base
   const handleAddDiscount = async (data: Discount) => {
-    const addDiscount = await http.post(data);
-    console.log(addDiscount);
+    await httpDiscount.post(data);
   };
 
   return (

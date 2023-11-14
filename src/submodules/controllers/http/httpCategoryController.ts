@@ -1,11 +1,8 @@
 import axios, { AxiosInstance } from "axios";
 import { Category } from "../../models/ProductModel/Category";
-import { Product, TProductResponse } from "../../models/ProductModel/Product";
+import { Product } from "../../models/ProductModel/Product";
 import { AxiosConfig } from "../interface/axiosConfig";
 class HttpCategoryController {
-  get(): TProductResponse | PromiseLike<TProductResponse> {
-    throw new Error("Method not implemented.");
-  }
   private axiosInstance: AxiosInstance;
 
   constructor(axiosConfig: AxiosConfig) {
@@ -13,6 +10,7 @@ class HttpCategoryController {
     this.axiosInstance = axios.create(axiosConfig);
     const token: any = localStorage.getItem("token");
     const jwtToken = JSON.parse(token!);
+
     if (jwtToken) {
       this.axiosInstance.defaults.headers.common[
         "Authorization"

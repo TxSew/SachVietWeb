@@ -7,26 +7,19 @@ import {
   Typography,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { color } from "../../../Theme/color";
+import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
 import { Discount } from "../../../submodules/models/DiscountModel/Discount";
-import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
-import { BaseAPi } from "../../../configs/BaseApi";
-const http = new HttpDiscountController(BaseAPi);
 const UpdateDiscount = () => {
-  const redirect = useNavigate();
   const {
     handleSubmit,
     control,
     register,
-    watch,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm<Discount>({});
 
-  // console.log(watch().desc);
-  //  upload image file base
   const handleAddDiscount = async (data: Discount) => {
-    const addDiscount = await http.post(data);
+    const addDiscount = await httpDiscount.post(data);
     console.log(addDiscount);
   };
 
@@ -55,7 +48,6 @@ const UpdateDiscount = () => {
             <Controller
               control={control}
               name="code"
-              defaultValue="" // Set an initial value here
               rules={{
                 required: "Vui lòng nhập mã giảm giá",
               }}

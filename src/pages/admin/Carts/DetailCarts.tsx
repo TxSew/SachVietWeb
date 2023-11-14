@@ -16,11 +16,9 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { numberFormat } from "../../../helpers/formatPrice";
-import HttpCartController from "../../../submodules/controllers/http/httpCartController";
+import { httpCart } from "../../../submodules/controllers/http/axiosController";
 
-const http = new HttpCartController(BaseAPi);
 function DetailCarts() {
   const componentRef: any = useRef();
   const { id } = useParams();
@@ -29,7 +27,7 @@ function DetailCarts() {
     fetchOrderDetail();
   }, []);
   const fetchOrderDetail = async () => {
-    const detail = await http.getOrderDetail(Number(id));
+    const detail = await httpCart.getOrderDetail(Number(id));
     if (detail) {
       setDetailOrder(detail);
     }

@@ -14,11 +14,9 @@ import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
+import { httpProducer } from "../../../submodules/controllers/http/axiosController";
 import { Producer } from "../../../submodules/models/producerModel/producer";
 
-var http = new HttpProducerController(BaseAPi);
 const UpdateProducer = () => {
   const { id } = useParams();
   const [Producer, setProducer] = useState<Producer>({});
@@ -27,7 +25,7 @@ const UpdateProducer = () => {
   }, []);
 
   const fetchProducerDetail = async () => {
-    const detailProducer = await http.getOne(Number(id));
+    const detailProducer = await httpProducer.getOne(Number(id));
     setProducer(detailProducer);
   };
 
@@ -56,7 +54,7 @@ const UpdateProducer = () => {
   ]);
 
   const handleUpdate = async (data: Producer) => {
-    const producerUpdate = await http.put(Number(id), data);
+    const producerUpdate = await httpProducer.put(Number(id), data);
     if (producerUpdate) {
       toast.success("producer add successfully", {
         position: "bottom-right",

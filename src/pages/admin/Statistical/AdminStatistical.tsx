@@ -1,27 +1,24 @@
-import { Box, Container, Grid, Stack, Typography } from "@mui/material";
-import { color } from "../../../Theme/color";
-import HttpStatisticalController from "../../../submodules/controllers/http/httpStatisticalController";
-import { BaseAPi } from "../../../configs/BaseApi";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { color } from "../../../Theme/color";
+import { httpStatistical } from "../../../submodules/controllers/http/axiosController";
 import { StatisticalDto } from "../../../submodules/models/Statistical/Statistical";
 import { ChartMOney } from "./chart/ChartMoney";
 
 function AdminStatistical() {
-  const http = new HttpStatisticalController(BaseAPi);
   const [StatisticalCount, setStatisticalCount] = useState<StatisticalDto>();
   useEffect(() => {
     fetchStatistical();
   }, []);
   const fetchStatistical = async () => {
-    const statistical = await http.getStatistical();
-    console.log(statistical.Statistical);
+    const statistical = await httpStatistical.getStatistical();
     setStatisticalCount(statistical);
   };
   return (
     <Box
       sx={{
         mt: 5,
-        px: 5
+        px: 5,
       }}
     >
       <Typography variant="h3" fontSize={"30px"} fontWeight={"bold"}>
@@ -38,7 +35,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <Typography
@@ -58,7 +55,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <Typography
@@ -79,7 +76,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <Typography
@@ -100,7 +97,7 @@ function AdminStatistical() {
                   borderRadius: 4,
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
                 }}
               >
                 <Typography
@@ -112,7 +109,7 @@ function AdminStatistical() {
                 </Typography>
               </Box>
             </Grid>
-            <ChartMOney/>
+            <ChartMOney />
           </Grid>
         </Container>
       </Box>

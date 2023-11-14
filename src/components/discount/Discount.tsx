@@ -1,16 +1,13 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import React from "react";
+import { toast } from "react-toastify";
 import { color } from "../../Theme/color";
 import { formatDates } from "../../helpers/FortmatDate";
+import { httpVoucher } from "../../submodules/controllers/http/axiosController";
 import { Discount } from "../../submodules/models/DiscountModel/Discount";
-import HttpVoucherController from "../../submodules/controllers/http/httpVoucherController";
-import { BaseAPi } from "../../configs/BaseApi";
-import { toast } from "react-toastify";
 
-const http = new HttpVoucherController(BaseAPi);
 function DiscountItem(props: Discount) {
   const handleSave = (ele: any) => {
-    http
+    httpVoucher
       .addVoucherUser(ele)
       .then((response) => {
         if (response) {

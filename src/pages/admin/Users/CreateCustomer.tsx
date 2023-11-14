@@ -12,12 +12,10 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
-import { Producer } from "../../../submodules/models/producerModel/producer";
 import { validateForm } from "../../../helpers/validateForm";
+import { httpProducer } from "../../../submodules/controllers/http/axiosController";
+import { Producer } from "../../../submodules/models/producerModel/producer";
 
-var http = new HttpProducerController(BaseAPi);
 const CreateCustomer = () => {
   const {
     handleSubmit,
@@ -30,7 +28,7 @@ const CreateCustomer = () => {
   });
 
   const handleAddProducer = async (data: Producer) => {
-    const producerUpdate = await http.post(data);
+    const producerUpdate = await httpProducer.post(data);
     if (producerUpdate) {
       toast.success("producer add successfully", {
         position: "bottom-right",

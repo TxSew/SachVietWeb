@@ -1,21 +1,17 @@
 import axios, { AxiosInstance } from "axios";
-import { TProductResponse } from "../../models/ProductModel/Product";
 import { AxiosConfig } from "../interface/axiosConfig";
 class HttpCartController {
-  get(): TProductResponse | PromiseLike<TProductResponse> {
-    throw new Error("Method not implemented.");
-  }
   private axiosInstance: AxiosInstance;
 
   constructor(axiosConfig: AxiosConfig) {
-    this.axiosInstance = axios.create(axiosConfig);
     const token: any = localStorage.getItem("token");
     const jwtToken = JSON.parse(token!);
-    if (jwtToken) {
-      this.axiosInstance.defaults.headers.common[
-        "Authorization"
-      ] = `Bearer ${jwtToken}`;
-    }
+    this.axiosInstance = axios.create({
+      baseURL: axiosConfig.baseURL,
+      headers: {
+        Authorization: ` Bearer ${jwtToken} `,
+      },
+    });
   }
 
   async getAll(props: any): Promise<any> {

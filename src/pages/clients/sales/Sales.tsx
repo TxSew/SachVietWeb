@@ -1,19 +1,17 @@
 import { Box, Grid, Stack } from "@mui/material";
 import { useEffect, useState } from "react";
 import DiscountItem from "../../../components/discount/Discount";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
+import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
 import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 
 function Sales() {
   const [discount, setDiscount] = useState<Discount[]>([]);
-  const http = new HttpDiscountController(BaseAPi);
   useEffect(() => {
     const props = {};
     discountFetch(props);
   }, []);
   const discountFetch = async (props: any) => {
-    const discounts = await http.getAll(props);
+    const discounts = await httpDiscount.getAll(props);
     setDiscount(discounts);
   };
 

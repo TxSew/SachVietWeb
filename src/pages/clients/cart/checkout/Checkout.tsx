@@ -21,13 +21,14 @@ import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { color } from "../../../../Theme/color";
-import { BaseAPi } from "../../../../configs/BaseApi";
 import { numberFormat } from "../../../../helpers/formatPrice";
 import { getTotals } from "../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../redux/storeClient";
 
-import HttpProviceController from "../../../../submodules/controllers/http/httpProvinceController";
-import HttpPaymentController from "../../../../submodules/controllers/http/httppaymentController";
+import {
+  httpPayment,
+  httpProvince,
+} from "../../../../submodules/controllers/http/axiosController";
 import { Order } from "../../../../submodules/models/OrderModel/Order";
 import { Product } from "../../../../submodules/models/ProductModel/Product";
 import {
@@ -35,44 +36,47 @@ import {
   district,
 } from "../../../../submodules/models/Province/Province";
 import { User } from "../../../../submodules/models/UserModel/User";
-const httpProvince = new HttpProviceController(BaseAPi);
-const httpPayment = new HttpPaymentController(BaseAPi);
 function Checkout() {
   const redirect = useNavigate();
   const dispatch = useDispatch();
   const [value, setValue] = useState("COD");
   const [user, setUser] = useState<User>({} as User);
+  const [province, setprovince] = useState<Province[]>([]);
+  const [district, setDistrict] = useState<district[]>([]);
+
+  const cart: any = useSelector((state: RootState) => state.cart.cartItems);
   const { cartTotalAmount, cartItems } = useSelector(
     (state: RootState) => state.cart
   );
 
-  const cart: any = useSelector((state: RootState) => state.cart.cartItems);
   useEffect(() => {
     fetchProvince();
     fetchDistrict();
     fetchUser();
   }, []);
+
+  useEffect(() => {
+    dispatch(getTotals());
+  }, [dispatch, cart]);
+
   const fetchUser = () => {
     const user = localStorage.getItem("user");
     const DataUser = JSON.parse(user!);
     setUser(DataUser);
   };
-  useEffect(() => {
-    dispatch(getTotals());
-  }, [dispatch, cart]);
 
   const fetchDistrict = async () => {
     const districtData = await httpProvince.getDistrict();
     setDistrict(districtData);
   };
-  const [province, setprovince] = useState<Province[]>([]);
-  const [district, setDistrict] = useState<district[]>([]);
+
   const fetchProvince = async () => {
     const provinceData = await httpProvince.getAll();
     if (provinceData) {
       setprovince(provinceData);
     }
   };
+
   const handleCheckout = async (data: any) => {
     console.log(data);
     const detailData = cart.map((e: Product) => {
@@ -97,7 +101,6 @@ function Checkout() {
     };
 
     const payment = await httpPayment.getPayment(orderData);
-    console.log(payment);
     if (payment.paymentMethod == "COD") {
       window.location.assign("http://www.sachviet.click/checkout/payment");
     }
@@ -105,18 +108,12 @@ function Checkout() {
       window.location.assign(payment.url);
     }
   };
+
   const {
     handleSubmit,
-
     control,
     formState: { errors, isSubmitting },
-  } = useForm<Order>({
-    defaultValues: {},
-  });
-
-  function handleChange(e: any) {
-    setValue(e.target.value);
-  }
+  } = useForm<Order>();
 
   return (
     <Grid bgcolor={"#eee"} pb={"170px"}>
@@ -347,26 +344,6 @@ function Checkout() {
                 {errors.orderType && errors.orderType.message}
               </FormHelperText>
             </FormControl>
-
-            {/* <Stack direction={"row"} spacing={2} py={1}>
-              <Radio
-                sx={{
-                  color: "pink[800]",
-                  "&.Mui-checked": {
-                    color: "pink[600]",
-                  },
-                }}
-              />
-              <Stack direction={"row"} spacing={1}>
-                <img
-                  src="https://cdn0.fahasa.com/skin/frontend/base/default/images/payment_icon/ico_cashondelivery.svg?q=102535"
-                  alt=""
-                />
-                <Typography variant="body1" color="initial" fontWeight={"bold"}>
-                  Thanh toán bằng tiền mặt khi nhận hàng
-                </Typography>
-              </Stack>
-            </Stack> */}
           </Box>
         </Box>
         <Box bgcolor={color.white} mt={2} p={2}>

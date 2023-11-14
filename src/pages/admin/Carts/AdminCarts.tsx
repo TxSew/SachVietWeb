@@ -1,3 +1,4 @@
+import { Label } from "@mui/icons-material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -27,12 +28,9 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpCartController from "../../../submodules/controllers/http/httpCartController";
+import { httpCart } from "../../../submodules/controllers/http/axiosController";
 import { Order } from "../../../submodules/models/OrderModel/Order";
-import { Label } from "@mui/icons-material";
 
-const http = new HttpCartController(BaseAPi);
 export default function AdminCarts() {
   const [carts, setCarts] = React.useState<Order[]>([] as Order[]);
   const [page, setPage] = React.useState<number>(1);
@@ -43,13 +41,13 @@ export default function AdminCarts() {
     fetchData(page);
   }, [page]);
   const handleUpdateOrder = async (id: any) => {
-    await http.put(Number(id), {
+    await httpCart.put(Number(id), {
       status: 2,
     });
   };
   const fetchData = async (page: number) => {
     try {
-      const cartsData: any = await http.getAll(page);
+      const cartsData: any = await httpCart.getAll(page);
       setCarts(cartsData?.orders);
       setCount(cartsData?.totalPage);
     } catch (err) {
@@ -65,7 +63,7 @@ export default function AdminCarts() {
   }, []);
   // remove item
   const handleDelete = async (element: any) => {
-    const sss = await http.delete(Number(element.id));
+    const sss = await httpCart.delete(Number(element.id));
   };
   const handleChangeSort = (event: SelectChangeEvent) => {
     let status = event.target.value;
@@ -73,7 +71,7 @@ export default function AdminCarts() {
     const props = {
       status: event.target.value,
     };
-    http.getAll(props).then((result) => {
+    httpCart.getAll(props).then((result) => {
       if (result.orders) {
         setCarts(result.orders);
       }
@@ -227,7 +225,7 @@ export default function AdminCarts() {
                               cursor: "pointer",
                             }}
                             onClick={async () => {
-                              const updated = await http.put(Number(e.id), {
+                              const updated = await httpCart.put(Number(e.id), {
                                 status: 1,
                               });
                               window.location.reload();
@@ -245,9 +243,12 @@ export default function AdminCarts() {
                                 cursor: "pointer",
                               }}
                               onClick={async () => {
-                                const updated = await http.put(Number(e.id), {
-                                  status: 0,
-                                });
+                                const updated = await httpCart.put(
+                                  Number(e.id),
+                                  {
+                                    status: 0,
+                                  }
+                                );
                                 window.location.reload();
 
                                 toast.success("updated order successfully", {
@@ -279,9 +280,12 @@ export default function AdminCarts() {
                           <Box>
                             <Stack
                               onClick={async () => {
-                                const updated = await http.put(Number(e.id), {
-                                  status: 0,
-                                });
+                                const updated = await httpCart.put(
+                                  Number(e.id),
+                                  {
+                                    status: 0,
+                                  }
+                                );
                                 window.location.reload();
                                 toast.success("updated order successfully", {
                                   position: "bottom-right",

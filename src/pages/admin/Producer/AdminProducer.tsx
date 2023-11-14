@@ -8,7 +8,7 @@ import {
   OutlinedInput,
   Pagination,
   Stack,
-  Typography
+  Typography,
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -20,30 +20,31 @@ import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
+import { httpProducer } from "../../../submodules/controllers/http/axiosController";
 import { Producer } from "../../../submodules/models/producerModel/producer";
 
-const http = new HttpProducerController(BaseAPi);
 export default function ProducerAdmin() {
   const [count, setCount] = React.useState<number>(1);
   const [page, setPage] = React.useState<number>(1);
   const [producer, setProducer] = React.useState<Producer[]>([]);
+
   React.useEffect(() => {
     fetchData(page);
   }, [page]);
+
   const fetchData = async (page: number = 1) => {
-    const producerData: any = await http.getAll(page);
+    const producerData: any = await httpProducer.getAll(page);
     setCount(producerData?.totalPage);
     setProducer(producerData?.producers);
   };
+
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
     console.log(value);
   };
 
   async function handleRemove(id: number) {
-    const destroy = await http.delete(Number(id));
+    await httpProducer.delete(Number(id));
     const filter = producer.filter((e: any) => e.id !== id);
     setProducer(filter);
   }
@@ -71,8 +72,8 @@ export default function ProducerAdmin() {
               maxWidth: "300px",
               mt: 1,
               "& > input": {
-                p: "7px"
-              }
+                p: "7px",
+              },
             }}
             fullWidth
             placeholder="Tìm kiếm sản phẩm..."
@@ -84,7 +85,7 @@ export default function ProducerAdmin() {
         <TableContainer component={Paper}>
           <Table
             sx={{
-              minWidth: 800
+              minWidth: 800,
             }}
             aria-label="simple tablek w"
           >
@@ -92,8 +93,8 @@ export default function ProducerAdmin() {
               <TableRow
                 sx={{
                   "& > th": {
-                    fontWeight: "bold"
-                  }
+                    fontWeight: "bold",
+                  },
                 }}
               >
                 <TableCell>ID</TableCell>
@@ -135,7 +136,7 @@ export default function ProducerAdmin() {
                       <Link to={`${e.id}`}>
                         <EditIcon
                           sx={{
-                            color: "green"
+                            color: "green",
                           }}
                         />
                       </Link>
@@ -143,7 +144,7 @@ export default function ProducerAdmin() {
                         <DeleteForeverIcon
                           onClick={() => handleRemove(Number(e.id))}
                           sx={{
-                            color: "red"
+                            color: "red",
                           }}
                         />
                       </Box>

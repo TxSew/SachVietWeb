@@ -120,14 +120,13 @@ const ProductItem = (Props: ProductItem) => {
               textDecoration: "line-through",
             }}
           >
-            {Props.products.sale && numberFormat(Number(Props.products.price))}
+            {!!Props.products.sale &&
+              numberFormat(Number(Props.products.price))}
           </Typography>
         </Stack>
       </CardContent>
     </Card>
   );
 };
-
-ProductItem.propTypes = {};
 
 export default memo(ProductItem);

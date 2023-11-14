@@ -6,15 +6,13 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { color } from "../../../Theme/color";
-import { Discount } from "../../../submodules/models/DiscountModel/Discount";
-import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
-import { BaseAPi } from "../../../configs/BaseApi";
-import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-const http = new HttpDiscountController(BaseAPi);
+import { color } from "../../../Theme/color";
+import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
+import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 const UpdateDiscount = () => {
   const [discount, setDiscount] = useState<Discount>({});
   const { id } = useParams();
@@ -23,7 +21,7 @@ const UpdateDiscount = () => {
     handleSubmit,
     control,
     setValue,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm<Discount>({
     defaultValues: {
       status: "1",
@@ -45,15 +43,13 @@ const UpdateDiscount = () => {
     setValue,
   ]);
   useEffect(() => {
-    http.getOne(Number(id)).then((res) => {
+    httpDiscount.getOne(Number(id)).then((res) => {
       if (res) setDiscount(res);
     });
   }, []);
 
-  // console.log(watch().desc);
-  //  upload image file base
   const handelUpdateDiscount = async (data: Discount) => {
-    await http.put(Number(id), data);
+    await httpDiscount.put(Number(id), data);
 
     toast.success("Cập nhật mã giảm giá thành công", {
       position: "top-right",

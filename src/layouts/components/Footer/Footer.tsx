@@ -13,6 +13,7 @@ import List from "@mui/material/List";
 
 function Footer() {
   const { isMediumMD } = useMedia();
+
   const ftItemhd = {
     padding: "24px 16px 0",
     fontSize: "16px",

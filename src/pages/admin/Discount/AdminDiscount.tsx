@@ -1,4 +1,5 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DiscountIcon from "@mui/icons-material/Discount";
 import EditCalendarIcon from "@mui/icons-material/EditCalendar";
 import {
   Box,
@@ -17,53 +18,45 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import moment from "moment";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
-import { Discount } from "../../../submodules/models/DiscountModel/Discount";
-import { TProductResponse } from "../../../submodules/models/ProductModel/Product";
-import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
-import DiscountIcon from "@mui/icons-material/Discount";
-import moment from "moment";
-import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
 import { numberFormat } from "../../../helpers/formatPrice";
+import { NumberFormattingComponent } from "../../../helpers/formatvalidate";
+import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
+import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 
-const http = new HttpDiscountController(BaseAPi);
 export default function AdminDiscount() {
   const [discount, setDiscount] = React.useState<Discount[]>([]);
+  const [page, setPage] = React.useState(1);
+
   React.useEffect(() => {
     const props = {};
     fetchData(props);
   }, []);
+
   const fetchData = async (props: any) => {
     try {
-      const discountData = await http.getAll(props);
-      console.log(discountData);
-      if (discountData) {
-        setDiscount(discountData);
-      }
+      const discountData = await httpDiscount.getAll(props);
+      if (discountData) setDiscount(discountData);
     } catch (err) {
       console.log(err);
     }
   };
-  const [page, setPage] = React.useState(1);
+
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
-    console.log(value);
   };
 
-  // remove item
   const handleDelete = async (element: any) => {
-    console.log(element.id);
     const filter = discount.filter((e) => e.id !== element.id);
-    const destroy = await http.delete(Number(element.id));
+    await httpDiscount.delete(Number(element.id));
     setDiscount(filter);
-    console.log(destroy);
-    toast.error("Delete item successfully", {
-      position: "bottom-right",
+
+    toast.error("Mã giảm giá đã bị xóa", {
+      position: "top-right",
     });
   };
 

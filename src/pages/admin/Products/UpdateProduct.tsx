@@ -18,15 +18,15 @@ import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
 import { validateForm } from "../../../helpers/validateForm";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
+import {
+  httpCategory,
+  httpProducer,
+} from "../../../submodules/controllers/http/axiosController";
 import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
 
-var http = new HttpProducerController(BaseAPi);
-var httpcategory = new HttpCategoryController(BaseAPi);
 const httpProduct = new HttpProductController(BaseAPi);
 const UpdateProduct = ({ productId, initialTitle }: any) => {
   const [urls, setUrls] = useState<string[]>([]);
@@ -49,7 +49,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
 
   const fetchProducer = async () => {
     try {
-      const producer: any = await http.getAll();
+      const producer: any = await httpProducer.getAll();
       setProducer(producer.producers);
     } catch (error) {
       console.log(error);
@@ -57,7 +57,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
   };
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getCategory({});
+      const category: any = await httpCategory.getCategory({});
       setCategory(category);
     } catch (err) {
       console.error(err);
@@ -65,7 +65,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
   };
   const fetchProduct = async () => {
     const product: Product = await httpProduct.getOneUpdate(ID);
-    if (product) {
+    if (product)
       reset({
         producerID: product.producerID,
         categoryId: product.categoryId,
@@ -78,9 +78,8 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
         pageNumber: product.pageNumber,
         size: product.size,
       });
-      // setProduct(product);
-    }
   };
+
   const handleUpdateProduct = async (data: any) => {
     data.image = url[0];
     const images = urls.map((e) => {
@@ -153,10 +152,8 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
     control,
     register,
     reset,
-    formState: { errors, isDirty, isValid },
-  } = useForm<Product>({
-    defaultValues: {},
-  });
+    formState: { errors },
+  } = useForm<Product>({});
 
   return (
     <Box>
@@ -276,7 +273,6 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
                           return <option value={e.id}>{e.name}</option>;
                         })}
                       </select>
-                      {/* <FormHelperText>Without label</FormHelperText> */}
                     </FormControl>
                   )}
                 />
@@ -380,23 +376,17 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
                         automatic_uploads: true,
                         file_picker_types: "image",
                         file_picker_callback: function (callback, value, meta) {
-                          // Provide file and text for the link dialog
-                          if (meta.filetype == "file") {
+                          if (meta.filetype == "file")
                             callback("mypage.html", { text: "My text" });
-                          }
 
-                          // Provide image and alt text for the image dialog
-                          if (meta.filetype == "image") {
+                          if (meta.filetype == "image")
                             callback("myimage.jpg", { alt: "My alt text" });
-                          }
 
-                          // Provide alternative source and posted for the media dialog
-                          if (meta.filetype == "media") {
+                          if (meta.filetype == "media")
                             callback("movie.mp4", {
                               source2: "alt.ogg",
                               poster: "image.jpg",
                             });
-                          }
                         },
                         plugins: [
                           "advlist",
@@ -612,7 +602,6 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
                 <CircularProgress />
               </Box>
             ) : url.length > 0 ? (
-              // Nếu mảng urls có chứa hình ảnh
               url.map((url, index) => (
                 <img
                   key={index}
@@ -622,7 +611,6 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
                 />
               ))
             ) : (
-              // Nếu mảng urls không có hình ảnh
               <div></div>
             )}
 
@@ -649,9 +637,8 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
               {isLoading ? (
-                <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
+                <CircularProgress />
               ) : urls.length > 0 ? (
-                // Nếu mảng urls có chứa hình ảnh
                 urls.map((url, index) => (
                   <img
                     key={index}
@@ -661,7 +648,6 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
                   />
                 ))
               ) : (
-                // Nếu mảng urls không có hình ảnh
                 <div></div>
               )}
             </Stack>

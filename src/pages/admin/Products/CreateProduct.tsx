@@ -17,19 +17,17 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import HttpProducerController from "../../../submodules/controllers/http/httpProducerController";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { validateForm } from "../../../helpers/validateForm";
+import {
+  httpCategory,
+  httpProducer,
+  httpProduct,
+} from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
-import { validateForm } from "../../../helpers/validateForm";
 
-var http = new HttpProducerController(BaseAPi);
-var httpcategory = new HttpCategoryController(BaseAPi);
-const httpProduct = new HttpProductController(BaseAPi);
 const CreateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);
   const [url, setUrl] = useState<string[]>([]);
@@ -47,15 +45,16 @@ const CreateProduct = () => {
 
   const fetchProducer = async () => {
     try {
-      const producer: any = await http.getAll();
+      const producer: any = await httpProducer.getAll();
       setProducer(producer.producers);
     } catch (error) {
       console.log(error);
     }
   };
+
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getCategory({});
+      const category: any = await httpCategory.getCategory({});
       setCategory(category);
     } catch (err) {
       console.error(err);
@@ -74,13 +73,13 @@ const CreateProduct = () => {
     };
 
     const storeProduct = await httpProduct.post(ProductDto);
-    if (storeProduct) {
-      toast.success("created new product successfully", {
-        position: "bottom-right",
+    if (storeProduct)
+      toast.success("Thêm sản phẩm thành công", {
+        position: "top-right",
       });
-      redirect("/admin/product");
-    }
+    redirect("/admin/product");
   };
+
   const loadImagesFiles = async (images: any) => {
     if (images) {
       setIsLoadings(true);
@@ -132,11 +131,12 @@ const CreateProduct = () => {
     control,
     register,
     watch,
-    formState: { errors, isDirty, isValid },
+    formState: { errors },
   } = useForm<Product>({
     defaultValues: {
       producerID: undefined,
       categoryId: undefined,
+      sale: 0,
     },
   });
   return (
@@ -164,7 +164,7 @@ const CreateProduct = () => {
             <Controller
               control={control}
               name="title"
-              defaultValue="" // Set an initial value here
+              defaultValue=""
               rules={{
                 validate: validateForm,
                 required: "Tên sản phẩm không được bỏ trống!",
@@ -218,7 +218,6 @@ const CreateProduct = () => {
                           );
                         })}
                       </Select>
-                      {/* <FormHelperText>Without label</FormHelperText> */}
                     </FormControl>
                   )}
                 />
@@ -230,7 +229,6 @@ const CreateProduct = () => {
                 <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
                   Nhà xuất bản
                 </Typography>
-                {/* Producer */}
                 <Controller
                   control={control}
                   name="producerID"
@@ -258,7 +256,6 @@ const CreateProduct = () => {
                           );
                         })}
                       </Select>
-                      {/* <FormHelperText>Without label</FormHelperText> */}
                     </FormControl>
                   )}
                 />
@@ -301,7 +298,6 @@ const CreateProduct = () => {
                 <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
                   Số trang
                 </Typography>
-                {/* Producer */}
                 <Controller
                   control={control}
                   name="pageNumber"
@@ -356,17 +352,12 @@ const CreateProduct = () => {
                         automatic_uploads: true,
                         file_picker_types: "image",
                         file_picker_callback: function (callback, value, meta) {
-                          // Provide file and text for the link dialog
                           if (meta.filetype == "file") {
                             callback("mypage.html", { text: "My text" });
                           }
-
-                          // Provide image and alt text for the image dialog
                           if (meta.filetype == "image") {
                             callback("myimage.jpg", { alt: "My alt text" });
                           }
-
-                          // Provide alternative source and posted for the media dialog
                           if (meta.filetype == "media") {
                             callback("movie.mp4", {
                               source2: "alt.ogg",
@@ -579,7 +570,6 @@ const CreateProduct = () => {
                 <CircularProgress />
               </Box>
             ) : url.length > 0 ? (
-              // Nếu mảng urls có chứa hình ảnh
               url.map((url, index) => (
                 <img
                   key={index}
@@ -589,7 +579,6 @@ const CreateProduct = () => {
                 />
               ))
             ) : (
-              // Nếu mảng urls không có hình ảnh
               <div></div>
             )}
 
@@ -616,9 +605,8 @@ const CreateProduct = () => {
             />
             <Stack direction={"row"} flexWrap={"wrap"}>
               {isLoading ? (
-                <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
+                <CircularProgress />
               ) : urls.length > 0 ? (
-                // Nếu mảng urls có chứa hình ảnh
                 urls.map((url, index) => (
                   <img
                     key={index}
@@ -628,7 +616,6 @@ const CreateProduct = () => {
                   />
                 ))
               ) : (
-                // Nếu mảng urls không có hình ảnh
                 <div></div>
               )}
             </Stack>

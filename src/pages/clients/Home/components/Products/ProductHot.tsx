@@ -13,6 +13,7 @@ import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
 import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
+import { httpProduct } from "../../../../../submodules/controllers/http/axiosController";
 interface PropsSort {
   page: number;
   search: string;
@@ -21,19 +22,12 @@ interface PropsSort {
   limit: number;
 }
 function ProductHots() {
-  const http = new HttpProductController(BaseAPi);
-  const [alignment, setAlignment] = React.useState("web");
   const { isLoading, startLoading, stopLoading } = useLoading();
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
-  ) => {
-    setAlignment(newAlignment);
-  };
+
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async (props: any) => {
     try {
-      const productData: any = await http.getAll(props);
+      const productData: any = await httpProduct.getAll(props);
       const { products } = productData;
       startLoading();
       if (products) {
@@ -46,6 +40,7 @@ function ProductHots() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     const props = {
       categoryFilter: "thieu-nhi",

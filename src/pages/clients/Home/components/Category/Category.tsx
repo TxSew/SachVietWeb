@@ -1,20 +1,16 @@
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import { Box, Container, Skeleton, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { color } from "../../../../../Theme/color";
-import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
 import useMedia from "../../../../../hooks/useMedia/useMedia";
-import HttpCategoryController from "../../../../../submodules/controllers/http/httpCategoryController";
+import { httpCategory } from "../../../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../../../submodules/models/ProductModel/Category";
-import {
-  createSearchParams,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
-const http = new HttpCategoryController(BaseAPi);
+
 const CategoryNav = () => {
   const redirect = useNavigate();
+  const { isMediumMD } = useMedia();
   const [category, SetCategory] = useState<Category[]>([]);
   const { isLoading, startLoading, stopLoading } = useLoading();
   useEffect(() => {
@@ -29,10 +25,11 @@ const CategoryNav = () => {
       }).toString(),
     });
   };
+
   const fetchcategory = async () => {
     startLoading();
     try {
-      const category = await http.getCategory({});
+      const category = await httpCategory.getCategory({});
       const filteredData = category.filter(
         (item: any) => item.parentId !== null
       );
@@ -46,7 +43,6 @@ const CategoryNav = () => {
       console.log(error);
     }
   };
-  const { isMediumMD } = useMedia();
   return (
     <Container
       maxWidth={"xl"}

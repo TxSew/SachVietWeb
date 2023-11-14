@@ -13,60 +13,75 @@ import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
+import useToast from "../../../hooks/useToast/useToast";
+import { httpCategory } from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 
-var httpcategory = new HttpCategoryController(BaseAPi);
 const UpdateCategory = () => {
   const { id } = useParams();
-
   const [category, setCategory] = useState([]);
   const [detail, setdetail] = useState<Category>({});
+  const [url, setUrl] = useState<string>("");
+  const { showToast } = useToast();
+
   useEffect(() => {
     fetchCategory();
     fetchOneCategory();
   }, []);
-
   const fetchOneCategory = async () => {
-    const categoryOne = await httpcategory.getOne(Number(id));
+    const categoryOne = await httpCategory.getOne(Number(id));
+
     reset({
       parentId: categoryOne.parentId,
+      name: categoryOne.name,
+      status: categoryOne.status,
+      parentName: categoryOne.parentName,
+      id: categoryOne.id,
+      image: categoryOne.image,
     });
     setdetail(categoryOne);
+  };
+  const [img, setImg] = useState<any>([]);
+
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    setImg(event.target.files);
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
   const fetchCategory = async () => {
     try {
-      const category: any = await httpcategory.getCategory({});
+      const category = await httpCategory.getCategory({});
       setCategory(category);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const [url, setUrl] = useState<string>("");
   const loadImageFile = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-      await uploadBytes(imageRef, images[i])
-        .then(() => {
-          storage
-            .ref("multipleFiles")
-            .child(images[i].name)
-            .getDownloadURL()
-            .then((url: any) => {
-              console.log(url);
-              setUrl(url);
-              return url;
-            });
-        })
-        .catch((err) => {
-          alert(err);
-        });
+      const data = await uploadBytes(imageRef, images[i]).then(() => {
+        return storage
+          .ref("multipleFiles")
+          .child(images[i].name)
+          .getDownloadURL()
+          .then((url: any) => {
+            return url;
+          });
+      });
+      return data;
     }
   };
 
@@ -74,35 +89,32 @@ const UpdateCategory = () => {
     handleSubmit,
     control,
     register,
-    setValue,
     reset,
-    formState: { errors },
+    watch,
+    formState: { errors, isSubmitting },
   } = useForm<Category>({
     defaultValues: {
       status: "1",
     },
   });
 
-  useEffect(() => {
-    setValue("name", detail.name);
-    setValue("parentName", detail.parentName);
-    setValue("parentId", detail.parentId);
-    setValue("status", detail.status);
-  }, [
-    detail.name,
-    detail.parentName,
-    detail.status,
-    detail.parentId,
-    setValue,
-  ]);
+  const ur = watch("image", "");
 
+  useEffect(() => {
+    if (ur) {
+      setUrl(ur);
+    }
+  }, [ur]);
   const handelUpdateCategory = async (data: Category) => {
-    data.image = url;
-    const categoryDto = await httpcategory.put(Number(id), data);
-    if (categoryDto) {
-      toast.success("Danh mục cập nhật thành công", {
-        position: "top-right",
-      });
+    const thumbnail = await loadImageFile(img);
+    if (thumbnail) {
+      data.image = thumbnail;
+      const categoryDto = await httpCategory.put(Number(id), data);
+      if (categoryDto) {
+        showToast("Danh mục cập nhật thành công", {
+          position: "top-right",
+        });
+      }
     }
   };
 
@@ -113,8 +125,8 @@ const UpdateCategory = () => {
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
             Cập nhật danh mục {detail?.id}
           </Typography>
-          <Button type="submit" variant="contained">
-            Lưu
+          <Button type="submit" variant="contained" disabled={isSubmitting}>
+            {isSubmitting ? "Đang xử lý..." : "Lưu"}
           </Button>
         </Stack>
         <Grid
@@ -130,7 +142,7 @@ const UpdateCategory = () => {
           <Controller
             control={control}
             name="name"
-            defaultValue="" // Set an initial value here
+            defaultValue=""
             rules={{
               required: "Tên danh mục không được bỏ trống!",
             }}
@@ -202,7 +214,7 @@ const UpdateCategory = () => {
           </Typography>
           <OutlinedInput
             type="file"
-            onChange={(e: any) => loadImageFile(e.target.files)}
+            onChange={handleImageChange}
             sx={{
               mt: 1,
               "& > input": {
@@ -211,9 +223,21 @@ const UpdateCategory = () => {
             }}
             fullWidth
           />
-          <Stack direction={"row"} flexWrap={"wrap"}>
-            <img src={url} width={"150px"} alt="" />
-          </Stack>
+
+          {image ? (
+            <div>
+              <h3>Preview:</h3>
+              <img
+                src={image}
+                alt="Uploaded preview"
+                style={{ maxWidth: "100px" }}
+              />
+            </div>
+          ) : (
+            <Stack direction={"row"} flexWrap={"wrap"}>
+              <img src={url} width={"150px"} alt="" />
+            </Stack>
+          )}
           <Box width={"100%"}>
             <Typography
               variant="h2"
@@ -252,7 +276,6 @@ const UpdateCategory = () => {
                       <em>Ngưng kinh doanh</em>
                     </MenuItem>
                   </Select>
-                  {/* <FormHelperText>Without label</FormHelperText> */}
                 </FormControl>
               )}
             />

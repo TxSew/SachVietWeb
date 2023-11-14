@@ -22,7 +22,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import ProductItem from "../../../components/ProductItem/ProductItem";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { numberFormat } from "../../../helpers/formatPrice";
 import useMedia from "../../../hooks/useMedia/useMedia";
 import { addToCart } from "../../../redux/features/cart/CartProducer";
@@ -31,30 +30,35 @@ import {
   increment,
 } from "../../../redux/features/counter/CounterProducer";
 import { RootState } from "../../../redux/storeClient";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { httpProduct } from "../../../submodules/controllers/http/axiosController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import "./style.scss";
-const http = new HttpProductController(BaseAPi);
+
 export const Details = () => {
   const { isMediumMD } = useMedia();
   const [TextMore, setTextMore] = useState(false);
   const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
   const redirect = useNavigate();
-  const { id } = useParams();
   const [Detail, setDetail] = useState<Product>({});
-  const Id: any = id;
   const [image, setImage] = useState<string>("");
+
+  const { id } = useParams();
+  const Id: any = id;
+
+  const count = useSelector((state: RootState) => state.counter.value);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [id]);
+
   useEffect(() => {
     FetchProductOne();
   }, [id]);
 
   const FetchProductOne = async () => {
     try {
-      const detailValue = await http.getOne(Id);
+      const detailValue = await httpProduct.getOne(Id);
       if (detailValue) {
       }
       setDetail(detailValue.product);
@@ -74,10 +78,7 @@ export const Details = () => {
   };
   const handleChangeImage = (e: any) => {
     setImage(e.image);
-    // e.image = image;
   };
-  const count = useSelector((state: RootState) => state.counter.value);
-  const dispatch = useDispatch();
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#f5f5f5",
@@ -93,7 +94,6 @@ export const Details = () => {
     "&:nth-of-type(odd)": {
       backgroundColor: "#f5f5f5",
     },
-    // hide last border
     "&:last-child td, &:last-child th": {
       border: "none",
     },
@@ -628,7 +628,7 @@ export const Details = () => {
                     </StyledTableCell>
                   </StyledTableRow>
                 )}
-                {Detail?.pageNumber !== null && Detail.pageNumber !== 0 ? (
+                {!!Detail?.pageNumber ? (
                   <StyledTableRow>
                     <StyledTableCell component="th" scope="row">
                       Số trang:

@@ -1,11 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { TProductResponse } from "../../models/ProductModel/Product";
-import { AxiosConfig } from "../interface/axiosConfig";
 import { Voucher } from "../../models/voucherModel/Voucher";
+import { AxiosConfig } from "../interface/axiosConfig";
 class HttpVoucherController {
-  get(): TProductResponse | PromiseLike<TProductResponse> {
-    throw new Error("Method not implemented.");
-  }
   private axiosInstance: AxiosInstance;
 
   constructor(axiosConfig: AxiosConfig) {

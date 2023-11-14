@@ -1,3 +1,4 @@
+import CategoryIcon from "@mui/icons-material/Category";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -17,28 +18,27 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import CategoryIcon from "@mui/icons-material/Category";
 import moment from "moment";
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
+import useToast from "../../../hooks/useToast/useToast";
+import { httpCategory } from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 
-const http = new HttpCategoryController(BaseAPi);
 export default function CategoryAdmin() {
   const [category, setCategory] = React.useState([]);
-  const [pageCount, setPageCount] = React.useState<number>(1);
-
+  const [pageCount, setPageCount] = React.useState<number>(0);
+  const { showErrorToast } = useToast();
   const [page, setPage] = React.useState<number>(1);
   React.useEffect(() => {
     fetchData(page);
   }, [page]);
-  const fetchData = async (page: number = 1) => {
+
+  const fetchData = async (page: number) => {
     try {
-      const CategoryData: any = await http.getAll(page);
+      const CategoryData: any = await httpCategory.getAll(page);
+      setPageCount(CategoryData.totalPage);
       const filteredData = CategoryData.category.filter(
         (item: any) => item.parentId !== null
       );
@@ -48,22 +48,22 @@ export default function CategoryAdmin() {
       console.log(err);
     }
   };
+
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
     setPage(value);
   };
 
-  // remove item
   const handleDelete = async (element: any) => {
-    const destroy = await http.delete(element.id);
+    const destroy = await httpCategory.delete(element.id);
     const filter = category.filter((e: any) => {
       return e.id !== element.id;
     });
-    if (destroy) {
-      toast.error("Delete item successfully", {
+
+    if (destroy)
+      showErrorToast("Danh mục đã bị xóa ", {
         position: "bottom-right",
       });
-      setCategory(filter);
-    }
+    setCategory(filter);
   };
 
   return (

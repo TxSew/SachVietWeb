@@ -9,19 +9,11 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import ProductItem from "../../../../../components/ProductItem/ProductItem";
-import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
-import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
+import { httpProduct } from "../../../../../submodules/controllers/http/axiosController";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
-interface PropsSort {
-  page: number;
-  search: string;
-  sortBy: string;
-  sortWith: string;
-  limit: number;
-}
+
 function Products() {
-  const http = new HttpProductController(BaseAPi);
   const [alignment, setAlignment] = React.useState("web");
   const { isLoading, startLoading, stopLoading } = useLoading();
   const handleChange = (
@@ -33,7 +25,7 @@ function Products() {
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async (props: any) => {
     try {
-      const productData: any = await http.getAll(props);
+      const productData: any = await httpProduct.getAll(props);
       const { products } = productData;
       startLoading();
       if (products) {

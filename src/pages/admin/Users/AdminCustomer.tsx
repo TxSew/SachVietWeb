@@ -1,10 +1,8 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import EditIcon from "@mui/icons-material/Edit";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import {
   Box,
-  Button,
   Chip,
   Grid,
   OutlinedInput,
@@ -22,12 +20,10 @@ import TableRow from "@mui/material/TableRow";
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpAccountController from "../../../submodules/controllers/http/httpAccountController";
+import { httpAccount } from "../../../submodules/controllers/http/axiosController";
 import { TUser, User } from "../../../submodules/models/UserModel/User";
 
 export default function AdminCustomer() {
-  const http = new HttpAccountController(BaseAPi);
   const [customer, setCustomer] = React.useState<User[]>([]);
   const [page, setPage] = React.useState(1);
   const [count, setCount] = React.useState(1);
@@ -36,7 +32,7 @@ export default function AdminCustomer() {
   }, [page]);
 
   const fetchData = async (page: number = 1) => {
-    const user: TUser = await http.getAll(page);
+    const user: TUser = await httpAccount.getAll(page);
     if (user) {
       setCustomer(user.Users);
       setCount(user.totalPage);

@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  CircularProgress,
   FormControl,
   Grid,
   MenuItem,
@@ -13,48 +12,56 @@ import {
 import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { storage } from "../../../configs/fireBaseConfig";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import { Category } from "../../../submodules/models/ProductModel/Category";
 import { validateForm } from "../../../helpers/validateForm";
-
-var httpCategory = new HttpCategoryController(BaseAPi);
+import useToast from "../../../hooks/useToast/useToast";
+import { httpCategory } from "../../../submodules/controllers/http/axiosController";
+import { Category } from "../../../submodules/models/ProductModel/Category";
 
 const CreateCategory = () => {
+  const [image, setImage] = useState(null);
+
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    setImg(event.target.files);
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   const [category, setCategory] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [url, setUrl] = useState<any>([]);
+
+  const [img, setImg] = useState<any>([]);
+  const { showToast, showErrorToast } = useToast();
+
   useEffect(() => {
     fetchCategory();
   }, []);
+
   const loadImageFile = async (images: any) => {
-    if (images) {
-      setIsLoading(true);
-    }
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-      await uploadBytes(imageRef, images[i])
-        .then(() => {
-          storage
-            .ref("multipleFiles")
-            .child(images[i].name)
-            .getDownloadURL()
-            .then((url: any) => {
-              setUrl((prev: any) => [...prev, url]);
-              setIsLoading(false);
-              return url;
-            });
-        })
-        .catch((err) => {});
+      const data = await uploadBytes(imageRef, images[i]).then(() => {
+        return storage
+          .ref("multipleFiles")
+          .child(images[i].name)
+          .getDownloadURL()
+          .then((url: any) => {
+            return url;
+          });
+      });
+      return data;
     }
   };
 
   const fetchCategory = async () => {
     try {
-      const category: any = await httpCategory.getCategory({});
+      const category = await httpCategory.getCategory({});
       setCategory(category);
     } catch (err) {
       console.error(err);
@@ -62,26 +69,29 @@ const CreateCategory = () => {
   };
 
   const handleAddCategory = async (data: Category) => {
-    data.image = url[0];
-    const category: Category = data;
-    try {
-      const categoryDto = await httpCategory.store(category);
-      if (categoryDto) {
-        toast.success("Thêm danh mục sản phẩm thành công", {
-          position: "bottom-right",
+    const image = await loadImageFile(img);
+    if (image) {
+      data.image = image;
+      const category: Category = data;
+      try {
+        const categoryDto = await httpCategory.store(category);
+        if (categoryDto) {
+          showToast("Thêm danh mục sản phẩm thành công", {
+            position: "top-right",
+          });
+        }
+      } catch (err) {
+        showErrorToast("tên danh mục đã tồn tại!", {
+          position: "top-right",
         });
       }
-    } catch (err) {
-      toast.error("tên danh mục đã tồn tại!", {
-        position: "top-right",
-      });
     }
   };
   const {
     handleSubmit,
     control,
     register,
-    formState: { errors },
+    formState: { errors, isValid, isSubmitting },
   } = useForm<Category>({
     defaultValues: {
       status: "1",
@@ -96,9 +106,11 @@ const CreateCategory = () => {
           <Typography variant="h2" fontSize={"24px"} fontWeight={"bold"}>
             Thêm danh mục mới
           </Typography>
-          <Button type="submit" variant="contained">
-            Lưu
-          </Button>
+          {isValid && (
+            <Button type="submit" variant="contained" disabled={isSubmitting}>
+              {isSubmitting ? "Đang xử lý..." : "Lưu"}
+            </Button>
+          )}
         </Stack>
         <Grid
           bgcolor={color.white}
@@ -171,7 +183,6 @@ const CreateCategory = () => {
                         );
                       })}
                     </Select>
-                    {/* <FormHelperText>Without label</FormHelperText> */}
                   </FormControl>
                 )}
               />
@@ -186,7 +197,8 @@ const CreateCategory = () => {
           </Typography>
           <OutlinedInput
             type="file"
-            onChange={(e: any) => loadImageFile(e.target.files)}
+            {...register("image")}
+            onChange={handleImageChange}
             sx={{
               mt: 1,
               "& > input": {
@@ -195,21 +207,15 @@ const CreateCategory = () => {
             }}
             fullWidth
           />
-          {isLoading ? (
-            <CircularProgress /> // Hiển thị CircularProgress khi đang tải dữ liệu
-          ) : url.length > 0 ? (
-            // Nếu mảng urls có chứa hình ảnh
-            url.map((url: any, index: any) => (
+          {image && (
+            <div>
+              <h3>Preview:</h3>
               <img
-                key={index}
-                src={url}
-                width={"100px"}
-                alt={`Image ${index}`}
+                src={image}
+                alt="Uploaded preview"
+                style={{ maxWidth: "100px" }}
               />
-            ))
-          ) : (
-            // Nếu mảng urls không có hình ảnh
-            <div></div>
+            </div>
           )}
           <Typography variant="caption" color={color.error}>
             {errors.level && errors.level.message}

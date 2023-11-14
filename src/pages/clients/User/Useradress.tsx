@@ -1,8 +1,6 @@
-import React from "react";
-import "./style.scss";
 import "./index.scss";
-import { Link } from "react-router-dom";
 import NavUser from "./layout/NavUser";
+import "./style.scss";
 function UserAdress() {
   return (
     <NavUser>

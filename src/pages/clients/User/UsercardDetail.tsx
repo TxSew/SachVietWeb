@@ -11,23 +11,24 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { color } from "../../../Theme/color";
-import NavUser from "./layout/NavUser";
-import { numberFormat } from "../../../helpers/formatPrice";
-import { useParams } from "react-router-dom";
-import HttpCartController from "../../../submodules/controllers/http/httpCartController";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { useEffect, useState } from "react";
-const http = new HttpCartController(BaseAPi);
+import { useParams } from "react-router-dom";
+import { color } from "../../../Theme/color";
+import { BaseAPi } from "../../../configs/BaseApi";
+import { numberFormat } from "../../../helpers/formatPrice";
+import HttpCartController from "../../../submodules/controllers/http/httpCartController";
+import NavUser from "./layout/NavUser";
+import { httpCart } from "../../../submodules/controllers/http/axiosController";
 function UserCartDetail() {
   const { id } = useParams();
   const [orderCurrent, setOrderCurrent] = useState<any>({});
+
   useEffect(() => {
     getOrderUser();
   }, []);
 
   const getOrderUser = async () => {
-    const orderByUser = await http.getOrderDetail(Number(id));
+    const orderByUser = await httpCart.getOrderDetail(Number(id));
     if (orderByUser) setOrderCurrent(orderByUser);
   };
   return (

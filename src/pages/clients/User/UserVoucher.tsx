@@ -1,4 +1,5 @@
 import {
+  Chip,
   Table,
   TableBody,
   TableCell,
@@ -10,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BaseAPi } from "../../../configs/BaseApi";
+import { formatDates } from "../../../helpers/FortmatDate";
 import HttpVoucherController from "../../../submodules/controllers/http/httpVoucherController";
 import "./index.scss";
 import NavUser from "./layout/NavUser";
@@ -82,12 +84,16 @@ function UserMyVoucher() {
                               {e?.userVoucher?.fullName}
                             </TableCell>
                             <TableCell align="center">
-                              {e?.discountVoucher?.expiration_date}
+                              {formatDates(e?.discountVoucher?.expiration_date)}
                             </TableCell>
-                            <TableCell align="center">status</TableCell>
                             <TableCell align="center">
-                              <button>sjdj</button>
+                              {e.status == null ? (
+                                <Chip label="Hoạt động" color="success" />
+                              ) : (
+                                <Chip color="error" label="Ngưng hoạt động" />
+                              )}
                             </TableCell>
+                            <TableCell align="center"></TableCell>
                           </TableRow>
                         );
                       })}

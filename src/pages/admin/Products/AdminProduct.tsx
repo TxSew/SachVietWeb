@@ -4,6 +4,11 @@ import {
   Box,
   Button,
   Chip,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Fade,
   FormControl,
   Grid,
   MenuItem,
@@ -11,6 +16,7 @@ import {
   Pagination,
   Select,
   SelectChangeEvent,
+  Slide,
   Stack,
   Typography,
 } from "@mui/material";
@@ -21,37 +27,26 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { TransitionProps } from "@mui/material/transitions";
 import * as React from "react";
+import { useDownloadExcel } from "react-export-table-to-excel";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import ToastModal from "../../../components/Modal/Modal";
 import { BaseAPi } from "../../../configs/BaseApi";
 import { numberFormat } from "../../../helpers/formatPrice";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
+import { httpProduct } from "../../../submodules/controllers/http/axiosController";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
-import { useDownloadExcel } from "react-export-table-to-excel";
-import DialogConfirm from "../../../components/Dialog/Dialog";
-import { toast } from "react-toastify";
 
-const http = new HttpProductController(BaseAPi);
-const httpCategory = new HttpCategoryController(BaseAPi);
 export default function AdminProduct() {
+  const httpCategory = new HttpCategoryController(BaseAPi);
+
   const [Products, setProducts] = React.useState<Product[]>([]);
   const [open, setOpen] = React.useState(false);
 
-  // const handleOpen = () => setOpen(true);
-  const handleToggle = () => setOpen(pre => !pre);
-
-
-  const tableRef = React.useRef<any>(null);
-  const { onDownload } = useDownloadExcel({
-    currentTableRef: tableRef.current,
-    filename: "Product",
-    sheet: "products",
-  });
   const [Category, setCategory] = React.useState<Category[]>([]);
   const [pageCount, setPageCount] = React.useState<number>(1);
   const [page, setPage] = React.useState<number>(1);
@@ -61,6 +56,14 @@ export default function AdminProduct() {
   const [sort, setSort] = React.useState("");
   const [sortCategory, setSortCategory] = React.useState("");
   const debounce = useDebounce(search, 400);
+
+  const tableRef = React.useRef<any>(null);
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: tableRef.current,
+    filename: "Product",
+    sheet: "products",
+  });
+
   React.useEffect(() => {
     const props = {
       limit: 5,
@@ -73,9 +76,10 @@ export default function AdminProduct() {
 
     fetchData(props);
   }, [page, debounce, sortBy, sortWith, sortCategory]);
+
   const fetchData = async (props: any) => {
     try {
-      const product: any = await http.getAll(props);
+      const product: any = await httpProduct.getAll(props);
       const { products } = product;
       setPageCount(product.totalPage);
       setProducts(products);
@@ -86,11 +90,13 @@ export default function AdminProduct() {
   React.useEffect(() => {
     fetchCategory();
   }, []);
+
   const fetchCategory = async () => {
     const props = {};
     const category: Category[] = await httpCategory.getCategory(props);
     setCategory(category);
   };
+
   const handleChange = async (
     event: React.ChangeEvent<unknown>,
     value: number
@@ -98,24 +104,33 @@ export default function AdminProduct() {
     setPage(value);
   };
 
-  // remove item
   const handleDelete = async (element: any) => {
-    const destroy = await http.delete(element);
-    toast.error("Delete item successfully", {
-      position: "bottom-right",
+    await httpProduct.delete(element.id);
+    toast.error("Xoá sản phẩm thành công", {
+      position: "top-right",
     });
-    const product = Products.filter((e) => e.id !== element);
+    const product = Products.filter((e) => e.id !== element.id);
     setProducts(product);
   };
+
   const handleChangeValue = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setSearch(event.target.value);
   };
 
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+
   const handleSortByCategory = async (event: SelectChangeEvent) => {
     setSortCategory(event.target.value);
   };
+
   const handleChangeSort = (event: SelectChangeEvent) => {
     if (event.target.value == "priceDown") {
       setSortBy("price_sale");
@@ -220,7 +235,13 @@ export default function AdminProduct() {
               border: "1px solid #ccc",
             }}
           >
-            <Typography textTransform={"capitalize"} fontSize={"12px"} color={"#333"}>Xuất EXEL</Typography>
+            <Typography
+              textTransform={"capitalize"}
+              fontSize={"12px"}
+              color={"#333"}
+            >
+              Xuất EXEL
+            </Typography>
           </Button>
         </Stack>
         <TableContainer component={Paper} ref={tableRef}>
@@ -295,15 +316,79 @@ export default function AdminProduct() {
                           }}
                         />
                       </Link>
-                      <Box>
-                        <DeleteForeverIcon
-                          sx={{
-                            color: "red",
-                          }}
-                          onClick={() => handleToggle()}
-                        />
-                      </Box>
-                      <DialogConfirm message="Bạn chắc chắn muốn xóa sản phẩm này ?" open={open}   onClose={handleToggle} onDelete={handleDelete} />
+                      <DeleteForeverIcon
+                        sx={{
+                          color: "red",
+                        }}
+                        onClick={() => {
+                          handleClickOpen();
+                        }}
+                      />
+                      <Dialog
+                        open={open}
+                        onClose={handleClickClose}
+                        TransitionComponent={Fade}
+                        aria-labelledby="customized-dialog-title"
+                      >
+                        <DialogContent>
+                          <DialogContentText
+                            id="alert-dialog-slide-description"
+                            textAlign={"center"}
+                            padding={"0 24px "}
+                            sx={{
+                              color: "red",
+                            }}
+                          >
+                            <DeleteForeverIcon
+                              sx={{
+                                fontSize: "56px",
+                                color: "rgb(201, 33, 39)",
+                              }}
+                            />
+                            <DialogTitle fontSize={"16px"}>
+                              Bạn chắc chắn muốn xóa sản phẩm này?
+                            </DialogTitle>
+                          </DialogContentText>
+                        </DialogContent>
+                        <Box
+                          display={"flex"}
+                          paddingBottom={"24px"}
+                          justifyContent={"space-around"}
+                        >
+                          <Button
+                            onClick={handleClickClose}
+                            sx={{
+                              padding: "8px 16px",
+                              border: "1px solid #ccc",
+                              borderRadius: "12px",
+                              color: "black",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              width: "96px",
+                            }}
+                          >
+                            Hủy
+                          </Button>
+                          <Button
+                            onClick={() => handleDelete(e)}
+                            sx={{
+                              padding: "8px 16px",
+                              border: "1px solid red",
+                              borderRadius: "12px",
+                              background: "red",
+                              color: "white",
+                              fontSize: "12px",
+                              fontWeight: "bold",
+                              width: "96px",
+                              ":hover": {
+                                backgroundColor: "rgb(201, 33, 39)",
+                              },
+                            }}
+                          >
+                            Đồng ý
+                          </Button>
+                        </Box>
+                      </Dialog>
                     </Stack>
                   </TableCell>
                 </TableRow>

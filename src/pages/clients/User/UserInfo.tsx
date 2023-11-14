@@ -1,8 +1,7 @@
-import React from "react";
-import "./style.scss";
-import "./index.scss";
 import { Link } from "react-router-dom";
+import "./index.scss";
 import NavUser from "./layout/NavUser";
+import "./style.scss";
 function UserInfo() {
   return (
     <NavUser>
@@ -91,48 +90,58 @@ function UserInfo() {
                   placeholder="Nhập mã VIP"
                 />
               </div>
-              <div className="div">
-                <label className="c-12 m-2 l-2" htmlFor=""></label>
-                <input id="rpass" className="rpass" type="checkbox" />
-                <label className="ps-2" htmlFor="rpass">
-                  Đổi mật khẩu
-                </label>
-                <div className="dpass">
-                  <div className="info-acc row">
-                    <label className="c-12 m-2 l-2" htmlFor="pt">
-                      Mật khẩu hiện tại*
-                    </label>
-                    <input
-                      className="c-12 m-8 l-8"
-                      type="text"
-                      placeholder="Mật khẩu hiện tại"
-                    />
-                  </div>
-                  <div className="info-acc row">
-                    <label className="c-12 m-2 l-2" htmlFor="">
-                      Mật khẩu mới*
-                    </label>
-                    <input
-                      className="c-12 m-8 l-8"
-                      type="text"
-                      placeholder="Mật khẩu mới"
-                    />
-                  </div>
-                  <div className="info-acc row pb-3">
-                    <label className="c-12 m-2 l-2" htmlFor="">
-                      Nhập lại mật khẩu mới*
-                    </label>
-                    <input
-                      className="c-12 m-8 l-8"
-                      type="text"
-                      placeholder="Nhập lại mật khẩu mới"
-                    />
-                  </div>
+              <button className="save pe-5 ps-5 pb-2 pt-2">Cập nhật</button>
+            </form>
+            <div className="">
+              <h1 className="info-acc-hd p-3">Thay đổi mật khẩu</h1>
+              <div className="">
+                <div className=" info-acc row">
+                  <label className="c-12 m-2 l-2" htmlFor="pt">
+                    Mật khẩu hiện tại*
+                  </label>
+                  <input
+                    className="c-12 m-8 l-8"
+                    type="text"
+                    placeholder="Mật khẩu hiện tại"
+                  />
+                </div>
+                <div className="info-acc row">
+                  <label className="c-12 m-2 l-2" htmlFor="">
+                    Mật khẩu mới*
+                  </label>
+                  <input
+                    className="c-12 m-8 l-8"
+                    type="text"
+                    placeholder="Mật khẩu mới"
+                  />
+                </div>
+                <div className="info-acc row pb-3">
+                  <label className="c-12 m-2 l-2" htmlFor="">
+                    Nhập lại mật khẩu mới*
+                  </label>
+                  <input
+                    className="c-12 m-8 l-8"
+                    type="text"
+                    placeholder="Nhập lại mật khẩu mới"
+                  />
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  <button
+                    className="save pe-5 ps-5 pb-2 pt-2"
+                    style={{
+                      textAlign: "center",
+                    }}
+                  >
+                    Lưu
+                  </button>
                 </div>
               </div>
-
-              <button className="save pe-5 ps-5 pb-2 pt-2">Lưu thay đổi</button>
-            </form>
+            </div>
           </div>
         </div>
       </div>

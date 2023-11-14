@@ -8,35 +8,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { formatDates } from "../../../helpers/FortmatDate";
 import { numberFormat } from "../../../helpers/formatPrice";
-import HttpCartController from "../../../submodules/controllers/http/httpCartController";
+import { httpCart } from "../../../submodules/controllers/http/axiosController";
 import { Order } from "../../../submodules/models/OrderModel/Order";
 import CartNotFound from "../cart/components/CartNotFound/CartNotFound";
 import "./index.scss";
 import NavUser from "./layout/NavUser";
 import "./style.scss";
 function UserMyCart() {
-  const http = new HttpCartController(BaseAPi);
   const [user, setUser] = useState<any>({} as any);
   const [orderUser, setOrderUser] = useState<any>([]);
   const [Token, setToken] = useState("");
+
   useEffect(() => {
     const getUser = localStorage.getItem("user");
     const token = localStorage.getItem("token");
     const convertUser = JSON.parse(getUser!);
     const convertToken = JSON.parse(token!);
     if (convertToken) setToken(convertToken);
-    if (convertUser) {
-      getOrderByUser(convertUser.id);
-    }
+    if (convertUser) getOrderByUser(convertUser.id);
   }, []);
-  useEffect(() => {}, []);
 
   const getOrderByUser = async (id: any) => {
     if (user) {
-      const orderUserData = await http.getOrderbyUser(Number(id));
+      const orderUserData = await httpCart.getOrderbyUser(Number(id));
       if (orderUserData) {
         setOrderUser(orderUserData);
       }

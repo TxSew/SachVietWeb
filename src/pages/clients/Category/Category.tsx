@@ -15,12 +15,9 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
 import ProductItem from "../../../components/ProductItem/ProductItem";
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
+import { httpProduct } from "../../../submodules/controllers/http/axiosController";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import Tabbar from "./components/Tabbar";
-import { convertText } from "../../../helpers/convertText";
-const http = new HttpProductController(BaseAPi);
 function Category() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [categoryParams, setCategoryParams] = useSearchParams();
@@ -34,7 +31,7 @@ function Category() {
 
   useEffect(() => {
     const value: any = searchParams.get("q");
-    const searchValue = (value);
+    const searchValue = value;
     const categorySearch = searchParams.get("category");
     const props = {
       sortBy,
@@ -44,13 +41,11 @@ function Category() {
       keyword: searchValue,
       categoryFilter: categorySearch,
     };
-    console.log( props)
     fetchProducts(props);
   }, [page, sortBy, sortWith, searchParams, categoryParams]);
 
   const fetchProducts = async (props: any) => {
-    const products: any = await http.getAll(props);
-    console.log("🚀 ~ file: Category.tsx:53 ~ fetchProducts ~ products:", products)
+    const products: any = await httpProduct.getAll(props);
     if (products) {
       setProducts(products.products);
       setCount(products.totalPage);
