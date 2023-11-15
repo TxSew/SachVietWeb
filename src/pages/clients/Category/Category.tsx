@@ -57,20 +57,20 @@ function Category() {
   };
 
   const handleChangeSort = (event: SelectChangeEvent) => {
-    if (event.target.value == "priceDown") {
+    if (event.target.value === "priceDown") {
       setSortBy("price_sale");
       setSortWith("desc");
       setSort(event.target.value);
-    } else if (event.target.value == "priceUp") {
+    } else if (event.target.value === "priceUp") {
       setSortBy("price_sale");
       setSortWith("asc");
       setSort(event.target.value);
     }
-    if (event.target.value == "old") {
+    if (event.target.value === "old") {
       setSortBy("createdAt");
       setSortWith("desc");
       setSort(event.target.value);
-    } else if (event.target.value == "new") {
+    } else if (event.target.value === "new") {
       setSortBy("createdAt");
       setSortWith("asc");
       setSort(event.target.value);

@@ -16,10 +16,6 @@ interface TDialog {
 const DialogConfirm: React.FC<TDialog> = (props) => {
   const { open, onClose , onDelete} = props;
 
-const handleDelete = (id:any) => {
-     console.log(id);
-}
-
   const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
       children: React.ReactElement<any, any>;

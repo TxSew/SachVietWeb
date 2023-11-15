@@ -30,11 +30,12 @@ import { Producer } from "../../../submodules/models/producerModel/producer";
 
 const CreateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);
-  const [url, setUrl] = useState<string[]>([]);
+  const [img, setImg] = useState<string[]>([]);
+  const [imgs, setImgs] = useState<any[]>([]);
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
+  const [image, setImage] = useState(null);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
-  const [isLoadings, setIsLoadings] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [selectedFiles, setSelectedFiles] = useState<any>([]);
   const editorRef = useRef<any>(null);
   const redirect = useNavigate();
 
@@ -61,69 +62,103 @@ const CreateProduct = () => {
     }
   };
   const handleAddProduct = async (data: any) => {
-    data.image = url[0];
-    const images = urls.map((e) => {
-      return {
-        image: e,
-      };
-    });
-    const ProductDto = {
-      product: data,
-      productImages: images,
-    };
-
-    const storeProduct = await httpProduct.post(ProductDto);
-    if (storeProduct)
-      toast.success("Thêm sản phẩm thành công", {
-        position: "top-right",
-      });
-    redirect("/admin/product");
-  };
-
-  const loadImagesFiles = async (images: any) => {
+    const image = await loadImageFile(img);
+    const images = await loadImagesFiles(imgs);
     if (images) {
-      setIsLoadings(true);
+      console.log(urls);
     }
-    for (let i = 0; i < images.length; i++) {
-      const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-      await uploadBytes(imageRef, images[i])
-        .then(() => {
-          storage
-            .ref("multipleFiles")
-            .child(images[i].name)
-            .getDownloadURL()
-            .then((url: any) => {
-              setUrl((prev) => [...prev, url]);
-              setIsLoadings(false);
-              return url;
-            });
-        })
-        .catch((err) => {
-          console.log(err);
+    if (image && images) {
+      data.image = image;
+      const thumb = urls.map((e) => {
+        return {
+          image: e,
+        };
+      });
+      const ProductDto = {
+        product: data,
+        productImages: thumb,
+      };
+
+      const storeProduct = await httpProduct.post(ProductDto);
+      if (storeProduct)
+        toast.success("Thêm sản phẩm thành công", {
+          position: "top-right",
         });
     }
   };
-  const loadImagesFile = async (images: any) => {
-    if (images) {
-      setIsLoading(true);
+
+  const handleImageChange = (event: any) => {
+    const file = event.target.files[0];
+    setImg(event.target.files);
+    if (file) {
+      const reader: any = new FileReader();
+      reader.onloadend = () => {
+        setImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
+  };
+
+  const handleFileChanges = (event: any) => {
+    const files = event.target.files;
+    const fileArray = Array.from(files);
+    console.log(fileArray);
+    setImgs(fileArray);
+    Promise.all(
+      fileArray.map((file: any) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+
+          reader.onload = (e: any) => {
+            resolve(e.target.result);
+          };
+
+          reader.onerror = (e) => {
+            reject(e);
+          };
+
+          reader.readAsDataURL(file);
+        });
+      })
+    ).then((results) => {
+      setSelectedFiles(results);
+    });
+  };
+
+  const loadImageFile = async (images: any) => {
+    for (let i = 0; i < images.length; i++) {
+      const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
+      const data = await uploadBytes(imageRef, images[i]).then(() => {
+        return storage
+          .ref("multipleFiles")
+          .child(images[i].name)
+          .getDownloadURL()
+          .then((url: any) => {
+            return url;
+          });
+      });
+      return data;
+    }
+  };
+
+  const loadImagesFiles = async (images: any) => {
     for (let i = 0; i < images.length; i++) {
       const imageRef = ref(storage, `imageUpload/${images[i].name}`);
-      await uploadBytes(imageRef, images[i])
+      const data = await uploadBytes(imageRef, images[i])
         .then(() => {
-          storage
+          return storage
             .ref("imageUpload")
             .child(images[i].name)
             .getDownloadURL()
             .then((url: any) => {
               setUrls((prev) => [...prev, url]);
-              setIsLoading(false);
               return url;
             });
         })
         .catch((err) => {
           alert(err);
         });
+      return data;
     }
   };
   const {
@@ -549,7 +584,8 @@ const CreateProduct = () => {
             </Typography>
 
             <OutlinedInput
-              onChange={(e: any) => loadImagesFiles(e.target.files)}
+              // onChange={(e: any) => loadImagesFiles(e.target.files)}
+              onChange={handleImageChange}
               type="file"
               sx={{
                 mt: 1,
@@ -560,26 +596,14 @@ const CreateProduct = () => {
               fullWidth
               placeholder="Vui lòng nhập Ten của bạn!"
             />
-            {isLoadings ? (
-              <Box
-                sx={{
-                  ml: 2,
-                  mt: 1,
-                }}
-              >
-                <CircularProgress />
-              </Box>
-            ) : url.length > 0 ? (
-              url.map((url, index) => (
+            {image && (
+              <div>
                 <img
-                  key={index}
-                  src={url}
-                  width={"100px"}
-                  alt={`Image ${index}`}
+                  src={image}
+                  alt="Uploaded preview"
+                  style={{ maxWidth: "100px" }}
                 />
-              ))
-            ) : (
-              <div></div>
+              </div>
             )}
 
             <Typography
@@ -592,7 +616,8 @@ const CreateProduct = () => {
             </Typography>
             <OutlinedInput
               type="file"
-              onChange={(e: any) => loadImagesFile(e.target.files)}
+              onChange={handleFileChanges}
+              // onChange={(e: any) => loadImagesFile(e.target.files)}
               inputProps={{ multiple: true }}
               sx={{
                 mt: 1,
@@ -603,22 +628,26 @@ const CreateProduct = () => {
               fullWidth
               placeholder="Vui lòng nhập Ten của bạn!"
             />
-            <Stack direction={"row"} flexWrap={"wrap"}>
-              {isLoading ? (
-                <CircularProgress />
-              ) : urls.length > 0 ? (
-                urls.map((url, index) => (
-                  <img
-                    key={index}
-                    src={url}
-                    width={"100px"}
-                    alt={`Image ${index}`}
-                  />
-                ))
-              ) : (
-                <div></div>
-              )}
-            </Stack>
+            <Box
+              sx={{
+                display: "flex",
+                gap: "2px",
+              }}
+            >
+              {selectedFiles.map((dataUrl: any, index: number) => (
+                <img
+                  key={index}
+                  src={dataUrl}
+                  alt={`preview-${index}`}
+                  style={{
+                    width: "70px",
+                    height: "70px",
+                    margin: "5px",
+                    border: "2px solid #ccc",
+                  }}
+                />
+              ))}
+            </Box>
           </Grid>
         </Grid>
       </form>

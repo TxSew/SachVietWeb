@@ -9,12 +9,11 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { storage } from "../../../configs/fireBaseConfig";
+import { loadImageFile } from "../../../helpers/loadImageFile";
 import useToast from "../../../hooks/useToast/useToast";
 import { httpCategory } from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
@@ -66,22 +65,6 @@ const UpdateCategory = () => {
       setCategory(category);
     } catch (err) {
       console.error(err);
-    }
-  };
-
-  const loadImageFile = async (images: any) => {
-    for (let i = 0; i < images.length; i++) {
-      const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-      const data = await uploadBytes(imageRef, images[i]).then(() => {
-        return storage
-          .ref("multipleFiles")
-          .child(images[i].name)
-          .getDownloadURL()
-          .then((url: any) => {
-            return url;
-          });
-      });
-      return data;
     }
   };
 
