@@ -28,6 +28,7 @@ class HttpProductController {
       throw error;
     }
   }
+
   async getOne(slug: string): Promise<any> {
     try {
       const response = await this.axiosInstance.get(`products/${slug}`);
@@ -36,6 +37,7 @@ class HttpProductController {
       throw err;
     }
   }
+
   async getOneUpdate(id: number) {
     try {
       const response = await this.axiosInstance.get(

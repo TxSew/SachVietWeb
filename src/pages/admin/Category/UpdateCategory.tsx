@@ -90,14 +90,12 @@ const UpdateCategory = () => {
   }, [ur]);
   const handelUpdateCategory = async (data: Category) => {
     const thumbnail = await loadImageFile(img);
-    if (thumbnail) {
-      data.image = thumbnail;
-      const categoryDto = await httpCategory.put(Number(id), data);
-      if (categoryDto) {
-        showToast("Danh mục cập nhật thành công", {
-          position: "top-right",
-        });
-      }
+    data.image = thumbnail;
+    const categoryDto = await httpCategory.put(Number(id), data);
+    if (categoryDto) {
+      showToast("Danh mục cập nhật thành công", {
+        position: "top-right",
+      });
     }
   };
 

@@ -53,21 +53,19 @@ const CreateCategory = () => {
 
   const handleAddCategory = async (data: Category) => {
     const image = await loadImageFile(img);
-    if (image) {
-      data.image = image;
-      const category: Category = data;
-      try {
-        const categoryDto = await httpCategory.store(category);
-        if (categoryDto) {
-          showToast("Thêm danh mục sản phẩm thành công", {
-            position: "top-right",
-          });
-        }
-      } catch (err) {
-        showErrorToast("tên danh mục đã tồn tại!", {
+    data.image = image;
+    const category: Category = data;
+    try {
+      const categoryDto = await httpCategory.store(category);
+      if (categoryDto) {
+        showToast("Thêm danh mục sản phẩm thành công", {
           position: "top-right",
         });
       }
+    } catch (err) {
+      showErrorToast("tên danh mục đã tồn tại!", {
+        position: "top-right",
+      });
     }
   };
   const {
