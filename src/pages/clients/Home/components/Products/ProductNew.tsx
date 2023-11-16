@@ -7,16 +7,16 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ProductitemNew from "../../../../../components/ProductItem/ProductitemNew";
-import { BaseAPi } from "../../../../../configs/BaseApi";
 import useLoading from "../../../../../hooks/useLoading/useLoading";
-import HttpProductController from "../../../../../submodules/controllers/http/httpProductController";
-import { Product } from "../../../../../submodules/models/ProductModel/Product";
 import { httpProduct } from "../../../../../submodules/controllers/http/axiosController";
+import { Product } from "../../../../../submodules/models/ProductModel/Product";
+import { redirect, useNavigate } from "react-router-dom";
 
 function ProductNew() {
   const { isLoading, startLoading, stopLoading } = useLoading();
+  const redirect = useNavigate();
   const [Products, setProducts] = useState<Product[]>([]);
   const fetchData = async (props: any) => {
     props.limit = 10;
@@ -117,7 +117,14 @@ function ProductNew() {
                 })}
           </Grid>
           <Stack>
-            <Button variant="OutlinedRed">Xem thêm</Button>
+            <Button
+              onClick={() => {
+                redirect("/category");
+              }}
+              variant="OutlinedRed"
+            >
+              Xem thêm
+            </Button>
           </Stack>
         </Box>
       </Container>

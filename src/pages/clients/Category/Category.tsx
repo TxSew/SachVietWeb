@@ -30,6 +30,10 @@ function Category() {
   const [sort, setSort] = React.useState("");
 
   useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, []);
+
+  useEffect(() => {
     const value: any = searchParams.get("q");
     const searchValue = value;
     const categorySearch = searchParams.get("category");

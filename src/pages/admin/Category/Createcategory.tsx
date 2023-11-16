@@ -173,7 +173,6 @@ const CreateCategory = () => {
           />
           {image && (
             <div>
-              <h3>Preview:</h3>
               <img
                 src={image}
                 alt="Uploaded preview"

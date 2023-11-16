@@ -72,9 +72,7 @@ const UpdateCategory = () => {
     let thumbnail;
     if (img) thumbnail = await uploadImageFirebase(img);
     data.image = thumbnail;
-
     const categoryDto = await httpCategory.put(Number(id), data);
-
     if (categoryDto) {
       showToast("Danh mục cập nhật thành công", {
         position: "top-right",

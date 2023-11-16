@@ -15,9 +15,11 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import LoyaltyIcon from "@mui/icons-material/Loyalty";
 import RemoveIcon from "@mui/icons-material/Remove";
+import { Controller, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { color } from "../../../../../Theme/color";
+import { numberFormat } from "../../../../../helpers/formatPrice";
 import {
   addToCart,
   decreaseCart,
@@ -25,14 +27,9 @@ import {
   removeFromCart,
 } from "../../../../../redux/features/cart/CartProducer";
 import { RootState } from "../../../../../redux/storeClient";
-import { Product } from "../../../../../submodules/models/ProductModel/Product";
-import { numberFormat } from "../../../../../helpers/formatPrice";
-import { Controller, useForm } from "react-hook-form";
-import {
-  httpDiscount,
-  httpVoucher,
-} from "../../../../../submodules/controllers/http/axiosController";
+import { httpVoucher } from "../../../../../submodules/controllers/http/axiosController";
 import { Discount } from "../../../../../submodules/models/DiscountModel/Discount";
+import { Product } from "../../../../../submodules/models/ProductModel/Product";
 
 const CartProduct = () => {
   const dispatch = useDispatch();
@@ -45,6 +42,9 @@ const CartProduct = () => {
   useEffect(() => {
     fetchCart();
     getDiscount();
+  }, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, []);
   const getDiscount = () => {
     httpVoucher.getAllVoucherByUser(3).then((res) => {
@@ -371,12 +371,6 @@ const CartProduct = () => {
             </Box>
           </Box>
         </Grid>
-        {/* <iframe
-          width="350"
-          height="430"
-          allow="microphone;"
-          src="https://console.dialogflow.com/api-client/demo/embedded/greetBot"
-        ></iframe> */}
       </Grid>
     </Container>
   );

@@ -127,6 +127,18 @@ export const Details = () => {
                       margin={"auto"}
                       p={2}
                     >
+                      <img
+                        src={Detail?.image}
+                        style={{
+                          border: "2px solid gray",
+                          marginBottom: "2px",
+                        }}
+                        onClick={() => handleChangeImage(Detail.image)}
+                        width={"60px"}
+                        height={"60px"}
+                        alt=""
+                      />
+
                       {Detail?.productImages
                         ? Detail?.productImages.map((e: any, i: number) => {
                             return (
