@@ -27,11 +27,12 @@ import {
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
+import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
 
 const CreateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);
   const [img, setImg] = useState<string[]>([]);
-  const [imgs, setImgs] = useState<any[]>([]);
+  const [imgs, setImgs] = useState<any>({});
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [image, setImage] = useState(null);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
@@ -62,12 +63,9 @@ const CreateProduct = () => {
     }
   };
   const handleAddProduct = async (data: any) => {
-    const image = await loadImageFile(img);
+    const image = await uploadImageFirebase(img);
     const images = await loadImagesFiles(imgs);
     if (images) {
-      console.log(urls);
-    }
-    if (image && images) {
       data.image = image;
       const thumb = urls.map((e) => {
         return {
@@ -101,9 +99,10 @@ const CreateProduct = () => {
 
   const handleFileChanges = (event: any) => {
     const files = event.target.files;
+    console.log(files);
+    setImgs(files);
+    console.log(imgs);
     const fileArray = Array.from(files);
-    console.log(fileArray);
-    setImgs(fileArray);
     Promise.all(
       fileArray.map((file: any) => {
         return new Promise((resolve, reject) => {
@@ -123,22 +122,6 @@ const CreateProduct = () => {
     ).then((results) => {
       setSelectedFiles(results);
     });
-  };
-
-  const loadImageFile = async (images: any) => {
-    for (let i = 0; i < images.length; i++) {
-      const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-      const data = await uploadBytes(imageRef, images[i]).then(() => {
-        return storage
-          .ref("multipleFiles")
-          .child(images[i].name)
-          .getDownloadURL()
-          .then((url: any) => {
-            return url;
-          });
-      });
-      return data;
-    }
   };
 
   const loadImagesFiles = async (images: any) => {
@@ -161,6 +144,7 @@ const CreateProduct = () => {
       return data;
     }
   };
+
   const {
     handleSubmit,
     control,
@@ -617,7 +601,7 @@ const CreateProduct = () => {
             <OutlinedInput
               type="file"
               onChange={handleFileChanges}
-              // onChange={(e: any) => loadImagesFile(e.target.files)}
+              // onChange={(e: any) => loadImagesFiles(e.target.files)}
               inputProps={{ multiple: true }}
               sx={{
                 mt: 1,

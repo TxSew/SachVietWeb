@@ -13,25 +13,26 @@ import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { loadImageFile } from "../../../helpers/loadImageFile";
 import useToast from "../../../hooks/useToast/useToast";
 import { httpCategory } from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
+import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
+import useImageUpload from "../../../hooks/useImageUpload/useImageUpload";
 
 const UpdateCategory = () => {
   const { id } = useParams();
   const [category, setCategory] = useState([]);
-  const [detail, setdetail] = useState<Category>({});
-  const [url, setUrl] = useState<string>("");
+  const [detail, setDetail] = useState<Category>({});
   const { showToast } = useToast();
+  const { handleImageChange, image, img } = useImageUpload();
 
   useEffect(() => {
     fetchCategory();
-    fetchOneCategory();
+    getDetailCategory();
   }, []);
-  const fetchOneCategory = async () => {
-    const categoryOne = await httpCategory.getOne(Number(id));
 
+  const getDetailCategory = async () => {
+    const categoryOne = await httpCategory.getOne(Number(id));
     reset({
       parentId: categoryOne.parentId,
       name: categoryOne.name,
@@ -40,23 +41,7 @@ const UpdateCategory = () => {
       id: categoryOne.id,
       image: categoryOne.image,
     });
-    setdetail(categoryOne);
-  };
-  const [img, setImg] = useState<any>([]);
-
-  const [image, setImage] = useState(null);
-
-  const handleImageChange = (event: any) => {
-    const file = event.target.files[0];
-    setImg(event.target.files);
-    if (file) {
-      const reader: any = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-
-      reader.readAsDataURL(file);
-    }
+    setDetail(categoryOne);
   };
 
   const fetchCategory = async () => {
@@ -81,17 +66,15 @@ const UpdateCategory = () => {
     },
   });
 
-  const ur = watch("image", "");
+  const url = watch("image", "");
 
-  useEffect(() => {
-    if (ur) {
-      setUrl(ur);
-    }
-  }, [ur]);
   const handelUpdateCategory = async (data: Category) => {
-    const thumbnail = await loadImageFile(img);
+    let thumbnail;
+    if (img) thumbnail = await uploadImageFirebase(img);
     data.image = thumbnail;
+
     const categoryDto = await httpCategory.put(Number(id), data);
+
     if (categoryDto) {
       showToast("Danh mục cập nhật thành công", {
         position: "top-right",
@@ -216,7 +199,7 @@ const UpdateCategory = () => {
             </div>
           ) : (
             <Stack direction={"row"} flexWrap={"wrap"}>
-              <img src={url} width={"150px"} alt="" />
+              <img src={url ?? url} width={"150px"} alt="" />
             </Stack>
           )}
           <Box width={"100%"}>

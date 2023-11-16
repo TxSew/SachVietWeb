@@ -25,6 +25,17 @@ class HttpVoucherController {
       throw error;
     }
   }
+  async getOneVoucher(props: any) {
+    try {
+      const response = await this.axiosInstance.post(
+        "/voucher/getVoucher",
+        props
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async addVoucherUser(props: Voucher) {
     console.log(props);
     try {

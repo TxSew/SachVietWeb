@@ -25,6 +25,7 @@ import { color } from "../../../Theme/color";
 import useToast from "../../../hooks/useToast/useToast";
 import { httpCategory } from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
+import { formatDates } from "../../../helpers/FortmatDate";
 
 export default function CategoryAdmin() {
   const [category, setCategory] = React.useState([]);
@@ -144,7 +145,7 @@ export default function CategoryAdmin() {
                     {e.parentName == null ? "Danh mục gốc" : e.parentName}
                   </TableCell>
                   <TableCell align="right">
-                    {moment(e.createdAt).format("DD MMM YYYY")}
+                    {formatDates(e.createdAt)}
                   </TableCell>
                   <TableCell align="right">
                     {e.status == null ? (

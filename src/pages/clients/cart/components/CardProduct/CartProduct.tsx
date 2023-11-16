@@ -1,4 +1,13 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { useEffect, useState } from "react";
 
 import AddIcon from "@mui/icons-material/Add";
@@ -18,9 +27,16 @@ import {
 import { RootState } from "../../../../../redux/storeClient";
 import { Product } from "../../../../../submodules/models/ProductModel/Product";
 import { numberFormat } from "../../../../../helpers/formatPrice";
+import { Controller, useForm } from "react-hook-form";
+import {
+  httpDiscount,
+  httpVoucher,
+} from "../../../../../submodules/controllers/http/axiosController";
+import { Discount } from "../../../../../submodules/models/DiscountModel/Discount";
 
 const CartProduct = () => {
   const dispatch = useDispatch();
+  const [discount, setDiscount] = useState<Discount[]>([]);
   const { cartTotalQuantity, cartTotalAmount } = useSelector(
     (state: RootState) => state.cart
   );
@@ -28,8 +44,16 @@ const CartProduct = () => {
   const cart = useSelector((state: RootState) => state.cart.cartItems);
   useEffect(() => {
     fetchCart();
+    getDiscount();
   }, []);
+  const getDiscount = () => {
+    httpVoucher.getAllVoucherByUser(3).then((res) => {
+      setDiscount(res);
+    });
+  };
+  const [voucher, setVoucher] = useState<number>(0);
   const [Cart, setCart] = useState<Product[]>([]);
+
   const fetchCart = async () => {
     const local = localStorage.getItem("cartItems");
     if (local) {
@@ -37,6 +61,7 @@ const CartProduct = () => {
       setCart(localCart);
     }
   };
+
   useEffect(() => {
     dispatch(getTotals());
   }, [dispatch, cart]);
@@ -53,6 +78,19 @@ const CartProduct = () => {
     dispatch(addToCart(id));
   };
 
+  const {
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+  } = useForm<any>();
+
+  const handleDiscount = (data: any) => {
+    console.log(data);
+    httpVoucher.getOneVoucher(data).then((res) => {
+      console.log(res);
+      setVoucher(res.discountVoucher.discount);
+    });
+  };
   return (
     <Container maxWidth="xl">
       <Grid container spacing={2}>
@@ -217,17 +255,41 @@ const CartProduct = () => {
                 fontSize={"14px"}
                 color={color.text_color}
               >
-                <input
-                  placeholder="Nhập mã khuyến mãi/Quà tặng"
-                  style={{
-                    flex: 1,
-                    color: "inherit",
+                <Controller
+                  control={control}
+                  defaultValue="" // Set an initial value here
+                  name="voucher"
+                  rules={{
+                    required: "Vui",
                   }}
-                  onChange={(event) => {
-                    console.log(event.target.value);
-                  }}
+                  render={({ field }) => (
+                    <Select
+                      sx={{
+                        flex: 1,
+                      }}
+                      {...field}
+                      displayEmpty
+                      inputProps={{ "aria-label": "Without label" }}
+                    >
+                      <MenuItem value={""}>
+                        <em>--chọn mã giảm giá--</em>
+                      </MenuItem>
+                      {discount.map((e: any) => {
+                        return (
+                          <MenuItem key={e.id} value={e.discountVoucher.code}>
+                            <em>{e.discountVoucher.code}</em>
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  )}
                 />
-                <Button variant="outlined">
+
+                <Button
+                  variant="outlined"
+                  onClick={handleSubmit(handleDiscount)}
+                  type="submit"
+                >
                   <Typography variant="body1">Áp dụng</Typography>
                 </Button>
               </Stack>
@@ -253,7 +315,7 @@ const CartProduct = () => {
                 <Typography variant="body1">KHUYẾN MÃI</Typography>
               </Stack>
               <Stack color={color.text_color} direction={"row"}>
-                <Typography variant="body1"> 0d</Typography>
+                <Typography variant="body1"> {voucher}</Typography>
               </Stack>
             </Stack>
             <Box pt={2}>
@@ -279,7 +341,7 @@ const CartProduct = () => {
                   fontWeight={"bold"}
                   color={color.error}
                 >
-                  {`${numberFormat(Number(cartTotalAmount))}`}
+                  {`${numberFormat(Number(cartTotalAmount - voucher))}`}
                 </Typography>
               </Stack>
               <Link to={"/checkout"}>

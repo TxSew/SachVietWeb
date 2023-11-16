@@ -45,7 +45,10 @@ export default function AdminProduct() {
   const httpCategory = new HttpCategoryController(BaseAPi);
 
   const [Products, setProducts] = React.useState<Product[]>([]);
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState({
+    isChecked: false,
+    id: "",
+  });
 
   const [Category, setCategory] = React.useState<Category[]>([]);
   const [pageCount, setPageCount] = React.useState<number>(1);
@@ -104,13 +107,14 @@ export default function AdminProduct() {
     setPage(value);
   };
 
-  const handleDelete = async (element: any) => {
-    await httpProduct.delete(element.id);
+  const handleDelete = async (id: any) => {
+    await httpProduct.delete(id);
     toast.error("Xoá sản phẩm thành công", {
       position: "top-right",
     });
-    const product = Products.filter((e) => e.id !== element.id);
+    const product = Products.filter((e) => e.id !== id);
     setProducts(product);
+    handleClickClose();
   };
 
   const handleChangeValue = async (
@@ -119,12 +123,18 @@ export default function AdminProduct() {
     setSearch(event.target.value);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = (id: any) => {
+    setOpen({
+      isChecked: true,
+      id: id,
+    });
   };
 
   const handleClickClose = () => {
-    setOpen(false);
+    setOpen({
+      isChecked: false,
+      id: "",
+    });
   };
 
   const handleSortByCategory = async (event: SelectChangeEvent) => {
@@ -321,11 +331,11 @@ export default function AdminProduct() {
                           color: "red",
                         }}
                         onClick={() => {
-                          handleClickOpen();
+                          handleClickOpen(e.id);
                         }}
                       />
                       <Dialog
-                        open={open}
+                        open={open.isChecked}
                         onClose={handleClickClose}
                         TransitionComponent={Fade}
                         aria-labelledby="customized-dialog-title"
@@ -370,7 +380,7 @@ export default function AdminProduct() {
                             Hủy
                           </Button>
                           <Button
-                            onClick={() => handleDelete(e)}
+                            onClick={() => handleDelete(open.id)}
                             sx={{
                               padding: "8px 16px",
                               border: "1px solid red",

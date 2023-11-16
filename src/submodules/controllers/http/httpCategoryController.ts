@@ -25,7 +25,7 @@ class HttpCategoryController {
       });
       return response.data;
     } catch (error) {
-      throw error;
+      console.log(error);
     }
   }
   async getAll(page: number = 1): Promise<any> {

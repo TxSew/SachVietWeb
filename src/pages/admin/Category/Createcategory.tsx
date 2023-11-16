@@ -12,47 +12,29 @@ import {
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { color } from "../../../Theme/color";
-import { loadImageFile } from "../../../helpers/loadImageFile";
 import { validateForm } from "../../../helpers/validateForm";
 import useToast from "../../../hooks/useToast/useToast";
 import { httpCategory } from "../../../submodules/controllers/http/axiosController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
+import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
+import useImageUpload from "../../../hooks/useImageUpload/useImageUpload";
 
 const CreateCategory = () => {
-  const [image, setImage] = useState(null);
-
-  const handleImageChange = (event: any) => {
-    const file = event.target.files[0];
-    setImg(event.target.files);
-    if (file) {
-      const reader: any = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
+  const { image, handleImageChange, img } = useImageUpload();
   const [category, setCategory] = useState([]);
-
-  const [img, setImg] = useState<any>([]);
   const { showToast, showErrorToast } = useToast();
 
   useEffect(() => {
-    fetchCategory();
+    getCategories();
   }, []);
 
-  const fetchCategory = async () => {
-    try {
-      const category = await httpCategory.getCategory({});
-      setCategory(category);
-    } catch (err) {
-      console.error(err);
-    }
+  const getCategories = async () => {
+    const category = await httpCategory.getCategory({});
+    setCategory(category);
   };
 
   const handleAddCategory = async (data: Category) => {
-    const image = await loadImageFile(img);
+    const image = await uploadImageFirebase(img);
     data.image = image;
     const category: Category = data;
     try {
@@ -68,6 +50,7 @@ const CreateCategory = () => {
       });
     }
   };
+
   const {
     handleSubmit,
     control,

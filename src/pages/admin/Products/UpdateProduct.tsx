@@ -100,7 +100,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
       redirect("/admin/product");
     }
   };
-  const loadImagesFiles = async (images: any) => {
+  const loadImagesFile = async (images: any) => {
     if (images) {
       setIsLoadings(true);
     }
@@ -123,7 +123,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
         });
     }
   };
-  const loadImagesFile = async (images: any) => {
+  const loadImagesFiles = async (images: any) => {
     if (images) {
       setIsLoading(true);
     }
@@ -581,7 +581,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
             </Typography>
 
             <OutlinedInput
-              onChange={(e: any) => loadImagesFiles(e.target.files)}
+              onChange={(e: any) => loadImagesFile(e.target.files)}
               type="file"
               sx={{
                 mt: 1,
@@ -624,7 +624,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
             </Typography>
             <OutlinedInput
               type="file"
-              onChange={(e: any) => loadImagesFile(e.target.files)}
+              onChange={(e: any) => loadImagesFiles(e.target.files)}
               inputProps={{ multiple: true }}
               sx={{
                 mt: 1,
