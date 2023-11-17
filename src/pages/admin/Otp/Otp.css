@@ -1,0 +1,58 @@
+.box-opt {
+  text-align: center;
+}
+
+.box-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #008c89;
+  padding: 24px;
+}
+
+.top-img {
+  width: 150px;
+  height: 150px;
+}
+
+.img-l {
+  border-radius: 50%;
+}
+
+.box-body {
+  padding: 48px 24px;
+}
+
+.code {
+  padding: 24px 0;
+  font-size: 32px;
+  color: #f7941e;
+}
+
+.code-text {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.box-end {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: left;
+  background-color: #008c89;
+  padding: 24px;
+  color: white;
+}
+
+p {
+  padding: 8px 0;
+}
+
+h1 {
+  padding: 8px 0;
+  font-size: 30px;
+}
+
+.sdt {
+  font-size: 30px;
+}

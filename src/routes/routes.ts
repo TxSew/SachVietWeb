@@ -32,6 +32,8 @@ import ForgotPasswordPage from "../pages/clients/auth/components/forgotPassword"
 import Checkout from "../pages/clients/cart/checkout/Checkout";
 import Error from "../pages/clients/notFound/notFound";
 import VoucherUser from "../pages/clients/User/UserVoucher";
+import Bill from "../pages/admin/Bill/Bill";
+import Otp from "../pages/admin/Otp/Otp";
 
 const PublicRouter = [
   {
@@ -152,6 +154,15 @@ const PrivateRouter = [
   {
     path: "/admin/orders",
     component: AdminCarts,
+  },
+
+  {
+    path: "/admin/bill",
+    component: Bill,
+  },
+  {
+    path: "/admin/otp",
+    component: Otp,
   },
 
   {
