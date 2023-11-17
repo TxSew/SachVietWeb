@@ -1,6 +1,12 @@
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import {
   Box,
   Button,
+  Dialog,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Fade,
   Grid,
   Stack,
   Table,
@@ -10,17 +16,14 @@ import {
   TableHead,
   TableRow,
   Typography,
-  colors,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
-import { numberFormat } from "../../../helpers/formatPrice";
-import HttpCartController from "../../../submodules/controllers/http/httpCartController";
-import NavUser from "./layout/NavUser";
-import { httpCart } from "../../../submodules/controllers/http/axiosController";
 import { formatDates } from "../../../helpers/FortmatDate";
+import { numberFormat } from "../../../helpers/formatPrice";
+import { httpCart } from "../../../submodules/controllers/http/axiosController";
+import NavUser from "./layout/NavUser";
 function UserCartDetail() {
   const { id } = useParams();
   const [orderCurrent, setOrderCurrent] = useState<any>({});
@@ -28,11 +31,25 @@ function UserCartDetail() {
   useEffect(() => {
     getOrderUser();
   }, []);
-
+  const [open, setOpen] = useState(false);
   const getOrderUser = async () => {
     const orderByUser = await httpCart.getOrderDetail(Number(id));
     if (orderByUser) setOrderCurrent(orderByUser);
   };
+  const handleCancelOrder = async () => {
+    httpCart.updateOrderUser(Number(id)).then((response) => {
+      handleClickClose();
+      if (response) window.location.reload();
+    });
+  };
+  const handleClickOpen = (id: any) => {
+    setOpen(true);
+  };
+
+  const handleClickClose = () => {
+    setOpen(false);
+  };
+
   return (
     <NavUser>
       <Box
@@ -93,16 +110,16 @@ function UserCartDetail() {
                 <Box
                   sx={{
                     display: "inline-block",
-                    backgroundColor: "#F6BA71",
+                    backgroundColor: color.BtnDartGreen,
                     borderRadius: "30px",
                     fontSize: "14px",
                     padding: "10px 15px",
                     marginTop: "10px",
                     fontWeight: "bold",
-                    color: "#F7941E",
+                    color: "white",
                   }}
                 >
-                  Đơn hàng chờ xác nhận
+                  Đơn hàng đã giao
                 </Box>
               ) : (
                 <Box
@@ -114,7 +131,7 @@ function UserCartDetail() {
                     padding: "10px 15px",
                     marginTop: "10px",
                     fontWeight: "bold",
-                    color: "#F7941E",
+                    color: "#ffff",
                   }}
                 >
                   Đơn hàng đã bị hủy
@@ -150,9 +167,7 @@ function UserCartDetail() {
 
           <Grid item xs={3}>
             <Box mt={"60px"}>
-              {!!orderCurrent.status ? (
-                ""
-              ) : (
+              {orderCurrent.status == null ? (
                 <Button
                   variant="OutlinedRed"
                   sx={{
@@ -160,12 +175,80 @@ function UserCartDetail() {
                     borderRadius: "15px",
                     padding: "7px 27px",
                   }}
+                  onClick={handleClickOpen}
                 >
                   <Typography textTransform={"capitalize"}>
                     Hủy đơn hàng
                   </Typography>
                 </Button>
+              ) : (
+                ""
               )}
+              <Dialog
+                open={open}
+                onClose={handleClickClose}
+                TransitionComponent={Fade}
+                aria-labelledby="customized-dialog-title"
+              >
+                <DialogContent>
+                  <DialogContentText
+                    id="alert-dialog-slide-description"
+                    textAlign={"center"}
+                    padding={"0 24px "}
+                    sx={{
+                      color: "red",
+                    }}
+                  >
+                    <DeleteForeverIcon
+                      sx={{
+                        fontSize: "56px",
+                        color: "rgb(201, 33, 39)",
+                      }}
+                    />
+                    <DialogTitle fontSize={"16px"}>
+                      Bạn chắc chắn muốn hủy đơn hàng này?
+                    </DialogTitle>
+                  </DialogContentText>
+                </DialogContent>
+                <Box
+                  display={"flex"}
+                  paddingBottom={"24px"}
+                  justifyContent={"space-around"}
+                >
+                  <Button
+                    onClick={handleClickClose}
+                    sx={{
+                      padding: "8px 16px",
+                      border: "1px solid #ccc",
+                      borderRadius: "12px",
+                      color: "black",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      width: "96px",
+                    }}
+                  >
+                    Hủy
+                  </Button>
+                  <Button
+                    onClick={() => handleCancelOrder()}
+                    sx={{
+                      padding: "8px 16px",
+                      border: "1px solid red",
+                      borderRadius: "12px",
+                      background: "red",
+                      color: "white",
+                      fontSize: "12px",
+                      fontWeight: "bold",
+                      width: "96px",
+                      ":hover": {
+                        backgroundColor: "rgb(201, 33, 39)",
+                      },
+                    }}
+                  >
+                    Đồng ý
+                  </Button>
+                </Box>
+              </Dialog>
             </Box>
           </Grid>
         </Grid>

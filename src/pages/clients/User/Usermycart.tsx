@@ -96,13 +96,40 @@ function UserMyCart() {
                             <TableCell align="center">{e.orderType}</TableCell>
                             <TableCell align="center">
                               {e.status == null ? (
-                                <Chip label="Đang chờ duyệt" />
+                                <Chip
+                                  sx={{
+                                    maxWidth: "130px",
+                                    width: "100%",
+                                  }}
+                                  label="Đang chờ duyệt"
+                                />
                               ) : e.status == 1 ? (
-                                <Chip color="primary" label="Đang giao hàng" />
+                                <Chip
+                                  sx={{
+                                    maxWidth: "130px",
+                                    width: "100%",
+                                  }}
+                                  color="primary"
+                                  label="Đang giao hàng"
+                                />
                               ) : e.status == 2 ? (
-                                <Chip label=" Đã giao hàng" color="success" />
+                                <Chip
+                                  sx={{
+                                    maxWidth: "130px",
+                                    width: "100%",
+                                  }}
+                                  label=" Đã giao hàng"
+                                  color="success"
+                                />
                               ) : (
-                                <Chip label="Đã bị hủy" color="error" />
+                                <Chip
+                                  sx={{
+                                    maxWidth: "130px",
+                                    width: "100%",
+                                  }}
+                                  label="Đã hủy"
+                                  color="error"
+                                />
                               )}
                             </TableCell>
 

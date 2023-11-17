@@ -69,6 +69,16 @@ class HttpCartController {
       throw error;
     }
   }
+  async updateOrderUser(id: number) {
+    try {
+      const response = await this.axiosInstance.post(
+        `order/updateOrderUser/${id}`
+      );
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async delete(id: number): Promise<any> {
     console.log(id);

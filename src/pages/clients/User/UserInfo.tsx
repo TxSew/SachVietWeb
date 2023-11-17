@@ -137,113 +137,121 @@ function UserInfo() {
               </div>
               <button className="save pe-5 ps-5 pb-2 pt-2">Cập nhật</button>
             </form>
-
-            <form className="" onSubmit={handleSubmit(handelChangePassword)}>
-              <h1 className="info-acc-hd p-3">Thay đổi mật khẩu</h1>
-              <div className="">
-                <Controller
-                  control={control}
-                  name="password"
-                  rules={{
-                    required: "Mật khẩu không được để trống!",
-                  }}
-                  render={({ field }) => (
-                    <div className="info-acc row">
-                      <label className="c-12 m-2 l-2" htmlFor="">
-                        Mật khẩu hiện tại
-                      </label>
-                      <input
-                        {...field}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        className="c-12 m-8 l-8"
-                        type="text"
-                        placeholder="Nhập mât khẩu hiện tại"
-                      />
-                      <Typography color={color.error}>
-                        {errors.password && errors.password.message}
-                      </Typography>
-                    </div>
-                  )}
-                />
-                <Controller
-                  control={control}
-                  name="newPassword"
-                  rules={{
-                    required: "Mật khẩu không được để  trống!",
-                    minLength: {
-                      value: 5,
-                      message: "Mật khẩu yêu cầu 5 kí tự trở lên!",
-                    },
-                    maxLength: {
-                      value: 30,
-                      message: "Mật khẩu yêu cầu 30 kí tự trở xuống!",
-                    },
-                  }}
-                  render={({ field }) => (
-                    <div className="info-acc row">
-                      <label className="c-12 m-2 l-2" htmlFor="">
-                        Mật khẩu mới
-                      </label>
-                      <input
-                        {...field}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        className="c-12 m-8 l-8"
-                        type="text"
-                        placeholder="Mật khẩu mới"
-                      />
-                      <Typography color={color.error}>
-                        {errors.newPassword && errors.newPassword.message}
-                      </Typography>
-                    </div>
-                  )}
-                />
-
-                <Controller
-                  control={control}
-                  name="repeatNewPassword"
-                  rules={{
-                    required: "Mật khẩu không được để  trống!",
-                    validate: validatePasswordConfirmation,
-                  }}
-                  render={({ field }) => (
-                    <div className="info-acc row">
-                      <label className="c-12 m-2 l-2" htmlFor="">
-                        Nhập lại mật khẩu mới
-                      </label>
-                      <input
-                        {...field}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        className="c-12 m-8 l-8"
-                        type="text"
-                        placeholder="Nhập lại mật khẩu mới"
-                      />
-                      <Typography color={color.error}>
-                        {errors.repeatNewPassword &&
-                          errors.repeatNewPassword.message}
-                      </Typography>
-                    </div>
-                  )}
-                />
-
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <button
-                    className="save pe-5 ps-5 pb-2 pt-2"
-                    style={{
-                      textAlign: "center",
-                    }}
-                    type="submit"
-                  >
-                    Lưu
-                  </button>
-                </div>
-              </div>
-            </form>
           </div>
+        </div>
+        <div
+          style={{
+            background: "white",
+            marginTop: "20px",
+            padding: " 40px 20px",
+            borderRadius: "5px",
+          }}
+        >
+          <form className="" onSubmit={handleSubmit(handelChangePassword)}>
+            <h1 className="info-acc-hd p-3">Thay đổi mật khẩu</h1>
+            <div className="">
+              <Controller
+                control={control}
+                name="password"
+                rules={{
+                  required: "Mật khẩu không được để trống!",
+                }}
+                render={({ field }) => (
+                  <div className="info-acc row">
+                    <label className="c-12 m-2 l-2" htmlFor="">
+                      Mật khẩu hiện tại
+                    </label>
+                    <input
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className="c-12 m-8 l-8"
+                      type="text"
+                      placeholder="Nhập mât khẩu hiện tại"
+                    />
+                    <Typography color={color.error}>
+                      {errors.password && errors.password.message}
+                    </Typography>
+                  </div>
+                )}
+              />
+              <Controller
+                control={control}
+                name="newPassword"
+                rules={{
+                  required: "Mật khẩu không được để  trống!",
+                  minLength: {
+                    value: 5,
+                    message: "Mật khẩu yêu cầu 5 kí tự trở lên!",
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: "Mật khẩu yêu cầu 30 kí tự trở xuống!",
+                  },
+                }}
+                render={({ field }) => (
+                  <div className="info-acc row">
+                    <label className="c-12 m-2 l-2" htmlFor="">
+                      Mật khẩu mới
+                    </label>
+                    <input
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className="c-12 m-8 l-8"
+                      type="text"
+                      placeholder="Mật khẩu mới"
+                    />
+                    <Typography color={color.error}>
+                      {errors.newPassword && errors.newPassword.message}
+                    </Typography>
+                  </div>
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="repeatNewPassword"
+                rules={{
+                  required: "Mật khẩu không được để  trống!",
+                  validate: validatePasswordConfirmation,
+                }}
+                render={({ field }) => (
+                  <div className="info-acc row">
+                    <label className="c-12 m-2 l-2" htmlFor="">
+                      Nhập lại mật khẩu mới
+                    </label>
+                    <input
+                      {...field}
+                      onChange={(e) => field.onChange(e.target.value)}
+                      className="c-12 m-8 l-8"
+                      type="text"
+                      placeholder="Nhập lại mật khẩu mới"
+                    />
+                    <Typography color={color.error}>
+                      {errors.repeatNewPassword &&
+                        errors.repeatNewPassword.message}
+                    </Typography>
+                  </div>
+                )}
+              />
+
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  className="save pe-5 ps-5 pb-2 pt-2"
+                  style={{
+                    textAlign: "center",
+                  }}
+                  type="submit"
+                >
+                  Lưu
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </NavUser>

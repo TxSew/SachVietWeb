@@ -78,9 +78,9 @@ function Checkout() {
   };
 
   const handleCheckout = async (data: any) => {
-    console.log(data);
     const detailData = cart.map((e: Product) => {
       return {
+        productName: e.title,
         productId: e.id,
         quantity: e.cartQuantity,
         price: e.price_sale,
