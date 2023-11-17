@@ -27,7 +27,7 @@ function App() {
       <Router>
         <Routes>
           {PublicRouter.map((e, i) => {
-            const Component = e.component;
+            const Component: any = e.component;
             let Layout = DefaultLayout;
             if (e.isRequired) {
               Layout = HeaderOnly;

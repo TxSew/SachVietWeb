@@ -40,11 +40,13 @@ export default function AdminCarts() {
   React.useEffect(() => {
     fetchData(page);
   }, [page]);
+
   const handleUpdateOrder = async (id: any) => {
     await httpCart.put(Number(id), {
       status: 2,
     });
   };
+
   const fetchData = async (page: number) => {
     try {
       const cartsData: any = await httpCart.getAll(page);
@@ -61,13 +63,10 @@ export default function AdminCarts() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-  // remove item
   const handleDelete = async (element: any) => {
-    const sss = await httpCart.delete(Number(element.id));
+    await httpCart.delete(Number(element.id));
   };
   const handleChangeSort = (event: SelectChangeEvent) => {
-    let status = event.target.value;
-
     const props = {
       status: event.target.value,
     };

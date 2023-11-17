@@ -131,6 +131,7 @@ const ForgotPasswordPage = () => {
     watch,
     formState: { errors },
   } = useForm<ForgotPassword>({ mode: "all" });
+
   const handleForgot = (event: any) => {
     console.log(event);
   };
@@ -264,7 +265,7 @@ const ForgotPasswordPage = () => {
                   <Typography>Mật khẩu</Typography>
                   <Controller
                     control={control}
-                    defaultValue="" // Set an initial value here
+                    defaultValue=""
                     name="password"
                     rules={{
                       required: "Mật khẩu không được để trống!",

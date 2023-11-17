@@ -102,8 +102,9 @@ function Checkout() {
 
     const payment = await httpPayment.getPayment(orderData);
     if (payment.paymentMethod == "COD") {
-      window.location.assign("http://www.sachviet.click/checkout/payment");
+      window.location.assign(payment.url);
     }
+
     if (payment.paymentMethod == "Visa") {
       window.location.assign(payment.url);
     }
@@ -273,32 +274,6 @@ function Checkout() {
           </FormGroup>
         </Box>
 
-        <Box bgcolor={color.white} mt={2} p={2}>
-          <Typography
-            fontWeight={"bold"}
-            variant="h4"
-            py={2}
-            borderBottom={"1px solid #eee"}
-          >
-            PHƯƠNG THỨC VẬN CHUYỂN
-          </Typography>
-          <Box>
-            <Stack direction={"row"}>
-              <Radio
-                checked
-                sx={{
-                  color: "pink[800]",
-                  "&.Mui-checked": {
-                    color: "pink[600]",
-                  },
-                }}
-              />
-              <Typography variant="body1" color="initial" fontWeight={"bold"}>
-                Giao hàng tiêu chuẩn: 19.000 đ
-              </Typography>
-            </Stack>
-          </Box>
-        </Box>
         <Box bgcolor={color.white} mt={2} p={2}>
           <Typography
             fontWeight={"bold"}

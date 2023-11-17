@@ -10,6 +10,7 @@ import {
   TableHead,
   TableRow,
   Typography,
+  colors,
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,6 +20,7 @@ import { numberFormat } from "../../../helpers/formatPrice";
 import HttpCartController from "../../../submodules/controllers/http/httpCartController";
 import NavUser from "./layout/NavUser";
 import { httpCart } from "../../../submodules/controllers/http/axiosController";
+import { formatDates } from "../../../helpers/FortmatDate";
 function UserCartDetail() {
   const { id } = useParams();
   const [orderCurrent, setOrderCurrent] = useState<any>({});
@@ -56,20 +58,68 @@ function UserCartDetail() {
               >
                 Chi tiết đơn hàng
               </Typography>
-              <Box
-                sx={{
-                  display: "inline-block",
-                  backgroundColor: "#F6BA71",
-                  borderRadius: "30px",
-                  fontSize: "14px",
-                  padding: "10px 15px",
-                  marginTop: "10px",
-                  fontWeight: "bold",
-                  color: "#F7941E",
-                }}
-              >
-                Đơn hàng chờ xác nhận
-              </Box>
+
+              {orderCurrent.status == null ? (
+                <Box
+                  sx={{
+                    display: "inline-block",
+                    backgroundColor: "#F6BA71",
+                    borderRadius: "30px",
+                    fontSize: "14px",
+                    padding: "10px 15px",
+                    marginTop: "10px",
+                    fontWeight: "bold",
+                    color: "#F7941E",
+                  }}
+                >
+                  Đơn hàng chờ xác nhận
+                </Box>
+              ) : orderCurrent.status == 1 ? (
+                <Box
+                  sx={{
+                    display: "inline-block",
+                    backgroundColor: color.BtnDartGreen,
+                    borderRadius: "30px",
+                    fontSize: "14px",
+                    padding: "10px 15px",
+                    marginTop: "10px",
+                    fontWeight: "bold",
+                    color: "#F7941E",
+                  }}
+                >
+                  Đơn hàng đang giao
+                </Box>
+              ) : orderCurrent.status == 2 ? (
+                <Box
+                  sx={{
+                    display: "inline-block",
+                    backgroundColor: "#F6BA71",
+                    borderRadius: "30px",
+                    fontSize: "14px",
+                    padding: "10px 15px",
+                    marginTop: "10px",
+                    fontWeight: "bold",
+                    color: "#F7941E",
+                  }}
+                >
+                  Đơn hàng chờ xác nhận
+                </Box>
+              ) : (
+                <Box
+                  sx={{
+                    display: "inline-block",
+                    backgroundColor: color.error,
+                    borderRadius: "30px",
+                    fontSize: "14px",
+                    padding: "10px 15px",
+                    marginTop: "10px",
+                    fontWeight: "bold",
+                    color: "#F7941E",
+                  }}
+                >
+                  Đơn hàng đã bị hủy
+                </Box>
+              )}
               <Box>
                 <Stack direction={"row"} mt={"10px"}>
                   <Typography>Mã đơn hàng:</Typography>
@@ -77,9 +127,9 @@ function UserCartDetail() {
                 </Stack>
 
                 <Stack direction={"row"} mt={"10px"}>
-                  <Typography>Ngày mua:</Typography>
+                  <Typography>Ngày mua: </Typography>
                   <Typography fontWeight={"bold"}>
-                    {orderCurrent.createdAt}
+                    {formatDates(orderCurrent.createdAt)}
                   </Typography>
                 </Stack>
 
@@ -100,30 +150,22 @@ function UserCartDetail() {
 
           <Grid item xs={3}>
             <Box mt={"60px"}>
-              <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: color.borderColor,
-                  borderRadius: "15px",
-                  padding: "7px 30px",
-                }}
-              >
-                <Typography textTransform={"capitalize"}>
-                  Đặt hàng lại
-                </Typography>
-              </Button>
-              <Button
-                variant="OutlinedRed"
-                sx={{
-                  mt: "10px",
-                  borderRadius: "15px",
-                  padding: "7px 27px",
-                }}
-              >
-                <Typography textTransform={"capitalize"}>
-                  Hủy đơn hàng
-                </Typography>
-              </Button>
+              {!!orderCurrent.status ? (
+                ""
+              ) : (
+                <Button
+                  variant="OutlinedRed"
+                  sx={{
+                    mt: "10px",
+                    borderRadius: "15px",
+                    padding: "7px 27px",
+                  }}
+                >
+                  <Typography textTransform={"capitalize"}>
+                    Hủy đơn hàng
+                  </Typography>
+                </Button>
+              )}
             </Box>
           </Grid>
         </Grid>
@@ -225,27 +267,6 @@ function UserCartDetail() {
           <Stack direction={"row"}>
             <Typography variant="body1">Đơn hàng:</Typography>
             <Typography variant="body1">{`#${orderCurrent.id}`}</Typography>
-          </Stack>
-          <Box
-            sx={{
-              display: "inline-block",
-              backgroundColor: "#F6BA71",
-              borderRadius: "30px",
-              fontSize: "14px",
-              padding: "10px 15px",
-              marginTop: "10px",
-              fontWeight: "bold",
-              color: "#F7941E",
-            }}
-          >
-            Đơn hàng chờ xác nhận
-          </Box>
-
-          <Stack direction={"row"} mt={"18px"}>
-            <Typography variant="body1">Tổng tiền:</Typography>
-            <Typography variant="body1" fontWeight={"bold"}>
-              {numberFormat(orderCurrent.money)}
-            </Typography>
           </Stack>
 
           <Stack direction={"row"} mt={"18px"}>

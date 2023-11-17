@@ -53,7 +53,7 @@ const PublicRouter = [
   },
 
   {
-    path: "/checkout/payment",
+    path: "/checkout/payment/:id",
     component: Payment,
   },
   {

@@ -71,9 +71,9 @@ function UserMyCart() {
                       >
                         <TableCell>Mã đơn hàng</TableCell>
                         <TableCell align="center">Ngày mua</TableCell>
-                        <TableCell align="center">Người mua</TableCell>
-                        <TableCell align="right">Tổng tiền</TableCell>
-                        <TableCell align="right">Trạng thái</TableCell>
+                        <TableCell align="center">Tổng tiền</TableCell>
+                        <TableCell align="center">Thanh toán</TableCell>
+                        <TableCell align="center">Trạng thái</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -87,14 +87,14 @@ function UserMyCart() {
                             <TableCell component="th" scope="row">
                               {e.id}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="center">
                               {formatDates(e.createdAt)}
                             </TableCell>
-                            <TableCell align="right">{e.fullName}</TableCell>
-                            <TableCell align="right">
+                            <TableCell align="center">
                               {numberFormat(e.money)}
                             </TableCell>
-                            <TableCell align="right">
+                            <TableCell align="center">{e.orderType}</TableCell>
+                            <TableCell align="center">
                               {e.status == null ? (
                                 <Chip label="Đang chờ duyệt" />
                               ) : e.status == 1 ? (

@@ -7,6 +7,7 @@ import HttpProducerController from "./httpProducerController";
 import HttpProductController from "./httpProductController";
 import HttpProviceController from "./httpProvinceController";
 import HttpStatisticalController from "./httpStatisticalController";
+import HttpUserAddressController from "./httpUserAddressController";
 import HttpVoucherController from "./httpVoucherController";
 import HttpPaymentController from "./httppaymentController";
 
@@ -20,3 +21,4 @@ export const httpCart = new HttpCartController(BaseAPi);
 export const httpStatistical = new HttpStatisticalController(BaseAPi);
 export const httpAccount = new HttpAccountController(BaseAPi);
 export const httpPayment = new HttpPaymentController(BaseAPi);
+export const httpUserAddress = new HttpUserAddressController(BaseAPi);

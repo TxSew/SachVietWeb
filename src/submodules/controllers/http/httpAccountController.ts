@@ -38,6 +38,17 @@ class HttpAccountController {
       throw error;
     }
   }
+  async changePassword(account: User) {
+    try {
+      const response = await this.axiosInstance.post(
+        "auth/changePassword",
+        account
+      );
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async register(account: User) {
     try {

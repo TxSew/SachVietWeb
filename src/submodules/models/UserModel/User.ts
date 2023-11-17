@@ -18,7 +18,11 @@ export interface ForgotPassword {
   password: string;
   confirmPassword?: string;
 }
-
+export interface ChangePassword {
+  password: string;
+  newPassword: string;
+  repeatNewPassword?: string;
+}
 export interface TUser {
   totalPage: number;
   page: number;
