@@ -1,0 +1,18 @@
+.box-menu {
+  display: none;
+  position: absolute;
+  width: 260px;
+  z-index: 10;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
+  transition: all 0.5s ease-in-out;
+}
+
+.icon-menu {
+  position: relative;
+  text-align: right;
+}
+
+.icon-menu:hover .box-menu {
+  display: block;
+}

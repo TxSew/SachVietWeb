@@ -15,6 +15,7 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import LockOpenIcon from "@mui/icons-material/LockOpen";
 import HowToRegIcon from "@mui/icons-material/HowToReg";
 import SegmentIcon from "@mui/icons-material/Segment";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import {
   Avatar,
   Badge,
@@ -27,7 +28,7 @@ import {
   Modal,
   Stack,
   TextField,
-  Tooltip,
+  Tooltip
 } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container/Container";
@@ -40,8 +41,9 @@ import {
   Link,
   NavLink,
   createSearchParams,
-  useNavigate,
+  useNavigate
 } from "react-router-dom";
+import "./Header.css";
 import Image from "../../../components/Image/Image";
 import { BaseAPi } from "../../../configs/BaseApi";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
@@ -69,7 +71,7 @@ const Header = () => {
   }, [dataSearch]);
   async function fetchValueSearch(props: any) {
     const data = await http.getAll({
-      keyword: props,
+      keyword: props
     });
     const dataCategory = await httpCategory.getCategory({});
     const cate = await dataCategory.filter(
@@ -101,7 +103,7 @@ const Header = () => {
     outline: "none",
     p: 4,
     pt: 2,
-    borderRadius: "8px",
+    borderRadius: "8px"
   };
 
   const boxmodal = {
@@ -115,7 +117,7 @@ const Header = () => {
     boxShadow: 24,
     outline: "none",
     p: 4,
-    pt: 2,
+    pt: 2
   };
 
   const hditem = {
@@ -130,22 +132,22 @@ const Header = () => {
     lineHieght: "normal",
     transition: "all .3s ease-in-out",
     "&:hover": {
-      color: "#008C89",
-    },
+      color: "#008C89"
+    }
   };
 
   const hdicon = {
     mr: 1,
-    fontSize: "24px",
+    fontSize: "24px"
   };
   const hdicon_mb = {
     mr: 1,
     fontSize: "24px",
-    lineHieght: "normal",
+    lineHieght: "normal"
   };
 
   const nicon = {
-    lineHeight: "normal",
+    lineHeight: "normal"
   };
 
   const [openSearch, setOpenSearch] = React.useState(false);
@@ -173,8 +175,8 @@ const Header = () => {
       navigate({
         pathname: "/category",
         search: createSearchParams({
-          q: value,
-        }).toString(),
+          q: value
+        }).toString()
       });
       handleCloseSearch();
     }
@@ -183,8 +185,8 @@ const Header = () => {
     navigate({
       pathname: "/category",
       search: createSearchParams({
-        q: search,
-      }).toString(),
+        q: search
+      }).toString()
     });
   };
   return (
@@ -252,8 +254,8 @@ const Header = () => {
                     position={"relative"}
                     sx={{
                       "&:hover .user-view": {
-                        visibility: "visible",
-                      },
+                        visibility: "visible"
+                      }
                     }}
                   >
                     <NavLink to={"/user"} style={hditem}>
@@ -279,16 +281,16 @@ const Header = () => {
                           padding: "5px 0px",
                           borderBottom: "1px solid #eee",
                           "&:hover": {
-                            color: "#008C89",
-                          },
-                        },
+                            color: "#008C89"
+                          }
+                        }
                       }}
                     >
                       <ul>
                         <li>
                           <Link
                             style={{
-                              color: "inherit",
+                              color: "inherit"
                             }}
                             to="/user/mycart"
                           >
@@ -302,7 +304,7 @@ const Header = () => {
                               window.location.reload();
                             }}
                             sx={{
-                              cursor: "pointer",
+                              cursor: "pointer"
                             }}
                           >
                             Đăng xuất
@@ -342,7 +344,7 @@ const Header = () => {
                   display: "flex",
                   flexDirection: "row",
                   alignItems: "center",
-                  py: "10px",
+                  py: "10px"
                 }}
               >
                 <Grid
@@ -350,14 +352,14 @@ const Header = () => {
                   xs={2}
                   sx={{
                     display: "flex",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
                   <Link to={"/"}>
                     <Box
                       sx={{
                         display: "flex",
-                        justifyContent: "center",
+                        justifyContent: "center"
                       }}
                     >
                       <Image
@@ -374,28 +376,193 @@ const Header = () => {
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    alignItems: "center",
+                    alignItems: "center"
                   }}
                 >
-                  <Box
-                    sx={{
-                      textAlign: "right",
-                    }}
-                  >
+                  <div className="icon-menu">
                     <SegmentIcon
                       sx={{
                         color: "#008C89",
                         cursor: "pointer",
-                        fontSize: "48px",
+                        fontSize: "48px"
                       }}
                     />
-                  </Box>
+                    <div className="box-menu">
+                      <NavLink
+                        to={""}
+                        style={{
+                          textAlign: "left"
+                        }}
+                      >
+                        <Typography
+                          color={"#615C5C"}
+                          variant="h5"
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            background: "white",
+                            padding: "8px 20px",
+                            transition: "all 0.3s ease-in-out",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            "&:hover": {
+                              backgroundColor: "#008C89",
+                              color: "white"
+                            }
+                          }}
+                        >
+                          Sách văn học
+                          <ChevronRightIcon />
+                        </Typography>
+                      </NavLink>
+                      <NavLink
+                        to={""}
+                        style={{
+                          textAlign: "left"
+                        }}
+                      >
+                        <Typography
+                          color={"#615C5C"}
+                          variant="h5"
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            background: "white",
+                            padding: "14px 20px",
+                            transition: "all 0.3s ease-in-out",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            "&:hover": {
+                              backgroundColor: "#008C89",
+                              color: "white"
+                            }
+                          }}
+                        >
+                          Sách Tiểu Thuyết
+                        </Typography>
+                      </NavLink>
+                      <NavLink
+                        to={""}
+                        style={{
+                          textAlign: "left"
+                        }}
+                      >
+                        <Typography
+                          color={"#615C5C"}
+                          variant="h5"
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            background: "white",
+                            padding: "8px 20px",
+                            transition: "all 0.3s ease-in-out",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            "&:hover": {
+                              backgroundColor: "#008C89",
+                              color: "white"
+                            }
+                          }}
+                        >
+                          Sách Tâm Lý - Kỹ Năng
+                          <ChevronRightIcon />
+                        </Typography>
+                      </NavLink>
+                      <NavLink
+                        to={""}
+                        style={{
+                          textAlign: "left"
+                        }}
+                      >
+                        <Typography
+                          color={"#615C5C"}
+                          variant="h5"
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            background: "white",
+                            padding: "8px 20px",
+                            transition: "all 0.3s ease-in-out",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            "&:hover": {
+                              backgroundColor: "#008C89",
+                              color: "white"
+                            }
+                          }}
+                        >
+                          Sách Ngoại Ngữ
+                          <ChevronRightIcon />
+                        </Typography>
+                      </NavLink>
+                      <NavLink
+                        to={""}
+                        style={{
+                          textAlign: "left"
+                        }}
+                      >
+                        <Typography
+                          color={"#615C5C"}
+                          variant="h5"
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            background: "white",
+                            padding: "8px 20px",
+                            transition: "all 0.3s ease-in-out",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            "&:hover": {
+                              backgroundColor: "#008C89",
+                              color: "white"
+                            }
+                          }}
+                        >
+                          Sách Trinh Thám
+                          <ChevronRightIcon />
+                        </Typography>
+                      </NavLink>
+                      <NavLink
+                        to={""}
+                        style={{
+                          textAlign: "left"
+                        }}
+                      >
+                        <Typography
+                          color={"#615C5C"}
+                          variant="h5"
+                          sx={{
+                            fontSize: "12px",
+                            fontWeight: "bold",
+                            background: "white",
+                            padding: "8px 20px",
+                            transition: "all 0.3s ease-in-out",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            "&:hover": {
+                              backgroundColor: "#008C89",
+                              color: "white"
+                            }
+                          }}
+                        >
+                          Sách Khoa Học Viễn Tưởng
+                          <ChevronRightIcon />
+                        </Typography>
+                      </NavLink>
+                    </div>
+                  </div>
                 </Grid>
                 <Grid
                   item
                   xs={5.5}
                   sx={{
-                    position: "relative",
+                    position: "relative"
                   }}
                 >
                   <Stack
@@ -407,7 +574,7 @@ const Header = () => {
                       justifyContent: "center",
                       border: "1px solid #ccc",
                       padding: "3px 10px",
-                      borderRadius: "5px",
+                      borderRadius: "5px"
                     }}
                   >
                     <Modal
@@ -420,9 +587,9 @@ const Header = () => {
                       sx={{
                         "& .css-919eu4, .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop":
                           {
-                            backgroundColor: "transparent !important",
+                            backgroundColor: "transparent !important"
                           },
-                        top: "130px",
+                        top: "130px"
                       }}
                     >
                       <Box sx={styles}>
@@ -431,7 +598,7 @@ const Header = () => {
                             display: "flex",
                             flexDirection: "row",
                             alignItems: "center",
-                            justifyContent: "center",
+                            justifyContent: "center"
                           }}
                         >
                           <Typography
@@ -440,7 +607,7 @@ const Header = () => {
                               border: "none",
                               display: "flex",
                               alignItems: "center",
-                              justifyContent: "center",
+                              justifyContent: "center"
                             }}
                           ></Typography>
                         </Stack>
@@ -489,7 +656,7 @@ const Header = () => {
                                             lineClamp: 2,
                                             WebkitLineClamp: 2,
                                             WebkitBoxOrient: "vertical",
-                                            flexShrink: 0,
+                                            flexShrink: 0
                                           }}
                                         >
                                           {e.title}
@@ -521,7 +688,7 @@ const Header = () => {
                                   onClick={handleCloseSearch}
                                   style={{
                                     textAlign: "center",
-                                    margin: "0 auto",
+                                    margin: "0 auto"
                                   }}
                                 >
                                   <img
@@ -529,7 +696,7 @@ const Header = () => {
                                     alt=""
                                     width={"50%"}
                                     style={{
-                                      margin: "0 auto",
+                                      margin: "0 auto"
                                     }}
                                   />
                                   <Typography>{e.name}</Typography>
@@ -544,7 +711,7 @@ const Header = () => {
                       onClick={handleOpenSearch}
                       sx={{
                         "& fieldset": { border: "none", width: "100%" },
-                        width: "100%",
+                        width: "100%"
                       }}
                       onInput={handleChangeValue}
                       placeholder="Tìm kiếm sản phẩm mong muốn..."
@@ -562,12 +729,12 @@ const Header = () => {
                         alignItems: "center",
                         justifyContent: "center",
                         borderRadius: "5px",
-                        cursor: "pointer",
+                        cursor: "pointer"
                       }}
                     >
                       <SearchIcon
                         sx={{
-                          color: "#fff",
+                          color: "#fff"
                         }}
                       />
                     </Typography>
@@ -580,7 +747,7 @@ const Header = () => {
                   sx={{
                     display: "flex",
                     alignItems: "center",
-                    pl: "24px",
+                    pl: "24px"
                   }}
                 >
                   <NavLink
@@ -588,12 +755,12 @@ const Header = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingLeft: "16px",
+                      paddingLeft: "16px"
                     }}
                   >
                     <PersonOutlineOutlinedIcon
                       sx={{
-                        color: "#008C89",
+                        color: "#008C89"
                       }}
                     />
                     <Typography
@@ -608,8 +775,8 @@ const Header = () => {
                         lineHeight: "normal",
                         color: "#F39801",
                         "&:hover": {
-                          color: "#008C89",
-                        },
+                          color: "#008C89"
+                        }
                       }}
                     >
                       {" "}
@@ -621,13 +788,13 @@ const Header = () => {
                     style={{
                       display: "flex",
                       alignItems: "center",
-                      paddingLeft: "16px",
+                      paddingLeft: "16px"
                     }}
                   >
                     <Badge badgeContent={cart.length} color="primary">
                       <ShoppingCartOutlinedIcon
                         sx={{
-                          color: "#008C89",
+                          color: "#008C89"
                         }}
                       />
                     </Badge>
@@ -638,8 +805,8 @@ const Header = () => {
                         color: "#615C5C",
 
                         "&:hover": {
-                          color: "#008C89",
-                        },
+                          color: "#008C89"
+                        }
                       }}
                     >
                       Giỏ hàng{" "}
@@ -661,7 +828,7 @@ const Header = () => {
                   borderRadius: "12px",
                   p: 4,
                   mt: 1,
-                  display: "none",
+                  display: "none"
                 }}
               ></Box>
             </Container>
@@ -686,7 +853,7 @@ const Header = () => {
                 <Box
                   color={"#333"}
                   sx={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   <Modal
@@ -695,7 +862,7 @@ const Header = () => {
                     aria-labelledby="modal-modal-title"
                     aria-describedby="modal-modal-description"
                     sx={{
-                      transition: "all 2s ease-in-out",
+                      transition: "all 2s ease-in-out"
                     }}
                   >
                     <Box sx={boxmodal}>
@@ -708,7 +875,7 @@ const Header = () => {
                 <NavLink
                   to={"/"}
                   style={{
-                    cursor: "pointer",
+                    cursor: "pointer"
                   }}
                 >
                   <Image
@@ -729,7 +896,7 @@ const Header = () => {
                   to={"/cart"}
                   style={{
                     cursor: "pointer",
-                    color: "#F7941E",
+                    color: "#F7941E"
                   }}
                 >
                   <Badge badgeContent={cart.length} color="primary">
@@ -742,7 +909,7 @@ const Header = () => {
                     sx={{
                       display: "flex",
                       alignItems: "center",
-                      textAlign: "center",
+                      textAlign: "center"
                     }}
                   >
                     <Tooltip title="Account settings">
@@ -760,13 +927,13 @@ const Header = () => {
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
-                            textAlign: "center",
+                            textAlign: "center"
                           }}
                         >
                           <Person3Icon
                             sx={hdicon_mb}
                             style={{
-                              margin: "0 auto",
+                              margin: "0 auto"
                             }}
                           />
                         </Avatar>
@@ -790,7 +957,7 @@ const Header = () => {
                             width: 32,
                             height: 32,
                             ml: -0.5,
-                            mr: 1,
+                            mr: 1
                           },
                           "&:before": {
                             content: '""',
@@ -802,9 +969,9 @@ const Header = () => {
                             height: 10,
                             bgcolor: "background.paper",
                             transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0,
-                          },
-                        },
+                            zIndex: 0
+                          }
+                        }
                       }}
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
@@ -813,12 +980,12 @@ const Header = () => {
                         <MenuItem
                           onClick={handleClose}
                           sx={{
-                            color: "gray",
+                            color: "gray"
                           }}
                         >
                           <LockOpenIcon
                             sx={{
-                              marginRight: "8px",
+                              marginRight: "8px"
                             }}
                           />{" "}
                           Login
@@ -828,12 +995,12 @@ const Header = () => {
                         <MenuItem
                           onClick={handleClose}
                           sx={{
-                            color: "gray",
+                            color: "gray"
                           }}
                         >
                           <HowToRegIcon
                             sx={{
-                              marginRight: "8px",
+                              marginRight: "8px"
                             }}
                           />{" "}
                           Register
@@ -864,7 +1031,7 @@ const Header = () => {
                             width: 32,
                             height: 32,
                             ml: -0.5,
-                            mr: 1,
+                            mr: 1
                           },
                           "&:before": {
                             content: '""',
@@ -876,9 +1043,9 @@ const Header = () => {
                             height: 10,
                             bgcolor: "background.paper",
                             transform: "translateY(-50%) rotate(45deg)",
-                            zIndex: 0,
-                          },
-                        },
+                            zIndex: 0
+                          }
+                        }
                       }}
                       transformOrigin={{ horizontal: "right", vertical: "top" }}
                       anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
@@ -887,12 +1054,12 @@ const Header = () => {
                         <MenuItem
                           onClick={handleClose}
                           sx={{
-                            color: "gray",
+                            color: "gray"
                           }}
                         >
                           <LockOpenIcon
                             sx={{
-                              marginRight: "8px",
+                              marginRight: "8px"
                             }}
                           />{" "}
                           Login
@@ -902,12 +1069,12 @@ const Header = () => {
                         <MenuItem
                           onClick={handleClose}
                           sx={{
-                            color: "gray",
+                            color: "gray"
                           }}
                         >
                           <HowToRegIcon
                             sx={{
-                              marginRight: "8px",
+                              marginRight: "8px"
                             }}
                           />{" "}
                           Register

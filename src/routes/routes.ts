@@ -34,6 +34,7 @@ import Error from "../pages/clients/notFound/notFound";
 import VoucherUser from "../pages/clients/User/UserVoucher";
 import Bill from "../pages/admin/Bill/Bill";
 import Otp from "../pages/admin/Otp/Otp";
+import Payerr from "../pages/clients/Payerr/Payerr";
 
 const PublicRouter = [
   {
@@ -98,6 +99,10 @@ const PublicRouter = [
   {
     path: "/step",
     component: CustomizedSteppers,
+  },
+  {
+    path: "/payerr",
+    component: Payerr,
   },
 ];
 const PrivateRouter = [

@@ -46,7 +46,11 @@ function AdminStatistical() {
                   />
                 </Grid>
                 <Grid xs={8}>
-                  <Typography variant="body1" color="initial">
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    fontWeight={"bold"}
+                  >
                     Khách hàng
                   </Typography>
                   <Typography
@@ -96,7 +100,11 @@ function AdminStatistical() {
                   />
                 </Grid>
                 <Grid xs={8}>
-                  <Typography variant="body1" color="initial">
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    fontWeight={"bold"}
+                  >
                     Danh mục
                   </Typography>
                   <Typography
@@ -147,7 +155,11 @@ function AdminStatistical() {
                   />
                 </Grid>
                 <Grid xs={8}>
-                  <Typography variant="body1" color="initial">
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    fontWeight={"bold"}
+                  >
                     Đơn hàng
                   </Typography>
                   <Typography
@@ -198,7 +210,11 @@ function AdminStatistical() {
                   />
                 </Grid>
                 <Grid xs={8}>
-                  <Typography variant="body1" color="initial">
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    fontWeight={"bold"}
+                  >
                     Sản phẩm
                   </Typography>
                   <Typography
@@ -248,7 +264,11 @@ function AdminStatistical() {
                   />
                 </Grid>
                 <Grid xs={8}>
-                  <Typography variant="body1" color="initial">
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    fontWeight={"bold"}
+                  >
                     Sản phẩm
                   </Typography>
                   <Typography
@@ -298,7 +318,11 @@ function AdminStatistical() {
                   />
                 </Grid>
                 <Grid xs={8}>
-                  <Typography variant="body1" color="initial">
+                  <Typography
+                    variant="body1"
+                    color="initial"
+                    fontWeight={"bold"}
+                  >
                     Sản phẩm
                   </Typography>
                   <Typography
@@ -401,7 +425,12 @@ function AdminStatistical() {
                     />
                   </Grid>
                   <Grid xs={8} textAlign={"center"}>
-                    <Typography variant="body1" color="initial">
+                    <Typography
+                      variant="body1"
+                      color="initial"
+                      fontWeight={"bold"}
+                      textAlign={"center"}
+                    >
                       Sản phẩm
                     </Typography>
                     <Typography variant="body1" color="initial">
@@ -427,7 +456,15 @@ function AdminStatistical() {
                       alt="err"
                     />
                   </Grid>
-                  <Grid xs={8}>
+                  <Grid xs={8} textAlign={"center"}>
+                    <Typography
+                      variant="body1"
+                      color="initial"
+                      fontWeight={"bold"}
+                      textAlign={"center"}
+                    >
+                      Sản phẩm
+                    </Typography>
                     <Typography variant="body1" color="initial">
                       Sản phẩm
                     </Typography>
