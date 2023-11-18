@@ -1,15 +1,15 @@
-import { BaseAPi } from "../../../configs/BaseApi";
-import HttpAccountController from "./httpAccountController";
-import HttpCartController from "./httpCartController";
-import HttpCategoryController from "./httpCategoryController";
-import HttpDiscountController from "./httpDiscountController";
-import HttpProducerController from "./httpProducerController";
-import HttpProductController from "./httpProductController";
-import HttpProviceController from "./httpProvinceController";
-import HttpStatisticalController from "./httpStatisticalController";
-import HttpUserAddressController from "./httpUserAddressController";
-import HttpVoucherController from "./httpVoucherController";
-import HttpPaymentController from "./httppaymentController";
+import { BaseAPi } from '../../../configs/BaseApi';
+import HttpAccountController from './httpAccountController';
+import HttpCartController from './httpCartController';
+import HttpCategoryController from './httpCategoryController';
+import HttpDiscountController from './httpDiscountController';
+import HttpProducerController from './httpProducerController';
+import HttpProductController from './httpProductController';
+import HttpProviceController from './httpProvinceController';
+import HttpStatisticalController from './httpStatisticalController';
+import HttpUserAddressController from './httpUserAddressController';
+import HttpVoucherController from './httpVoucherController';
+import HttpPaymentController from './httppaymentController';
 
 export const httpProduct = new HttpProductController(BaseAPi);
 export const httpCategory = new HttpCategoryController(BaseAPi);

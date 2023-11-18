@@ -24,6 +24,7 @@ import { formatDates } from "../../../helpers/FortmatDate";
 import { numberFormat } from "../../../helpers/formatPrice";
 import { httpCart } from "../../../submodules/controllers/http/axiosController";
 import NavUser from "./layout/NavUser";
+import { OrderType } from "../../../submodules/models/OrderModel/Order";
 function UserCartDetail() {
   const { id } = useParams();
   const [orderCurrent, setOrderCurrent] = useState<any>({});
@@ -334,7 +335,11 @@ function UserCartDetail() {
                 }}
               >
                 <Typography variant="body1">
-                  Thanh toán bằng tiền mặt khi nhận hàng
+                  {orderCurrent.orderType == OrderType.COD
+                    ? "Thanh toán bằng tiền mặt khi nhận hàng"
+                    : OrderType.VISA
+                    ? "Thanh  toán bằng thẻ tín dụng"
+                    : ""}
                 </Typography>
               </Box>
             </Box>

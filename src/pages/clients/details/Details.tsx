@@ -208,37 +208,51 @@ export const Details = () => {
                   <></>
                 ) : (
                   <>
-                    {" "}
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        color: "#F7941E",
-                        borderColor: "#F7941E",
-                        fontWeight: "bold",
-                        "&:hover": {
-                          borderColor: "#008C89",
-                          backgroundColor: "#008C89",
-                          color: "white",
-                        },
-                      }}
-                      onClick={() => handleAddToCart(Detail)}
-                    >
-                      Thêm vào giỏ hàng
-                    </Button>
-                    <Button
-                      onClick={() => handleOrder(Detail)}
-                      sx={{
-                        fontWeight: "bold",
-                        backgroundColor: "#008C89",
-                        "&:hover": {
-                          backgroundColor: "#F7941E",
-                          color: "white",
-                        },
-                      }}
-                      variant="containedGreen"
-                    >
-                      Mua ngay
-                    </Button>
+                    {Number(Detail.quantity) <= 0 ? (
+                      <Typography
+                        sx={{
+                          padding: "5px 20px",
+                          border: "1px solid gray",
+                          color: "gray",
+                          borderRadius: "5px",
+                        }}
+                      >
+                        Hết hàng
+                      </Typography>
+                    ) : (
+                      <>
+                        <Button
+                          variant="outlined"
+                          sx={{
+                            color: "#F7941E",
+                            borderColor: "#F7941E",
+                            fontWeight: "bold",
+                            "&:hover": {
+                              borderColor: "#008C89",
+                              backgroundColor: "#008C89",
+                              color: "white",
+                            },
+                          }}
+                          onClick={() => handleAddToCart(Detail)}
+                        >
+                          Thêm vào giỏ hàng
+                        </Button>
+                        <Button
+                          onClick={() => handleOrder(Detail)}
+                          sx={{
+                            fontWeight: "bold",
+                            backgroundColor: "#008C89",
+                            "&:hover": {
+                              backgroundColor: "#F7941E",
+                              color: "white",
+                            },
+                          }}
+                          variant="containedGreen"
+                        >
+                          Mua ngay
+                        </Button>
+                      </>
+                    )}
                   </>
                 )}
               </Stack>

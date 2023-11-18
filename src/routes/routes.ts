@@ -24,14 +24,16 @@ import UserCartDetail from "../pages/clients/User/UsercardDetail";
 import UserMyCart from "../pages/clients/User/Usermycart";
 import Auth from "../pages/clients/auth/Auth";
 import { Cart } from "../pages/clients/cart/Cart";
-import Payment from "../pages/clients/cart/payment/Payment";
 import { Details } from "../pages/clients/details/Details";
 import Sales from "../pages/clients/sales/Sales";
 
+import VoucherUser from "../pages/clients/User/UserVoucher";
 import ForgotPasswordPage from "../pages/clients/auth/components/forgotPassword";
 import Checkout from "../pages/clients/cart/checkout/Checkout";
+import PaymentError from "../pages/clients/cart/payment/PaymentError";
+import PaymentSuccess from "../pages/clients/cart/payment/PaymentSuccess";
+import Invoice from "../pages/clients/invoice/invoice";
 import Error from "../pages/clients/notFound/notFound";
-import VoucherUser from "../pages/clients/User/UserVoucher";
 
 const PublicRouter = [
   {
@@ -53,8 +55,12 @@ const PublicRouter = [
   },
 
   {
-    path: "/checkout/payment/:id",
-    component: Payment,
+    path: "/checkout/paymentSuccess/:id",
+    component: PaymentSuccess,
+  },
+  {
+    path: "/checkout/paymentError",
+    component: PaymentError,
   },
   {
     path: "/products/:id",
@@ -92,6 +98,11 @@ const PublicRouter = [
   {
     path: "/user/mycart/:id",
     component: UserCartDetail,
+  },
+  {
+    path: "/user/invoice/:id",
+    component: Invoice,
+    isRequired: true,
   },
   {
     path: "/step",

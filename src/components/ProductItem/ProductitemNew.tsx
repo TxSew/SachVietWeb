@@ -136,7 +136,7 @@ const ProductItemNew = (Props: ProductItem) => {
             backgroundColor: color.linePay,
           }}
         >
-          đã bán 0
+          đã bán {Props.products.soldQuantity}
         </Box>
       </CardContent>
     </Card>
