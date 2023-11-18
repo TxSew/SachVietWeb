@@ -18,6 +18,7 @@ import { httpCategory } from "../../../submodules/controllers/http/axiosControll
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
 import useImageUpload from "../../../hooks/useImageUpload/useImageUpload";
+import { pushSuccess } from "../../../components/Toast/Toast";
 
 const UpdateCategory = () => {
   const { id } = useParams();
@@ -74,9 +75,7 @@ const UpdateCategory = () => {
     data.image = thumbnail;
     const categoryDto = await httpCategory.put(Number(id), data);
     if (categoryDto) {
-      showToast("Danh mục cập nhật thành công", {
-        position: "top-right",
-      });
+      pushSuccess("Danh mục cập nhật thành công");
     }
   };
 

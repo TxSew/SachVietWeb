@@ -28,6 +28,7 @@ import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
 import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
+import { pushSuccess } from "../../../components/Toast/Toast";
 
 const CreateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);
@@ -79,9 +80,7 @@ const CreateProduct = () => {
 
       const storeProduct = await httpProduct.post(ProductDto);
       if (storeProduct)
-        toast.success("Thêm sản phẩm thành công", {
-          position: "top-right",
-        });
+        pushSuccess("Thêm sản phẩm thành công");
     }
   };
 

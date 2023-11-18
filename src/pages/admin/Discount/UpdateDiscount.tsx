@@ -9,8 +9,8 @@ import {
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
+import { pushSuccess } from "../../../components/Toast/Toast";
 import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
 import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 const UpdateDiscount = () => {
@@ -51,9 +51,7 @@ const UpdateDiscount = () => {
   const handelUpdateDiscount = async (data: Discount) => {
     await httpDiscount.put(Number(id), data);
 
-    toast.success("Cập nhật mã giảm giá thành công", {
-      position: "top-right",
-    });
+    pushSuccess("Cập nhật mã giảm giá thành công");
     redirect("/admin/discount");
   };
 

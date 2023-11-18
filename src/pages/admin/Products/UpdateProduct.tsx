@@ -13,33 +13,30 @@ import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
+import { pushSuccess } from "../../../components/Toast/Toast";
 import { storage } from "../../../configs/fireBaseConfig";
 import { validateForm } from "../../../helpers/validateForm";
 import {
   httpCategory,
   httpProducer,
+  httpProduct,
 } from "../../../submodules/controllers/http/axiosController";
-import HttpProductController from "../../../submodules/controllers/http/httpProductController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
 
-const httpProduct = new HttpProductController(BaseAPi);
-const UpdateProduct = ({ productId, initialTitle }: any) => {
+const UpdateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);
   const [url, setUrl] = useState<string[]>([]);
   const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
   const [Category, setCategory] = useState<Category[]>([] as Category[]);
-  const [isLoadings, setIsLoadings] = useState(false);
+  const [isLoadings, setIsLoadings] = useState<boolean>(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const editorRef = useRef<any>(null);
-  const id = useParams();
-  const ID: any = id.id;
   const redirect = useNavigate();
+   const {id}= useParams()
 
   useEffect(() => {
     fetchProducer();
@@ -64,7 +61,7 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
     }
   };
   const fetchProduct = async () => {
-    const product: Product = await httpProduct.getOneUpdate(ID);
+    const product: Product = await httpProduct.getOneUpdate(Number(id));
     if (product)
       reset({
         producerID: product.producerID,
@@ -92,11 +89,9 @@ const UpdateProduct = ({ productId, initialTitle }: any) => {
       productImages: images,
     };
 
-    const storeProduct = await httpProduct.put(ID, ProductDto);
+    const storeProduct = await httpProduct.put(Number(id), ProductDto);
     if (storeProduct) {
-      toast.success("Cập nhật sản phẩm thành công", {
-        position: "top-right",
-      });
+      pushSuccess("Cập nhật sản phẩm thành công");
       redirect("/admin/product");
     }
   };

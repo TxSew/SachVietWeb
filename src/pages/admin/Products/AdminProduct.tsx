@@ -36,13 +36,13 @@ import { color } from "../../../Theme/color";
 import { BaseAPi } from "../../../configs/BaseApi";
 import { numberFormat } from "../../../helpers/formatPrice";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
-import { httpProduct } from "../../../submodules/controllers/http/axiosController";
+import { httpCategory, httpProduct } from "../../../submodules/controllers/http/axiosController";
 import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
+import { pushError } from "../../../components/Toast/Toast";
 
 export default function AdminProduct() {
-  const httpCategory = new HttpCategoryController(BaseAPi);
 
   const [Products, setProducts] = React.useState<Product[]>([]);
   const [open, setOpen] = React.useState({
@@ -109,9 +109,7 @@ export default function AdminProduct() {
 
   const handleDelete = async (id: any) => {
     await httpProduct.delete(id);
-    toast.error("Xoá sản phẩm thành công", {
-      position: "top-right",
-    });
+    pushError("Xoá sản phẩm thành công");
     const product = Products.filter((e) => e.id !== id);
     setProducts(product);
     handleClickClose();
