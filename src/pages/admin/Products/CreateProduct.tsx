@@ -1,23 +1,23 @@
 import {
   Box,
   Button,
-  CircularProgress,
   FormControl,
   Grid,
   MenuItem,
   OutlinedInput,
   Select,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import { Editor } from "@tinymce/tinymce-react";
 import { ref, uploadBytes } from "firebase/storage";
 import { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
+import { pushSuccess } from "../../../components/Toast/Toast";
 import { storage } from "../../../configs/fireBaseConfig";
+import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
 import { validateForm } from "../../../helpers/validateForm";
 import {
   httpCategory,
@@ -27,8 +27,6 @@ import {
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
 import { Producer } from "../../../submodules/models/producerModel/producer";
-import { uploadImageFirebase } from "../../../helpers/uploadImageFIrebase";
-import { pushSuccess } from "../../../components/Toast/Toast";
 
 const CreateProduct = () => {
   const [urls, setUrls] = useState<string[]>([]);

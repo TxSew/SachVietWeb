@@ -32,9 +32,10 @@ class HttpCartController {
             throw err;
         }
     }
-    async getOrderbyUser(id: number): Promise<any> {
+    async getOrderbyUser(props: any): Promise<any> {
+        console.log(props);
         try {
-            const response = await this.axiosInstance.get(`order/current/${id}`);
+            const response = await this.axiosInstance.post(`order/current`, props);
             return response.data;
         } catch (err) {
             throw err;

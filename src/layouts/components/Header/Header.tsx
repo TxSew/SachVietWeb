@@ -216,16 +216,18 @@ const Header = () => {
                                     <Box sx={hditem}>
                                         <CardGiftcardIcon sx={hdicon} />
                                         <Typography fontSize={'12px'} style={nicon}>
-                                            Ưu đãi & tiện ích
+                                            Tra cứu đơn hàng
                                         </Typography>
                                     </Box>
                                 </NavLink>
-                                <Box sx={hditem}>
-                                    <ShoppingBasketSharpIcon sx={hdicon} />
-                                    <Typography fontSize={'12px'} style={nicon}>
-                                        Kiểm tra đơn hàng
-                                    </Typography>
-                                </Box>
+                                <NavLink to={'/user/mycart'}>
+                                    <Box sx={hditem}>
+                                        <ShoppingBasketSharpIcon sx={hdicon} />
+                                        <Typography fontSize={'12px'} style={nicon}>
+                                            Kiểm tra đơn hàng
+                                        </Typography>
+                                    </Box>
+                                </NavLink>
                                 {user.id ? (
                                     <Box
                                         position={'relative'}

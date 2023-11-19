@@ -1,4 +1,4 @@
-import { Chip } from '@mui/material';
+import { Box, Chip, Pagination } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -17,26 +17,22 @@ import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
 function UserMyCart() {
-    const [user, setUser] = useState<any>({} as any);
-    const [orderUser, setOrderUser] = useState<any>([]);
-    const [Token, setToken] = useState('');
+    const [orderUser, setOrderUser] = useState<any>({});
+    const [page, setPage] = useState<number>(1);
 
     useEffect(() => {
-        const getUser = localStorage.getItem('user');
-        const token = localStorage.getItem('token');
-        const convertUser = JSON.parse(getUser!);
-        const convertToken = JSON.parse(token!);
-        if (convertToken) setToken(convertToken);
-        if (convertUser) getOrderByUser(convertUser.id);
-    }, []);
+        const props = {
+            page: page,
+        };
+        getOrderByUser(props);
+    }, [page]);
 
-    const getOrderByUser = async (id: any) => {
-        if (user) {
-            const orderUserData = await httpCart.getOrderbyUser(Number(id));
-            if (orderUserData) {
-                setOrderUser(orderUserData);
-            }
-        }
+    const getOrderByUser = async (props: any) => {
+        const orderUserData = await httpCart.getOrderbyUser(props);
+        setOrderUser(orderUserData);
+    };
+    const handleChange = async (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value);
     };
 
     return (
@@ -52,7 +48,7 @@ function UserMyCart() {
                     </div>
                     <div className="main-waper-end pt-4 pb-5 ps-4 pe-4">
                         <h1 className="info-acc-hd p-3">Đơn hàng của tôi</h1>
-                        {orderUser.length > 0 ? (
+                        {orderUser?.data?.length > 0 ? (
                             <div className="p-3">
                                 <TableContainer component={Paper}>
                                     <Table
@@ -77,7 +73,7 @@ function UserMyCart() {
                                             </TableRow>
                                         </TableHead>
                                         <TableBody>
-                                            {orderUser.map((e: Order) => {
+                                            {orderUser?.data.map((e: Order) => {
                                                 return (
                                                     <TableRow
                                                         sx={{
@@ -140,6 +136,15 @@ function UserMyCart() {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                    }}
+                                    pt={2}
+                                >
+                                    <Pagination count={orderUser?.totalPage} page={page} onChange={handleChange} />
+                                </Box>
                             </div>
                         ) : (
                             <CartNotFound />
