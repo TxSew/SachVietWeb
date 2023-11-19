@@ -13,7 +13,6 @@ const UpdateDiscount = () => {
 
     const handleAddDiscount = async (data: Discount) => {
         const addDiscount = await httpDiscount.post(data);
-        console.log(addDiscount);
     };
 
     return (

@@ -82,5 +82,22 @@ class HttpCartController {
             throw error;
         }
     }
+
+    async addToCart(data: any) {
+        try {
+            const response = await this.axiosInstance.post(`order/addToCart`, data);
+            return response.data;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    async getCart() {
+        try {
+            const response = await this.axiosInstance.get(`cart`);
+            return response.data;
+        } catch (err) {
+            console.log(err);
+        }
+    }
 }
 export default HttpCartController;

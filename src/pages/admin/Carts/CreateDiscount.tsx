@@ -9,10 +9,8 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { color } from "../../../Theme/color";
-import { Discount } from "../../../submodules/models/DiscountModel/Discount";
-import HttpDiscountController from "../../../submodules/controllers/http/httpDiscountController";
-import { BaseAPi } from "../../../configs/BaseApi";
 import { httpDiscount } from "../../../submodules/controllers/http/axiosController";
+import { Discount } from "../../../submodules/models/DiscountModel/Discount";
 const CreateDiscount = () => {
   const redirect = useNavigate();
 
@@ -25,7 +23,7 @@ const CreateDiscount = () => {
   } = useForm<Discount>({});
 
   const handleAddDiscount = async (data: Discount) => {
-    const addDiscount = await httpDiscount.post(data);
+       await httpDiscount.post(data);
   };
 
   return (

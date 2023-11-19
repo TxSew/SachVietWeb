@@ -1,33 +1,31 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import GlobalStyle from "./sass/GlobalStyle";
-import { Theme } from "./Theme/Theme";
-import { Provider } from "react-redux";
-import { store } from "./redux/storeClient";
-import { ToastContainer } from "react-toastify";
+import { CssBaseline, ThemeProvider } from '@mui/material';
 import { inject } from '@vercel/analytics';
- 
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import App from './App';
+import { Theme } from './Theme/Theme';
+import { store } from './redux/storeClient';
+import reportWebVitals from './reportWebVitals';
+import GlobalStyle from './sass/GlobalStyle';
+
 inject();
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
-  <React.StrictMode>
-    <ThemeProvider theme={Theme}>
-      <CssBaseline />
-      <GlobalStyle>
-        <Provider store={store}>
-          <ToastContainer />
-          <App />
-        </Provider>
-      </GlobalStyle>
-    </ThemeProvider>
-  </React.StrictMode>
+    <React.StrictMode>
+        <ThemeProvider theme={Theme}>
+            <CssBaseline />
+            <GlobalStyle>
+                <Provider store={store}>
+                    <ToastContainer />
+                    <App />
+                </Provider>
+            </GlobalStyle>
+        </ThemeProvider>
+    </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

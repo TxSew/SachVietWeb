@@ -1,10 +1,10 @@
 import { Box, Button, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { color } from '../../../Theme/color';
+import { pushSuccess } from '../../../components/Toast/Toast';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
-import { pushWarning } from '../../../components/Toast/Toast';
 
 const CreateDiscount = () => {
     const {
@@ -19,7 +19,7 @@ const CreateDiscount = () => {
 
     const handleAddDiscount = async (data: Discount) => {
         await httpDiscount.post(data);
-        pushWarning('Thêm mã giảm giá thành công');
+        pushSuccess('Thêm mã giảm giá thành công');
     };
 
     return (

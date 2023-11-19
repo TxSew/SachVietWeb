@@ -1,117 +1,377 @@
-import { Controller, useForm } from "react-hook-form";
-import "./index.scss";
-import NavUser from "./layout/NavUser";
-import "./style.scss";
-import { Button, Stack } from "@mui/material";
+import { Controller, useForm } from 'react-hook-form';
+import './index.scss';
+import NavUser from './layout/NavUser';
+import './style.scss';
+import {
+    Box,
+    Button,
+    FormControl,
+    FormHelperText,
+    Grid,
+    MenuItem,
+    OutlinedInput,
+    Select,
+    Stack,
+    Typography,
+} from '@mui/material';
+import { color } from '../../../Theme/color';
+import { httpProvince, httpUserAddress } from '../../../submodules/controllers/http/axiosController';
+import { Province, district } from '../../../submodules/models/Province/Province';
+import { useEffect, useState } from 'react';
 function UserAdress() {
-  const {
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm({});
-  const handleAddUserAddress = (data: any) => {
-    console.log(data);
-  };
-  return (
-    <NavUser>
-      <div className="mainps-0 pt-3 pb-3 pe-0">
-        <div className="main-waper ">
-          <div className="main-waper-top pt-2 pb-2 ps-4">
-            <h1 className="info-acc-hd p-3">THÊM ĐỊA CHỈ MỚI</h1>
-            <form action="" onSubmit={handleSubmit(handleAddUserAddress)}>
-              <div className="row p-4">
-                <div className="adr-ttlh c-12 m-6 l-6 pe-3">
-                  <h2>Thông tin liên hệ</h2>
+    const [province, setprovince] = useState<Province[]>([]);
+    const [district, setDistrict] = useState<district[]>([]);
+    const [userAddress, setUserAddress] = useState([] as any);
+    const [isLength, setIsLength] = useState(false);
+    useEffect(() => {
+        fetchProvince();
+        fetchDistrict();
+        fetchUserAddress();
+    }, []);
+    const fetchUserAddress = async () => {
+        httpUserAddress.getListUserAddress().then((res) => {
+            if (res.length) {
+                setUserAddress(res);
+                setIsLength(true);
+            }
+        });
+    };
+    const fetchDistrict = async () => {
+        const districtData = await httpProvince.getDistrict();
+        setDistrict(districtData);
+    };
 
-                  <Controller
-                    name="fullName"
-                    control={control}
-                    render={({ field }) => {
-                      return (
-                        <div className="ttlh ttlh-name">
-                          <input
-                            {...field}
-                            onChange={(e) => field.onChange(e.target.value)}
-                            type="text"
-                            placeholder="Họ Tên"
-                          />
-                        </div>
-                      );
-                    }}
-                  />
-                  <Controller
-                    name="phone"
-                    control={control}
-                    render={({ field }) => {
-                      return (
-                        <div className="ttlh ttlh-name">
-                          <input
-                            {...field}
-                            onChange={(e) => field.onChange(e.target.value)}
-                            type="number"
-                            placeholder="Số điện thoại"
-                          />
-                        </div>
-                      );
-                    }}
-                  />
-                </div>
-                <div className="adr-dc c-12 m-6 l-6  pe-3">
-                  <h2>Địa chỉ</h2>
+    const fetchProvince = async () => {
+        const provinceData = await httpProvince.getAll();
+        if (provinceData) {
+            setprovince(provinceData);
+        }
+    };
 
-                  <div className="adr adr-t">
-                    <select name="" id="" placeholder="Tỉnh/Thành phố">
-                      <option value="1">Tỉnh/Thành phố</option>
-                    </select>
-                  </div>
-                  <div className="adr adr-tp">
-                    <select name="" id="" placeholder="Quận/Huyện">
-                      <option value="1">Quận/Huyện</option>
-                    </select>
-                  </div>
-                  <Controller
-                    name="address"
-                    control={control}
-                    render={({ field }) => {
-                      return (
-                        <div className="ttlh ttlh-name">
-                          <input
-                            {...field}
-                            onChange={(e) => field.onChange(e.target.value)}
-                            type="number"
-                            placeholder="Địa chỉ"
-                          />
-                        </div>
-                      );
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+    } = useForm({});
+    const handleAddUserAddress = (data: any) => {
+        httpUserAddress.createUserAddress(data).then((res) => {
+            setUserAddress(res);
+        });
+    };
+    return (
+        <NavUser>
+            {isLength ? (
+                <Box
+                    bgcolor={color.white}
+                    sx={{
+                        mt: '20px',
                     }}
-                  />
-                </div>
-              </div>
-              <div
-                style={{
-                  display: "flex",
-                  paddingRight: "25px",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <button
-                  type="submit"
-                  style={{
-                    border: "1px solid green",
-                    padding: "5px 20px",
-                    borderRadius: "8px",
-                    marginRight: "10px",
-                  }}
                 >
-                  Thêm
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </NavUser>
-  );
+                    <Box bgcolor={color.white} p={2}>
+                        <Stack direction={'row'} justifyContent={'space-between'}>
+                            <Typography
+                                sx={{
+                                    fontSize: '20px',
+                                    textTransform: 'uppercase',
+                                }}
+                            >
+                                Địa chỉ của bạn
+                            </Typography>
+                            <Button variant="OutlinedRed">
+                                <Typography fontSize={'13px'} fontWeight={'bold'}>
+                                    Thêm địa chỉ mới
+                                </Typography>
+                            </Button>
+                        </Stack>
+                    </Box>
+                    <Grid
+                        container
+                        sx={{
+                            backgroundColor: color.white,
+                        }}
+                    >
+                        <Grid item md={6}>
+                            <Box
+                                sx={{
+                                    backgroundColor: color.white,
+                                }}
+                            >
+                                <Box p={3}>
+                                    <Box mb={2} mt={1}>
+                                        <Typography fontWeight={'bold'}> Địa chỉ thanh toán mặc định</Typography>
+                                    </Box>
+                                    <Box>
+                                        <Box>
+                                            <Typography>{userAddress[0]?.fullName}</Typography>
+                                        </Box>
+
+                                        <Box>
+                                            <Typography>{userAddress[0]?.province}</Typography>
+                                        </Box>
+
+                                        <Box>
+                                            <Typography>{userAddress[0]?.district}</Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography>{userAddress[0]?.address}</Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography> Tel: {userAddress[0]?.phone}</Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography color={'#C92127'} fontWeight={'bold'}>
+                                                Thay đổi Địa chỉ thanh toán
+                                            </Typography>
+                                        </Box>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Grid>
+                        <Grid item md={6}>
+                            <Box
+                                sx={{
+                                    backgroundColor: color.white,
+                                }}
+                            >
+                                <Box p={3}>
+                                    <Box mb={2} mt={1}>
+                                        <Typography fontWeight={'bold'}> Địa chỉ khác</Typography>
+                                    </Box>
+                                    <Box>
+                                        <Box>
+                                            <Typography>{userAddress[0].fullName}</Typography>
+                                        </Box>
+
+                                        <Box>
+                                            <Typography>{userAddress[0].province}</Typography>
+                                        </Box>
+
+                                        <Box>
+                                            <Typography>{userAddress[0].district}</Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography>{userAddress[0].address}</Typography>
+                                        </Box>
+                                        <Box>
+                                            <Typography> Tel: {userAddress[0].phone}</Typography>
+                                        </Box>
+                                        <Stack direction={'row'} spacing={1}>
+                                            <Typography color={'#C92127'} fontSize={'12px'} fontWeight={'bold'}>
+                                                Thay đổi Địa chỉ khác
+                                            </Typography>
+                                            |
+                                            <Typography color={'gray'} fontWeight={'bold'} fontSize={'12px'}>
+                                                Xóa địa chỉ
+                                            </Typography>
+                                        </Stack>
+                                    </Box>
+                                </Box>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                </Box>
+            ) : (
+                <Box
+                    sx={{
+                        pb: '20px',
+                        backgroundColor: color.white,
+                    }}
+                >
+                    <Box pt={2}>
+                        <Typography
+                            sx={{
+                                ml: '20px',
+                                fontSize: '20px',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            Thêm địa chỉ của bạn
+                        </Typography>
+                    </Box>
+                    <form action="" style={{}} onSubmit={handleSubmit(handleAddUserAddress)}>
+                        <Grid
+                            p={2}
+                            container
+                            justifyContent={'space-between'}
+                            gap={2}
+                            sx={{
+                                padding: ' 20px',
+                            }}
+                        >
+                            <Grid xs={12} md={5} mb={3} fontSize={'20px'}>
+                                <FormControl
+                                    fullWidth
+                                    sx={{
+                                        marginTop: ' 10px',
+                                    }}
+                                >
+                                    <Typography variant="h2" fontSize={'14px'}>
+                                        Họ Tên
+                                    </Typography>
+                                    <Controller
+                                        control={control}
+                                        name="fullName"
+                                        defaultValue=""
+                                        rules={{
+                                            required: 'Tên sản phẩm không được bỏ trống!',
+                                        }}
+                                        render={({ field }) => (
+                                            <OutlinedInput
+                                                {...field}
+                                                sx={{
+                                                    mt: 1,
+                                                    '& > input': {
+                                                        p: '7px',
+                                                    },
+                                                }}
+                                                fullWidth
+                                                placeholder="Vui lòng nhập Ten của bạn!"
+                                            />
+                                        )}
+                                    />
+                                    <Typography variant="caption" color={color.error}></Typography>
+                                </FormControl>
+                                <FormControl
+                                    fullWidth
+                                    sx={{
+                                        mt: '10px',
+                                    }}
+                                >
+                                    <Typography variant="h2" fontSize={'14px'}>
+                                        Số điện thoại
+                                    </Typography>
+                                    <Controller
+                                        control={control}
+                                        name="phone"
+                                        render={({ field }) => (
+                                            <OutlinedInput
+                                                type="number"
+                                                {...field}
+                                                sx={{
+                                                    mt: 1,
+                                                    '& > input': {
+                                                        p: '7px',
+                                                    },
+                                                }}
+                                                fullWidth
+                                                placeholder="Vui lòng nhập số  điện thoại"
+                                            />
+                                        )}
+                                    />
+                                    <Typography variant="caption" color={color.error}></Typography>
+                                </FormControl>
+                            </Grid>
+                            <Grid xs={12} md={5}>
+                                <FormControl fullWidth>
+                                    <Typography>Tỉnh/Thành Phố</Typography>
+
+                                    <Controller
+                                        control={control}
+                                        defaultValue="" // Set an initial value here
+                                        name="province"
+                                        rules={{
+                                            required: 'Vui lòng nhập Tỉnh/ Thành phố',
+                                        }}
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                displayEmpty
+                                                inputProps={{ 'aria-label': 'Without label' }}
+                                            >
+                                                {province.map((e: Province) => {
+                                                    return (
+                                                        <MenuItem value={e.id}>
+                                                            <em>{e.name}</em>
+                                                        </MenuItem>
+                                                    );
+                                                })}
+                                            </Select>
+                                        )}
+                                    />
+
+                                    <FormHelperText sx={{ color: color.error }}></FormHelperText>
+                                </FormControl>
+                                <FormControl fullWidth>
+                                    <Typography>Quận/Huyện</Typography>
+
+                                    <Controller
+                                        control={control}
+                                        defaultValue="" // Set an initial value here
+                                        name="district"
+                                        rules={{
+                                            required: 'Vui lòng nhập Quận /Huyện',
+                                        }}
+                                        render={({ field }) => (
+                                            <Select
+                                                {...field}
+                                                displayEmpty
+                                                inputProps={{ 'aria-label': 'Without label' }}
+                                            >
+                                                {district.map((e) => {
+                                                    return (
+                                                        <MenuItem value={e.id}>
+                                                            <em>{e.name}</em>
+                                                        </MenuItem>
+                                                    );
+                                                })}
+                                            </Select>
+                                        )}
+                                    />
+
+                                    <FormHelperText sx={{ color: color.error }}></FormHelperText>
+                                </FormControl>
+
+                                <FormControl
+                                    sx={{
+                                        mt: '10px',
+                                    }}
+                                    fullWidth
+                                >
+                                    <Typography variant="h2" fontSize={'14px'}>
+                                        Địa chỉ
+                                    </Typography>
+                                    <Controller
+                                        control={control}
+                                        name="address"
+                                        render={({ field }) => (
+                                            <OutlinedInput
+                                                type="address"
+                                                {...field}
+                                                sx={{
+                                                    mt: 1,
+                                                    '& > input': {
+                                                        p: '7px',
+                                                    },
+                                                }}
+                                                fullWidth
+                                                placeholder="Vui lòng nhập  địa chỉ cụ thể"
+                                            />
+                                        )}
+                                    />
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                            }}
+                        >
+                            <Button
+                                variant="outlined"
+                                sx={{
+                                    mr: '20px',
+                                }}
+                                type="submit"
+                            >
+                                Cập nhật
+                            </Button>
+                        </Box>
+                    </form>
+                </Box>
+            )}
+        </NavUser>
+    );
 }
 
 export default UserAdress;

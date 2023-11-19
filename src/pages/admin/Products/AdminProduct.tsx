@@ -16,9 +16,8 @@ import {
   Pagination,
   Select,
   SelectChangeEvent,
-  Slide,
   Stack,
-  Typography,
+  Typography
 } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -27,20 +26,16 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { TransitionProps } from "@mui/material/transitions";
 import * as React from "react";
 import { useDownloadExcel } from "react-export-table-to-excel";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
 import { color } from "../../../Theme/color";
-import { BaseAPi } from "../../../configs/BaseApi";
+import { pushError } from "../../../components/Toast/Toast";
 import { numberFormat } from "../../../helpers/formatPrice";
 import useDebounce from "../../../hooks/useDebounce/useDebounce";
 import { httpCategory, httpProduct } from "../../../submodules/controllers/http/axiosController";
-import HttpCategoryController from "../../../submodules/controllers/http/httpCategoryController";
 import { Category } from "../../../submodules/models/ProductModel/Category";
 import { Product } from "../../../submodules/models/ProductModel/Product";
-import { pushError } from "../../../components/Toast/Toast";
 
 export default function AdminProduct() {
 
