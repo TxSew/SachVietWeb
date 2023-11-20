@@ -65,6 +65,14 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                 <span>Sản phẩm</span>
                             </li>
                         </NavLink>
+                        <NavLink to="/admin/productInvetory">
+                            <li className="">
+                                <i>
+                                    <FaBookOpen />
+                                </i>
+                                <span>Hàng tồn kho</span>
+                            </li>
+                        </NavLink>
                         <NavLink to="/admin/orders">
                             <li className="">
                                 <i>
@@ -124,7 +132,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                 }}
                             >
                                 <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-                                <Typography sx={{ minWidth: 100 }}>Profile</Typography>
                                 <Tooltip title="Account settings">
                                     <IconButton
                                         onClick={handleClick}
@@ -176,9 +183,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                 <MenuItem onClick={handleClose}>
                                     <Avatar /> Profile
                                 </MenuItem>
-                                <MenuItem onClick={handleClose}>
-                                    <Avatar /> My account
-                                </MenuItem>
+
                                 <NavLink to={'/'}>
                                     <MenuItem onClick={handleClose}>
                                         <Avatar /> My account
@@ -208,17 +213,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </div>
                     <div className="dasb-wapper-main-bg">
                         <div className="content">{children} </div>
-                        <Box sx={{}}>
-                            <SpeedDial
-                                ariaLabel="SpeedDial basic example"
-                                sx={{ position: 'fixed', bottom: 160, right: 24 }}
-                                icon={<SpeedDialIcon />}
-                            >
-                                {actions.map((action) => (
-                                    <SpeedDialAction key={action.name} icon={action.icon} tooltipTitle={action.name} />
-                                ))}
-                            </SpeedDial>
-                        </Box>
                     </div>
                 </div>
             </div>

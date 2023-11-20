@@ -66,7 +66,6 @@ const ProductItem = (Props: ProductItem) => {
                     image={Props.products.image}
                 />
             </Link>
-
             <CardContent
                 sx={{
                     display: 'flex',
@@ -75,23 +74,32 @@ const ProductItem = (Props: ProductItem) => {
                     height: '100%',
                 }}
             >
-                <Typography
-                    variant="body1"
-                    color={'#3333333'}
-                    fontSize={'14px'}
-                    textTransform={'capitalize'}
-                    sx={{
-                        overflow: 'hidden',
-                        textAlign: 'center',
-                        display: '-webkit-box',
-                        lineClamp: 2,
-                        WebkitLineClamp: 2,
-                        WebkitBoxOrient: 'vertical',
+                <Link
+                    to={`/products/${Props.products.slug}`}
+                    style={{
                         flexShrink: 0,
+                        color: '#333333',
                     }}
                 >
-                    {Props.products.title}
-                </Typography>
+                    <Typography
+                        variant="body1"
+                        color={'#3333333'}
+                        fontSize={'14px'}
+                        textTransform={'capitalize'}
+                        sx={{
+                            overflow: 'hidden',
+                            textAlign: 'center',
+                            display: '-webkit-box',
+                            lineClamp: 2,
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                            flexShrink: 0,
+                        }}
+                    >
+                        {Props.products.title}
+                    </Typography>
+                </Link>
+
                 <Stack
                     direction={'row'}
                     justifyContent={Props.products.sale ? 'space-between' : 'center'}

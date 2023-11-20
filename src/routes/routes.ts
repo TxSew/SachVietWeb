@@ -35,6 +35,8 @@ import PaymentSuccess from '../pages/clients/cart/payment/PaymentSuccess';
 import Invoice from '../pages/clients/invoice/invoice';
 import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
+import AdminProductInvetory from '../pages/admin/ProductInvetory/AdminProductInvetory';
+import OrderUser from '../pages/admin/Users/OrderUser';
 
 const PublicRouter = [
     {
@@ -103,6 +105,10 @@ const PrivateRouter = [
         component: UpdateProduct,
     },
     {
+        path: '/admin/productInvetory',
+        component: AdminProductInvetory,
+    },
+    {
         path: '/admin/category',
         component: CategoryAdmin,
     },
@@ -152,6 +158,10 @@ const PrivateRouter = [
     {
         path: '/admin/customer',
         component: AdminCustomer,
+    },
+    {
+        path: '/admin/customer/:id',
+        component: OrderUser,
     },
     {
         path: '/admin/statistical',

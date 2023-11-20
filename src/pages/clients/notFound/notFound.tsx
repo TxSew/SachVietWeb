@@ -1,36 +1,25 @@
-import React from "react";
-import { Box, Button, Container, Typography } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Link } from 'react-router-dom';
+import './style.scss';
 
 export default function Error() {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
-      <Container maxWidth="md">
-        <Grid container spacing={2}>
-          <Grid xs={6}>
-            <Typography variant="h1">404</Typography>
-            <Typography variant="h6">
-              The page you’re looking for doesn’t exist.
-            </Typography>
-            <Button variant="contained">Back Home</Button>
-          </Grid>
-          <Grid xs={6}>
-            <img
-              src="https://cdn.pixabay.com/photo/2017/03/09/12/31/error-2129569__340.jpg"
-              alt=""
-              width={500}
-              height={250}
-            />
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
-  );
+    return (
+        <div id="notfound">
+            <div className="notfound">
+                <div className="notfound-404">
+                    <div></div>
+                    <h1>404</h1>
+                </div>
+                <h2>Page not found</h2>
+                <p>Trang bạn đang tìm kiếm có thể đã bị xóa do đã thay đổi tên hoặc tạm thời không khả dụng.</p>
+                <Link
+                    style={{
+                        marginTop: '10px',
+                    }}
+                    to="/"
+                >
+                    Trang chủ
+                </Link>
+            </div>
+        </div>
+    );
 }

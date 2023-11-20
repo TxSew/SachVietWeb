@@ -37,7 +37,7 @@ import { httpCategory, httpProduct } from '../../../submodules/controllers/http/
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 
-export default function AdminProduct() {
+export default function AdminProductInvetory() {
     const [Products, setProducts] = React.useState<Product[]>([]);
     const [open, setOpen] = React.useState({
         isChecked: false,
@@ -154,22 +154,10 @@ export default function AdminProduct() {
             <Grid mt={3} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        Quản lý Sản phẩm
+                        Quản lý tồn kho
                     </Typography>
-
-                    <Button variant="contained">
-                        <Link
-                            style={{
-                                color: color.white,
-                            }}
-                            to={`/admin/createProduct`}
-                        >
-                            Thêm sản phẩm
-                        </Link>
-                    </Button>
                 </Stack>
                 <Stack mb={1} spacing={3} sx={{ minWidth: 300 }} direction={'row'}>
-                    <Typography>Sắp xếp:</Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
                         <Select
                             value={sort}
@@ -244,12 +232,10 @@ export default function AdminProduct() {
                                 <TableCell>ID</TableCell>
                                 <TableCell>Hình ảnh</TableCell>
                                 <TableCell align="right">Tiêu đề</TableCell>
-                                <TableCell align="right">Số lượng sản phẩm</TableCell>
-                                <TableCell align="right">Danh mục</TableCell>
+                                <TableCell align="right">Số lượng tồn kho</TableCell>
+                                <TableCell align="right">số lượng đã bán</TableCell>
                                 <TableCell align="right">Giá</TableCell>
-                                <TableCell align="right">Nhà cung cấp</TableCell>
                                 <TableCell align="right">Trạng thái</TableCell>
-                                <TableCell align="right">Hành động</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -269,9 +255,8 @@ export default function AdminProduct() {
                                     </TableCell>
                                     <TableCell align="right">{e.title}</TableCell>
                                     <TableCell align="right">{e.quantity}</TableCell>
-                                    <TableCell align="right">{e.category?.name}</TableCell>
+                                    <TableCell align="right">{e.soldQuantity}</TableCell>
                                     <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
-                                    <TableCell align="right">{e.producer?.name}</TableCell>
                                     <TableCell align="right">
                                         {e.status == null ? (
                                             <Chip label="Hoạt động" color="success" />
@@ -280,23 +265,11 @@ export default function AdminProduct() {
                                         )}
                                     </TableCell>
                                     <TableCell align="right">
-                                        <Stack
-                                            direction={'row'}
-                                            color={color.text_color}
-                                            spacing={2}
-                                            justifyContent={'end'}
-                                        >
-                                            <Link to={`/admin/product/${e.id}`}>
-                                                <EditCalendarIcon
-                                                    sx={{
-                                                        color: 'green',
-                                                    }}
-                                                />
-                                            </Link>
-                                            <DeleteForeverIcon
-                                                sx={{
-                                                    color: 'red',
-                                                }}
+                                        <Stack direction={'row'} spacing={1}>
+                                            <Chip label="Nhập hàng" color="primary" />
+                                            <Chip
+                                                label="Xóa"
+                                                color="error"
                                                 onClick={() => {
                                                     handleClickOpen(e.id);
                                                 }}

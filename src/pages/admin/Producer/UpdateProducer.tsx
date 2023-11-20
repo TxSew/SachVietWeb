@@ -84,7 +84,7 @@ const UpdateProducer = () => {
           mt={3}
           justifyContent={"space-between"}
         >
-          <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"}>
+          <Typography variant="h2" fontSize={"18px"} fontWeight={"bold"} textTransform={"uppercase"}>
             Tên nhà cung cấp
           </Typography>
           <Controller

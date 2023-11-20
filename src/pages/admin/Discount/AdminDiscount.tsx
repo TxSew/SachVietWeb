@@ -1,5 +1,6 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DiscountIcon from '@mui/icons-material/Discount';
+
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { Box, Button, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -53,13 +54,13 @@ export default function AdminDiscount() {
         <Grid>
             <Grid mt={3} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'}>
+                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                         <DiscountIcon
                             sx={{
                                 mr: 1,
                             }}
-                        />{' '}
-                        Mã giảm giá
+                        />
+                        Quản lý Mã giảm giá
                     </Typography>
                     <OutlinedInput
                         sx={{
