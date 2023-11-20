@@ -113,6 +113,10 @@ const PublicRouter = [
         path: '/searchOrder',
         component: SearchOrder,
     },
+    {
+        path: '/searchOrder/:id',
+        component: SearchOrder,
+    },
 ];
 const PrivateRouter = [
     {

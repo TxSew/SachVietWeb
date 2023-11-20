@@ -212,7 +212,7 @@ const Header = () => {
                                 </NavLink>
                             </Box>
                             <Box display={'flex'} alignItems={'center'} gap={3}>
-                                <NavLink to={''}>
+                                <NavLink to={'/searchOrder'}>
                                     <Box sx={hditem}>
                                         <CardGiftcardIcon sx={hdicon} />
                                         <Typography fontSize={'12px'} style={nicon}>
