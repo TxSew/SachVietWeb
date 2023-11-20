@@ -72,39 +72,10 @@ const PublicRouter = [
         component: Category,
     },
     {
-        path: '/user',
-        component: User,
-    },
-    {
-        path: '/user/info',
-        component: UserInfo,
-    },
-    {
-        path: '/user/adress',
-        component: UserAdress,
-    },
-    {
-        path: '/user/myvoucher',
-        component: VoucherUser,
-    },
-    {
-        path: '/user/mycart',
-        component: UserMyCart,
-    },
-    {
         path: '/auth/ChangePassword',
         component: ForgotPasswordPage,
     },
     { path: '/sales', component: Sales },
-    {
-        path: '/user/mycart/:id',
-        component: UserCartDetail,
-    },
-    {
-        path: '/user/invoice/:id',
-        component: Invoice,
-        isRequired: true,
-    },
     {
         path: '/step',
         component: CustomizedSteppers,
@@ -187,6 +158,43 @@ const PrivateRouter = [
         component: AdminStatistical,
     },
 ];
+
+const userProvide = [
+    {
+        path: '/user',
+        component: User,
+    },
+    {
+        path: '/user/info',
+        component: UserInfo,
+    },
+    {
+        path: '/user/adress',
+        component: UserAdress,
+    },
+    {
+        path: '/user/myvoucher',
+        component: VoucherUser,
+    },
+    {
+        path: '/user/mycart',
+        component: UserMyCart,
+    },
+    {
+        path: '/auth/ChangePassword',
+        component: ForgotPasswordPage,
+    },
+    {
+        path: '/user/mycart/:id',
+        component: UserCartDetail,
+    },
+    {
+        path: '/user/invoice/:id',
+        component: Invoice,
+        isRequired: true,
+    },
+];
+
 const moreNotFound = [
     {
         path: '*',
@@ -194,4 +202,4 @@ const moreNotFound = [
     },
 ];
 
-export { PrivateRouter, PublicRouter, moreNotFound };
+export { PrivateRouter, PublicRouter, moreNotFound, userProvide };

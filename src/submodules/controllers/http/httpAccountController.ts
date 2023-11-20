@@ -4,7 +4,6 @@ class HttpAccountController {
     private axiosInstance: AxiosInstance;
 
     constructor(axiosConfig: any) {
-        // Create an Axios instance with the provided configuration
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token');
         const jwtToken = JSON.parse(token!);
