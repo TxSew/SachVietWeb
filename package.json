@@ -2,6 +2,7 @@
   "name": "books_client",
   "version": "0.1.0",
   "private": true,
+  "ngrok-skip-browser-warning": "69420", 
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^39.0.2",
     "@ckeditor/ckeditor5-react": "^6.1.0",

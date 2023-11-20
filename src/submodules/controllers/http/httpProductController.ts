@@ -29,7 +29,11 @@ class HttpProductController {
 
     async getOne(slug: string): Promise<any> {
         try {
-            const response = await this.axiosInstance.get(`products/${slug}`);
+            const response = await this.axiosInstance.get(`products/${slug}`, {
+                headers: {
+                    'ngrok-skip-browser-warning': '69420',
+                },
+            });
             return response.data;
         } catch (err) {
             throw err;
