@@ -8,6 +8,7 @@ class HttpUserAddressController {
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token');
         const jwtToken = JSON.parse(token);
+        this.axiosInstance.defaults.headers.common['ngrok-skip-browser-warning'] = '69420';
         if (jwtToken) {
             this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
         }

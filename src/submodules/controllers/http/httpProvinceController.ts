@@ -12,6 +12,7 @@ class HttpProviceController {
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token');
         const jwtToken = JSON.parse(token!);
+        this.axiosInstance.defaults.headers.common['ngrok-skip-browser-warning'] = '69420';
         if (jwtToken) {
             this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
         }
@@ -27,7 +28,7 @@ class HttpProviceController {
     }
     async getDistrict(): Promise<any> {
         try {
-            const response = await this.axiosInstance.get('/province/district');
+            const response = await this.axiosInstance.get('/province/district', {});
             return response.data;
         } catch (error) {
             throw error;

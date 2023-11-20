@@ -14,6 +14,7 @@ class HttpDiscountController {
         if (jwtToken) {
             this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
         }
+        this.axiosInstance.defaults.headers.common['ngrok-skip-browser-warning'] = '69420';
     }
     async getAll(props: any): Promise<any> {
         try {
