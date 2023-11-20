@@ -35,6 +35,7 @@ import VoucherUser from "../pages/clients/User/UserVoucher";
 import Bill from "../pages/admin/Bill/Bill";
 import Otp from "../pages/admin/Otp/Otp";
 import Payerr from "../pages/clients/Payerr/Payerr";
+import News from "../pages/clients/News/News";
 
 const PublicRouter = [
   {
@@ -103,6 +104,10 @@ const PublicRouter = [
   {
     path: "/payerr",
     component: Payerr,
+  },
+  {
+    path: "/news",
+    component: News,
   },
 ];
 const PrivateRouter = [

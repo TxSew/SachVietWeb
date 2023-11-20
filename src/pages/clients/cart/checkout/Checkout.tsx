@@ -14,7 +14,13 @@ import {
   RadioGroup,
   Select,
   Stack,
-  Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Typography
 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -27,16 +33,18 @@ import { RootState } from "../../../../redux/storeClient";
 
 import {
   httpPayment,
-  httpProvince,
+  httpProvince
 } from "../../../../submodules/controllers/http/axiosController";
 import { Order } from "../../../../submodules/models/OrderModel/Order";
 import { Product } from "../../../../submodules/models/ProductModel/Product";
 import {
   Province,
-  district,
+  district
 } from "../../../../submodules/models/Province/Province";
 import { User } from "../../../../submodules/models/UserModel/User";
+import useMedia from "../../../../hooks/useMedia/useMedia";
 function Checkout() {
+  const { isMediumMD } = useMedia();
   const redirect = useNavigate();
   const dispatch = useDispatch();
   const [value, setValue] = useState("COD");
@@ -84,20 +92,20 @@ function Checkout() {
         productId: e.id,
         quantity: e.cartQuantity,
         price: e.price_sale,
-        image: e.image,
+        image: e.image
       };
     });
 
     const orders = {
       ...data,
       userID: user?.id ?? null,
-      money: cartTotalAmount,
+      money: cartTotalAmount
     };
 
     const orderData = {
       orders: orders,
       orderDetail: detailData,
-      paymentMethod: data.orderType,
+      paymentMethod: data.orderType
     };
 
     const payment = await httpPayment.getPayment(orderData);
@@ -112,7 +120,7 @@ function Checkout() {
   const {
     handleSubmit,
     control,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting }
   } = useForm<Order>();
 
   return (
@@ -121,159 +129,212 @@ function Checkout() {
         maxWidth="xl"
         sx={{
           pt: 2,
-          pb: 2,
+          pb: 2
         }}
       >
-        <Box bgcolor={color.white} p={2}>
-          <Typography
-            fontWeight={"bold"}
-            variant="h4"
-            py={2}
-            borderBottom={"1px solid #eee"}
+        <Grid container>
+          <Grid
+            xs={12}
+            md={7}
+            px={3}
+            boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 12px"}
+            bgcolor={color.white}
           >
-            ĐỊA CHỈ GIAO HÀNG
-          </Typography>
-          <FormGroup
-            sx={{
-              mt: 2,
-              maxWidth: "600px",
-            }}
-          >
-            <FormControl>
-              <Typography>Họ và tên người nhận</Typography>
-              <Controller
-                control={control}
-                defaultValue="" // Set an initial value here
-                name="fullName"
-                rules={{
-                  required: "Tên của bạn không được bỏ trống!",
-                }}
-                render={({ field }) => (
-                  <OutlinedInput
-                    key={1}
-                    {...field}
-                    fullWidth
-                    placeholder="Vui lòng nhập tên của bạn!"
-                  />
-                )}
-              />
+            <Typography
+              fontWeight={"bold"}
+              variant="h4"
+              py={2}
+              borderBottom={"1px solid #eee"}
+            >
+              ĐỊA CHỈ GIAO HÀNG
+            </Typography>
+            <FormGroup
+              sx={{
+                mt: 2
+              }}
+            >
+              <FormControl>
+                <Typography>Họ và tên người nhận</Typography>
+                <Controller
+                  control={control}
+                  defaultValue="" // Set an initial value here
+                  name="fullName"
+                  rules={{
+                    required: "Tên của bạn không được bỏ trống!"
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      key={1}
+                      {...field}
+                      fullWidth
+                      placeholder="Vui lòng nhập tên của bạn!"
+                    />
+                  )}
+                />
 
-              <FormHelperText sx={{ color: color.error }}>
-                {errors.fullName && errors.fullName.message}
-              </FormHelperText>
-            </FormControl>
-            <FormControl>
-              <Typography>Số điện thoại</Typography>
-              <Controller
-                control={control}
-                defaultValue="" // Set an initial value here
-                name="phone"
-                rules={{
-                  required: "Vui lòng nhập số điện thoại",
-                }}
-                render={({ field }) => (
-                  <OutlinedInput
-                    key={1}
-                    {...field}
-                    fullWidth
-                    placeholder="Vui lòng nhập tên của bạn!"
-                  />
-                )}
-              />
+                <FormHelperText sx={{ color: color.error }}>
+                  {errors.fullName && errors.fullName.message}
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <Typography>Số điện thoại</Typography>
+                <Controller
+                  control={control}
+                  defaultValue="" // Set an initial value here
+                  name="phone"
+                  rules={{
+                    required: "Vui lòng nhập số điện thoại"
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      key={1}
+                      {...field}
+                      fullWidth
+                      placeholder="Vui lòng nhập tên của bạn!"
+                    />
+                  )}
+                />
 
-              <FormHelperText sx={{ color: color.error }}>
-                {errors.phone && errors.phone.message}
-              </FormHelperText>
-            </FormControl>
-            <FormControl>
-              <Typography>Tỉnh/Thành Phố</Typography>
+                <FormHelperText sx={{ color: color.error }}>
+                  {errors.phone && errors.phone.message}
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <Typography>Tỉnh/Thành Phố</Typography>
 
-              <Controller
-                control={control}
-                defaultValue="" // Set an initial value here
-                name="province"
-                rules={{
-                  required: "Vui lòng nhập Tỉnh/ Thành phố",
-                }}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    {province.map((e: Province) => {
-                      return (
-                        <MenuItem value={e.id}>
-                          <em>{e.name}</em>
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
+                <Controller
+                  control={control}
+                  defaultValue="" // Set an initial value here
+                  name="province"
+                  rules={{
+                    required: "Vui lòng nhập Tỉnh/ Thành phố"
+                  }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      displayEmpty
+                      inputProps={{ "aria-label": "Without label" }}
+                    >
+                      {province.map((e: Province) => {
+                        return (
+                          <MenuItem value={e.id}>
+                            <em>{e.name}</em>
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  )}
+                />
 
-              <FormHelperText sx={{ color: color.error }}>
-                {errors.province && errors.province.message}
-              </FormHelperText>
-            </FormControl>
-            <FormControl>
-              <Typography>Quận/Huyện</Typography>
+                <FormHelperText sx={{ color: color.error }}>
+                  {errors.province && errors.province.message}
+                </FormHelperText>
+              </FormControl>
+              <FormControl>
+                <Typography>Quận/Huyện</Typography>
 
-              <Controller
-                control={control}
-                defaultValue="" // Set an initial value here
-                name="district"
-                rules={{
-                  required: "Vui lòng nhập Quận /Huyện",
-                }}
-                render={({ field }) => (
-                  <Select
-                    {...field}
-                    displayEmpty
-                    inputProps={{ "aria-label": "Without label" }}
-                  >
-                    {district.map((e: district) => {
-                      return (
-                        <MenuItem value={e.id}>
-                          <em>{e.name}</em>
-                        </MenuItem>
-                      );
-                    })}
-                  </Select>
-                )}
-              />
+                <Controller
+                  control={control}
+                  defaultValue="" // Set an initial value here
+                  name="district"
+                  rules={{
+                    required: "Vui lòng nhập Quận /Huyện"
+                  }}
+                  render={({ field }) => (
+                    <Select
+                      {...field}
+                      displayEmpty
+                      inputProps={{ "aria-label": "Without label" }}
+                    >
+                      {district.map((e: district) => {
+                        return (
+                          <MenuItem value={e.id}>
+                            <em>{e.name}</em>
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  )}
+                />
 
-              <FormHelperText sx={{ color: color.error }}>
-                {errors.district && errors.district.message}
-              </FormHelperText>
-            </FormControl>
+                <FormHelperText sx={{ color: color.error }}>
+                  {errors.district && errors.district.message}
+                </FormHelperText>
+              </FormControl>
 
-            <FormControl>
-              <Typography>Địa chỉ nhận hàng</Typography>
-              <Controller
-                control={control}
-                defaultValue="" // Set an initial value here
-                name="address"
-                rules={{
-                  required: "Vui lòng nhập địa chỉ nhận hàng!",
-                }}
-                render={({ field }) => (
-                  <OutlinedInput
-                    key={1}
-                    {...field}
-                    fullWidth
-                    placeholder="Vui lòng nhập tên của bạn!"
-                  />
-                )}
-              />
-              <FormHelperText sx={{ color: color.error }}>
-                {errors.address && errors.address.message}
-              </FormHelperText>
-            </FormControl>
-          </FormGroup>
-        </Box>
+              <FormControl>
+                <Typography>Địa chỉ nhận hàng</Typography>
+                <Controller
+                  control={control}
+                  defaultValue="" // Set an initial value here
+                  name="address"
+                  rules={{
+                    required: "Vui lòng nhập địa chỉ nhận hàng!"
+                  }}
+                  render={({ field }) => (
+                    <OutlinedInput
+                      key={1}
+                      {...field}
+                      fullWidth
+                      placeholder="Vui lòng nhập tên của bạn!"
+                    />
+                  )}
+                />
+                <FormHelperText sx={{ color: color.error }}>
+                  {errors.address && errors.address.message}
+                </FormHelperText>
+              </FormControl>
+            </FormGroup>
+          </Grid>
+          <Grid xs={12} md={5} pl={{ xs: 0, md: 3 }}>
+            <Box
+              px={3}
+              boxShadow={"rgba(0, 0, 0, 0.1) 0px 4px 12px"}
+              bgcolor={color.white}
+            >
+              <Typography fontWeight={"bold"} variant="h4" py={2}>
+                ĐỊA CHỈ GIAO HÀNG
+              </Typography>
+              <FormControl component="fieldset">
+                <Controller
+                  name="orderType"
+                  control={control}
+                  rules={{ required: "Vui lòng nhập phương thức thanh toán" }}
+                  render={({ field }) => (
+                    <RadioGroup
+                      aria-labelledby="demo-controlled-radio-buttons-group"
+                      value={field.value}
+                      onChange={field.onChange}
+                    >
+                      <FormControlLabel
+                        value="Visa"
+                        sx={{
+                          fontWeight: "bold"
+                        }}
+                        control={<Radio />}
+                        label="Thanh toán bằng thẻ Visa"
+                      />
+                      <FormControlLabel
+                        value="COD"
+                        control={<Radio />}
+                        sx={{
+                          fontWeight: "bold"
+                        }}
+                        label="Thanh toán bằng tiền mặt khi nhận hàng COD"
+                      />
+                    </RadioGroup>
+                  )}
+                />
 
-        <Box bgcolor={color.white} mt={2} p={2}>
+                <FormHelperText sx={{ color: color.error }}>
+                  {errors.orderType && errors.orderType.message}
+                </FormHelperText>
+              </FormControl>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Box bgcolor={color.white} mt={2} p={2} display={"none"}>
           <Typography
             fontWeight={"bold"}
             variant="h4"
@@ -289,8 +350,8 @@ function Checkout() {
                 sx={{
                   color: "pink[800]",
                   "&.Mui-checked": {
-                    color: "pink[600]",
-                  },
+                    color: "pink[600]"
+                  }
                 }}
               />
               <Typography variant="body1" color="initial" fontWeight={"bold"}>
@@ -299,54 +360,7 @@ function Checkout() {
             </Stack>
           </Box>
         </Box>
-        <Box bgcolor={color.white} mt={2} p={2}>
-          <Typography
-            fontWeight={"bold"}
-            variant="h4"
-            py={2}
-            borderBottom={"1px solid #eee"}
-          >
-            PHƯƠNG THỨC THANH TOÁN
-          </Typography>
-          <Box>
-            <FormControl component="fieldset">
-              <Controller
-                name="orderType"
-                control={control}
-                rules={{ required: "Vui lòng nhập phương thức thanh toán" }}
-                render={({ field }) => (
-                  <RadioGroup
-                    aria-labelledby="demo-controlled-radio-buttons-group"
-                    value={field.value}
-                    onChange={field.onChange}
-                  >
-                    <FormControlLabel
-                      value="COD"
-                      control={<Radio />}
-                      sx={{
-                        fontWeight: "bold",
-                      }}
-                      label="Thanh toán bằng tiền mặt khi nhận hàng COD"
-                    />
-                    <FormControlLabel
-                      value="Visa"
-                      sx={{
-                        fontWeight: "bold",
-                      }}
-                      control={<Radio />}
-                      label="Thanh toán bằng thẻ Visa"
-                    />
-                  </RadioGroup>
-                )}
-              />
-
-              <FormHelperText sx={{ color: color.error }}>
-                {errors.orderType && errors.orderType.message}
-              </FormHelperText>
-            </FormControl>
-          </Box>
-        </Box>
-        <Box bgcolor={color.white} mt={2} p={2}>
+        <Box bgcolor={color.white} mt={2} p={2} pb={5}>
           <Typography
             fontWeight={"bold"}
             variant="h4"
@@ -355,37 +369,167 @@ function Checkout() {
           >
             KIỂM TRA LẠI ĐƠN HÀNG
           </Typography>
-          <Box>
-            {cart.map((e: Product) => {
-              return (
-                <Stack
-                  className="cartItem"
-                  direction={"row"}
-                  mt={2}
-                  p={2}
-                  borderRadius={2}
-                  bgcolor={color.white}
-                  justifyContent={"space-between"}
-                >
-                  <Stack
-                    className="cartItem_thumb"
-                    direction={"row"}
-                    spacing={2}
-                  >
-                    <Stack direction={"row"} alignItems={"normal"} spacing={2}>
-                      <Box maxWidth={"119px"}>
+          {isMediumMD ? (
+            <Box>
+              {cart.map((e: Product) => {
+                return (
+                  <Grid container display={"flex"} pb={3} alignItems={"center"}>
+                    <Grid xs={4}>
+                      <Box maxWidth={"80px"}>
                         <img
                           src={e.image ? e.image : ""}
                           alt=""
                           width={"100%"}
                         />
                       </Box>
-                      <Stack
-                        direction={"column"}
+                    </Grid>
+                    <Grid
+                      xs={8}
+                      display={"flex"}
+                      direction={"column"}
+                      justifyContent={"space-around"}
+                      px={{ xs: 2, md: 0 }}
+                      gap={1}
+                    >
+                      {" "}
+                      <Typography
+                        sx={{
+                          width: "100%",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          WebkitLineClamp: "2",
+                          display: "-webkit-box",
+                          WebkitBoxOrient: "vertical"
+                        }}
+                      >
+                        {e.title}
+                      </Typography>
+                      <Box
+                        display={"flex"}
+                        alignContent={"center"}
                         justifyContent={"space-between"}
                       >
-                        <Typography>{e.title}</Typography>
-                        <Stack direction={"row"} spacing={2}>
+                        <Typography>{numberFormat(Number(e.price))}</Typography>
+                        <Typography
+                          variant="caption"
+                          className="cartItem_PriceSale"
+                        >
+                          {numberFormat(Number(e.price_sale))}
+                        </Typography>
+                      </Box>
+                      <Box display={"flex"} justifyContent={"space-between"}>
+                        <Typography>{e.cartQuantity}</Typography>
+                        <Typography color={"#F39801"} fontWeight={"bold"}>
+                          {e.cartQuantity && e.price_sale
+                            ? numberFormat(
+                                Number(e.cartQuantity * e.price_sale)
+                              )
+                            : ""}
+                        </Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                );
+              })}
+            </Box>
+          ) : (
+            <TableContainer>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      Ảnh
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      Tên sản phẩm
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      Giá tiền
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      Giá gốc
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      Số lượng
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      sx={{
+                        fontWeight: "bold",
+                        fontSize: "14px"
+                      }}
+                    >
+                      Tổng tiền
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {cart.map((e: Product) => {
+                    return (
+                      <TableRow
+                        key=""
+                        sx={{
+                          "&:last-child td, &:last-child th": { border: 0 }
+                        }}
+                      >
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          style={{
+                            maxWidth: "119px"
+                          }}
+                        >
+                          <Box maxWidth={"119px"} margin={"auto"}>
+                            <img
+                              src={e.image ? e.image : ""}
+                              alt=""
+                              width={"100%"}
+                            />
+                          </Box>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography>{e.title}</Typography>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography
+                            variant="caption"
+                            className="cartItem_Price"
+                            fontWeight={"bold"}
+                          >
+                            {numberFormat(Number(e.price_sale))}
+                          </Typography>
+                        </TableCell>
+                        <TableCell align="center">
                           <Typography
                             variant="caption"
                             className="cartItem_Price"
@@ -393,32 +537,26 @@ function Checkout() {
                           >
                             {numberFormat(Number(e.price))}
                           </Typography>
-                          <Typography
-                            variant="caption"
-                            className="cartItem_PriceSale"
-                          >
-                            {numberFormat(Number(e.price_sale))}
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography>{e.cartQuantity}</Typography>
+                        </TableCell>
+                        <TableCell align="center">
+                          <Typography color={"#F39801"} fontWeight={"bold"}>
+                            {e.cartQuantity && e.price_sale
+                              ? numberFormat(
+                                  Number(e.cartQuantity * e.price_sale)
+                                )
+                              : ""}
                           </Typography>
-                        </Stack>
-                      </Stack>
-                    </Stack>
-                  </Stack>
-                  <Stack
-                    className="cartItem_action"
-                    direction={"row"}
-                    spacing={10}
-                  >
-                    <Typography>{e.cartQuantity}</Typography>
-                    <Typography color={"#F39801"} fontWeight={"bold"}>
-                      {e.cartQuantity && e.price_sale
-                        ? numberFormat(Number(e.cartQuantity * e.price_sale))
-                        : ""}
-                    </Typography>
-                  </Stack>
-                </Stack>
-              );
-            })}
-          </Box>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
         </Box>
       </Container>
       <Grid
@@ -428,7 +566,7 @@ function Checkout() {
           boxShadow: 2,
           width: "100%",
           zIndex: 10,
-          bottom: "0px",
+          bottom: "0px"
         }}
       >
         <Container maxWidth="xl">
@@ -438,7 +576,7 @@ function Checkout() {
               display: "flex",
               flexDirection: "column",
               rowGap: "3px",
-              borderBottom: "1px solid #eee",
+              borderBottom: "1px solid #eee"
             }}
           >
             <Stack direction={"row"} spacing={3} justifyContent={"flex-end"}>
