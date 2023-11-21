@@ -1,4 +1,3 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { Box, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';

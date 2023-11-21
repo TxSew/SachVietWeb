@@ -27,13 +27,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
 import { useDownloadExcel } from 'react-export-table-to-excel';
+import { Link } from 'react-router-dom';
 import { pushError } from '../../../components/Toast/Toast';
 import { numberFormat } from '../../../helpers/formatPrice';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCategory, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
-import { Link } from 'react-router-dom';
 
 export default function AdminProductInventory() {
     const [Products, setProducts] = React.useState<Product[]>([]);
@@ -127,20 +127,20 @@ export default function AdminProductInventory() {
     };
 
     const handleChangeSort = (event: SelectChangeEvent) => {
-        if (event.target.value == 'priceDown') {
+        if (event.target.value === 'priceDown') {
             setSortBy('price_sale');
             setSortWith('desc');
             setSort(event.target.value);
-        } else if (event.target.value == 'priceUp') {
+        } else if (event.target.value === 'priceUp') {
             setSortBy('price_sale');
             setSortWith('asc');
             setSort(event.target.value);
         }
-        if (event.target.value == 'old') {
+        if (event.target.value === 'old') {
             setSortBy('createdAt');
             setSortWith('desc');
             setSort(event.target.value);
-        } else if (event.target.value == 'new') {
+        } else if (event.target.value === 'new') {
             setSortBy('createdAt');
             setSortWith('asc');
             setSort(event.target.value);

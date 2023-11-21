@@ -21,8 +21,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import {
-    EmailIcon,
-    EmailShareButton,
     FacebookIcon,
     FacebookMessengerIcon,
     FacebookMessengerShareButton,
@@ -33,6 +31,7 @@ import {
     TwitterShareButton,
 } from 'react-share';
 import { color } from '../../../Theme/color';
+import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
 import ProductItem from '../../../components/ProductItem/ProductItem';
 import { numberFormat } from '../../../helpers/formatPrice';
 import useMedia from '../../../hooks/useMedia/useMedia';
@@ -42,7 +41,6 @@ import { RootState } from '../../../redux/storeClient';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import './style.scss';
-import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();

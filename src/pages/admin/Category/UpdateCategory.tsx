@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
+import { pushSuccess } from '../../../components/Toast/Toast';
+import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
+import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
 import useToast from '../../../hooks/useToast/useToast';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
-import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
-import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
-import { pushSuccess } from '../../../components/Toast/Toast';
 
 const UpdateCategory = () => {
     const { id } = useParams();

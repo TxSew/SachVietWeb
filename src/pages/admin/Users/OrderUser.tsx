@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Chip, Pagination, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -7,7 +6,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
@@ -82,7 +81,7 @@ function OrderUser() {
                                             <TableCell align="center">{numberFormat(e.money)}</TableCell>
                                             <TableCell align="center">{e.orderType}</TableCell>
                                             <TableCell align="center">
-                                                {e.status == null ? (
+                                                {e.status === null ? (
                                                     <Chip
                                                         sx={{
                                                             maxWidth: '130px',
@@ -90,7 +89,7 @@ function OrderUser() {
                                                         }}
                                                         label="Đang chờ duyệt"
                                                     />
-                                                ) : e.status == 1 ? (
+                                                ) : e.status === 1 ? (
                                                     <Chip
                                                         sx={{
                                                             maxWidth: '130px',
@@ -99,7 +98,7 @@ function OrderUser() {
                                                         color="primary"
                                                         label="Đang giao hàng"
                                                     />
-                                                ) : e.status == 2 ? (
+                                                ) : e.status === 2 ? (
                                                     <Chip
                                                         sx={{
                                                             maxWidth: '130px',

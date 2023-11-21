@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { User } from '../../models/UserModel/User';
 class HttpAccountController {
     private axiosInstance: AxiosInstance;
