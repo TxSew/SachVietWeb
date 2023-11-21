@@ -1,27 +1,18 @@
-import { Box, Button, CircularProgress, FormControl, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
-import { Editor } from '@tinymce/tinymce-react';
-import { ref, uploadBytes } from 'firebase/storage';
-import { useEffect, useRef, useState } from 'react';
+import { Box, Button, FormControl, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
-import { pushSuccess } from '../../../components/Toast/Toast';
-import { storage } from '../../../configs/fireBaseConfig';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpCategory, httpProducer, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
+import { pushSuccess } from '../../../components/Toast/Toast';
 
-const AddProductInvetory = () => {
-    const [urls, setUrls] = useState<string[]>([]);
-    const [url, setUrl] = useState<string[]>([]);
+const AddProductInventory = () => {
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
     const [Category, setCategory] = useState<Category[]>([] as Category[]);
-    const [isLoadings, setIsLoadings] = useState<boolean>(false);
-
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-    const editorRef = useRef<any>(null);
     const redirect = useNavigate();
     const { id } = useParams();
 
@@ -53,48 +44,40 @@ const AddProductInvetory = () => {
             reset({
                 producerID: product.producerID,
                 categoryId: product.categoryId,
-                price: product.price,
-                sale: product.sale,
-                desc: product.desc,
                 quantity: product.quantity,
                 title: product.title,
                 author: product.author,
-                pageNumber: product.pageNumber,
                 soldQuantity: product.soldQuantity,
-                size: product.size,
+                soldInventory: product.soldInventory,
             });
     };
 
-    const handleUpdateProduct = async (data: any) => {
-        data.image = url[0];
-        const images = urls.map((e) => {
-            return {
-                image: e,
-            };
-        });
-        const ProductDto = {
-            product: data,
-            productImages: images,
-        };
-
-        const storeProduct = await httpProduct.put(Number(id), ProductDto);
-        if (storeProduct) {
-            pushSuccess('Cập nhật sản phẩm thành công');
-            redirect('/admin/product');
-        }
-    };
-
     const {
-        handleSubmit,
         control,
-        register,
+        handleSubmit,
         reset,
         formState: { errors },
     } = useForm<Product>({});
 
+    const handleUpdateProductInventory = async (data: any) => {
+        const props = {
+            id: id,
+            ...data,
+        };
+        httpProduct.updateProductInventory(props).then((response) => {
+            console.log(
+                '🚀 ~ file: AddProductInventory.tsx:68 ~ httpProduct.updateProductInventory ~ response:',
+                response
+            );
+            if (response.message) {
+                pushSuccess('Nhập hàng thành công');
+                redirect('/admin/productInventory');
+            }
+        });
+    };
     return (
         <Box>
-            <form action="" onSubmit={handleSubmit(handleUpdateProduct)}>
+            <form action="" onSubmit={handleSubmit(handleUpdateProductInventory)}>
                 <Stack direction={'row'} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Nhập hàng
@@ -107,15 +90,11 @@ const AddProductInvetory = () => {
                         </Typography>
                         <Controller
                             control={control}
+                            disabled
                             name="title"
-                            rules={{
-                                validate: validateForm,
-                                required: 'Tên sản phẩm không được bỏ trống!',
-                            }}
                             render={({ field }) => (
                                 <OutlinedInput
                                     {...field}
-                                    disabled
                                     sx={{
                                         mt: 1,
                                         '& > input': {
@@ -123,9 +102,6 @@ const AddProductInvetory = () => {
                                         },
                                     }}
                                     fullWidth
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
                                     placeholder="Vui lòng nhập Ten của bạn!"
                                 />
                             )}
@@ -138,15 +114,11 @@ const AddProductInvetory = () => {
                                 </Typography>
                                 <Controller
                                     control={control}
+                                    disabled
                                     name="categoryId"
-                                    rules={{
-                                        required: 'Vui lòng nhập Danh mục sản phẩm!',
-                                    }}
                                     render={({ field }) => (
                                         <select
-                                            disabled
                                             className=""
-                                            onChange={field.onChange}
                                             value={field.value}
                                             style={{
                                                 marginTop: '10px',
@@ -170,20 +142,14 @@ const AddProductInvetory = () => {
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
                                     Nhà cung cấp
                                 </Typography>
-                                {/* Producer */}
                                 <Controller
                                     control={control}
-                                    disabled
                                     name="producerID"
-                                    rules={{
-                                        required: 'Vui lòng nhập Nhà cung cấp sản phẩm !',
-                                    }}
+                                    disabled
                                     render={({ field }) => (
                                         <FormControl fullWidth>
                                             <select
                                                 className=""
-                                                onChange={field.onChange}
-                                                disabled
                                                 value={field.value}
                                                 style={{
                                                     marginTop: '10px',
@@ -208,56 +174,16 @@ const AddProductInvetory = () => {
                         <Grid container mt={2} justifyContent={'space-between'}>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Tên Tác giả
+                                    Tổng số lượng đã bán
                                 </Typography>
                                 <Controller
                                     control={control}
                                     disabled
-                                    name="author"
-                                    rules={{
-                                        required: 'Vui lòng nhập tên tác giả!',
-                                    }}
-                                    render={({ field }) => (
-                                        <OutlinedInput
-                                            disabled
-                                            type="text"
-                                            {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                            }}
-                                            sx={{
-                                                mt: 1,
-                                                '& > input': {
-                                                    p: '7px',
-                                                },
-                                            }}
-                                            fullWidth
-                                            placeholder="Vui lòng nhập tên tác giả!"
-                                        />
-                                    )}
-                                />
-                                <Typography variant="caption" color={color.error}>
-                                    {errors.author && errors.author.message}
-                                </Typography>
-                            </Grid>
-                            <Grid xs={5.8}>
-                                <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Số trang
-                                </Typography>
-                                <Controller
-                                    control={control}
-                                    disabled
-                                    name="pageNumber"
-                                    rules={{
-                                        required: 'Vui lòng nhập số trang cho sản phẩm',
-                                    }}
+                                    name="soldQuantity"
                                     render={({ field }) => (
                                         <OutlinedInput
                                             type="number"
                                             {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                            }}
                                             sx={{
                                                 mt: 1,
                                                 '& > input': {
@@ -265,17 +191,11 @@ const AddProductInvetory = () => {
                                                 },
                                             }}
                                             fullWidth
-                                            placeholder="Vui lòng nhập số trang cho sản phẩm"
-                                            disabled
+                                            placeholder="0"
                                         />
                                     )}
                                 />
-                                <Typography variant="caption" color={color.error}>
-                                    {errors.pageNumber && errors.pageNumber.message}
-                                </Typography>
                             </Grid>
-                        </Grid>
-                        <Grid container mt={2} justifyContent={'space-between'}>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
                                     Tổng số lượng đã nhập
@@ -283,47 +203,11 @@ const AddProductInvetory = () => {
                                 <Controller
                                     control={control}
                                     disabled
-                                    name="author"
-                                    rules={{
-                                        required: 'Vui lòng nhập tên tác giả!',
-                                    }}
-                                    render={({ field }) => (
-                                        <OutlinedInput
-                                            disabled
-                                            type="text"
-                                            {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                            }}
-                                            sx={{
-                                                mt: 1,
-                                                '& > input': {
-                                                    p: '7px',
-                                                },
-                                            }}
-                                            fullWidth
-                                        />
-                                    )}
-                                />
-                            </Grid>
-                            <Grid xs={5.8}>
-                                <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Tổng số lượng đã bán
-                                </Typography>
-                                <Controller
-                                    control={control}
-                                    disabled
-                                    name="soldQuantity"
-                                    rules={{
-                                        required: 'Vui lòng nhập số trang cho sản phẩm',
-                                    }}
+                                    name="soldInventory"
                                     render={({ field }) => (
                                         <OutlinedInput
                                             type="number"
                                             {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                            }}
                                             sx={{
                                                 mt: 1,
                                                 '& > input': {
@@ -331,7 +215,6 @@ const AddProductInvetory = () => {
                                                 },
                                             }}
                                             fullWidth
-                                            disabled
                                             placeholder="0"
                                         />
                                     )}
@@ -343,11 +226,11 @@ const AddProductInvetory = () => {
                         </Typography>
                         <Controller
                             control={control}
+                            disabled
                             name="quantity"
                             render={({ field }) => (
                                 <OutlinedInput
                                     {...field}
-                                    disabled
                                     sx={{
                                         mt: 1,
                                         '& > input': {
@@ -374,9 +257,6 @@ const AddProductInvetory = () => {
                                         },
                                     }}
                                     fullWidth
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
                                 />
                             )}
                         />
@@ -398,4 +278,4 @@ const AddProductInvetory = () => {
     );
 };
 
-export default AddProductInvetory;
+export default AddProductInventory;

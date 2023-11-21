@@ -77,8 +77,8 @@ export default function ProducerAdmin() {
                                 }}
                             >
                                 <TableCell>ID</TableCell>
-                                <TableCell>Code</TableCell>
-                                <TableCell align="right">Tên nhà cung cấp</TableCell>
+                                <TableCell>Tên nhà cung cấp</TableCell>
+                                <TableCell align="right">Code</TableCell>
                                 <TableCell align="right">Keyword</TableCell>
                                 <TableCell align="right">Trạng thái</TableCell>
                                 <TableCell align="right">Thao tác </TableCell>
@@ -90,10 +90,11 @@ export default function ProducerAdmin() {
                                     <TableCell component="th" scope="row">
                                         {e.id}
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
+
+                                    <TableCell>{e.name}</TableCell>
+                                    <TableCell component="th" scope="row" align="right">
                                         {e.code}
                                     </TableCell>
-                                    <TableCell align="right">{e.name}</TableCell>
                                     <TableCell align="right">{e.keyword}</TableCell>
                                     <TableCell align="right">
                                         {e.status == null ? (

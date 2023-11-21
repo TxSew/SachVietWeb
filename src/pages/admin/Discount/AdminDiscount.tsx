@@ -19,6 +19,7 @@ import { numberFormat } from '../../../helpers/formatPrice';
 import { NumberFormattingComponent } from '../../../helpers/formatvalidate';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
+import { formatDates } from '../../../helpers/FortmatDate';
 
 export default function AdminDiscount() {
     const [discount, setDiscount] = React.useState<any>({});
@@ -111,13 +112,11 @@ export default function AdminDiscount() {
                                     <TableCell component="th" scope="row">
                                         {e.code}
                                     </TableCell>
-                                    <TableCell align="right">{NumberFormattingComponent(e.discount)}</TableCell>
+                                    <TableCell align="right">{numberFormat(e.discount)}</TableCell>
                                     <TableCell align="right">{numberFormat(Number(e.payment_limit))}</TableCell>
                                     <TableCell align="right">{e.limit_number}</TableCell>
 
-                                    <TableCell align="right">
-                                        {moment(e.expiration_date).format('DD MMM YYYY')}
-                                    </TableCell>
+                                    <TableCell align="right">{formatDates(e.expiration_date)}</TableCell>
                                     <TableCell align="right">
                                         {e?.status == 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
                                     </TableCell>

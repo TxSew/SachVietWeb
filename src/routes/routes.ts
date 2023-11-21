@@ -27,6 +27,9 @@ import { Cart } from '../pages/clients/cart/Cart';
 import { Details } from '../pages/clients/details/Details';
 import Sales from '../pages/clients/sales/Sales';
 
+import AddProductInventory from '../pages/admin/ProductInventory/AddProductInventory';
+import AdminProductInvetory from '../pages/admin/ProductInventory/AdminProductInventory';
+import OrderUser from '../pages/admin/Users/OrderUser';
 import VoucherUser from '../pages/clients/User/UserVoucher';
 import ForgotPasswordPage from '../pages/clients/auth/components/forgotPassword';
 import Checkout from '../pages/clients/cart/checkout/Checkout';
@@ -35,9 +38,7 @@ import PaymentSuccess from '../pages/clients/cart/payment/PaymentSuccess';
 import Invoice from '../pages/clients/invoice/invoice';
 import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
-import AdminProductInvetory from '../pages/admin/ProductInvetory/AdminProductInvetory';
-import OrderUser from '../pages/admin/Users/OrderUser';
-import AddProductInvetory from '../pages/admin/ProductInvetory/AddProductInvetory';
+import AdminProductInventory from '../pages/admin/ProductInventory/AdminProductInventory';
 
 const PublicRouter = [
     {
@@ -106,12 +107,12 @@ const PrivateRouter = [
         component: UpdateProduct,
     },
     {
-        path: '/admin/productInvetory',
-        component: AdminProductInvetory,
+        path: '/admin/productInventory',
+        component: AdminProductInventory,
     },
     {
-        path: '/admin/productInvetory/:id',
-        component: AddProductInvetory,
+        path: '/admin/productInventory/:id',
+        component: AddProductInventory,
     },
     {
         path: '/admin/category',

@@ -33,8 +33,9 @@ import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCategory, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
+import { Link } from 'react-router-dom';
 
-export default function AdminProductInvetory() {
+export default function AdminProductInventory() {
     const [Products, setProducts] = React.useState<Product[]>([]);
     const [open, setOpen] = React.useState({
         isChecked: false,
@@ -263,7 +264,9 @@ export default function AdminProductInvetory() {
                                     </TableCell>
                                     <TableCell align="right">
                                         <Stack direction={'row'} spacing={1}>
-                                            <Chip label="Nhập hàng" color="primary" />
+                                            <Link to={`/admin/productInventory/${e.id}`}>
+                                                <Chip label="Nhập hàng" color="primary" />
+                                            </Link>
                                             <Chip
                                                 label="Xóa"
                                                 color="error"

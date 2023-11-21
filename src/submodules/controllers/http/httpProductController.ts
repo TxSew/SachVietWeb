@@ -82,7 +82,14 @@ class HttpProductController {
             throw error;
         }
     }
-
+    async updateProductInventory(props: any) {
+        try {
+            const response = await this.axiosInstance.post(`products/addProductInventory`, { ...props });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
     async delete(id: number): Promise<any> {
         try {
             const response = await this.axiosInstance.delete(`products/${id}`);

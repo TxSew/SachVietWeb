@@ -1,27 +1,16 @@
+import { Logout, PersonAdd, Settings } from '@mui/icons-material';
+import { Avatar, MenuItem, Tooltip } from '@mui/material';
+import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Menu from '@mui/material/Menu';
+import Typography from '@mui/material/Typography';
 import React from 'react';
 import { BiBookAdd, BiSolidCategoryAlt } from 'react-icons/bi';
 import { FaBookOpen, FaHome, FaListUl } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
-import Menu from '@mui/material/Menu';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
-import { Avatar, MenuItem, SpeedDial, SpeedDialAction, SpeedDialIcon, Tooltip } from '@mui/material';
-import { Logout, PersonAdd, Settings } from '@mui/icons-material';
-
-const actions = [
-    { icon: <FileCopyIcon />, name: 'Copy' },
-    { icon: <SaveIcon />, name: 'Save' },
-    { icon: <PrintIcon />, name: 'Print' },
-    { icon: <ShareIcon />, name: 'Share' },
-];
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -65,7 +54,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                 <span>Sản phẩm</span>
                             </li>
                         </NavLink>
-                        <NavLink to="/admin/productInvetory">
+                        <NavLink to="/admin/productInventory">
                             <li className="">
                                 <i>
                                     <FaBookOpen />
