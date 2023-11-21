@@ -58,8 +58,8 @@ export default function CategoryAdmin() {
         <Grid>
             <Grid mt={0} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={"uppercase"}>
-                        <CategoryIcon /> Quản lý dang mục
+                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+                        <CategoryIcon /> Quản lý danh mục
                     </Typography>
                     <OutlinedInput
                         sx={{

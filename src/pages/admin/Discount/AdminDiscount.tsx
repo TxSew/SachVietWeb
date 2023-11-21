@@ -21,7 +21,7 @@ import { httpDiscount } from '../../../submodules/controllers/http/axiosControll
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
 
 export default function AdminDiscount() {
-    const [discount, setDiscount] = React.useState<Discount[]>([]);
+    const [discount, setDiscount] = React.useState<any>({});
     const [page, setPage] = React.useState(1);
 
     React.useEffect(() => {
@@ -43,7 +43,7 @@ export default function AdminDiscount() {
     };
 
     const handleDelete = async (element: any) => {
-        const filter = discount.filter((e) => e.id !== element.id);
+        const filter = discount?.data?.filter((e: any) => e.id !== element.id);
         await httpDiscount.delete(Number(element.id));
         setDiscount(filter);
 
@@ -103,7 +103,7 @@ export default function AdminDiscount() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {discount.map((e: Discount, i) => (
+                            {discount?.data?.map((e: Discount, i: number) => (
                                 <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row">
                                         {e.id}
@@ -149,8 +149,14 @@ export default function AdminDiscount() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Box mt={2}>
-                    <Pagination count={10} page={page} onChange={handleChange} />
+                <Box
+                    mt={2}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Pagination count={discount?.totalPage} page={page} onChange={handleChange} />
                 </Box>
             </Grid>
         </Grid>

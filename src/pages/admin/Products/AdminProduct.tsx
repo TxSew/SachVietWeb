@@ -78,6 +78,7 @@ export default function AdminProduct() {
         try {
             const product: any = await httpProduct.getAll(props);
             const { products } = product;
+            console.log(product);
             setPageCount(product.totalPage);
             setProducts(products);
         } catch (err) {

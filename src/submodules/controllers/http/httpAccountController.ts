@@ -21,6 +21,7 @@ class HttpAccountController {
             throw error;
         }
     }
+
     async getById(id: number): Promise<any> {
         try {
             const response = await this.axiosInstance.get('/');
@@ -29,6 +30,7 @@ class HttpAccountController {
             throw error;
         }
     }
+
     async login(account: User) {
         try {
             const response = await this.axiosInstance.post('auth/login', account);
@@ -37,6 +39,7 @@ class HttpAccountController {
             throw error;
         }
     }
+
     async changePassword(account: User) {
         try {
             const response = await this.axiosInstance.post('auth/changePassword', account);
@@ -63,6 +66,7 @@ class HttpAccountController {
             throw error;
         }
     }
+
     async sendOtp(props: string) {
         try {
             const response = await this.axiosInstance.post(`forgotPassword/send-otp-email`, {
@@ -73,6 +77,7 @@ class HttpAccountController {
             throw error;
         }
     }
+
     async verifyOtpAndResetPassword(props: any) {
         try {
             const response = await this.axiosInstance.post(`forgotPassword/verify-otp-email-resetPassword`, {

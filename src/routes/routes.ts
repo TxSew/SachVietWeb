@@ -37,6 +37,7 @@ import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
 import AdminProductInvetory from '../pages/admin/ProductInvetory/AdminProductInvetory';
 import OrderUser from '../pages/admin/Users/OrderUser';
+import AddProductInvetory from '../pages/admin/ProductInvetory/AddProductInvetory';
 
 const PublicRouter = [
     {
@@ -107,6 +108,10 @@ const PrivateRouter = [
     {
         path: '/admin/productInvetory',
         component: AdminProductInvetory,
+    },
+    {
+        path: '/admin/productInvetory/:id',
+        component: AddProductInvetory,
     },
     {
         path: '/admin/category',

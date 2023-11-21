@@ -131,7 +131,13 @@ export default function ProducerAdmin() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Box mt={2}>
+                <Box
+                    mt={2}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
                     <Pagination count={count} page={page} onChange={handleChange} />
                 </Box>
             </Grid>

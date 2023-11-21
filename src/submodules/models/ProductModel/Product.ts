@@ -26,6 +26,7 @@ export interface Product extends BaseModel, Modified {
     productImages?: ProductImage[];
     category?: Category;
     producer?: Producer;
+    newQuantity?: number;
 }
 interface ProductImage extends Modified {
     productId?: number;
