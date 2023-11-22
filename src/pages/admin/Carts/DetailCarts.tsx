@@ -141,11 +141,12 @@ function DetailCarts() {
                                         },
                                     }}
                                 >
-                                    <TableCell>Hình ảnh</TableCell>
+                                    <TableCell>STT</TableCell>
+                                    <TableCell align="center">Hình ảnh</TableCell>
                                     <TableCell align="center">Tên sản phẩm</TableCell>
                                     <TableCell align="center">SKU</TableCell>
                                     <TableCell align="center">Giá bán</TableCell>
-                                    <TableCell align="right"> SL</TableCell>
+                                    <TableCell align="center"> SL</TableCell>
                                     <TableCell align="center">Thành tiền</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -153,27 +154,36 @@ function DetailCarts() {
                                 {orderCurrent?.orderDetail?.map((order: any) => {
                                     return (
                                         <TableRow>
+                                            <TableCell>{order.product.id}</TableCell>
                                             <TableCell>
-                                                <img width={'80px'} height={'70px'} src={order.product.image} alt="" />
+                                                <img
+                                                    width={'80px'}
+                                                    height={'70px'}
+                                                    src={order.product.image}
+                                                    alt=""
+                                                    style={{
+                                                        margin: 'auto',
+                                                    }}
+                                                />
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.product.title}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.product.id}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.product.price_sale}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.quantity}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>
                                                     {numberFormat(order.quantity * order.product.price_sale)}
                                                 </Typography>
