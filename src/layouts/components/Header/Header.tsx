@@ -194,7 +194,7 @@ const Header = () => {
                                         </Typography>
                                     </Box>
                                 </NavLink>
-                                <NavLink to={''}>
+                                <NavLink to={'/news'}>
                                     <Box sx={hditem}>
                                         <NewspaperIcon sx={hdicon} />
                                         <Typography fontSize={'12px'} style={nicon}>
