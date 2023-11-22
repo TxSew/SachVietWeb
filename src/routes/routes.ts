@@ -35,6 +35,8 @@ import PaymentSuccess from '../pages/clients/cart/payment/PaymentSuccess';
 import Invoice from '../pages/clients/invoice/invoice';
 import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
+import News from '../pages/clients/News/News';
+import NewsDetail from '../pages/clients/News/NewsDetail/NewsDetail';
 
 const PublicRouter = [
     {
@@ -116,6 +118,14 @@ const PublicRouter = [
     {
         path: '/searchOrder/:id',
         component: SearchOrder,
+    },
+    {
+        path: '/news',
+        component: News,
+    },
+    {
+        path: '/news/detail',
+        component: NewsDetail,
     },
 ];
 const PrivateRouter = [
