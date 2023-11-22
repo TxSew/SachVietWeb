@@ -93,6 +93,7 @@ function Checkout() {
         };
 
         const payment = await httpPayment.getPayment(orderData);
+        localStorage.removeItem('cartItems');
         if (payment.paymentMethod == 'COD') {
             window.location.assign(payment.url);
         }

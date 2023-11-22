@@ -1,5 +1,5 @@
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
-import { Box, Container, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Container, Grid, Skeleton, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { createSearchParams, useNavigate } from 'react-router-dom';
 import { color } from '../../../../../Theme/color';
@@ -34,7 +34,7 @@ const CategoryNav = () => {
             if (filteredData) {
                 setTimeout(() => {
                     stopLoading();
-                }, 300);
+                }, 3000);
             }
             SetCategory(filteredData);
         } catch (error) {
@@ -63,74 +63,51 @@ const CategoryNav = () => {
                     </Typography>
                 </Stack>
 
-                <Stack
-                    direction={'row'}
-                    alignItems={'start'}
-                    mt={2}
-                    sx={{
-                        flexWrap: 'wrap',
-                    }}
-                >
+                <Grid container px={2} mt={2}>
                     {isLoading
                         ? Array.from({ length: category.length }).map((e) => {
                               return (
-                                  <Stack
-                                      sx={
-                                          isMediumMD
-                                              ? {
-                                                    width: '20%',
-                                                }
-                                              : {
-                                                    width: '10%',
-                                                }
-                                      }
-                                  >
-                                      <Skeleton
-                                          variant="rectangular"
-                                          width={'100px'}
-                                          height={'100px'}
-                                          sx={{
-                                              borderRadius: '5px',
-                                          }}
-                                      />
-                                      <Skeleton animation="wave" height={50} width="60%" />
-                                  </Stack>
+                                  <Grid xs={4} md={2} flexWrap={'wrap'} lg={1} item>
+                                      <Box p={'0 5px'} alignItems={'center'} textAlign={'center'}>
+                                          <Skeleton
+                                              variant="rectangular"
+                                              height={'120px'}
+                                              sx={{
+                                                  borderRadius: '5px',
+                                              }}
+                                          />
+                                          <Skeleton
+                                              animation="wave"
+                                              sx={{
+                                                  m: '0 auto',
+                                              }}
+                                              height={50}
+                                              width="60%"
+                                          />
+                                      </Box>
+                                  </Grid>
                               );
                           })
                         : category.map((e: Category) => {
                               return (
-                                  <Stack
-                                      key={e.id}
-                                      justifyContent={'center'}
-                                      alignContent={'center'}
+                                  <Grid
+                                      item
+                                      xs={4}
+                                      md={2}
                                       flexWrap={'wrap'}
-                                      sx={
-                                          isMediumMD
-                                              ? {
-                                                    width: '20%',
-                                                    cursor: 'pointer',
-                                                }
-                                              : {
-                                                    width: '10%',
-                                                    cursor: 'pointer',
-                                                }
-                                      }
+                                      lg={1}
+                                      key={e.id}
                                       onClick={() => RedirectProductPage(e.slug)}
                                   >
-                                      <Box
-                                          sx={{
-                                              display: 'flex',
-                                              maxWidth: '100px',
-                                              flexDirection: 'column',
-                                          }}
-                                      >
+                                      <Box px={1}>
                                           <img
                                               style={{
                                                   flexShrink: 0,
+                                                  border: '1px solid #eee',
                                               }}
                                               src={e.image}
-                                              width={'100px'}
-                                              height={'100px'}
+                                              width={'100%'}
+                                              height={'120px'}
                                               alt=""
                                           />
 
@@ -153,10 +130,10 @@ const CategoryNav = () => {
                                               {e.name}
                                           </Typography>
                                       </Box>
-                                  </Stack>
+                                  </Grid>
                               );
                           })}
-                </Stack>
+                </Grid>
             </Box>
         </Container>
     );

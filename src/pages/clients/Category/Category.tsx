@@ -132,15 +132,15 @@ function Category() {
                             </Stack>
                         </Box>
                         <Box mt={3}>
-                            <Stack direction={'row'} flexWrap={'wrap'}>
+                            <Grid container>
                                 {products.map((item: Product, index) => {
                                     return (
-                                        <Grid key={item.id} item xs={3}>
+                                        <Grid key={item.id} item xs={6} md={4} lg={3}>
                                             <ProductItem products={item} />
                                         </Grid>
                                     );
                                 })}
-                            </Stack>
+                            </Grid>
                             <Stack mt={2} spacing={2}>
                                 <Pagination count={count} page={page} onChange={handleChanges} />
                             </Stack>

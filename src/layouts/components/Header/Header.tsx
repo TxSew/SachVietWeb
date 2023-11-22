@@ -564,6 +564,7 @@ const Header = () => {
                                     }}
                                 >
                                     <NavLink
+                                        hrefLang="tel:0383476296"
                                         to={'/'}
                                         style={{
                                             display: 'flex',
@@ -576,6 +577,7 @@ const Header = () => {
                                                 color: '#008C89',
                                             }}
                                         />
+
                                         <Typography
                                             variant="caption"
                                             sx={{
@@ -592,8 +594,7 @@ const Header = () => {
                                                 },
                                             }}
                                         >
-                                            {' '}
-                                            037412595{' '}
+                                            0383476296
                                         </Typography>
                                     </NavLink>
                                     <NavLink
