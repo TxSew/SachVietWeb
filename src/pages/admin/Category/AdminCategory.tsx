@@ -1,5 +1,7 @@
 import CategoryIcon from '@mui/icons-material/Category';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
+
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
@@ -9,20 +11,18 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { color } from '../../../Theme/color';
+import { pushError } from '../../../components/Toast/Toast';
+import { formatDates } from '../../../helpers/FortmatDate';
 import useToast from '../../../hooks/useToast/useToast';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
-import { formatDates } from '../../../helpers/FortmatDate';
-import { pushError } from '../../../components/Toast/Toast';
 
 export default function CategoryAdmin() {
     const [category, setCategory] = React.useState([]);
     const [pageCount, setPageCount] = React.useState<number>(0);
-    const { showErrorToast } = useToast();
     const [page, setPage] = React.useState<number>(1);
     React.useEffect(() => {
         fetchData(page);
@@ -58,8 +58,8 @@ export default function CategoryAdmin() {
         <Grid>
             <Grid mt={0} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'}>
-                        <CategoryIcon /> Danh mục sản phẩm
+                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+                        <CategoryIcon /> Quản lý danh mục
                     </Typography>
                     <OutlinedInput
                         sx={{
@@ -138,7 +138,7 @@ export default function CategoryAdmin() {
                                             justifyContent={'end'}
                                         >
                                             <Link to={`${e.id}`}>
-                                                <EditIcon
+                                                <EditCalendarIcon
                                                     sx={{
                                                         color: 'green',
                                                     }}

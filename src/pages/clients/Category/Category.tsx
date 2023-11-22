@@ -125,8 +125,8 @@ function Category() {
                                         </MenuItem>
                                         <MenuItem value={'old'}>Cũ nhất</MenuItem>
                                         <MenuItem value={'new'}>Mới nhất</MenuItem>
-                                        <MenuItem value={'priceDown'}>Giá từ cao tới thấp</MenuItem>
-                                        <MenuItem value={'priceUp'}>Giá từ thấp tới cao</MenuItem>
+                                        <MenuItem value={'priceUp'}>Giá từ cao tới thấp</MenuItem>
+                                        <MenuItem value={'priceDown'}>Giá từ thấp tới cao</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Stack>

@@ -1,10 +1,7 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import { TProductResponse } from '../../models/ProductModel/Product';
 import { AxiosConfig } from '../interface/axiosConfig';
-import { Product, TProductResponse } from '../../models/ProductModel/Product';
 class HttpProductController {
-    get(): TProductResponse | PromiseLike<TProductResponse> {
-        throw new Error('Method not implemented.');
-    }
     private axiosInstance: AxiosInstance;
 
     constructor(axiosConfig: AxiosConfig) {
@@ -82,7 +79,14 @@ class HttpProductController {
             throw error;
         }
     }
-
+    async updateProductInventory(props: any) {
+        try {
+            const response = await this.axiosInstance.post(`products/addProductInventory`, { ...props });
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
     async delete(id: number): Promise<any> {
         try {
             const response = await this.axiosInstance.delete(`products/${id}`);

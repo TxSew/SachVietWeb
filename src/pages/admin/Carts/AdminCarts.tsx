@@ -30,16 +30,22 @@ import { toast } from 'react-toastify';
 import { color } from '../../../Theme/color';
 import { httpCart, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../submodules/models/OrderModel/Order';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 
 export default function AdminCarts() {
     const [carts, setCarts] = React.useState<Order[]>([] as Order[]);
     const [page, setPage] = React.useState<number>(1);
     const [count, setCount] = React.useState<number>(1);
     const [search, setSearch] = React.useState<string>('');
+    const debounce = useDebounce(search, 400);
 
     React.useEffect(() => {
-        fetchData(page);
-    }, [page]);
+        const props = {
+            page: page,
+            keyword: debounce,
+        };
+        fetchData(props);
+    }, [page, debounce]);
 
     const handleUpdateOrder = async (id: any) => {
         await httpCart.put(Number(id), {
@@ -49,11 +55,15 @@ export default function AdminCarts() {
         httpProduct.updateQuantity(order.orderDetail).then((response) => {
             console.log(response);
         });
+        window.location.reload();
+    };
+    const handleChangeValue = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        setSearch(event.target.value);
     };
 
-    const fetchData = async (page: number) => {
+    const fetchData = async (props: any) => {
         try {
-            const cartsData: any = await httpCart.getAll(page);
+            const cartsData: any = await httpCart.getAll(props);
             setCarts(cartsData?.orders);
             setCount(cartsData?.totalPage);
         } catch (err) {
@@ -62,7 +72,6 @@ export default function AdminCarts() {
     };
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
-        console.log(value);
     };
     React.useEffect(() => {
         window.scrollTo(0, 0);
@@ -84,13 +93,13 @@ export default function AdminCarts() {
         <Grid>
             <Grid mt={0} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'}>
+                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                         <ShoppingBasketIcon
                             sx={{
                                 mr: 1,
                             }}
                         />
-                        Danh sách đơn hàng
+                        quản lý đơn hàng
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
                         <Label>Sắp xếp:</Label>
@@ -108,10 +117,6 @@ export default function AdminCarts() {
                             <MenuItem value={2}>Đã giao hàng</MenuItem>
                         </Select>
                     </FormControl>
-
-                    <Link to={'/admijk/'}>
-                        <Button variant="contained">Thùng rác</Button>
-                    </Link>
                 </Stack>
                 <TableContainer component={Paper}>
                     <Table
@@ -135,6 +140,7 @@ export default function AdminCarts() {
                                 <TableCell>
                                     Mã đơn hàng
                                     <OutlinedInput
+                                        type="number"
                                         sx={{
                                             display: 'block',
                                             maxWidth: '100px',
@@ -144,6 +150,7 @@ export default function AdminCarts() {
                                             },
                                         }}
                                         fullWidth
+                                        onChange={handleChangeValue}
                                     />
                                 </TableCell>
                                 <TableCell>
@@ -158,6 +165,7 @@ export default function AdminCarts() {
                                             },
                                         }}
                                         fullWidth
+                                        onChange={handleChangeValue}
                                     />
                                 </TableCell>
                                 <TableCell align="center">Tổng tiền</TableCell>
@@ -326,7 +334,13 @@ export default function AdminCarts() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Box mt={2}>
+                <Box
+                    mt={2}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
                     <Pagination count={count} page={page} onChange={handleChange} />
                 </Box>
             </Grid>

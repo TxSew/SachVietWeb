@@ -42,6 +42,15 @@ class HttpCartController {
             throw err;
         }
     }
+    async getOrderAdminbyUser(id: number, props: any): Promise<any> {
+        try {
+            const response = await this.axiosInstance.post(`order/orderUser/${id}`, props);
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    }
+
     async getOneUpdate(id: number) {
         try {
             const response = await this.axiosInstance.get(`products/currentUpdate/${id}`);
@@ -50,6 +59,7 @@ class HttpCartController {
             throw err;
         }
     }
+
     async post(cart: any): Promise<any> {
         try {
             const response = await this.axiosInstance.post(`order/store`, cart);

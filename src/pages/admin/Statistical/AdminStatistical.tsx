@@ -21,7 +21,7 @@ function AdminStatistical() {
         px: 5,
       }}
     >
-      <Typography variant="h3" fontSize={"30px"} fontWeight={"bold"}>
+      <Typography variant="h3" fontSize={"30px"} fontWeight={"bold"} textTransform={"uppercase"}>
         Thống kê
       </Typography>
       <Box mt={2}>
@@ -434,7 +434,6 @@ function AdminStatistical() {
                 </Box>
               </Grid>
             </Grid>
-            <ChartMOney />
           </Grid>
         </Container>
       </Box>

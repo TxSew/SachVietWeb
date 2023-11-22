@@ -27,6 +27,9 @@ import { Cart } from '../pages/clients/cart/Cart';
 import { Details } from '../pages/clients/details/Details';
 import Sales from '../pages/clients/sales/Sales';
 
+import AddProductInventory from '../pages/admin/ProductInventory/AddProductInventory';
+import AdminProductInvetory from '../pages/admin/ProductInventory/AdminProductInventory';
+import OrderUser from '../pages/admin/Users/OrderUser';
 import VoucherUser from '../pages/clients/User/UserVoucher';
 import ForgotPasswordPage from '../pages/clients/auth/components/forgotPassword';
 import Checkout from '../pages/clients/cart/checkout/Checkout';
@@ -37,6 +40,7 @@ import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
 import News from '../pages/clients/News/News';
 import NewsDetail from '../pages/clients/News/NewsDetail/NewsDetail';
+import AdminProductInventory from '../pages/admin/ProductInventory/AdminProductInventory';
 
 const PublicRouter = [
     {
@@ -74,39 +78,10 @@ const PublicRouter = [
         component: Category,
     },
     {
-        path: '/user',
-        component: User,
-    },
-    {
-        path: '/user/info',
-        component: UserInfo,
-    },
-    {
-        path: '/user/adress',
-        component: UserAdress,
-    },
-    {
-        path: '/user/myvoucher',
-        component: VoucherUser,
-    },
-    {
-        path: '/user/mycart',
-        component: UserMyCart,
-    },
-    {
         path: '/auth/ChangePassword',
         component: ForgotPasswordPage,
     },
     { path: '/sales', component: Sales },
-    {
-        path: '/user/mycart/:id',
-        component: UserCartDetail,
-    },
-    {
-        path: '/user/invoice/:id',
-        component: Invoice,
-        isRequired: true,
-    },
     {
         path: '/step',
         component: CustomizedSteppers,
@@ -140,6 +115,14 @@ const PrivateRouter = [
     {
         path: '/admin/product/:id',
         component: UpdateProduct,
+    },
+    {
+        path: '/admin/productInventory',
+        component: AdminProductInventory,
+    },
+    {
+        path: '/admin/productInventory/:id',
+        component: AddProductInventory,
     },
     {
         path: '/admin/category',
@@ -193,10 +176,51 @@ const PrivateRouter = [
         component: AdminCustomer,
     },
     {
+        path: '/admin/customer/:id',
+        component: OrderUser,
+    },
+    {
         path: '/admin/statistical',
         component: AdminStatistical,
     },
 ];
+
+const userProvide = [
+    {
+        path: '/user',
+        component: User,
+    },
+    {
+        path: '/user/info',
+        component: UserInfo,
+    },
+    {
+        path: '/user/adress',
+        component: UserAdress,
+    },
+    {
+        path: '/user/myvoucher',
+        component: VoucherUser,
+    },
+    {
+        path: '/user/mycart',
+        component: UserMyCart,
+    },
+    {
+        path: '/auth/ChangePassword',
+        component: ForgotPasswordPage,
+    },
+    {
+        path: '/user/mycart/:id',
+        component: UserCartDetail,
+    },
+    {
+        path: '/user/invoice/:id',
+        component: Invoice,
+        isRequired: true,
+    },
+];
+
 const moreNotFound = [
     {
         path: '*',
@@ -204,4 +228,4 @@ const moreNotFound = [
     },
 ];
 
-export { PrivateRouter, PublicRouter, moreNotFound };
+export { PrivateRouter, PublicRouter, moreNotFound, userProvide };

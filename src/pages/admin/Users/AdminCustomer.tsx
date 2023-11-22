@@ -1,4 +1,3 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 import { Box, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
@@ -40,7 +39,7 @@ export default function AdminCustomer() {
             <Grid mt={3} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        khách hàng
+                        Quản lý khách hàng
                     </Typography>
                     <OutlinedInput
                         sx={{
@@ -102,21 +101,13 @@ export default function AdminCustomer() {
                                             spacing={2}
                                             justifyContent={'end'}
                                         >
-                                            <Link to={`/admin/orders/detail/${e.id}`}>
+                                            <Link to={`/admin/customer/${e.id}`}>
                                                 <VisibilityIcon
                                                     sx={{
                                                         color: 'green',
                                                     }}
                                                 />
                                             </Link>
-                                            <Box>
-                                                <DeleteForeverIcon
-                                                    onClick={() => handleRemove(Number(e.id))}
-                                                    sx={{
-                                                        color: 'red',
-                                                    }}
-                                                />
-                                            </Box>
                                         </Stack>
                                     </TableCell>
                                 </TableRow>
@@ -124,7 +115,13 @@ export default function AdminCustomer() {
                         </TableBody>
                     </Table>
                 </TableContainer>
-                <Box mt={2}>
+                <Box
+                    mt={2}
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                    }}
+                >
                     <Pagination count={count} page={page} onChange={handleChange} />
                 </Box>
             </Grid>

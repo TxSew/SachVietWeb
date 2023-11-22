@@ -14,6 +14,7 @@ export interface Product extends BaseModel, Modified {
     price?: number;
     sale?: number;
     price_sale?: number;
+    soldInventory?: number;
     quantity?: number;
     image?: string;
     listImage?: string;
@@ -26,6 +27,7 @@ export interface Product extends BaseModel, Modified {
     productImages?: ProductImage[];
     category?: Category;
     producer?: Producer;
+    newQuantity?: number;
 }
 interface ProductImage extends Modified {
     productId?: number;
