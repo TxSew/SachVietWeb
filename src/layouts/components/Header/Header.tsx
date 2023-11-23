@@ -46,6 +46,7 @@ import HttpCategoryController from '../../../submodules/controllers/http/httpCat
 import HttpProductController from '../../../submodules/controllers/http/httpProductController';
 import { User } from '../../../submodules/models/UserModel/User';
 import { convertText } from '../../../helpers/convertText';
+import { image } from '../../../assets';
 
 const Header = () => {
     const http = new HttpProductController(BaseAPi);
@@ -341,10 +342,7 @@ const Header = () => {
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            <Image
-                                                src="https://bookbuy.vn/Images/frontend/base/mobile/logo-new.png"
-                                                alt="Logo"
-                                            />
+                                            <Image src={image.logo} width="160px" height="50px" alt="Logo" />
                                         </Box>
                                     </Link>
                                 </Grid>
@@ -363,12 +361,12 @@ const Header = () => {
                                             textAlign: 'right',
                                         }}
                                     >
-                                        <SegmentIcon
-                                            sx={{
-                                                color: '#008C89',
-                                                cursor: 'pointer',
-                                                fontSize: '48px',
-                                            }}
+                                        <img
+                                            src={image.menu}
+                                            height={'45px'}
+                                            style={{ objectFit: 'cover' }}
+                                            width={'45px'}
+                                            alt=""
                                         />
                                     </Box>
                                 </Grid>
@@ -734,12 +732,7 @@ const Header = () => {
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <Image
-                                        src="https://bookbuy.vn/Images/frontend/base/mobile/logo-new.png"
-                                        alt="logo"
-                                        width="100px"
-                                        height="24px"
-                                    />
+                                    <Image src={image.logo} alt="logo" width="100px" height="24px" />
                                 </NavLink>
                             </Box>
                             <Box display={'flex'} alignItems={'center'} lineHeight={'normal'} gap={1}>
