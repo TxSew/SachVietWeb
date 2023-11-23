@@ -1,9 +1,10 @@
 import { Box, Button, Container, Grid, Skeleton, Stack, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import ProductItem from '../../../../../components/ProductItem/ProductItem';
 import useLoading from '../../../../../hooks/useLoading/useLoading';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
+import { image } from '../../../../../assets';
 
 function Products() {
     const { isLoading, startLoading, stopLoading } = useLoading();
@@ -52,7 +53,12 @@ function Products() {
                             borderBottom={'1px solid #eee'}
                         >
                             <img
-                                src="https://cdn0.fahasa.com/skin/frontend/base/default/images/ico_dealhot.png"
+                                width={'40px'}
+                                height={'40px'}
+                                style={{
+                                    objectFit: 'cover',
+                                }}
+                                src={image.Fire}
                                 alt=""
                             />
                             <Typography

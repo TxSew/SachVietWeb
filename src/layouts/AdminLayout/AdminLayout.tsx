@@ -11,6 +11,7 @@ import { BiBookAdd, BiSolidCategoryAlt } from 'react-icons/bi';
 import { FaBookOpen, FaHome, FaListUl } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
+import { image } from '../../assets';
 
 function AdminLayout({ children }: { children: React.ReactNode }) {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -27,7 +28,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <input type="checkbox" id="tool" />
                 <div className="dasb-sidebar">
                     <div className="dasb-sidebar-logo">
-                        <h1>MUI</h1>
+                        <img width={'100px'} src={image.logo} alt="" />
                     </div>
                     <ul className="">
                         <NavLink to="/admin/statistical">
@@ -120,7 +121,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     padding: '0 16px',
                                 }}
                             >
-                                <Typography sx={{ minWidth: 100 }}>Contact</Typography>
                                 <Tooltip title="Account settings">
                                     <IconButton
                                         onClick={handleClick}

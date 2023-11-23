@@ -6,6 +6,7 @@ import useLoading from '../../../../../hooks/useLoading/useLoading';
 import HttpProductController from '../../../../../submodules/controllers/http/httpProductController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
+import { image } from '../../../../../assets';
 interface PropsSort {
     page: number;
     search: string;
@@ -64,8 +65,13 @@ function ProductHots() {
                             borderBottom={'1px solid #eee'}
                         >
                             <img
-                                src="https://cdn0.fahasa.com/skin/frontend/base/default/images/ico_dealhot.png"
+                                width={'40px'}
+                                height={'40px'}
+                                src={image.folder}
                                 alt=""
+                                style={{
+                                    objectFit: 'cover',
+                                }}
                             />
                             <Typography
                                 variant="h3"
