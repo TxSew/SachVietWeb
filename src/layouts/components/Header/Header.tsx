@@ -436,50 +436,76 @@ const Header = () => {
                                                 </Typography>
                                                 <Box padding={'8px 0'}>
                                                     <Grid container spacing={2}>
-                                                        {Products.slice(0, 6).map((e: any) => {
-                                                            return (
-                                                                <Grid item xs={6} md={4}>
-                                                                    <Link
-                                                                        to={`/products/${e.slug}`}
-                                                                        onClick={handleCloseSearch}
-                                                                    >
-                                                                        <Box display={'fex'} alignItems={'center'}>
-                                                                            <Grid item xs={12} md={3}>
-                                                                                <img
-                                                                                    src={e.image}
-                                                                                    width={'40px'}
-                                                                                    alt=""
-                                                                                ></img>
-                                                                            </Grid>
-                                                                            <Grid
-                                                                                xs={12}
-                                                                                md={9}
-                                                                                item
-                                                                                textAlign={'left'}
-                                                                                paddingLeft={1}
-                                                                            >
-                                                                                <Typography
-                                                                                    variant="body1"
-                                                                                    sx={{
-                                                                                        fontSize: '12px',
-                                                                                        color: 'black',
-                                                                                        overflow: 'hidden',
-                                                                                        textAlign: 'center',
-                                                                                        display: '-webkit-box',
-                                                                                        lineClamp: 2,
-                                                                                        WebkitLineClamp: 2,
-                                                                                        WebkitBoxOrient: 'vertical',
-                                                                                        flexShrink: 0,
-                                                                                    }}
+                                                        {!Products.length ? (
+                                                            <Stack
+                                                                pl={5}
+                                                                direction={'column'}
+                                                                alignItems={'center'}
+                                                                justifyContent={'center'}
+                                                            >
+                                                                <Box
+                                                                    sx={{
+                                                                        maxWidth: '50px',
+                                                                        height: '50px',
+                                                                    }}
+                                                                >
+                                                                    <img
+                                                                        width={'100%'}
+                                                                        src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
+                                                                        alt=""
+                                                                    />
+                                                                </Box>
+                                                            </Stack>
+                                                        ) : (
+                                                            Products.slice(0, 6).map((e: any) => {
+                                                                return (
+                                                                    <Grid item xs={6} md={4}>
+                                                                        <Link
+                                                                            to={`/products/${e.slug}`}
+                                                                            onClick={handleCloseSearch}
+                                                                        >
+                                                                            <Box display={'fex'} alignItems={'center'}>
+                                                                                <Grid item xs={12} md={3}>
+                                                                                    <img
+                                                                                        src={e.image}
+                                                                                        style={{
+                                                                                            border: '1px solid #eee',
+                                                                                        }}
+                                                                                        width={'50px'}
+                                                                                        height={'50px'}
+                                                                                        alt=""
+                                                                                    ></img>
+                                                                                </Grid>
+                                                                                <Grid
+                                                                                    xs={12}
+                                                                                    md={9}
+                                                                                    item
+                                                                                    textAlign={'left'}
+                                                                                    paddingLeft={1}
                                                                                 >
-                                                                                    {e.title}
-                                                                                </Typography>
-                                                                            </Grid>
-                                                                        </Box>
-                                                                    </Link>
-                                                                </Grid>
-                                                            );
-                                                        })}
+                                                                                    <Typography
+                                                                                        variant="body1"
+                                                                                        sx={{
+                                                                                            fontSize: '12px',
+                                                                                            color: 'black',
+                                                                                            overflow: 'hidden',
+                                                                                            textAlign: 'center',
+                                                                                            display: '-webkit-box',
+                                                                                            lineClamp: 2,
+                                                                                            WebkitLineClamp: 2,
+                                                                                            WebkitBoxOrient: 'vertical',
+                                                                                            flexShrink: 0,
+                                                                                        }}
+                                                                                    >
+                                                                                        {e.title}
+                                                                                    </Typography>
+                                                                                </Grid>
+                                                                            </Box>
+                                                                        </Link>
+                                                                    </Grid>
+                                                                );
+                                                            })
+                                                        )}
                                                     </Grid>
                                                 </Box>
 
@@ -493,30 +519,51 @@ const Header = () => {
                                                     Danh mục nổi bật (4 danh mục)
                                                 </Typography>
                                                 <Grid container>
-                                                    {categories.map((e: any, i: number) => {
-                                                        return (
-                                                            <Grid item xs={6} md={3}>
-                                                                <Link
-                                                                    to="http://localhost:3000/products/sach99jjj9923"
-                                                                    onClick={handleCloseSearch}
-                                                                    style={{
-                                                                        textAlign: 'center',
-                                                                        margin: '0 auto',
-                                                                    }}
-                                                                >
-                                                                    <img
-                                                                        src={e.image}
-                                                                        alt=""
-                                                                        width={'50%'}
+                                                    {!categories.length ? (
+                                                        <Stack
+                                                            direction={'column'}
+                                                            alignItems={'center'}
+                                                            justifyContent={'center'}
+                                                        >
+                                                            <Box
+                                                                sx={{
+                                                                    maxWidth: '60px',
+                                                                }}
+                                                            >
+                                                                <img
+                                                                    width={'100%'}
+                                                                    src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
+                                                                    alt=""
+                                                                />
+                                                            </Box>
+                                                        </Stack>
+                                                    ) : (
+                                                        categories.map((e: any, i: number) => {
+                                                            return (
+                                                                <Grid item xs={6} md={3}>
+                                                                    <Link
+                                                                        to={`/category?category=${e.slug}`}
+                                                                        onClick={handleCloseSearch}
                                                                         style={{
+                                                                            textAlign: 'center',
                                                                             margin: '0 auto',
                                                                         }}
-                                                                    />
-                                                                    <Typography>{e.name}</Typography>
-                                                                </Link>
-                                                            </Grid>
-                                                        );
-                                                    })}
+                                                                    >
+                                                                        <img
+                                                                            src={e.image}
+                                                                            alt=""
+                                                                            width={'50px'}
+                                                                            height={'50px'}
+                                                                            style={{
+                                                                                margin: '0 auto',
+                                                                            }}
+                                                                        />
+                                                                        <Typography color={'gray'}>{e.name}</Typography>
+                                                                    </Link>
+                                                                </Grid>
+                                                            );
+                                                        })
+                                                    )}
                                                 </Grid>
                                             </Box>
                                         </Modal>

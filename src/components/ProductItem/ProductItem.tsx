@@ -7,10 +7,12 @@ import { Link } from 'react-router-dom';
 import { color } from '../../Theme/color';
 import { Product } from '../../submodules/models/ProductModel/Product';
 import { numberFormat } from '../../helpers/formatPrice';
+import useMedia from '../../hooks/useMedia/useMedia';
 interface ProductItem {
     products: Product;
 }
 const ProductItem = (Props: ProductItem) => {
+    const { isMediumMD } = useMedia();
     return (
         <Card
             variant="outlined"
@@ -56,10 +58,10 @@ const ProductItem = (Props: ProductItem) => {
             >
                 <CardMedia
                     component="img"
+                    width={'100%'}
                     height={'170'}
                     sx={{
                         p: '20px',
-                        width: '180px',
                         objectFit: 'contain',
                     }}
                     title=""
@@ -101,7 +103,7 @@ const ProductItem = (Props: ProductItem) => {
                 </Link>
 
                 <Stack
-                    direction={'row'}
+                    direction={isMediumMD ? 'column' : 'row'}
                     justifyContent={Props.products.sale ? 'space-between' : 'center'}
                     sx={{
                         marginTop: 'auto',
@@ -116,15 +118,30 @@ const ProductItem = (Props: ProductItem) => {
                         fontWeight={'bold'}
                         lineHeight={1}
                         marginTop={'auto'}
+                        sx={
+                            isMediumMD
+                                ? {
+                                      fontSize: '13px',
+                                  }
+                                : {}
+                        }
                     >
                         {`${numberFormat(Number(Props.products.price_sale))} `}
                     </Typography>
                     <Typography
                         color={'#888888'}
                         lineHeight={1}
-                        sx={{
-                            textDecoration: 'line-through',
-                        }}
+                        sx={
+                            !isMediumMD
+                                ? {
+                                      textDecoration: 'line-through',
+                                  }
+                                : {
+                                      textDecoration: 'line-through',
+                                      marginTop: '10px',
+                                      fontSize: '13px',
+                                  }
+                        }
                     >
                         {!!Props.products.sale && numberFormat(Number(Props.products.price))}
                     </Typography>

@@ -30,7 +30,9 @@ import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province, district } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
+import useMedia from '../../../../hooks/useMedia/useMedia';
 function Checkout() {
+    const { isMediumMD, isXSOnly } = useMedia();
     const redirect = useNavigate();
     const dispatch = useDispatch();
     const [value, setValue] = useState('COD');
@@ -307,18 +309,33 @@ function Checkout() {
                                     className="cartItem"
                                     direction={'row'}
                                     mt={2}
-                                    p={2}
                                     borderRadius={2}
                                     bgcolor={color.white}
                                     justifyContent={'space-between'}
                                 >
                                     <Stack className="cartItem_thumb" direction={'row'} spacing={2}>
                                         <Stack direction={'row'} alignItems={'normal'} spacing={2}>
-                                            <Box maxWidth={'119px'}>
+                                            <Box maxWidth={'119px'} flexShrink={0}>
                                                 <img src={e.image ? e.image : ''} alt="" width={'100%'} />
                                             </Box>
-                                            <Stack direction={'column'} justifyContent={'space-between'}>
-                                                <Typography>{e.title}</Typography>
+                                            <Stack
+                                                direction={'column'}
+                                                justifyContent={'space-between'}
+                                                maxWidth={'350px'}
+                                            >
+                                                <Typography
+                                                    sx={{
+                                                        overflow: 'hidden',
+                                                        textAlign: 'center',
+                                                        display: '-webkit-box',
+                                                        lineClamp: 2,
+                                                        WebkitLineClamp: 2,
+                                                        WebkitBoxOrient: 'vertical',
+                                                        flexShrink: 0,
+                                                    }}
+                                                >
+                                                    {e.title}
+                                                </Typography>
                                                 <Stack direction={'row'} spacing={2}>
                                                     <Typography
                                                         variant="caption"
@@ -334,14 +351,18 @@ function Checkout() {
                                             </Stack>
                                         </Stack>
                                     </Stack>
-                                    <Stack className="cartItem_action" direction={'row'} spacing={10}>
-                                        <Typography>{e.cartQuantity}</Typography>
-                                        <Typography color={'#F39801'} fontWeight={'bold'}>
-                                            {e.cartQuantity && e.price_sale
-                                                ? numberFormat(Number(e.cartQuantity * e.price_sale))
-                                                : ''}
-                                        </Typography>
-                                    </Stack>
+                                    {isMediumMD ? (
+                                        ''
+                                    ) : (
+                                        <Stack className="cartItem_action" direction={'row'} spacing={10}>
+                                            <Typography>{e.cartQuantity}</Typography>
+                                            <Typography color={'#F39801'} fontWeight={'bold'}>
+                                                {e.cartQuantity && e.price_sale
+                                                    ? numberFormat(Number(e.cartQuantity * e.price_sale))
+                                                    : ''}
+                                            </Typography>
+                                        </Stack>
+                                    )}
                                 </Stack>
                             );
                         })}
@@ -377,7 +398,7 @@ function Checkout() {
                             </Typography>
                         </Stack>
                         <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
-                            <Typography variant="body1" fontSize={'15.5px'}>
+                            <Typography variant="body1" fontSize={isXSOnly ? '13px' : '15.5px'}>
                                 Phí vận chuyển (Giao hàng tiêu chuẩn)
                             </Typography>
                             <Typography variant="body1" fontSize={'15.5px'}>

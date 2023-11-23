@@ -34,7 +34,7 @@ const CategoryNav = () => {
             if (filteredData) {
                 setTimeout(() => {
                     stopLoading();
-                }, 3000);
+                }, 300);
             }
             SetCategory(filteredData);
         } catch (error) {
@@ -71,7 +71,7 @@ const CategoryNav = () => {
                                       <Box p={'0 5px'} alignItems={'center'} textAlign={'center'}>
                                           <Skeleton
                                               variant="rectangular"
-                                              height={'120px'}
+                                              height={isMediumMD ? '100px' : '120px'}
                                               sx={{
                                                   borderRadius: '5px',
                                               }}
@@ -99,7 +99,7 @@ const CategoryNav = () => {
                                       key={e.id}
                                       onClick={() => RedirectProductPage(e.slug)}
                                   >
-                                      <Box px={1}>
+                                      <Box px={isMediumMD ? 2 : 1}>
                                           <img
                                               style={{
                                                   flexShrink: 0,
@@ -107,7 +107,7 @@ const CategoryNav = () => {
                                               }}
                                               src={e.image}
                                               width={'100%'}
-                                              height={'120px'}
+                                              height={isMediumMD ? '100px' : '120px'}
                                               alt=""
                                           />
 

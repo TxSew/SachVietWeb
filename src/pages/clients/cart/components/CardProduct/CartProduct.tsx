@@ -16,8 +16,10 @@ import { RootState } from '../../../../../redux/storeClient';
 import { httpVoucher } from '../../../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../../../submodules/models/DiscountModel/Discount';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
+import useMedia from '../../../../../hooks/useMedia/useMedia';
 
 const CartProduct = () => {
+    const { isMediumMD } = useMedia();
     const dispatch = useDispatch();
     const [discount, setDiscount] = useState<Discount[]>([]);
     const { cartTotalQuantity, cartTotalAmount } = useSelector((state: RootState) => state.cart);
@@ -91,8 +93,14 @@ const CartProduct = () => {
                         </Stack>
 
                         <Stack direction={'row'} spacing={3} pr={4}>
-                            <Typography>Số lượng</Typography>
-                            <Typography>Thành tiền</Typography>
+                            {isMediumMD ? (
+                                ''
+                            ) : (
+                                <>
+                                    <Typography>Số lượng</Typography>
+                                    <Typography>Thành tiền</Typography>
+                                </>
+                            )}
                         </Stack>
                     </Stack>
                     <Box>
@@ -107,83 +115,185 @@ const CartProduct = () => {
                                     bgcolor={color.white}
                                     justifyContent={'space-between'}
                                 >
-                                    <Stack className="cartItem_thumb" direction={'row'} spacing={2}>
-                                        <Stack direction={'row'} alignItems={'normal'} spacing={2}>
-                                            <Box maxWidth={'119px'}>
+                                    <Stack className="cartItem_thumb" direction={'row'} rowGap={2} spacing={2}>
+                                        <Stack direction={'row'} alignItems={'normal'} spacing={2} rowGap={2}>
+                                            <Box>
                                                 <img
                                                     src={element.productImages ? element.image : ''}
                                                     alt=""
-                                                    width={'100%'}
+                                                    style={{
+                                                        flexShrink: 0,
+                                                        objectFit: 'cover',
+                                                    }}
+                                                    width={isMediumMD ? '110px' : '119px'}
+                                                    height={'100px'}
                                                 />
                                             </Box>
-                                            <Stack direction={'column'} justifyContent={'space-between'}>
-                                                <Typography>{element.title}</Typography>
+                                            <Stack
+                                                direction={'column'}
+                                                justifyContent={'space-between'}
+                                                maxWidth={'350px'}
+                                            >
+                                                <Typography
+                                                    sx={
+                                                        isMediumMD
+                                                            ? {
+                                                                  overflow: 'hidden',
+                                                                  display: '-webkit-box',
+                                                                  lineClamp: 2,
+                                                                  WebkitLineClamp: 2,
+                                                                  WebkitBoxOrient: 'vertical',
+                                                                  fontSize: '11px',
+                                                                  flexShrink: 0,
+                                                              }
+                                                            : {
+                                                                  overflow: 'hidden',
+                                                                  display: '-webkit-box',
+                                                                  lineClamp: 2,
+                                                                  WebkitLineClamp: 2,
+                                                                  WebkitBoxOrient: 'vertical',
+                                                                  flexShrink: 0,
+                                                              }
+                                                    }
+                                                >
+                                                    {element.title}
+                                                </Typography>
                                                 <Stack direction={'row'} spacing={2}>
+                                                    <Typography
+                                                        variant="caption"
+                                                        className="cartItem_PriceSale"
+                                                        color={'#F39801'}
+                                                    >
+                                                        {`${numberFormat(Number(element.price_sale))} `}
+                                                    </Typography>
                                                     <Typography
                                                         variant="caption"
                                                         className="cartItem_Price"
                                                         fontWeight={'bold'}
+                                                        color={'gray'}
+                                                        sx={{
+                                                            textDecoration: 'line-through',
+                                                        }}
                                                     >
                                                         {numberFormat(Number(element.price))}
                                                     </Typography>
-                                                    <Typography
-                                                        variant="caption"
-                                                        className="cartItem_PriceSale"
-                                                        sx={{
-                                                            textDecoration: 'underline',
-                                                        }}
-                                                    >
-                                                        {`${numberFormat(Number(element.price_sale))} `}
-                                                    </Typography>
                                                 </Stack>
+                                                <Box>
+                                                    {isMediumMD ? (
+                                                        <Stack
+                                                            className="cartItem_action"
+                                                            direction={'row'}
+                                                            spacing={2}
+                                                        >
+                                                            <Stack
+                                                                direction={'row'}
+                                                                border={'1px solid #eee'}
+                                                                borderRadius={2}
+                                                                width={'max-content'}
+                                                            >
+                                                                <RemoveIcon
+                                                                    sx={{
+                                                                        cursor: 'pointer',
+                                                                        fontSize: '13px',
+                                                                    }}
+                                                                    onClick={() => handleDes(element.id)}
+                                                                />
+                                                                <input
+                                                                    type="text"
+                                                                    value={element?.cartQuantity}
+                                                                    style={{
+                                                                        maxWidth: '36px',
+                                                                        padding: '0px 10px',
+                                                                        textAlign: 'center',
+                                                                    }}
+                                                                />
+                                                                <AddIcon
+                                                                    onClick={() => handleIncrement(element)}
+                                                                    sx={{
+                                                                        fontSize: '13px',
+                                                                        cursor: 'pointer',
+                                                                    }}
+                                                                />
+                                                            </Stack>
+                                                            {isMediumMD ? (
+                                                                ''
+                                                            ) : (
+                                                                <Typography color={'#F39801'}>
+                                                                    {
+                                                                        element?.price_sale !== undefined &&
+                                                                        element?.cartQuantity !== undefined
+                                                                            ? `${numberFormat(
+                                                                                  Number(
+                                                                                      element.price_sale *
+                                                                                          element.cartQuantity
+                                                                                  )
+                                                                              )} `
+                                                                            : 'N/A' /* Replace "N/A" with your preferred placeholder */
+                                                                    }
+                                                                </Typography>
+                                                            )}
+                                                        </Stack>
+                                                    ) : (
+                                                        ''
+                                                    )}
+                                                </Box>
                                             </Stack>
                                         </Stack>
                                     </Stack>
-                                    <Stack className="cartItem_action" direction={'row'} spacing={2}>
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={3}
-                                            border={'1px solid #eee'}
-                                            p={'3px 5px'}
-                                            borderRadius={2}
-                                        >
-                                            <Box>
-                                                <RemoveIcon
-                                                    sx={{
-                                                        fontSize: '14px',
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={() => handleDes(element.id)}
-                                                />
-                                            </Box>
-                                            <input
-                                                type="text"
-                                                value={element?.cartQuantity}
-                                                style={{
-                                                    width: '27px',
-                                                    textAlign: 'center',
-                                                }}
-                                            />
-                                            <AddIcon
-                                                onClick={() => handleIncrement(element)}
-                                                sx={{
-                                                    fontSize: '14px',
-                                                    cursor: 'pointer',
-                                                }}
-                                            />
-                                        </Stack>
-                                        <Typography color={'#F39801'}>
-                                            {
-                                                element?.price_sale !== undefined && element?.cartQuantity !== undefined
-                                                    ? `${numberFormat(
-                                                          Number(element.price_sale * element.cartQuantity)
-                                                      )} `
-                                                    : 'N/A' /* Replace "N/A" with your preferred placeholder */
-                                            }
-                                        </Typography>
+
+                                    <Stack direction={'row'} spacing={2}>
+                                        {!isMediumMD && (
+                                            <Stack className="cartItem_action" direction={'row'} spacing={2}>
+                                                <Stack
+                                                    direction={'row'}
+                                                    border={'1px solid #eee'}
+                                                    borderRadius={2}
+                                                    p={'4px 10px'}
+                                                >
+                                                    <RemoveIcon
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                            fontSize: '13px',
+                                                        }}
+                                                        onClick={() => handleDes(element.id)}
+                                                    />
+                                                    <input
+                                                        type="text"
+                                                        value={element?.cartQuantity}
+                                                        style={{
+                                                            maxWidth: '37px',
+                                                            padding: '0px 10px',
+                                                            textAlign: 'center',
+                                                        }}
+                                                    />
+                                                    <AddIcon
+                                                        onClick={() => handleIncrement(element)}
+                                                        sx={{
+                                                            fontSize: '13px',
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                </Stack>
+                                                {isMediumMD ? (
+                                                    ''
+                                                ) : (
+                                                    <Typography color={'#F39801'}>
+                                                        {
+                                                            element?.price_sale !== undefined &&
+                                                            element?.cartQuantity !== undefined
+                                                                ? `${numberFormat(
+                                                                      Number(element.price_sale * element.cartQuantity)
+                                                                  )} `
+                                                                : 'N/A' /* Replace "N/A" with your preferred placeholder */
+                                                        }
+                                                    </Typography>
+                                                )}
+                                            </Stack>
+                                        )}
                                         <DeleteForeverIcon
                                             onClick={() => handleRemove(element.id)}
                                             sx={{
+                                                color: color.btnRed,
                                                 fontSize: '17px',
                                                 cursor: 'pointer',
                                             }}
