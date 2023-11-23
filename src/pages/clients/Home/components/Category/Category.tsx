@@ -96,6 +96,9 @@ const CategoryNav = () => {
                                       md={2}
                                       flexWrap={'wrap'}
                                       lg={1}
+                                      sx={{
+                                          cursor: 'pointer',
+                                      }}
                                       key={e.id}
                                       onClick={() => RedirectProductPage(e.slug)}
                                   >
