@@ -66,8 +66,8 @@ function UserCartDetail() {
                         padding: '20px',
                     }}
                 >
-                    <Grid item xs={9}>
-                        <Box>
+                    <Grid item xs={12}>
+                        <Box display={'flex'} alignContent={'center'} justifyContent={'space-between'}>
                             <Typography variant="h2" fontSize={'25px'} fontWeight={'bold'} pt={'20px'}>
                                 Chi tiết đơn hàng
                             </Typography>
@@ -133,31 +133,31 @@ function UserCartDetail() {
                                     Đơn hàng đã bị hủy
                                 </Box>
                             )}
-                            <Box>
-                                <Stack direction={'row'} mt={'10px'}>
-                                    <Typography>Mã đơn hàng:</Typography>
-                                    <Typography fontWeight={'bold'}>{orderCurrent.id}</Typography>
-                                </Stack>
+                        </Box>
+                        <Box>
+                            <Stack direction={'row'} mt={'10px'}>
+                                <Typography>Mã đơn hàng:</Typography>
+                                <Typography fontWeight={'bold'}>{orderCurrent.id}</Typography>
+                            </Stack>
 
-                                <Stack direction={'row'} mt={'10px'}>
-                                    <Typography>Ngày mua: </Typography>
-                                    <Typography fontWeight={'bold'}>{formatDates(orderCurrent.createdAt)}</Typography>
-                                </Stack>
+                            <Stack direction={'row'} mt={'10px'}>
+                                <Typography>Ngày mua: </Typography>
+                                <Typography fontWeight={'bold'}>{formatDates(orderCurrent.createdAt)}</Typography>
+                            </Stack>
 
-                                <Stack direction={'row'} mt={'10px'}>
-                                    <Typography>Tổng tiền: </Typography>
-                                    <Typography fontWeight={'bold'}>{numberFormat(orderCurrent.money)}</Typography>
-                                </Stack>
+                            <Stack direction={'row'} mt={'10px'}>
+                                <Typography>Tổng tiền: </Typography>
+                                <Typography fontWeight={'bold'}>{numberFormat(orderCurrent.money)}</Typography>
+                            </Stack>
 
-                                <Stack direction={'row'} mt={'10px'}>
-                                    <Typography>Thông tin xuất hóa đơn: </Typography>
-                                    <Typography fontWeight={'bold'}>không có</Typography>
-                                </Stack>
-                            </Box>
+                            <Stack direction={'row'} mt={'10px'}>
+                                <Typography>Thông tin xuất hóa đơn: </Typography>
+                                <Typography fontWeight={'bold'}>không có</Typography>
+                            </Stack>
                         </Box>
                     </Grid>
 
-                    <Grid item xs={3}>
+                    <Grid item xs={12}>
                         <Box mt={'60px'}>
                             {orderCurrent.status == null ? (
                                 <Button
@@ -364,11 +364,12 @@ function UserCartDetail() {
                                         },
                                     }}
                                 >
-                                    <TableCell>Hình ảnh</TableCell>
+                                    <TableCell>STT</TableCell>
+                                    <TableCell align="center">Hình ảnh</TableCell>
                                     <TableCell align="center">Tên sản phẩm</TableCell>
                                     <TableCell align="center">SKU</TableCell>
                                     <TableCell align="center">Giá bán</TableCell>
-                                    <TableCell align="right"> SL</TableCell>
+                                    <TableCell align="center">SL</TableCell>
                                     <TableCell align="center">Thành tiền</TableCell>
                                 </TableRow>
                             </TableHead>
@@ -376,11 +377,20 @@ function UserCartDetail() {
                                 {orderCurrent?.orderDetail?.map((order: any) => {
                                     return (
                                         <TableRow>
+                                            <TableCell>{order.product.id}</TableCell>
                                             <TableCell>
-                                                <img width={'80px'} height={'70px'} src={order.product.image} alt="" />
+                                                <img
+                                                    width={'80px'}
+                                                    height={'70px'}
+                                                    src={order.product.image}
+                                                    alt=""
+                                                    style={{
+                                                        margin: 'auto',
+                                                        objectFit: 'contain',
+                                                    }}
+                                                />
                                             </TableCell>
-
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Link
                                                     to={`/products/${order.product.slug}`}
                                                     style={{
@@ -392,19 +402,19 @@ function UserCartDetail() {
                                                 </Link>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.product.id}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.product.price_sale}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>{order.quantity}</Typography>
                                             </TableCell>
 
-                                            <TableCell>
+                                            <TableCell align="center">
                                                 <Typography fontSize={'12px'}>
                                                     {numberFormat(order.quantity * order.product.price_sale)}
                                                 </Typography>
