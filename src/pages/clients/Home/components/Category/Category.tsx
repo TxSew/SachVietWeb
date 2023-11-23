@@ -57,6 +57,7 @@ const CategoryNav = () => {
                     alignItems={'center'}
                     p={2}
                     spacing={2}
+                    mb={2}
                     border={'1px solid #eee'}
                     borderRadius={3}
                 >
