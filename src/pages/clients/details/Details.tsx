@@ -111,7 +111,19 @@ export const Details = () => {
     return (
         <Box bgcolor={'#eee'}>
             <Container maxWidth="xl">
-                <Stack direction={'row'} py={1} alignItems={'center'} textTransform={'uppercase'}>
+                <Stack
+                    direction={'row'}
+                    py={1}
+                    alignItems={'center'}
+                    textTransform={'uppercase'}
+                    sx={
+                        isMediumMD
+                            ? {
+                                  fontSize: '12px',
+                              }
+                            : {}
+                    }
+                >
                     <Typography variant="caption">{Detail?.category?.name}</Typography>
                     <ChevronRightOutlinedIcon />
                     <Typography variant="caption">{Detail?.title}</Typography>

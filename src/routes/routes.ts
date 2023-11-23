@@ -41,6 +41,8 @@ import SearchOrder from '../pages/clients/searchOrder/searchOrder';
 import News from '../pages/clients/News/News';
 import NewsDetail from '../pages/clients/News/NewsDetail/NewsDetail';
 import AdminProductInventory from '../pages/admin/ProductInventory/AdminProductInventory';
+import CreateNews from '../pages/admin/News/CreateNews';
+import AdminNews from '../pages/admin/News/AdminNews';
 
 const PublicRouter = [
     {
@@ -131,6 +133,14 @@ const PrivateRouter = [
     {
         path: '/admin/createCategory',
         component: CreateCategory,
+    },
+    {
+        path: '/admin/createNews',
+        component: CreateNews,
+    },
+    {
+        path: '/admin/news',
+        component: AdminNews,
     },
     {
         path: '/admin/category/:id',

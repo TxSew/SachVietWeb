@@ -10,6 +10,7 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -18,7 +19,9 @@ import ProductItem from '../../../components/ProductItem/ProductItem';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import Tabbar from './components/Tabbar';
+import useMedia from '../../../hooks/useMedia/useMedia';
 function Category() {
+    const { isMediumMD } = useMedia();
     const [searchParams, setSearchParams] = useSearchParams();
     const [categoryParams, setCategoryParams] = useSearchParams();
     const value: any = searchParams.get('q');
@@ -86,10 +89,14 @@ function Category() {
         <Box bgcolor={'#eee'} py={3}>
             <Container maxWidth={'xl'}>
                 <Grid container bgcolor={color.white} py={3} px={3}>
-                    <Grid item xs={3}>
-                        <Tabbar />
-                    </Grid>
-                    <Grid item xs={9}>
+                    {isMediumMD ? (
+                        <MenuIcon />
+                    ) : (
+                        <Grid item className="hiddenTab" xs={3}>
+                            <Tabbar />
+                        </Grid>
+                    )}
+                    <Grid item xs={isMediumMD ? 12 : 9}>
                         <Box>
                             <Box>
                                 {value && (
@@ -132,15 +139,15 @@ function Category() {
                             </Stack>
                         </Box>
                         <Box mt={3}>
-                            <Stack direction={'row'} flexWrap={'wrap'}>
+                            <Grid container>
                                 {products.map((item: Product, index) => {
                                     return (
-                                        <Grid key={item.id} item xs={3}>
+                                        <Grid key={item.id} item xs={6} md={4} lg={3}>
                                             <ProductItem products={item} />
                                         </Grid>
                                     );
                                 })}
-                            </Stack>
+                            </Grid>
                             <Stack mt={2} spacing={2}>
                                 <Pagination count={count} page={page} onChange={handleChanges} />
                             </Stack>
