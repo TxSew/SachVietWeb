@@ -43,6 +43,7 @@ import NewsDetail from '../pages/clients/News/NewsDetail/NewsDetail';
 import AdminProductInventory from '../pages/admin/ProductInventory/AdminProductInventory';
 import CreateNews from '../pages/admin/News/CreateNews';
 import AdminNews from '../pages/admin/News/AdminNews';
+import UpdateNews from '../pages/admin/News/UpdateNews';
 
 const PublicRouter = [
     {
@@ -141,6 +142,11 @@ const PrivateRouter = [
     {
         path: '/admin/news',
         component: AdminNews,
+    },
+
+    {
+        path: '/admin/news/:id',
+        component: UpdateNews,
     },
     {
         path: '/admin/category/:id',

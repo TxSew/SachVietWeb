@@ -19,6 +19,7 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^4.3.0",
+    "@tippyjs/react": "^4.2.6",
     "@types/faker": "^6.6.9",
     "@types/firebase": "^3.2.1",
     "@types/jest": "^27.5.2",

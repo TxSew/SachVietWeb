@@ -21,7 +21,6 @@ const CreateDiscount = () => {
         await httpDiscount.post(data);
         pushSuccess('Thêm mã giảm giá thành công');
     };
-
     return (
         <Box>
             <form action="" onSubmit={handleSubmit(handleAddDiscount)}>
@@ -41,7 +40,7 @@ const CreateDiscount = () => {
                         <Controller
                             control={control}
                             name="code"
-                            defaultValue="" // Set an initial value here
+                            defaultValue=""
                             rules={{
                                 required: 'Vui lòng nhập mã giảm giá',
                                 validate: validateForm,

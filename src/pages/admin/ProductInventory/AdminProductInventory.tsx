@@ -34,6 +34,7 @@ import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCategory, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
+import { color } from '../../../Theme/color';
 
 export default function AdminProductInventory() {
     const [Products, setProducts] = React.useState<Product[]>([]);
@@ -64,8 +65,8 @@ export default function AdminProductInventory() {
             limit: 5,
             page,
             keyword: debounce,
-            sortBy,
-            sortWith,
+            sortBy: 'quantity',
+            sortWith: 'desc',
             categoryFilter: sortCategory,
         };
 
@@ -252,7 +253,11 @@ export default function AdminProductInventory() {
                                         />
                                     </TableCell>
                                     <TableCell align="right">{e.title}</TableCell>
-                                    <TableCell align="right">{e.quantity}</TableCell>
+                                    <TableCell align="right">
+                                        <Typography color={Number(e.quantity) <= 5 ? color.error : ''}>
+                                            {e.quantity}
+                                        </Typography>
+                                    </TableCell>
                                     <TableCell align="right">{e.soldQuantity}</TableCell>
                                     <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
                                     <TableCell align="right">

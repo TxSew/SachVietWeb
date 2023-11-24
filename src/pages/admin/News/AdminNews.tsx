@@ -31,10 +31,8 @@ import { useDownloadExcel } from 'react-export-table-to-excel';
 import { Link } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushError } from '../../../components/Toast/Toast';
-import { numberFormat } from '../../../helpers/formatPrice';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { httpCategory, httpProduct } from '../../../submodules/controllers/http/axiosController';
-import { Category } from '../../../submodules/models/ProductModel/Category';
+import { httpNews, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 
 export default function AdminNews() {
@@ -44,14 +42,12 @@ export default function AdminNews() {
         id: '',
     });
 
-    const [Category, setCategory] = React.useState<Category[]>([]);
-    const [pageCount, setPageCount] = React.useState<number>(1);
     const [page, setPage] = React.useState<number>(1);
     const [search, setSearch] = React.useState<string>('');
     const [sortBy, setSortBy] = React.useState('createdAt');
     const [sortWith, setSortWith] = React.useState('asc');
     const [sort, setSort] = React.useState('');
-    const [sortCategory, setSortCategory] = React.useState('');
+    const [news, setNews] = React.useState<any>({});
     const debounce = useDebounce(search, 400);
 
     const tableRef = React.useRef<any>(null);
@@ -65,44 +61,26 @@ export default function AdminNews() {
         const props = {
             limit: 5,
             page,
-            keyword: debounce,
-            sortBy,
-            sortWith,
-            categoryFilter: sortCategory,
         };
-
-        fetchData(props);
-    }, [page, debounce, sortBy, sortWith, sortCategory]);
-
-    const fetchData = async (props: any) => {
-        try {
-            const product: any = await httpProduct.getAll(props);
-            const { products } = product;
-            setPageCount(product.totalPage);
-            setProducts(products);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-    React.useEffect(() => {
-        fetchCategory();
-    }, []);
-
-    const fetchCategory = async () => {
-        const props = {};
-        const category: Category[] = await httpCategory.getCategory(props);
-        setCategory(category);
-    };
+        httpNews.getList(props).then((news) => {
+            if (news) {
+                setNews(news);
+            }
+        });
+    }, [page]);
 
     const handleChange = async (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
 
     const handleDelete = async (id: any) => {
-        await httpProduct.delete(id);
-        pushError('Xoá sản phẩm thành công');
-        const product = Products.filter((e) => e.id !== id);
-        setProducts(product);
+        await httpNews.deleteNew(id).then((res) => {
+            pushError('Xoá Bài viết thành công');
+        });
+        const data = news?.data?.filter((e: any) => e.id !== id);
+        setNews({
+            data: data,
+        });
         handleClickClose();
     };
 
@@ -122,10 +100,6 @@ export default function AdminNews() {
             isChecked: false,
             id: '',
         });
-    };
-
-    const handleSortByCategory = async (event: SelectChangeEvent) => {
-        setSortCategory(event.target.value);
     };
 
     const handleChangeSort = (event: SelectChangeEvent) => {
@@ -154,7 +128,7 @@ export default function AdminNews() {
             <Grid mt={3} width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        Quản lý Sản phẩm
+                        Quản lý bài viết
                     </Typography>
 
                     <Button variant="contained">
@@ -162,9 +136,9 @@ export default function AdminNews() {
                             style={{
                                 color: color.white,
                             }}
-                            to={`/admin/createProduct`}
+                            to={`/admin/createNews`}
                         >
-                            Thêm sản phẩm
+                            Thêm bài viết
                         </Link>
                     </Button>
                 </Stack>
@@ -186,21 +160,7 @@ export default function AdminNews() {
                             <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
                         </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Select
-                            value={sortCategory}
-                            onChange={handleSortByCategory}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                        >
-                            <MenuItem value="">
-                                <em>Chọn danh mục</em>
-                            </MenuItem>
-                            {Category.map((e: Category) => {
-                                return <MenuItem value={e.slug}>{e.name}</MenuItem>;
-                            })}
-                        </Select>
-                    </FormControl>
+
                     <Button
                         onClick={onDownload}
                         variant="outlinedGreen"
@@ -242,19 +202,27 @@ export default function AdminNews() {
                                 }}
                             >
                                 <TableCell>ID</TableCell>
-                                <TableCell>Hình ảnh</TableCell>
-                                <TableCell align="right">Tiêu đề</TableCell>
-                                <TableCell align="right">Nội dung ngắn</TableCell>
+                                <TableCell align="center">Tiêu đề</TableCell>
+                                <TableCell align="center">Hình ảnh</TableCell>
+                                <TableCell align="right">Tác giả</TableCell>
+                                <TableCell align="right"> Trạng thái</TableCell>
                                 <TableCell align="right">Hành động</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {Products.map((e, i) => (
+                            {news?.data?.map((e: any, i: number) => (
                                 <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row">
                                         {e.id}
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell align="center">{e.title}</TableCell>
+                                    <TableCell
+                                        sx={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                        }}
+                                        align="center"
+                                    >
                                         <img
                                             style={{ objectFit: 'cover' }}
                                             src={e?.image}
@@ -263,7 +231,15 @@ export default function AdminNews() {
                                             alt=""
                                         />
                                     </TableCell>
-                                    <TableCell align="right">{e.title}</TableCell>
+
+                                    <TableCell align="right">{e.author}</TableCell>
+                                    <TableCell align="right">
+                                        {e.status == null ? (
+                                            <Chip label="Xuất bản" color="success" />
+                                        ) : (
+                                            <Chip color="error" label="Ngưng  Xuất bản" />
+                                        )}
+                                    </TableCell>
                                     <TableCell align="right">
                                         <Stack
                                             direction={'row'}
@@ -271,7 +247,7 @@ export default function AdminNews() {
                                             spacing={2}
                                             justifyContent={'end'}
                                         >
-                                            <Link to={`/admin/product/${e.id}`}>
+                                            <Link to={`/admin/news/${e.id}`}>
                                                 <EditCalendarIcon
                                                     sx={{
                                                         color: 'green',
@@ -308,7 +284,7 @@ export default function AdminNews() {
                                                             }}
                                                         />
                                                         <DialogTitle fontSize={'16px'}>
-                                                            Bạn chắc chắn muốn xóa sản phẩm này?
+                                                            Bạn chắc chắn muốn xóa bài viết này?
                                                         </DialogTitle>
                                                     </DialogContentText>
                                                 </DialogContent>
@@ -359,7 +335,7 @@ export default function AdminNews() {
                     </Table>
                 </TableContainer>
                 <Stack mt={2} textAlign={'center'} justifyContent={'center'} alignItems={''}>
-                    <Pagination count={pageCount} page={page} onChange={handleChange} />
+                    <Pagination count={news?.totalPage} page={page} onChange={handleChange} />
                 </Stack>
             </Grid>
         </Grid>

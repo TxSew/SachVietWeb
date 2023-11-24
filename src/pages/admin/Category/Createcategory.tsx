@@ -2,18 +2,16 @@ import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack,
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { color } from '../../../Theme/color';
+import { pushSuccess, pushWarning } from '../../../components/Toast/Toast';
+import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import { validateForm } from '../../../helpers/validateForm';
-import useToast from '../../../hooks/useToast/useToast';
+import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
-import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
-import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
-import { pushSuccess, pushWarning } from '../../../components/Toast/Toast';
 
 const CreateCategory = () => {
-    const { image, handleImageChange, img } = useImageUpload();
     const [category, setCategory] = useState([]);
-
+    const { image, handleImageChange, img } = useImageUpload();
     useEffect(() => {
         getCategories();
     }, []);
@@ -25,16 +23,17 @@ const CreateCategory = () => {
 
     const handleAddCategory = async (data: Category) => {
         const image = await uploadImageFirebase(img);
-        data.image = image;
-        const category: Category = data;
-        try {
-            const categoryDto = await httpCategory.store(category);
-            if (categoryDto) {
-                pushSuccess('Thêm danh mục sản phẩm thành công');
-            }
-        } catch (err) {
-            pushWarning('tên danh mục đã tồn tại!');
-        }
+        console.log('🚀 ~ file: Createcategory.tsx:26 ~ handleAddCategory ~ image:', image);
+        // data.image = image;
+        // const category: Category = data;
+        // try {
+        //     const categoryDto = await httpCategory.store(category);
+        //     if (categoryDto) {
+        //         pushSuccess('Thêm danh mục sản phẩm thành công');
+        //     }
+        // } catch (err) {
+        //     pushWarning('tên danh mục đã tồn tại!');
+        // }
     };
 
     const {
@@ -151,6 +150,7 @@ const CreateCategory = () => {
                         }}
                         fullWidth
                     />
+                    {errors.image && <span>{errors.image.message}</span>}
                     {image && (
                         <div>
                             <img src={image} alt="Uploaded preview" style={{ maxWidth: '100px' }} />

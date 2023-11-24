@@ -1,29 +1,46 @@
 import { Box, Button, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
+import { pushSuccess } from '../../../components/Toast/Toast';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import { validateForm } from '../../../helpers/validateForm';
-import { httpNews, httpProduct } from '../../../submodules/controllers/http/axiosController';
+import { httpNews } from '../../../submodules/controllers/http/axiosController';
 import { New } from '../../../submodules/models/NewsModel/new';
-import { pushSuccess } from '../../../components/Toast/Toast';
 
-const CreateNews = () => {
+const UpdateNews = () => {
     const [img, setImg] = useState<string[]>([]);
     const [image, setImage] = useState(null);
     const editorRef = useRef<any>(null);
-    const handleAddNew = async (data: any) => {
-        const image = await uploadImageFirebase(img);
+    const { id } = useParams();
+    useEffect(() => {
+        httpNews.getOne(Number(id)).then((res) => {
+            reset({
+                author: res.author,
+                title: res.title,
+                image: res.image,
+                desc: res.desc,
+            });
+        });
+    }, []);
 
+    const handleUpdateNew = async (data: any) => {
+        let thumbnail;
+        if (img) thumbnail = await uploadImageFirebase(img);
+        data.image = thumbnail;
         const props = {
-            image: image,
+            id: Number(id),
             ...data,
         };
-
-        httpNews.createNew(props).then((news) => {
-            pushSuccess('Thêm bài viết mới thành công');
-        });
+        if (props) {
+            httpNews.updateNew(props).then((news) => {
+                if (news) {
+                    pushSuccess('cập nhật bài viết thành công');
+                }
+            });
+        }
     };
 
     const handleImageChange = (event: any) => {
@@ -41,6 +58,7 @@ const CreateNews = () => {
     const {
         handleSubmit,
         control,
+        reset,
         register,
         formState: { errors },
     } = useForm<New>({
@@ -48,10 +66,10 @@ const CreateNews = () => {
     });
     return (
         <Box>
-            <form action="" onSubmit={handleSubmit(handleAddNew)}>
+            <form action="" onSubmit={handleSubmit(handleUpdateNew)}>
                 <Stack direction={'row'} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
-                        Thêm Tin tức
+                        Cập nhật Tin tức
                     </Typography>
                 </Stack>
                 <Grid bgcolor={color.white} p={2} container mt={3} justifyContent={'space-between'}>
@@ -103,6 +121,7 @@ const CreateNews = () => {
                                     fullWidth
                                     placeholder="Vui lòng nhập tiêu đề bài viết!"
                                 />
+
                                 {image && (
                                     <div>
                                         <img src={image} alt="Uploaded preview" style={{ maxWidth: '100px' }} />
@@ -210,7 +229,7 @@ const CreateNews = () => {
                         </Box>
                         <Stack direction={'row'} justifyContent={'end'} mt={1}>
                             <Button type="submit" variant="contained">
-                                Thêm
+                                Cập nhật
                             </Button>
                         </Stack>
                     </Grid>
@@ -220,4 +239,4 @@ const CreateNews = () => {
     );
 };
 
-export default CreateNews;
+export default UpdateNews;
