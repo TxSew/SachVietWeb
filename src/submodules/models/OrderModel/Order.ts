@@ -9,6 +9,7 @@ export interface Order extends BaseModel, Modified {
     orderDate?: string;
     fullName?: string;
     phone?: string;
+    email?: string;
     money?: string;
     price_ship?: string;
     coupon?: string;

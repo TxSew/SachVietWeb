@@ -154,6 +154,29 @@ function Checkout() {
                             </FormHelperText>
                         </FormControl>
                         <FormControl>
+                            <Typography>Địa chỉ email</Typography>
+                            <Controller
+                                control={control}
+                                defaultValue="" // Set an initial value here
+                                name="email"
+                                rules={{
+                                    required: 'Vui lòng nhập địa chỉ email',
+                                }}
+                                render={({ field }) => (
+                                    <OutlinedInput
+                                        key={1}
+                                        {...field}
+                                        fullWidth
+                                        placeholder="Vui lòng nhập email của bạn!"
+                                    />
+                                )}
+                            />
+
+                            <FormHelperText sx={{ color: color.error }}>
+                                {errors.email && errors.email.message}
+                            </FormHelperText>
+                        </FormControl>
+                        <FormControl>
                             <Typography>Số điện thoại</Typography>
                             <Controller
                                 control={control}
