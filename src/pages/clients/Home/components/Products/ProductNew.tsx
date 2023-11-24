@@ -5,6 +5,7 @@ import useLoading from '../../../../../hooks/useLoading/useLoading';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import { redirect, useNavigate } from 'react-router-dom';
+import { image } from '../../../../../assets';
 
 function ProductNew() {
     const { isLoading, startLoading, stopLoading } = useLoading();
@@ -55,8 +56,13 @@ function ProductNew() {
                             borderBottom={'1px solid #eee'}
                         >
                             <img
-                                src="https://cdn0.fahasa.com/skin/frontend/base/default/images/ico_dealhot.png"
+                                width={'40px'}
+                                height={'40px'}
+                                src={image.new}
                                 alt=""
+                                style={{
+                                    objectFit: 'cover',
+                                }}
                             />
                             <Typography
                                 variant="h3"

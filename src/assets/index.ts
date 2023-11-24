@@ -9,4 +9,8 @@ export const image = {
     sale: require('./images/sale.png'),
     producer: require('./images/producer.png'),
     quantityProduct: require('./images/quantiyProduct.png'),
+    new: require('./images/New.png'),
+    folder: require('./images/folder.png'),
+    Fire: require('./images/Fire.png'),
+    CategoryIcon: require('./images/categoryIcon.png'),
 };
