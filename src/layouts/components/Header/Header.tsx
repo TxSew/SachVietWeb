@@ -1,7 +1,9 @@
 import { Logout, PersonAdd, Settings } from '@mui/icons-material';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 import HowToRegSharpIcon from '@mui/icons-material/HowToRegSharp';
 import InfoIcon from '@mui/icons-material/Info';
+import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginSharpIcon from '@mui/icons-material/LoginSharp';
 import MenuIcon from '@mui/icons-material/Menu';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
@@ -12,9 +14,6 @@ import SellIcon from '@mui/icons-material/Sell';
 import ShoppingBasketSharpIcon from '@mui/icons-material/ShoppingBasketSharp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import LockOpenIcon from '@mui/icons-material/LockOpen';
-import HowToRegIcon from '@mui/icons-material/HowToReg';
-import SegmentIcon from '@mui/icons-material/Segment';
 import {
     Avatar,
     Badge,
@@ -37,16 +36,16 @@ import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, NavLink, createSearchParams, useNavigate } from 'react-router-dom';
+import { image } from '../../../assets';
 import Image from '../../../components/Image/Image';
 import { BaseAPi } from '../../../configs/BaseApi';
+import { convertText } from '../../../helpers/convertText';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { RootState } from '../../../redux/storeClient';
 import HttpCategoryController from '../../../submodules/controllers/http/httpCategoryController';
 import HttpProductController from '../../../submodules/controllers/http/httpProductController';
 import { User } from '../../../submodules/models/UserModel/User';
-import { convertText } from '../../../helpers/convertText';
-import { image } from '../../../assets';
 
 const Header = () => {
     const http = new HttpProductController(BaseAPi);
@@ -58,7 +57,7 @@ const Header = () => {
     const [Products, setProducts] = useState<any>([]);
     const [categories, setCategories] = useState<any>([]);
     const dataSearch = useDebounce(search, 300);
-
+    const redirect = useNavigate();
     const { isMediumMD } = useMedia();
     useEffect(() => {
         fetchValueSearch(dataSearch);
@@ -281,6 +280,7 @@ const Header = () => {
                                                     <Typography
                                                         onClick={() => {
                                                             localStorage.clear();
+                                                            redirect('/');
                                                             window.location.reload();
                                                         }}
                                                         sx={{

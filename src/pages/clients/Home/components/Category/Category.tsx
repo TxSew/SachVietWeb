@@ -5,11 +5,11 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { color } from '../../../../../Theme/color';
+import { image } from '../../../../../assets';
 import useLoading from '../../../../../hooks/useLoading/useLoading';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
 import { httpCategory } from '../../../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../../../submodules/models/ProductModel/Category';
-import { image } from '../../../../../assets';
 
 const CategoryNav = () => {
     const redirect = useNavigate();
@@ -75,82 +75,87 @@ const CategoryNav = () => {
                     </Typography>
                 </Stack>
 
-                <Swiper watchSlidesProgress={true} slidesPerView={isMediumMD ? 4 : 10} className="mySwiper">
-                    {isLoading
-                        ? Array.from({ length: category.length }).map((e) => {
-                              return (
-                                  <SwiperSlide>
-                                      <Grid flexWrap={'wrap'} item>
-                                          <Box p={'0 5px'} alignItems={'center'} textAlign={'center'}>
-                                              <Skeleton
-                                                  variant="rectangular"
-                                                  height={isMediumMD ? '100px' : '120px'}
-                                                  sx={{
-                                                      borderRadius: '5px',
-                                                  }}
-                                              />
-                                              <Skeleton
-                                                  animation="wave"
-                                                  sx={{
-                                                      m: '0 auto',
-                                                  }}
-                                                  height={50}
-                                                  width="60%"
-                                              />
-                                          </Box>
-                                      </Grid>
-                                  </SwiperSlide>
-                              );
-                          })
-                        : category.map((e: Category) => {
-                              return (
-                                  <SwiperSlide>
-                                      <Grid
-                                          item
-                                          flexWrap={'wrap'}
-                                          sx={{
-                                              cursor: 'pointer',
-                                          }}
-                                          key={e.id}
-                                          onClick={() => RedirectProductPage(e.slug)}
-                                      >
-                                          <Box px={isMediumMD ? 2 : 1}>
-                                              <img
-                                                  style={{
-                                                      flexShrink: 0,
-                                                      border: '1px solid #eee',
-                                                  }}
-                                                  src={e.image}
-                                                  width={'100%'}
-                                                  height={isMediumMD ? '100px' : '120px'}
-                                                  alt=""
-                                              />
+                <Grid container px={2} mt={2}>
+                    <Swiper
+                        watchSlidesProgress={true}
+                        slidesPerView={isMediumMD ? 4 : 10}
+                        className="mySwiper categorySwiper"
+                    >
+                        {isLoading
+                            ? Array.from({ length: category.length }).map((e) => {
+                                  return (
+                                      <SwiperSlide>
+                                          <Grid flexWrap={'wrap'} item>
+                                              <Box p={'0 5px'} alignItems={'center'} textAlign={'center'}>
+                                                  <Skeleton
+                                                      variant="rectangular"
+                                                      height={isMediumMD ? '100px' : '120px'}
+                                                      sx={{
+                                                          borderRadius: '5px',
+                                                      }}
+                                                  />
+                                                  <Skeleton
+                                                      animation="wave"
+                                                      sx={{
+                                                          m: '0 auto',
+                                                      }}
+                                                      height={50}
+                                                      width="60%"
+                                                  />
+                                              </Box>
+                                          </Grid>
+                                      </SwiperSlide>
+                                  );
+                              })
+                            : category.map((e: Category) => {
+                                  return (
+                                      <SwiperSlide>
+                                          <Grid
+                                              item
+                                              flexWrap={'wrap'}
+                                              sx={{
+                                                  cursor: 'pointer',
+                                              }}
+                                              key={e.id}
+                                              onClick={() => RedirectProductPage(e.slug)}
+                                          >
+                                              <Box px={isMediumMD ? 2 : 1}>
+                                                  <img
+                                                      style={{
+                                                          flexShrink: 0,
+                                                          border: '1px solid #eee',
+                                                      }}
+                                                      src={e.image}
+                                                      width={'100%'}
+                                                      height={isMediumMD ? '100px' : '120px'}
+                                                      alt=""
+                                                  />
 
-                                              <Typography
-                                                  variant="body1"
-                                                  pt={1}
-                                                  color={color.text_color}
-                                                  textTransform={'capitalize'}
-                                                  sx={{
-                                                      fontSize: '15px',
-                                                      lineHeight: '1',
-                                                      overflow: 'hidden',
-                                                      display: '-webkit-box',
-                                                      textAlign: 'center',
-                                                      WebkitLineClamp: 2,
-                                                      lineClamp: 2,
-                                                      WebkitBoxOrient: 'vertical',
-                                                  }}
-                                              >
-                                                  {e.name}
-                                              </Typography>
-                                          </Box>
-                                      </Grid>
-                                  </SwiperSlide>
-                              );
-                          })}
-                </Swiper>
-                <Grid container px={2} mt={2}></Grid>
+                                                  <Typography
+                                                      variant="body1"
+                                                      pt={1}
+                                                      color={color.text_color}
+                                                      textTransform={'capitalize'}
+                                                      sx={{
+                                                          fontSize: '15px',
+                                                          lineHeight: '1',
+                                                          overflow: 'hidden',
+                                                          display: '-webkit-box',
+                                                          textAlign: 'center',
+                                                          WebkitLineClamp: 2,
+                                                          lineClamp: 2,
+                                                          WebkitBoxOrient: 'vertical',
+                                                      }}
+                                                  >
+                                                      {e.name}
+                                                  </Typography>
+                                              </Box>
+                                          </Grid>
+                                      </SwiperSlide>
+                                  );
+                              })}
+                    </Swiper>
+                </Grid>
             </Box>
         </Container>
     );

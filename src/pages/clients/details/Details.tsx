@@ -8,6 +8,7 @@ import {
     Button,
     Container,
     Grid,
+    Pagination,
     Rating,
     Stack,
     Table,
@@ -30,6 +31,7 @@ import {
     TwitterIcon,
     TwitterShareButton,
 } from 'react-share';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import { color } from '../../../Theme/color';
 import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
 import ProductItem from '../../../components/ProductItem/ProductItem';
@@ -41,6 +43,10 @@ import { RootState } from '../../../redux/storeClient';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import './style.scss';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import { Mousewheel, Navigation } from 'swiper';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -132,53 +138,77 @@ export const Details = () => {
                     <Grid container bgcolor={'#fff'} p={2}>
                         <Grid item xs={12} md={5} pb={3}>
                             <Box mx={'auto'} display={'flex'}>
-                                <Grid container display={'flex'} margin={'auto'} spacing={2}>
+                                <Grid container display={'flex'} spacing={2}>
                                     {!isMediumMD ? (
-                                        <Grid direction={'column'} xs={12} md={3} spacing={1} margin={'auto'} p={2}>
+                                        <Grid direction={'column'} xs={12} margin={'auto'} md={3} spacing={1} p={2}>
                                             <img
                                                 src={Detail?.image}
                                                 style={{
-                                                    border: '2px solid gray',
+                                                    border: '2px solid #eee',
+
                                                     marginBottom: '2px',
                                                 }}
                                                 onClick={() => handleChangeImage(Detail.image)}
-                                                width={'60px'}
+                                                width={'70px'}
                                                 height={'60px'}
                                                 alt=""
                                             />
-
-                                            {Detail?.productImages
-                                                ? Detail?.productImages.map((e: any, i: number) => {
-                                                      return (
-                                                          <img
-                                                              key={i}
-                                                              src={e.image}
-                                                              alt=""
-                                                              style={{
-                                                                  border: '2px solid gray',
-                                                                  marginBottom: '2px',
-                                                              }}
-                                                              onClick={() => handleChangeImage(e)}
-                                                              width={'60px'}
-                                                              height={'60px'}
-                                                          />
-                                                      );
-                                                  })
-                                                : ''}
+                                            <Box
+                                                width={'70px'}
+                                                mt={'4px'}
+                                                height={'190px'}
+                                                sx={{
+                                                    boxShadow: 'rgba(100, 100, 111, 0.5) 0px 7px 50px 0px',
+                                                }}
+                                            >
+                                                <Swiper
+                                                    direction={'vertical'}
+                                                    watchSlidesProgress={true}
+                                                    pagination={{
+                                                        clickable: true,
+                                                    }}
+                                                    slidesPerView={3}
+                                                    spaceBetween={20}
+                                                >
+                                                    {Detail?.productImages?.map((e: any, i: number) => {
+                                                        return (
+                                                            <SwiperSlide>
+                                                                <img
+                                                                    key={i}
+                                                                    src={e.image}
+                                                                    style={{
+                                                                        height: '60px',
+                                                                        border: '2px solid #eee',
+                                                                    }}
+                                                                    alt=""
+                                                                    onClick={() => handleChangeImage(e)}
+                                                                    // width={'60px'}
+                                                                    // height={'60px'}
+                                                                />
+                                                            </SwiperSlide>
+                                                        );
+                                                    })}
+                                                </Swiper>
+                                            </Box>
                                         </Grid>
                                     ) : (
                                         <></>
                                     )}
+
                                     {!isMediumMD ? (
                                         <Grid justifyContent={'center'} xs={12} md={9} spacing={2} p={2}>
                                             <Box sx={{ padding: '0 64px 0 0' }}>
-                                                <ImageMagnifier src={String(image ? image : Detail.image)} />
+                                                <ImageMagnifier
+                                                    width="100%"
+                                                    height="300px"
+                                                    src={String(image ? image : Detail.image)}
+                                                />
                                             </Box>
                                         </Grid>
                                     ) : (
                                         <Grid justifyContent={'center'} xs={12} md={9} spacing={2}>
                                             <Box sx={{ padding: '0 64px' }}>
-                                                <ImageMagnifier src={String(Detail.image)} />
+                                                <ImageMagnifier width="100%" src={String(Detail.image)} />
                                             </Box>
                                         </Grid>
                                     )}
@@ -700,6 +730,7 @@ export const Details = () => {
                         <Typography variant="h2" fontWeight={'bold'} fontSize={'18.85px'}>
                             Sản phẩm liên quan
                         </Typography>
+
                         <Grid container mt={2}>
                             {RelatedProduct.map((e) => {
                                 return (
