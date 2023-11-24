@@ -153,14 +153,7 @@ export const Details = () => {
                                                 height={'60px'}
                                                 alt=""
                                             />
-                                            <Box
-                                                width={'70px'}
-                                                mt={'4px'}
-                                                height={'190px'}
-                                                sx={{
-                                                    boxShadow: 'rgba(100, 100, 111, 0.5) 0px 7px 50px 0px',
-                                                }}
-                                            >
+                                            <Box width={'70px'} mt={'4px'} height={'190px'}>
                                                 <Swiper
                                                     direction={'vertical'}
                                                     watchSlidesProgress={true}
