@@ -102,7 +102,7 @@ const PublicRouter = [
         component: News,
     },
     {
-        path: '/news/detail',
+        path: '/news/detail/:slug',
         component: NewsDetail,
     },
 ];

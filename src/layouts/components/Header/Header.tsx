@@ -506,63 +506,6 @@ const Header = () => {
                                                         )}
                                                     </Grid>
                                                 </Box>
-
-                                                <Typography
-                                                    variant="h2"
-                                                    display={'block'}
-                                                    padding={'16px 0'}
-                                                    textTransform={'uppercase'}
-                                                    fontWeight={'bold'}
-                                                >
-                                                    Danh mục nổi bật (4 danh mục)
-                                                </Typography>
-                                                <Grid container>
-                                                    {!categories.length ? (
-                                                        <Stack
-                                                            direction={'column'}
-                                                            alignItems={'center'}
-                                                            justifyContent={'center'}
-                                                        >
-                                                            <Box
-                                                                sx={{
-                                                                    maxWidth: '60px',
-                                                                }}
-                                                            >
-                                                                <img
-                                                                    width={'100%'}
-                                                                    src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
-                                                                    alt=""
-                                                                />
-                                                            </Box>
-                                                        </Stack>
-                                                    ) : (
-                                                        categories.map((e: any, i: number) => {
-                                                            return (
-                                                                <Grid item xs={6} md={3}>
-                                                                    <Link
-                                                                        to={`/category?category=${e.slug}`}
-                                                                        onClick={handleCloseSearch}
-                                                                        style={{
-                                                                            textAlign: 'center',
-                                                                            margin: '0 auto',
-                                                                        }}
-                                                                    >
-                                                                        <img
-                                                                            src={e.image}
-                                                                            alt=""
-                                                                            width={'50px'}
-                                                                            height={'50px'}
-                                                                            style={{
-                                                                                margin: '0 auto',
-                                                                            }}
-                                                                        />
-                                                                        <Typography color={'gray'}>{e.name}</Typography>
-                                                                    </Link>
-                                                                </Grid>
-                                                            );
-                                                        })
-                                                    )}
-                                                </Grid>
                                             </Box>
                                         </Modal>
                                         <TextField

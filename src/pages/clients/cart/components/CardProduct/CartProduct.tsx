@@ -71,9 +71,7 @@ const CartProduct = () => {
     } = useForm<any>();
 
     const handleDiscount = (data: any) => {
-        console.log(data);
         httpVoucher.getOneVoucher(data).then((res) => {
-            console.log(res);
             setVoucher(res.discountVoucher.discount);
         });
     };
@@ -219,17 +217,15 @@ const CartProduct = () => {
                                                                 ''
                                                             ) : (
                                                                 <Typography color={'#F39801'}>
-                                                                    {
-                                                                        element?.price_sale !== undefined &&
-                                                                        element?.cartQuantity !== undefined
-                                                                            ? `${numberFormat(
-                                                                                  Number(
-                                                                                      element.price_sale *
-                                                                                          element.cartQuantity
-                                                                                  )
-                                                                              )} `
-                                                                            : 'N/A' /* Replace "N/A" with your preferred placeholder */
-                                                                    }
+                                                                    {element?.price_sale !== undefined &&
+                                                                    element?.cartQuantity !== undefined
+                                                                        ? `${numberFormat(
+                                                                              Number(
+                                                                                  element.price_sale *
+                                                                                      element.cartQuantity
+                                                                              )
+                                                                          )} `
+                                                                        : ''}
                                                                 </Typography>
                                                             )}
                                                         </Stack>
@@ -284,7 +280,7 @@ const CartProduct = () => {
                                                                 ? `${numberFormat(
                                                                       Number(element.price_sale * element.cartQuantity)
                                                                   )} `
-                                                                : 'N/A' /* Replace "N/A" with your preferred placeholder */
+                                                                : '' /* Replace "N/A" with your preferred placeholder */
                                                         }
                                                     </Typography>
                                                 )}

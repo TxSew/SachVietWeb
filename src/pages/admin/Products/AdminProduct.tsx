@@ -84,6 +84,7 @@ export default function AdminProduct() {
             console.log(err);
         }
     };
+
     React.useEffect(() => {
         fetchCategory();
     }, []);

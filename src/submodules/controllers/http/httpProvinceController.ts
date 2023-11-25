@@ -23,7 +23,7 @@ class HttpProviceController {
             const response = await this.axiosInstance.get('/province');
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
     async getDistrict(): Promise<any> {
@@ -31,7 +31,7 @@ class HttpProviceController {
             const response = await this.axiosInstance.get('/province/district', {});
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 
@@ -56,7 +56,7 @@ class HttpProviceController {
             const response = await this.axiosInstance.post(`discount/store`, discount);
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
     async put(id: number, status: any) {
@@ -64,7 +64,7 @@ class HttpProviceController {
             const response = await this.axiosInstance.post(`order/update/${id}`, status);
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 
@@ -74,7 +74,7 @@ class HttpProviceController {
             const response = await this.axiosInstance.delete(`/order/${id}`);
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 }

@@ -153,21 +153,7 @@ export default function AdminCarts() {
                                         onChange={handleChangeValue}
                                     />
                                 </TableCell>
-                                <TableCell>
-                                    Khách hàng
-                                    <OutlinedInput
-                                        sx={{
-                                            display: 'block',
-                                            maxWidth: '100px',
-                                            mt: 1,
-                                            '& > input': {
-                                                p: '7px',
-                                            },
-                                        }}
-                                        fullWidth
-                                        onChange={handleChangeValue}
-                                    />
-                                </TableCell>
+                                <TableCell>Khách hàng</TableCell>
                                 <TableCell align="center">Tổng tiền</TableCell>
                                 <TableCell align="center">Ngày tạo hóa đơn</TableCell>
                                 <TableCell align="right">Trạng thái</TableCell>

@@ -33,77 +33,58 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     <ul className="">
                         <NavLink to="/admin/statistical">
                             <li className="">
-                                <i>
-                                    <FaHome />
-                                </i>
-                                <span>Trang chủ</span>
+                                <FaHome />
+                                <span>Thống Kê</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/category">
                             <li className="">
-                                <i>
-                                    <BiSolidCategoryAlt />
-                                </i>
+                                <BiSolidCategoryAlt />
                                 <span>Danh mục</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/product">
                             <li className="">
-                                <i>
-                                    <FaBookOpen />
-                                </i>
+                                <FaBookOpen />
                                 <span>Sản phẩm</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/productInventory">
                             <li className="">
-                                <i>
-                                    <FaBookOpen />
-                                </i>
+                                <FaBookOpen />
                                 <span>Hàng tồn kho</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/orders">
                             <li className="">
-                                <i>
-                                    <FaBookOpen />
-                                </i>
+                                <FaBookOpen />
                                 <span>Đơn hàng</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/producer">
                             <li className="">
-                                <i>
-                                    <BiBookAdd />
-                                </i>
+                                <BiBookAdd />
                                 <span>Cung cấp</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/discount">
                             <li className="">
-                                <i>
-                                    <BiBookAdd />
-                                </i>
+                                <BiBookAdd />
                                 <span>Giảm giá</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/customer">
                             <li className="">
-                                <i>
-                                    <BiBookAdd />
-                                </i>
+                                <BiBookAdd />
                                 <span>Khách hàng</span>
                             </li>
                         </NavLink>
                         <NavLink to="/admin/news">
                             <li className="">
-                                <i>
-                                    <BiBookAdd />
-                                </i>
+                                <BiBookAdd />
                                 <span>Tin tức</span>
                             </li>
                         </NavLink>
-
                         <div className="active start"></div>
                     </ul>
                 </div>

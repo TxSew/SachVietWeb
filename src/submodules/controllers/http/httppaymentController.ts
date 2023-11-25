@@ -18,7 +18,7 @@ class HttpPaymentController {
             const response = await this.axiosInstance.post(`/payment/stripe-payment`, data);
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 }

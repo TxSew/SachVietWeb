@@ -3,11 +3,11 @@ import { Editor } from '@tinymce/tinymce-react';
 import { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { color } from '../../../Theme/color';
+import { pushSuccess } from '../../../components/Toast/Toast';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import { validateForm } from '../../../helpers/validateForm';
-import { httpNews, httpProduct } from '../../../submodules/controllers/http/axiosController';
+import { httpNews } from '../../../submodules/controllers/http/axiosController';
 import { New } from '../../../submodules/models/NewsModel/new';
-import { pushSuccess } from '../../../components/Toast/Toast';
 
 const CreateNews = () => {
     const [img, setImg] = useState<string[]>([]);
@@ -56,31 +56,62 @@ const CreateNews = () => {
                 </Stack>
                 <Grid bgcolor={color.white} p={2} container mt={3} justifyContent={'space-between'}>
                     <Grid xs={12} md={7.8} mb={3} fontSize={'20px'}>
-                        <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Tên tiêu đề
-                        </Typography>
-                        <Controller
-                            control={control}
-                            name="title"
-                            defaultValue=""
-                            rules={{
-                                validate: validateForm,
-                                required: 'Tên sản phẩm không được bỏ trống!',
-                            }}
-                            render={({ field }) => (
-                                <OutlinedInput
-                                    {...field}
-                                    sx={{
-                                        mt: 1,
-                                        '& > input': {
-                                            p: '7px',
-                                        },
+                        <Grid container justifyContent={'space-between'}>
+                            <Grid xs={5.8}>
+                                <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
+                                    Tên tiêu đề
+                                </Typography>
+                                <Controller
+                                    control={control}
+                                    name="title"
+                                    defaultValue=""
+                                    rules={{
+                                        validate: validateForm,
+                                        required: 'Tên sản phẩm không được bỏ trống!',
                                     }}
-                                    fullWidth
-                                    placeholder="Vui lòng nhập Ten của bạn!"
+                                    render={({ field }) => (
+                                        <OutlinedInput
+                                            {...field}
+                                            sx={{
+                                                mt: 1,
+                                                '& > input': {
+                                                    p: '7px',
+                                                },
+                                            }}
+                                            fullWidth
+                                            placeholder="Vui lòng nhập Ten của bạn!"
+                                        />
+                                    )}
                                 />
-                            )}
-                        />
+                            </Grid>
+                            <Grid xs={5.8}>
+                                <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
+                                    Tên tác giả
+                                </Typography>
+                                <Controller
+                                    control={control}
+                                    name="author"
+                                    render={({ field }) => (
+                                        <OutlinedInput
+                                            type="text"
+                                            {...field}
+                                            sx={{
+                                                mt: 1,
+                                                '& > input': {
+                                                    p: '7px',
+                                                },
+                                            }}
+                                            fullWidth
+                                            placeholder="Vui lòng nhập tác giả cho bài viết"
+                                        />
+                                    )}
+                                />
+                                <Typography variant="caption" color={color.error}>
+                                    {errors.author && errors.author.message}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+
                         <Typography variant="caption" color={color.error}>
                             {errors.title && errors.title.message}
                         </Typography>
@@ -111,14 +142,17 @@ const CreateNews = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Tên tác giả
+                                    Mô tả ngắn
                                 </Typography>
                                 <Controller
                                     control={control}
-                                    name="author"
+                                    name="descShort"
+                                    defaultValue=""
+                                    rules={{
+                                        required: 'Vui lòng nhập mô tả ngắn',
+                                    }}
                                     render={({ field }) => (
                                         <OutlinedInput
-                                            type="text"
                                             {...field}
                                             sx={{
                                                 mt: 1,
@@ -127,13 +161,10 @@ const CreateNews = () => {
                                                 },
                                             }}
                                             fullWidth
-                                            placeholder="Vui lòng nhập tác giả cho bài viết"
+                                            placeholder="Vui lòng nhập mô tả ngắn!"
                                         />
                                     )}
                                 />
-                                <Typography variant="caption" color={color.error}>
-                                    {errors.author && errors.author.message}
-                                </Typography>
                             </Grid>
                         </Grid>
                         <Box>

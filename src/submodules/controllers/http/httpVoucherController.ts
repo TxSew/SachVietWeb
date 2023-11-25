@@ -21,7 +21,7 @@ class HttpVoucherController {
             });
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
     async getOneVoucher(props: any) {
@@ -40,7 +40,7 @@ class HttpVoucherController {
             });
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 }

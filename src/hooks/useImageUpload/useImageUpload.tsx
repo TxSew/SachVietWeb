@@ -1,5 +1,5 @@
-import { useState, ChangeEvent } from 'react';
-import { pushError, pushWarning } from '../../components/Toast/Toast';
+import { ChangeEvent, useState } from 'react';
+import { pushWarning } from '../../components/Toast/Toast';
 
 const useImageUpload = () => {
     const [image, setImage] = useState<string | null>(null);

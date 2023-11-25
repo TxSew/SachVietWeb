@@ -18,7 +18,7 @@ class HttpUserAddressController {
             const response = await this.axiosInstance.get('/userAddress/');
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
     async createUserAddress(props: any) {
@@ -37,7 +37,7 @@ class HttpUserAddressController {
             });
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 }

@@ -22,15 +22,15 @@ class HttpCartController {
             });
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
-    async getOrderDetail(id: number): Promise<any> {
+    async getOrderDetail(id: number) {
         try {
             const response = await this.axiosInstance.get(`order/orderDetail/${id}`);
             return response.data;
         } catch (err) {
-            throw err;
+            console.log(err);
         }
     }
     async getOrderbyUser(props: any): Promise<any> {
@@ -39,7 +39,7 @@ class HttpCartController {
             const response = await this.axiosInstance.post(`order/current`, props);
             return response.data;
         } catch (err) {
-            throw err;
+            console.log(err);
         }
     }
     async getOrderAdminbyUser(id: number, props: any): Promise<any> {
@@ -47,7 +47,7 @@ class HttpCartController {
             const response = await this.axiosInstance.post(`order/orderUser/${id}`, props);
             return response.data;
         } catch (err) {
-            throw err;
+            console.log(err);
         }
     }
 
@@ -56,7 +56,7 @@ class HttpCartController {
             const response = await this.axiosInstance.get(`products/currentUpdate/${id}`);
             return response.data;
         } catch (err) {
-            throw err;
+            console.log(err);
         }
     }
 

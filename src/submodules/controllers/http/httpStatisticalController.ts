@@ -19,7 +19,7 @@ class HttpStatisticalController {
             const response = await this.axiosInstance.get('/statistical');
             return response.data;
         } catch (error) {
-            throw error;
+            console.log(error);
         }
     }
 }

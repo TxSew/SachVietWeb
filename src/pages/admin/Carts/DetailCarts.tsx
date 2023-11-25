@@ -22,14 +22,19 @@ import { httpCart } from '../../../submodules/controllers/http/axiosController';
 function DetailCarts() {
     const componentRef: any = useRef();
     const { id } = useParams();
+    console.log('🚀 ~ file: DetailCarts.tsx:25 ~ DetailCarts ~ id:', id);
     const [orderCurrent, setDetailOrder] = useState<any>({});
     useEffect(() => {
         fetchOrderDetail();
     }, []);
     const fetchOrderDetail = async () => {
-        const detail = await httpCart.getOrderDetail(Number(id));
-        if (detail) {
-            setDetailOrder(detail);
+        try {
+            const detail = await httpCart.getOrderDetail(Number(id));
+            if (detail) {
+                setDetailOrder(detail);
+            }
+        } catch (err) {
+            console.log(err);
         }
     };
     const handlePrint = useReactToPrint({

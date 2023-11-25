@@ -20,6 +20,3 @@ export interface Category extends BaseModel, Modified {
         }
     ];
 }
-interface subcategories {
-    id: number;
-}

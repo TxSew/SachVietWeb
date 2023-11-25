@@ -212,9 +212,6 @@ const UpdateDiscount = () => {
                         <Controller
                             control={control}
                             name="desc"
-                            rules={{
-                                required: 'Vui lòng nhập mô tả ngắn',
-                            }}
                             render={({ field }) => (
                                 <OutlinedInput
                                     type="text"
@@ -233,9 +230,6 @@ const UpdateDiscount = () => {
                                 />
                             )}
                         />
-                        <Typography variant="caption" color={color.error}>
-                            {errors.desc && errors.desc.message}
-                        </Typography>
                     </Grid>
                 </Grid>
             </form>

@@ -46,7 +46,6 @@ import './style.scss';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { Mousewheel, Navigation } from 'swiper';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -175,8 +174,6 @@ export const Details = () => {
                                                                     }}
                                                                     alt=""
                                                                     onClick={() => handleChangeImage(e)}
-                                                                    // width={'60px'}
-                                                                    // height={'60px'}
                                                                 />
                                                             </SwiperSlide>
                                                         );
