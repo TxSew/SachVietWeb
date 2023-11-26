@@ -7,9 +7,7 @@ import './style.scss';
 function valuetext(value: number) {
     return `${value}°C`;
 }
-interface props  {
-  handelValue () => void 
-} 
+
 function Tabbar() {
     const [open, setOpen] = React.useState(false);
 
