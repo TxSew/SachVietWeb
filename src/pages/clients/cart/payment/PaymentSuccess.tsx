@@ -6,6 +6,7 @@ import { httpCart } from '../../../../submodules/controllers/http/axiosControlle
 function PaymentSuccess() {
     const [isPayment, setIsPayment] = useState<boolean>(false);
     const { id } = useParams();
+
     useEffect(() => {
         httpCart.getOrderDetail(Number(id)).then((res) => {
             if (res) {
@@ -13,6 +14,7 @@ function PaymentSuccess() {
             }
         });
     }, []);
+
     if (isPayment) {
         return (
             <Box bgcolor={'#eee'} py={2}>
