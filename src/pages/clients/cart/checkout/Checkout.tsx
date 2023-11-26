@@ -19,14 +19,14 @@ import {
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, createSearchParams, useNavigate } from 'react-router-dom';
+import { Link, createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { color } from '../../../../Theme/color';
 import { numberFormat } from '../../../../helpers/formatPrice';
 import { getTotals } from '../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../redux/storeClient';
 
 import useMedia from '../../../../hooks/useMedia/useMedia';
-import { httpPayment, httpProvince } from '../../../../submodules/controllers/http/axiosController';
+import { httpPayment, httpProvince, httpVoucher } from '../../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province, district } from '../../../../submodules/models/Province/Province';
@@ -38,12 +38,17 @@ function Checkout() {
     const [user, setUser] = useState<User>({} as User);
     const [province, setProvince] = useState<Province[]>([]);
     const [districts, setDistricts] = useState([]);
+    const [voucher, setVoucher] = useState<number>(0);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [code, setCode] = useState<string>('');
     const cart: any = useSelector((state: RootState) => state.cart.cartItems);
     const { cartTotalAmount, cartItems } = useSelector((state: RootState) => state.cart);
+    const value: any = searchParams.get('discount');
 
     useEffect(() => {
         fetchProvince();
         fetchUser();
+        fetchDiscount();
     }, []);
 
     useEffect(() => {
@@ -55,7 +60,28 @@ function Checkout() {
         const DataUser = JSON.parse(user!);
         setUser(DataUser);
     };
+    const fetchDiscount = () => {
+        console.log('🚀 ~ file: Checkout.tsx:64 ~ fetchDiscount ~ value:', value);
+        console.log(cartTotalAmount);
 
+        const order = {
+            money: cartTotalAmount,
+            code: value,
+        };
+
+        httpVoucher
+            .getOneVoucher(order)
+            .then((res) => {
+                console.log('🚀 ~ file: Checkout.tsx:72 ~ .then ~ res:', res);
+                setVoucher(res.discount.discount);
+                setCode(res.discount.code);
+            })
+            .catch((err) => {
+                console.log('🚀 ~ file: Checkout.tsx:77 ~ fetchDiscount ~ err:', err);
+                console.log(err);
+                setVoucher(0);
+            });
+    };
     const fetchProvince = async () => {
         const provinceData = await httpProvince.getAll();
         if (provinceData) {
@@ -457,6 +483,14 @@ function Checkout() {
                             </Typography>
                             <Typography variant="body1" fontSize={'15.5px'}>
                                 {numberFormat(Number(cartTotalAmount))}
+                            </Typography>
+                        </Stack>
+                        <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
+                            <Typography variant="body1" fontSize={'15.5px'}>
+                                Khuyến mãi
+                            </Typography>
+                            <Typography variant="body1" fontSize={'12.5px'} fontWeight={'bold'} color={color.sale}>
+                                {` - ${numberFormat(Number(20000))}`}
                             </Typography>
                         </Stack>
                         <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>

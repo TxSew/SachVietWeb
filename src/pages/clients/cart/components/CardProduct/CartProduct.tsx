@@ -72,17 +72,15 @@ const CartProduct = () => {
     } = useForm<any>();
 
     const handleDiscount = (data: any) => {
-        console.log('🚀 ~ file: CartProduct.tsx:74 ~ handleDiscount ~ data:', data);
         const order = {
             money: cartTotalAmount,
             code: data.voucher,
         };
-        console.log('🚀 ~ file: CartProduct.tsx:79 ~ handleDiscount ~ order:', order);
         httpVoucher
             .getOneVoucher(order)
             .then((res) => {
-                console.log('🚀 ~ file: CartProduct.tsx:83 ~ httpVoucher.getOneVoucher ~ s:', res);
                 setVoucher(res.discount.discount);
+                setCode(res.discount.code);
             })
             .catch((err) => {
                 console.log(err);
@@ -90,12 +88,16 @@ const CartProduct = () => {
             });
     };
     const handleCheckout = () => {
-        redirect({
-            pathname: '/checkout',
-            search: createSearchParams({
-                dc: String(voucher),
-            }).toString(),
-        });
+        if (code) {
+            redirect({
+                pathname: '/checkout',
+                search: createSearchParams({
+                    discount: String(code),
+                }).toString(),
+            });
+        } else {
+            redirect('/checkout');
+        }
     };
     return (
         <Container maxWidth="xl">
