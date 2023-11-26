@@ -1,32 +1,41 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, OutlinedInput, Slider, Stack, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { color } from '../../../../Theme/color';
-import { httpCategory } from '../../../../submodules/controllers/http/axiosController';
+import { httpCategory, httpProducer } from '../../../../submodules/controllers/http/axiosController';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
+import { Producer } from '../../../../submodules/models/producerModel/producer';
 function valuetext(value: number) {
     return `${value}°C`;
 }
 
-function Tabbar() {
+export interface Props {
+    handleChange: (vent: Event, newValue: number | number[]) => void;
+    valueSlider: number[];
+    handlePrice?: (value: any) => void;
+    handleProducer?: (value: any) => void;
+}
+
+function Tabbar(props: Props) {
     const [open, setOpen] = React.useState(false);
 
     const handleClick = () => {
         setOpen(!open);
     };
     const [category, setCategory] = useState<any>([]);
+    const [producer, setProducer] = useState<any>({});
     useEffect(() => {
+        httpProducer.getAll().then((res) => {
+            if (res) {
+                setProducer(res);
+            }
+        });
         httpCategory.getCategory({}).then((res) => {
             setCategory(res);
         });
     }, []);
-    const [value, setValue] = React.useState<any[]>([3, 6]);
-    const [min, setMin] = useState<number>(1);
+    // const [value, setValue] = React.useState<any[]>([3, 6]);
 
-    const handleChange = (event: Event, newValue: number | number[]) => {
-        setValue(newValue as number[]);
-        const [a, b] = newValue as number[];
-    };
     return (
         <Box
             sx={{
@@ -41,14 +50,13 @@ function Tabbar() {
                     {category.map((e: any) => {
                         return (
                             <Box color={'gray'} pl={1}>
-                                <NavLink className={'active'} to={`/category?category=${e.slug}`}>
+                                <NavLink to={`/category?category=${e.slug}`}>
                                     <Typography
                                         sx={{
                                             transition: 'linear 0.2s',
                                             cursor: 'pointer',
                                             '&:hover': {
                                                 color: color.sale,
-                                                fontWeight: 'bold',
                                             },
                                         }}
                                         color={'#666'}
@@ -66,11 +74,11 @@ function Tabbar() {
                 <Typography variant="h3" fontWeight={'bold'} fontSize={'17px'}>
                     Giá
                 </Typography>
-                <FormGroup color={color.text_color} sx={{}}>
-                    <FormControlLabel control={<Checkbox />} label="0đ - 150.000đ" />
-                    <FormControlLabel control={<Checkbox />} label="150.000đ - 300.000đ" />
-                    <FormControlLabel control={<Checkbox />} label="150.000đ - 300.000đ" />
-                    <FormControlLabel control={<Checkbox />} label="300.000đ - 500.000đ" />
+                <FormGroup color={color.text_color} onChange={props.handlePrice}>
+                    <FormControlLabel value={'max150'} control={<Checkbox />} label="0đ - 150.000đ" />
+                    <FormControlLabel value={'max300'} control={<Checkbox />} label="150.000đ - 300.000đ" />
+                    <FormControlLabel value={'max500'} control={<Checkbox />} label="300.000đ - 500.000đ" />
+                    <FormControlLabel value={'max700'} control={<Checkbox />} label="300.000đ - 500.000đ" />
                 </FormGroup>
                 <Typography variant="h3" fontSize={'17px'} mt={2}>
                     Hoặc chọn mức giá phù hợp
@@ -78,7 +86,7 @@ function Tabbar() {
                 <Stack direction={'row'} spacing={3} mt={1}>
                     <OutlinedInput
                         disabled
-                        value={value[0]}
+                        value={props.valueSlider[0]}
                         type="text"
                         sx={{
                             mt: 1,
@@ -94,7 +102,7 @@ function Tabbar() {
                     <OutlinedInput
                         disabled
                         type="text"
-                        value={value[1]}
+                        value={props.valueSlider[1]}
                         sx={{
                             mt: 1,
                             width: '100px',
@@ -106,10 +114,16 @@ function Tabbar() {
                         fullWidth
                     />
                 </Stack>
+
                 <Slider
+                    step={1}
+                    sx={{
+                        width: '250px',
+                        color: '#198c89',
+                    }}
                     getAriaLabel={() => 'Minimum distance'}
-                    value={value}
-                    onChange={handleChange}
+                    value={props.valueSlider}
+                    onChange={props.handleChange}
                     max={1000000}
                     valueLabelDisplay="auto"
                     getAriaValueText={valuetext}
@@ -120,11 +134,10 @@ function Tabbar() {
                 <Typography variant="h3" fontWeight={'bold'} fontSize={'17px'}>
                     Nhà cung cấp
                 </Typography>
-                <FormGroup color={color.text_color} sx={{}}>
-                    <FormControlLabel control={<Checkbox />} label="NXB Trẻ" />
-                    <FormControlLabel control={<Checkbox />} label="Bách việt" />
-                    <FormControlLabel control={<Checkbox />} label="Phụ nữ" />
-                    <FormControlLabel control={<Checkbox />} label="Nhã Nam" />
+                <FormGroup color={color.text_color} sx={{}} onChange={props.handleProducer}>
+                    {producer?.producers?.map((producer: Producer) => {
+                        return <FormControlLabel value={producer.id} control={<Checkbox />} label={producer.name} />;
+                    })}
                 </FormGroup>
             </Box>
         </Box>

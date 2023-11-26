@@ -19,25 +19,24 @@ import {
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, createSearchParams, useNavigate } from 'react-router-dom';
 import { color } from '../../../../Theme/color';
 import { numberFormat } from '../../../../helpers/formatPrice';
 import { getTotals } from '../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../redux/storeClient';
 
+import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpPayment, httpProvince } from '../../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province, district } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
-import useMedia from '../../../../hooks/useMedia/useMedia';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
     const redirect = useNavigate();
     const dispatch = useDispatch();
-    const [value, setValue] = useState('COD');
     const [user, setUser] = useState<User>({} as User);
-    const [province, setprovince] = useState<Province[]>([]);
+    const [province, setProvince] = useState<Province[]>([]);
     const [district, setDistrict] = useState<district[]>([]);
 
     const cart: any = useSelector((state: RootState) => state.cart.cartItems);
@@ -67,10 +66,10 @@ function Checkout() {
     const fetchProvince = async () => {
         const provinceData = await httpProvince.getAll();
         if (provinceData) {
-            setprovince(provinceData);
+            setProvince(provinceData);
         }
     };
-
+    const navigate = useNavigate();
     const handleCheckout = async (data: any) => {
         const detailData = cart.map((e: Product) => {
             return {
@@ -110,7 +109,14 @@ function Checkout() {
         control,
         formState: { errors, isSubmitting },
     } = useForm<Order>();
-
+    const handelLogin = () => {
+        navigate({
+            pathname: '/auth',
+            search: createSearchParams({
+                a: 'checkout',
+            }).toString(),
+        });
+    };
     return (
         <Grid bgcolor={'#eee'} pb={'170px'}>
             <Container
@@ -120,7 +126,26 @@ function Checkout() {
                     pb: 2,
                 }}
             >
-                <Box bgcolor={color.white} p={2}>
+                {user ? (
+                    ''
+                ) : (
+                    <Box className="main-waper-top pt-2 pb-2 ps-4">
+                        <Typography>
+                            Bạn đã là thành viên?
+                            <Typography
+                                onClick={handelLogin}
+                                style={{
+                                    cursor: 'pointer',
+                                    color: color.sale,
+                                    textDecoration: 'underline',
+                                }}
+                            >
+                                Đăng nhập ngay
+                            </Typography>
+                        </Typography>
+                    </Box>
+                )}
+                <Box bgcolor={color.white} p={2} mt={1}>
                     <Typography fontWeight={'bold'} variant="h4" py={2} borderBottom={'1px solid #eee'}>
                         ĐỊA CHỈ GIAO HÀNG
                     </Typography>

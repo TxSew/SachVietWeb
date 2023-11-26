@@ -17,9 +17,7 @@ class HttpCartController {
 
     async getAll(props: any): Promise<any> {
         try {
-            const response = await this.axiosInstance.post(`/order`, {
-                ...props,
-            });
+            const response = await this.axiosInstance.post(`/order`, props);
             return response.data;
         } catch (error) {
             console.log(error);
@@ -34,7 +32,6 @@ class HttpCartController {
         }
     }
     async getOrderbyUser(props: any): Promise<any> {
-        console.log(props);
         try {
             const response = await this.axiosInstance.post(`order/current`, props);
             return response.data;
@@ -86,7 +83,6 @@ class HttpCartController {
     }
 
     async delete(id: number): Promise<any> {
-        console.log(id);
         try {
             const response = await this.axiosInstance.delete(`/order/${id}`);
             return response.data;

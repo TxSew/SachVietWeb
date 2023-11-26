@@ -1,6 +1,6 @@
 import { Box, Button, FormControl, IconButton, InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { color } from '../../../../Theme/color';
 import { BaseAPi } from '../../../../configs/BaseApi';
@@ -9,14 +9,17 @@ import { User } from '../../../../submodules/models/UserModel/User';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import { ResponseStatus } from '../../../../helpers/ResponsiveStatus';
+import { pushError, pushWarning } from '../../../../components/Toast/Toast';
 
 const Login = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
+
     const [showPassword, setShowPassword] = useState(false);
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
     };
-
+    const value: any = searchParams.get('a');
     const http = new HttpAccountController(BaseAPi);
     const redirect = useNavigate();
     const {
@@ -39,18 +42,18 @@ const Login = () => {
                     localStorage.setItem('role', JSON.stringify(role));
                 }
             }
-            // redirect("/");
-            window.location.assign('/');
+
+            if (value == 'checkout') {
+                window.location.assign('/checkout');
+            } else {
+                window.location.assign('/');
+            }
         } catch (err: any) {
             if (err.response.data.message === ResponseStatus.auth.notFound) {
-                toast.error('Tài khoản không có quyền truy cập, xin vui lòng thử lại!', {
-                    position: 'top-right',
-                });
+                pushError('Tài khoản không có quyền truy cập, xin vui lòng thử lại!');
             }
             if (err.response.data.message === 'Wrong password') {
-                toast.warning('Mật khẩu  không đúng, xin vui lòng nhập lại!', {
-                    position: 'top-right',
-                });
+                pushWarning('Mật khẩu  không đúng, xin vui lòng nhập lại!');
             }
         }
     };
@@ -66,7 +69,7 @@ const Login = () => {
                 <Controller
                     control={control}
                     name="email"
-                    defaultValue="" // Set an initial value here
+                    defaultValue=""
                     rules={{
                         required: 'Vui lòng nhập email của bạn!',
                         pattern: {

@@ -2,7 +2,21 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import DiscountIcon from '@mui/icons-material/Discount';
 
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
-import { Box, Button, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Chip,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Fade,
+    Grid,
+    OutlinedInput,
+    Pagination,
+    Stack,
+    Typography,
+} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -23,6 +37,24 @@ export default function AdminDiscount() {
     const [discount, setDiscount] = React.useState<any>({});
     const [page, setPage] = React.useState(1);
 
+    const [open, setOpen] = React.useState({
+        isChecked: false,
+        id: '',
+    });
+    const handleClickClose = () => {
+        setOpen({
+            isChecked: false,
+            id: '',
+        });
+    };
+
+    const handleClickOpen = (id: any) => {
+        setOpen({
+            isChecked: true,
+            id: id.id,
+        });
+    };
+
     React.useEffect(() => {
         const props = {};
         fetchData(props);
@@ -41,12 +73,13 @@ export default function AdminDiscount() {
         setPage(value);
     };
 
-    const handleDelete = async (element: any) => {
-        const filter = discount?.data?.filter((e: any) => e.id !== element.id);
-        await httpDiscount.delete(Number(element.id));
+    const handleDelete = async (element: number) => {
+        console.log('🚀 ~ file: AdminDiscount.tsx:77 ~ handleDelete ~ element:', element);
+        await httpDiscount.delete(Number(element));
+        const filter = discount?.data?.filter((e: any) => e.id !== element);
         setDiscount(filter);
-
         pushError('Mã giảm giá đã bị xóa');
+        handleClickClose();
     };
 
     return (
@@ -132,12 +165,78 @@ export default function AdminDiscount() {
                                                     }}
                                                 />
                                             </Link>
-                                            <Box onClick={() => handleDelete(e)}>
+                                            <Box>
                                                 <DeleteForeverIcon
                                                     sx={{
                                                         color: 'red',
                                                     }}
+                                                    onClick={() => handleClickOpen(e)}
                                                 />
+                                                <Dialog
+                                                    open={open.isChecked}
+                                                    onClose={handleClickClose}
+                                                    TransitionComponent={Fade}
+                                                    aria-labelledby="customized-dialog-title"
+                                                >
+                                                    <DialogContent>
+                                                        <DialogContentText
+                                                            id="alert-dialog-slide-description"
+                                                            textAlign={'center'}
+                                                            padding={'0 24px '}
+                                                            sx={{
+                                                                color: 'red',
+                                                            }}
+                                                        >
+                                                            <DeleteForeverIcon
+                                                                sx={{
+                                                                    fontSize: '56px',
+                                                                    color: 'rgb(201, 33, 39)',
+                                                                }}
+                                                            />
+                                                            <DialogTitle fontSize={'16px'}>
+                                                                Bạn chắc chắn muốn xóa đơn hàng này?
+                                                            </DialogTitle>
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                    <Box
+                                                        display={'flex'}
+                                                        paddingBottom={'24px'}
+                                                        justifyContent={'space-around'}
+                                                    >
+                                                        <Button
+                                                            onClick={handleClickClose}
+                                                            sx={{
+                                                                padding: '8px 16px',
+                                                                border: '1px solid #ccc',
+                                                                borderRadius: '12px',
+                                                                color: 'black',
+                                                                fontSize: '12px',
+                                                                fontWeight: 'bold',
+                                                                width: '96px',
+                                                            }}
+                                                        >
+                                                            Hủy
+                                                        </Button>
+                                                        <Button
+                                                            onClick={() => handleDelete(Number(open.id))}
+                                                            sx={{
+                                                                padding: '8px 16px',
+                                                                border: '1px solid red',
+                                                                borderRadius: '12px',
+                                                                background: 'red',
+                                                                color: 'white',
+                                                                fontSize: '12px',
+                                                                fontWeight: 'bold',
+                                                                width: '96px',
+                                                                ':hover': {
+                                                                    backgroundColor: 'rgb(201, 33, 39)',
+                                                                },
+                                                            }}
+                                                        >
+                                                            Đồng ý
+                                                        </Button>
+                                                    </Box>
+                                                </Dialog>
                                             </Box>
                                         </Stack>
                                     </TableCell>

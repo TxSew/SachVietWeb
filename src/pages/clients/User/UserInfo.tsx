@@ -8,8 +8,6 @@ import { color } from '../../../Theme/color';
 import { ChangePassword } from '../../../submodules/models/UserModel/User';
 import { httpAccount } from '../../../submodules/controllers/http/axiosController';
 import { toast } from 'react-toastify';
-import { error } from 'console';
-import { da } from '@faker-js/faker';
 function UserInfo() {
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('newPassword');

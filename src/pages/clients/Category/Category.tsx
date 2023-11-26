@@ -1,3 +1,4 @@
+import MenuIcon from '@mui/icons-material/Menu';
 import {
     Box,
     Container,
@@ -10,32 +11,44 @@ import {
     Stack,
     Typography,
 } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
 
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import ProductItem from '../../../components/ProductItem/ProductItem';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
+import useMedia from '../../../hooks/useMedia/useMedia';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import Tabbar from './components/Tabbar';
-import useMedia from '../../../hooks/useMedia/useMedia';
+export interface props {
+    handleChanges: (event: React.ChangeEvent<unknown>, value: number) => void;
+}
+
 function Category() {
     const { isMediumMD } = useMedia();
     const [searchParams, setSearchParams] = useSearchParams();
     const [categoryParams, setCategoryParams] = useSearchParams();
     const value: any = searchParams.get('q');
-
+    const [sale, setSale] = React.useState('');
     const [page, setPage] = React.useState<number>(1);
     const [count, setCount] = useState<number>(1);
     const [products, setProducts] = React.useState<Product[]>([] as Product[]);
     const [sortBy, setSortBy] = React.useState('createdAt');
     const [sortWith, setSortWith] = React.useState('asc');
+    const [producer, setProducer] = React.useState('');
+    const [values, setValue] = useState<any[]>([1, 0] as any[]);
     const [sort, setSort] = React.useState('');
+
+    const handelSale = (event: any) => {
+        setSale(event.target.value);
+    };
 
     useEffect(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }, []);
+
+    const debouncedInputValue = useDebounce(values, 700);
 
     useEffect(() => {
         const value: any = searchParams.get('q');
@@ -48,15 +61,33 @@ function Category() {
             limit: 12,
             keyword: searchValue,
             categoryFilter: categorySearch,
+            filter: sale,
+            sortMinPrice: debouncedInputValue[0],
+            sortMaxPrice: debouncedInputValue[1],
+            producerFilter: producer,
         };
+
         fetchProducts(props);
-    }, [page, sortBy, sortWith, searchParams, categoryParams]);
+    }, [page, sortBy, sortWith, searchParams, categoryParams, sale, debouncedInputValue, producer]);
 
     const fetchProducts = async (props: any) => {
         const products: any = await httpProduct.getAll(props);
         if (products) {
             setProducts(products.products);
             setCount(products.totalPage);
+        }
+    };
+
+    const handelChangePrice = (event: any) => {
+        if (event.target.value === 'max150') {
+            setValue([1, 150000]);
+        } else if (event.target.value === 'max300') {
+            setValue([150000, 300000]);
+        }
+        if (event.target.value === 'max500') {
+            setValue([300000, 500000]);
+        } else if (event.target.value === 'max700') {
+            setValue([500000, 700000]);
         }
     };
 
@@ -85,6 +116,14 @@ function Category() {
         }
     };
 
+    const handleCHnage = (event: Event, newValue: number | number[]) => {
+        setValue(newValue as number[]);
+    };
+
+    const handelSortProducer = (event: any) => {
+        setProducer(event.target.value);
+    };
+
     return (
         <Box bgcolor={'#eee'} py={3}>
             <Container maxWidth={'xl'}>
@@ -93,7 +132,12 @@ function Category() {
                         <MenuIcon />
                     ) : (
                         <Grid item className="hiddenTab" xs={3}>
-                            <Tabbar />
+                            <Tabbar
+                                handlePrice={handelChangePrice}
+                                handleChange={handleCHnage}
+                                valueSlider={values}
+                                handleProducer={handelSortProducer}
+                            />
                         </Grid>
                     )}
                     <Grid item xs={isMediumMD ? 12 : 9}>
@@ -134,6 +178,19 @@ function Category() {
                                         <MenuItem value={'new'}>Mới nhất</MenuItem>
                                         <MenuItem value={'priceUp'}>Giá từ cao tới thấp</MenuItem>
                                         <MenuItem value={'priceDown'}>Giá từ thấp tới cao</MenuItem>
+                                    </Select>
+                                </FormControl>
+
+                                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                                    <Select
+                                        value={sale}
+                                        onChange={handelSale}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                    >
+                                        <MenuItem value={''}>Mặc định</MenuItem>
+                                        <MenuItem value={1}>Sản phẩm giảm giá</MenuItem>
+                                        <MenuItem value={2}>Sản phẩm bán chạy</MenuItem>
                                     </Select>
                                 </FormControl>
                             </Stack>

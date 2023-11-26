@@ -68,6 +68,7 @@ export default function AdminProductInventory() {
             sortBy: 'quantity',
             sortWith: 'desc',
             categoryFilter: sortCategory,
+            filter: '',
         };
 
         fetchData(props);
@@ -76,9 +77,8 @@ export default function AdminProductInventory() {
     const fetchData = async (props: any) => {
         try {
             const product: any = await httpProduct.getAll(props);
-            const { products } = product;
             setPageCount(product.totalPage);
-            setProducts(products);
+            setProducts(product?.products);
         } catch (err) {
             console.log(err);
         }
@@ -261,10 +261,10 @@ export default function AdminProductInventory() {
                                     <TableCell align="right">{e.soldQuantity}</TableCell>
                                     <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
                                     <TableCell align="right">
-                                        {e.status == null ? (
-                                            <Chip label="Hoạt động" color="success" />
-                                        ) : (
+                                        {Number(e.quantity) <= 0 ? (
                                             <Chip color="error" label="Ngưng hoạt động" />
+                                        ) : (
+                                            <Chip label="Hoạt động" color="success" />
                                         )}
                                     </TableCell>
                                     <TableCell align="right">

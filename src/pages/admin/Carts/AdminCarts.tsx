@@ -6,6 +6,11 @@ import {
     Box,
     Button,
     Chip,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Fade,
     FormControl,
     Grid,
     MenuItem,
@@ -31,21 +36,40 @@ import { color } from '../../../Theme/color';
 import { httpCart, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../submodules/models/OrderModel/Order';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
+import { pushError } from '../../../components/Toast/Toast';
 
 export default function AdminCarts() {
-    const [carts, setCarts] = React.useState<Order[]>([] as Order[]);
+    const [carts, setCarts] = React.useState<any>({});
     const [page, setPage] = React.useState<number>(1);
-    const [count, setCount] = React.useState<number>(1);
     const [search, setSearch] = React.useState<string>('');
+    const [status, setStatus] = React.useState('');
     const debounce = useDebounce(search, 400);
+    const [open, setOpen] = React.useState({
+        isChecked: false,
+        id: '',
+    });
+    const handleClickClose = () => {
+        setOpen({
+            isChecked: false,
+            id: '',
+        });
+    };
 
+    const handleClickOpen = (id: any) => {
+        setOpen({
+            isChecked: true,
+            id: id.id,
+        });
+    };
     React.useEffect(() => {
         const props = {
-            page: page,
+            limit: 5,
+            page,
             keyword: debounce,
+            status: status,
         };
         fetchData(props);
-    }, [page, debounce]);
+    }, [page, debounce, status]);
 
     const handleUpdateOrder = async (id: any) => {
         await httpCart.put(Number(id), {
@@ -63,9 +87,8 @@ export default function AdminCarts() {
 
     const fetchData = async (props: any) => {
         try {
-            const cartsData: any = await httpCart.getAll(props);
-            setCarts(cartsData?.orders);
-            setCount(cartsData?.totalPage);
+            const cartsData = await httpCart.getAll(props);
+            setCarts(cartsData as any);
         } catch (err) {
             console.log(err);
         }
@@ -73,21 +96,21 @@ export default function AdminCarts() {
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
+
     React.useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
+
     const handleDelete = async (element: any) => {
-        await httpCart.delete(Number(element.id));
+        await httpCart.delete(Number(element));
+        const filter = carts.filter((e: any) => e.id !== element);
+        setCarts(filter);
+        pushError('Đơn hàng đã bị xóa');
+        handleClickClose();
     };
+
     const handleChangeSort = (event: SelectChangeEvent) => {
-        const props = {
-            status: event.target.value,
-        };
-        httpCart.getAll(props).then((result) => {
-            if (result.orders) {
-                setCarts(result.orders);
-            }
-        });
+        setStatus(event.target.value);
     };
     return (
         <Grid>
@@ -105,16 +128,17 @@ export default function AdminCarts() {
                         <Label>Sắp xếp:</Label>
                         <Select
                             displayEmpty
-                            defaultValue={''}
+                            defaultValue={undefined}
                             inputProps={{ 'aria-label': 'Without label' }}
                             onChange={handleChangeSort}
                         >
-                            <MenuItem value="">
-                                <em>Tất cả</em>
+                            <MenuItem value={undefined}>
+                                <em>-- Chọn trạng thái --</em>
                             </MenuItem>
-                            <MenuItem value={`${null}`}>Đang chờ duyệt</MenuItem>
-                            <MenuItem value={1}>Đang giao hàng </MenuItem>
+                            <MenuItem value={`${null}`}> Đang chờ duyệt</MenuItem>
+                            <MenuItem value={1}>Đang giao </MenuItem>
                             <MenuItem value={2}>Đã giao hàng</MenuItem>
+                            <MenuItem value={3}> Bị hủy</MenuItem>
                         </Select>
                     </FormControl>
                 </Stack>
@@ -162,7 +186,7 @@ export default function AdminCarts() {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {carts.map((e: Order, i) => (
+                            {carts?.orders?.map((e: Order) => (
                                 <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                     <TableCell component="th" scope="row">
                                         {e.id}
@@ -193,8 +217,10 @@ export default function AdminCarts() {
                                             </Typography>
                                         ) : e.status == 2 ? (
                                             <Typography color={'green'}> Đã giao </Typography>
-                                        ) : (
+                                        ) : e.status == 3 ? (
                                             <Typography color={'red'}>Đã bị hủy</Typography>
+                                        ) : (
+                                            ''
                                         )}
                                     </TableCell>
                                     <TableCell align="center">
@@ -230,7 +256,7 @@ export default function AdminCarts() {
                                                             }}
                                                             onClick={async () => {
                                                                 const updated = await httpCart.put(Number(e.id), {
-                                                                    status: 0,
+                                                                    status: 3,
                                                                 });
                                                                 window.location.reload();
 
@@ -305,13 +331,80 @@ export default function AdminCarts() {
                                                     }}
                                                 />
                                             </Link>
-                                            <Box onClick={() => handleDelete(e)}>
+                                            <Box>
                                                 <DeleteForeverIcon
                                                     sx={{
                                                         color: 'red',
                                                         cursor: 'pointer',
                                                     }}
+                                                    onClick={() => handleClickOpen(e)}
                                                 />
+
+                                                <Dialog
+                                                    open={open.isChecked}
+                                                    onClose={handleClickClose}
+                                                    TransitionComponent={Fade}
+                                                    aria-labelledby="customized-dialog-title"
+                                                >
+                                                    <DialogContent>
+                                                        <DialogContentText
+                                                            id="alert-dialog-slide-description"
+                                                            textAlign={'center'}
+                                                            padding={'0 24px '}
+                                                            sx={{
+                                                                color: 'red',
+                                                            }}
+                                                        >
+                                                            <DeleteForeverIcon
+                                                                sx={{
+                                                                    fontSize: '56px',
+                                                                    color: 'rgb(201, 33, 39)',
+                                                                }}
+                                                            />
+                                                            <DialogTitle fontSize={'16px'}>
+                                                                Bạn chắc chắn muốn xóa đơn hàng này?
+                                                            </DialogTitle>
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                    <Box
+                                                        display={'flex'}
+                                                        paddingBottom={'24px'}
+                                                        justifyContent={'space-around'}
+                                                    >
+                                                        <Button
+                                                            onClick={handleClickClose}
+                                                            sx={{
+                                                                padding: '8px 16px',
+                                                                border: '1px solid #ccc',
+                                                                borderRadius: '12px',
+                                                                color: 'black',
+                                                                fontSize: '12px',
+                                                                fontWeight: 'bold',
+                                                                width: '96px',
+                                                            }}
+                                                        >
+                                                            Hủy
+                                                        </Button>
+                                                        <Button
+                                                            onClick={() => handleDelete(open.id)}
+                                                            sx={{
+                                                                padding: '8px 16px',
+                                                                border: '1px solid red',
+                                                                borderRadius: '12px',
+                                                                background: 'red',
+                                                                color: 'white',
+                                                                fontSize: '12px',
+                                                                fontWeight: 'bold',
+                                                                width: '96px',
+                                                                ':hover': {
+                                                                    backgroundColor: 'rgb(201, 33, 39)',
+                                                                },
+                                                            }}
+                                                        >
+                                                            Đồng ý
+                                                        </Button>
+                                                    </Box>
+                                                </Dialog>
                                             </Box>
                                         </Stack>
                                     </TableCell>
@@ -327,7 +420,7 @@ export default function AdminCarts() {
                         justifyContent: 'center',
                     }}
                 >
-                    <Pagination count={count} page={page} onChange={handleChange} />
+                    <Pagination count={carts?.totalPage} page={page} onChange={handleChange} />
                 </Box>
             </Grid>
         </Grid>

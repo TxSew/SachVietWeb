@@ -48,6 +48,7 @@ export default function AdminProduct() {
     const [pageCount, setPageCount] = React.useState<number>(1);
     const [page, setPage] = React.useState<number>(1);
     const [search, setSearch] = React.useState<string>('');
+    const [sale, setSale] = React.useState('');
     const [sortBy, setSortBy] = React.useState('createdAt');
     const [sortWith, setSortWith] = React.useState('asc');
     const [sort, setSort] = React.useState('');
@@ -69,10 +70,11 @@ export default function AdminProduct() {
             sortBy,
             sortWith,
             categoryFilter: sortCategory,
+            filter: sale,
         };
 
         fetchData(props);
-    }, [page, debounce, sortBy, sortWith, sortCategory]);
+    }, [page, debounce, sortBy, sortWith, sortCategory, sale]);
 
     const fetchData = async (props: any) => {
         try {
@@ -149,6 +151,9 @@ export default function AdminProduct() {
             setSort(event.target.value);
         }
     };
+    const handelSale = (event: any) => {
+        setSale(event.target.value);
+    };
 
     return (
         <Grid>
@@ -200,6 +205,18 @@ export default function AdminProduct() {
                             {Category.map((e: Category) => {
                                 return <MenuItem value={e.slug}>{e.name}</MenuItem>;
                             })}
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <Select
+                            value={sale}
+                            onChange={handelSale}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value={''}>Mặc định</MenuItem>
+                            <MenuItem value={1}>Sản phẩm giảm giá</MenuItem>
+                            <MenuItem value={2}>Sản phẩm bán chạy</MenuItem>
                         </Select>
                     </FormControl>
                     <Button
