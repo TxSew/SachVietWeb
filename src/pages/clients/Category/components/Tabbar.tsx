@@ -91,7 +91,6 @@ function Tabbar() {
                         }}
                         fullWidth
                     />
-                    <Typography>-</Typography>
                     <OutlinedInput
                         disabled
                         type="text"

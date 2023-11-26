@@ -1,6 +1,20 @@
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
-import { Box, Button, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Chip,
+    Dialog,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Fade,
+    Grid,
+    OutlinedInput,
+    Pagination,
+    Stack,
+    Typography,
+} from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,11 +27,29 @@ import { Link } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { httpProducer } from '../../../submodules/controllers/http/axiosController';
 import { Producer } from '../../../submodules/models/producerModel/producer';
+import { pushError } from '../../../components/Toast/Toast';
 
 export default function ProducerAdmin() {
     const [count, setCount] = React.useState<number>(1);
     const [page, setPage] = React.useState<number>(1);
     const [producer, setProducer] = React.useState<Producer[]>([]);
+    const [open, setOpen] = React.useState({
+        isChecked: false,
+        id: '',
+    });
+    const handleClickClose = () => {
+        setOpen({
+            isChecked: false,
+            id: '',
+        });
+    };
+
+    const handleClickOpen = (id: any) => {
+        setOpen({
+            isChecked: true,
+            id: id.id,
+        });
+    };
 
     React.useEffect(() => {
         fetchData(page);
@@ -38,6 +70,8 @@ export default function ProducerAdmin() {
         await httpProducer.delete(Number(id));
         const filter = producer.filter((e: any) => e.id !== id);
         setProducer(filter);
+        pushError('Nhà cung cấp đã bị xóa');
+        handleClickClose();
     }
     return (
         <Grid>
@@ -119,11 +153,79 @@ export default function ProducerAdmin() {
                                             </Link>
                                             <Box>
                                                 <DeleteForeverIcon
-                                                    onClick={() => handleRemove(Number(e.id))}
+                                                    // onClick={() => handleRemove(Number(e.id))}
+                                                    onClick={() => {
+                                                        handleClickOpen(e);
+                                                    }}
                                                     sx={{
                                                         color: 'red',
                                                     }}
                                                 />
+                                                <Dialog
+                                                    open={open.isChecked}
+                                                    onClose={handleClickClose}
+                                                    TransitionComponent={Fade}
+                                                    aria-labelledby="customized-dialog-title"
+                                                >
+                                                    <DialogContent>
+                                                        <DialogContentText
+                                                            id="alert-dialog-slide-description"
+                                                            textAlign={'center'}
+                                                            padding={'0 24px '}
+                                                            sx={{
+                                                                color: 'red',
+                                                            }}
+                                                        >
+                                                            <DeleteForeverIcon
+                                                                sx={{
+                                                                    fontSize: '56px',
+                                                                    color: 'rgb(201, 33, 39)',
+                                                                }}
+                                                            />
+                                                            <DialogTitle fontSize={'16px'}>
+                                                                Bạn chắc chắn muốn xóa Nhà cung cấp này?
+                                                            </DialogTitle>
+                                                        </DialogContentText>
+                                                    </DialogContent>
+                                                    <Box
+                                                        display={'flex'}
+                                                        paddingBottom={'24px'}
+                                                        justifyContent={'space-around'}
+                                                    >
+                                                        <Button
+                                                            onClick={handleClickClose}
+                                                            sx={{
+                                                                padding: '8px 16px',
+                                                                border: '1px solid #ccc',
+                                                                borderRadius: '12px',
+                                                                color: 'black',
+                                                                fontSize: '12px',
+                                                                fontWeight: 'bold',
+                                                                width: '96px',
+                                                            }}
+                                                        >
+                                                            Hủy
+                                                        </Button>
+                                                        <Button
+                                                            onClick={() => handleRemove(Number(open.id))}
+                                                            sx={{
+                                                                padding: '8px 16px',
+                                                                border: '1px solid red',
+                                                                borderRadius: '12px',
+                                                                background: 'red',
+                                                                color: 'white',
+                                                                fontSize: '12px',
+                                                                fontWeight: 'bold',
+                                                                width: '96px',
+                                                                ':hover': {
+                                                                    backgroundColor: 'rgb(201, 33, 39)',
+                                                                },
+                                                            }}
+                                                        >
+                                                            Đồng ý
+                                                        </Button>
+                                                    </Box>
+                                                </Dialog>
                                             </Box>
                                         </Stack>
                                     </TableCell>

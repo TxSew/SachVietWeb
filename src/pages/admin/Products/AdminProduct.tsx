@@ -299,7 +299,7 @@ export default function AdminProduct() {
                                                     color: 'red',
                                                 }}
                                                 onClick={() => {
-                                                    handleClickOpen(e.id);
+                                                    handleClickOpen(e);
                                                 }}
                                             />
                                             <Dialog

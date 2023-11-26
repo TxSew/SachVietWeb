@@ -81,6 +81,7 @@ export default function CategoryAdmin() {
 
         if (destroy) pushError('Danh mục đã bị xóa ');
         setCategory(filter);
+        handleClickClose();
     };
 
     return (
@@ -173,10 +174,13 @@ export default function CategoryAdmin() {
                                                     }}
                                                 />
                                             </Link>
-                                            <Box onClick={() => handleClickOpen(e)}>
+                                            <Box>
                                                 <DeleteForeverIcon
                                                     sx={{
                                                         color: 'red',
+                                                    }}
+                                                    onClick={() => {
+                                                        handleClickOpen(e);
                                                     }}
                                                 />
                                                 <Dialog
