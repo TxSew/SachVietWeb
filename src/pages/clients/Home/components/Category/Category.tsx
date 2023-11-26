@@ -99,11 +99,12 @@ const CategoryNav = () => {
                                       key={e.id}
                                       onClick={() => RedirectProductPage(e.slug)}
                                   >
-                                      <Box px={isMediumMD ? 2 : 1}>
+                                      <Box px={isMediumMD ? 2 : 1} pb={2}>
                                           <img
                                               style={{
                                                   flexShrink: 0,
                                                   border: '1px solid #eee',
+                                                  objectFit: 'contain',
                                               }}
                                               src={e.image}
                                               width={'100%'}

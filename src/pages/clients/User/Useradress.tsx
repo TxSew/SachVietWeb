@@ -18,6 +18,8 @@ import { color } from '../../../Theme/color';
 import { httpProvince, httpUserAddress } from '../../../submodules/controllers/http/axiosController';
 import { Province, district } from '../../../submodules/models/Province/Province';
 import { useEffect, useState } from 'react';
+import useMedia from '../../../hooks/useMedia/useMedia';
+import ModalUser from './layout/ModalUser';
 function UserAdress() {
     const [province, setprovince] = useState<Province[]>([]);
     const [district, setDistrict] = useState<district[]>([]);
@@ -58,6 +60,7 @@ function UserAdress() {
             setUserAddress(res);
         });
     };
+    const { isMediumMD } = useMedia();
     return (
         <NavUser>
             {isLength ? (
@@ -177,10 +180,10 @@ function UserAdress() {
                         backgroundColor: color.white,
                     }}
                 >
-                    <Box pt={2}>
+                    <Box pt={2} px={2}>
+                        {isMediumMD ? <ModalUser /> : <></>}
                         <Typography
                             sx={{
-                                ml: '20px',
                                 fontSize: '20px',
                                 textTransform: 'uppercase',
                             }}

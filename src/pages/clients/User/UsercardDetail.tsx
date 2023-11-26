@@ -25,6 +25,8 @@ import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
 import NavUser from './layout/NavUser';
+import ModalUser from './layout/ModalUser';
+import useMedia from '../../../hooks/useMedia/useMedia';
 function UserCartDetail() {
     const { id } = useParams();
     const [orderCurrent, setOrderCurrent] = useState<any>({});
@@ -50,6 +52,7 @@ function UserCartDetail() {
     const handleClickClose = () => {
         setOpen(false);
     };
+    const { isMediumMD } = useMedia();
 
     return (
         <NavUser>
@@ -66,6 +69,8 @@ function UserCartDetail() {
                         padding: '20px',
                     }}
                 >
+                    {isMediumMD ? <ModalUser /> : <></>}
+
                     <Grid item xs={12}>
                         <Box display={'flex'} alignContent={'center'} justifyContent={'space-between'}>
                             <Typography variant="h2" fontSize={'25px'} fontWeight={'bold'} pt={'20px'}>
@@ -251,7 +256,7 @@ function UserCartDetail() {
                         padding: '20px',
                     }}
                 >
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
                             <Typography
                                 sx={{
@@ -277,7 +282,7 @@ function UserCartDetail() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
                             <Typography
                                 sx={{
@@ -300,7 +305,7 @@ function UserCartDetail() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} border={'1px solid #B7B4B4'} height={'166px'}>
                             <Typography
                                 sx={{
@@ -364,7 +369,7 @@ function UserCartDetail() {
                                         },
                                     }}
                                 >
-                                    <TableCell>STT</TableCell>
+                                    <TableCell>STT </TableCell>
                                     <TableCell align="center">Hình ảnh</TableCell>
                                     <TableCell align="center">Tên sản phẩm</TableCell>
                                     <TableCell align="center">SKU</TableCell>
@@ -374,10 +379,10 @@ function UserCartDetail() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {orderCurrent?.orderDetail?.map((order: any) => {
+                                {orderCurrent?.orderDetail?.map((order: any, i: number) => {
                                     return (
                                         <TableRow>
-                                            <TableCell>{order.product.id}</TableCell>
+                                            <TableCell>{(i += 1)}</TableCell>
                                             <TableCell>
                                                 <img
                                                     width={'80px'}

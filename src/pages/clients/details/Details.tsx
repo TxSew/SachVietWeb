@@ -124,9 +124,9 @@ export const Details = () => {
                             : {}
                     }
                 >
-                    <Typography variant="caption">{Detail?.category?.name}</Typography>
+                    <Typography variant="body2">{Detail?.category?.name}</Typography>
                     <ChevronRightOutlinedIcon />
-                    <Typography variant="caption">{Detail?.title}</Typography>
+                    <Typography variant="body2">{Detail?.title}</Typography>
                 </Stack>
                 <Box pb={2}>
                     <Grid container bgcolor={'#fff'} p={2}>
@@ -171,14 +171,23 @@ export const Details = () => {
                                     )}
                                     {!isMediumMD ? (
                                         <Grid justifyContent={'center'} xs={12} md={9} spacing={2} p={2}>
-                                            <Box sx={{ padding: '0 64px 0 0' }}>
-                                                <ImageMagnifier src={String(image ? image : Detail.image)} />
+                                            <Box sx={{ padding: '0 8%' }}>
+                                                <ImageMagnifier
+                                                    width="100%"
+                                                    height="294px"
+                                                    src={String(image ? image : Detail.image)}
+                                                />
                                             </Box>
                                         </Grid>
                                     ) : (
                                         <Grid justifyContent={'center'} xs={12} md={9} spacing={2}>
-                                            <Box sx={{ padding: '0 64px' }}>
-                                                <ImageMagnifier src={String(Detail.image)} />
+                                            <Box sx={{ padding: '0 30px', objectFit: 'cover' }}>
+                                                <img
+                                                    style={{ objectFit: 'contain' }}
+                                                    width="100%"
+                                                    height="290px"
+                                                    src={String(Detail.image)}
+                                                />
                                             </Box>
                                         </Grid>
                                     )}

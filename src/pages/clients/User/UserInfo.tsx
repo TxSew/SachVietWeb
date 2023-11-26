@@ -10,6 +10,8 @@ import { httpAccount } from '../../../submodules/controllers/http/axiosControlle
 import { toast } from 'react-toastify';
 import { error } from 'console';
 import { da } from '@faker-js/faker';
+import ModalUser from './layout/ModalUser';
+import useMedia from '../../../hooks/useMedia/useMedia';
 function UserInfo() {
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('newPassword');
@@ -39,11 +41,16 @@ function UserInfo() {
     };
 
     const formInfo: any = useForm();
+    const { isMediumMD } = useMedia();
+
     return (
         <NavUser>
             <div className="main ps-0 pt-3 pb-3 pe-0">
                 <div className="main-waper ">
                     <div className="main-waper-top pt-2 pb-2 ps-4">
+                        <i className="fa fa-exclamation-triangle"></i>
+                        {isMediumMD ? <ModalUser /> : <></>}
+
                         <h1 className="info-acc-hd p-3">Thông tin tài khoản</h1>
                         <form className="aa" action="" onSubmit={formInfo.handleSubmit(handelChangeInfo)}>
                             <div className="info-acc row">

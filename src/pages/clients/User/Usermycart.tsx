@@ -16,6 +16,8 @@ import CartNotFound from '../cart/components/CartNotFound/CartNotFound';
 import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
+import ModalUser from './layout/ModalUser';
+import useMedia from '../../../hooks/useMedia/useMedia';
 function UserMyCart() {
     const [orderUser, setOrderUser] = useState<any>({});
     const [page, setPage] = useState<number>(1);
@@ -34,13 +36,15 @@ function UserMyCart() {
     const handleChange = async (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
     };
+    const { isMediumMD } = useMedia();
 
     return (
         <NavUser>
             <div className="main ps-0 pt-3 pb-3 pe-0">
                 <div className="main-waper ">
                     <div className="main-waper-top pt-2 pb-2 ps-4">
-                        <i className="fa fa-exclamation-triangle"></i>
+                        {isMediumMD ? <ModalUser /> : <></>}
+
                         <p>
                             Bạn vui lòng cập nhật thông tin tài khoản:
                             <Link to="">Cập nhật thông tin ngay</Link>
