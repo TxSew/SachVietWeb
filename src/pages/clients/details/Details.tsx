@@ -8,6 +8,7 @@ import {
     Button,
     Container,
     Grid,
+    OutlinedInput,
     Rating,
     Stack,
     Table,
@@ -53,7 +54,6 @@ export const Details = () => {
     const [Detail, setDetail] = useState<Product>({});
     const [image, setImage] = useState<string>('');
     const [quantity, setQuantity] = useState<number>(1);
-    console.log('🚀 ~ file: Details.tsx:56 ~ Details ~ quantity:', quantity);
     const { id } = useParams();
     const Id: any = id;
 
@@ -474,15 +474,32 @@ export const Details = () => {
                                                             }
                                                             sx={{
                                                                 fontSize: '17px',
+                                                                cursor: 'pointer',
                                                             }}
                                                         />
-                                                        <Typography variant="caption">{quantity}</Typography>
+                                                        <OutlinedInput
+                                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                                const inputValue: any = e.target.value;
+                                                                if (/^\d+$/.test(inputValue) || inputValue === '')
+                                                                    setQuantity(inputValue);
+                                                            }}
+                                                            value={quantity}
+                                                            type="text"
+                                                            sx={{
+                                                                maxWidth: '60px',
+                                                                textAlign: 'center',
+                                                                justifyContent: 'center',
+                                                                alignContent: 'center',
+                                                                display: 'flex',
+                                                            }}
+                                                        />
                                                         <AddIcon
                                                             onClick={() =>
                                                                 setQuantity((prevQuantity) => prevQuantity + 1)
                                                             }
                                                             sx={{
                                                                 fontSize: '17px',
+                                                                cursor: 'pointer',
                                                             }}
                                                         />
                                                     </Stack>
