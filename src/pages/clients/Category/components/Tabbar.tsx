@@ -17,13 +17,9 @@ export interface Props {
 }
 
 function Tabbar(props: Props) {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClick = () => {
-        setOpen(!open);
-    };
     const [category, setCategory] = useState<any>([]);
     const [producer, setProducer] = useState<any>({});
+
     useEffect(() => {
         httpProducer.getAll().then((res) => {
             if (res) {
@@ -34,7 +30,6 @@ function Tabbar(props: Props) {
             setCategory(res);
         });
     }, []);
-    // const [value, setValue] = React.useState<any[]>([3, 6]);
 
     return (
         <Box

@@ -8,7 +8,7 @@ import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams, useNavigate } from 'react-router-dom';
 import { color } from '../../../../../Theme/color';
 import { numberFormat } from '../../../../../helpers/formatPrice';
 import { addToCart, decreaseCart, getTotals, removeFromCart } from '../../../../../redux/features/cart/CartProducer';
@@ -38,6 +38,7 @@ const CartProduct = () => {
         });
     };
     const [voucher, setVoucher] = useState<number>(0);
+    const [code, setCode] = useState<string>('');
     const [Cart, setCart] = useState<Product[]>([]);
 
     const fetchCart = async () => {
@@ -63,7 +64,7 @@ const CartProduct = () => {
     const handleIncrement = (id: any) => {
         dispatch(addToCart(id));
     };
-
+    const redirect = useNavigate();
     const {
         handleSubmit,
         control,
@@ -71,8 +72,29 @@ const CartProduct = () => {
     } = useForm<any>();
 
     const handleDiscount = (data: any) => {
-        httpVoucher.getOneVoucher(data).then((res) => {
-            setVoucher(res.discountVoucher.discount);
+        console.log('🚀 ~ file: CartProduct.tsx:74 ~ handleDiscount ~ data:', data);
+        const order = {
+            money: cartTotalAmount,
+            code: data.voucher,
+        };
+        console.log('🚀 ~ file: CartProduct.tsx:79 ~ handleDiscount ~ order:', order);
+        httpVoucher
+            .getOneVoucher(order)
+            .then((res) => {
+                console.log('🚀 ~ file: CartProduct.tsx:83 ~ httpVoucher.getOneVoucher ~ s:', res);
+                setVoucher(res.discount.discount);
+            })
+            .catch((err) => {
+                console.log(err);
+                setVoucher(0);
+            });
+    };
+    const handleCheckout = () => {
+        redirect({
+            pathname: '/checkout',
+            search: createSearchParams({
+                dc: String(voucher),
+            }).toString(),
         });
     };
     return (
@@ -406,21 +428,20 @@ const CartProduct = () => {
                                     {`${numberFormat(Number(cartTotalAmount - voucher))}`}
                                 </Typography>
                             </Stack>
-                            <Link to={'/checkout'}>
-                                <Button
-                                    variant="contained"
-                                    sx={{
-                                        marginTop: '10px',
-                                        bgcolor: 'red',
-                                        color: '#fff',
-                                    }}
-                                    fullWidth
-                                >
-                                    <Typography fontWeight={'bold'} p={1}>
-                                        Thanh toán
-                                    </Typography>
-                                </Button>
-                            </Link>
+                            <Button
+                                variant="contained"
+                                sx={{
+                                    marginTop: '10px',
+                                    bgcolor: 'red',
+                                    color: '#fff',
+                                }}
+                                onClick={handleCheckout}
+                                fullWidth
+                            >
+                                <Typography fontWeight={'bold'} p={1}>
+                                    Thanh toán
+                                </Typography>
+                            </Button>
 
                             <Typography variant="body1" color={color.error} py={1} fontSize={'13px'}>
                                 (Giảm giá trên web chỉ áp dụng cho bán lẻ)

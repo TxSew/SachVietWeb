@@ -54,6 +54,7 @@ function Category() {
         const value: any = searchParams.get('q');
         const searchValue = value;
         const categorySearch = searchParams.get('category');
+
         const props = {
             sortBy,
             sortWith,

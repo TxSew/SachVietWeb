@@ -291,10 +291,10 @@ export default function AdminProduct() {
                                     <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
                                     <TableCell align="right">{e.producer?.name}</TableCell>
                                     <TableCell align="right">
-                                        {e.status == null ? (
-                                            <Chip label="Hoạt động" color="success" />
+                                        {Number(e.quantity) > 0 ? (
+                                            <Chip label="Còn hàng" color="success" />
                                         ) : (
-                                            <Chip color="error" label="Ngưng hoạt động" />
+                                            <Chip color="error" label="Hết hàng" />
                                         )}
                                     </TableCell>
                                     <TableCell align="right">

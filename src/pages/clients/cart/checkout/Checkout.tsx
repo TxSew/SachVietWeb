@@ -37,14 +37,12 @@ function Checkout() {
     const dispatch = useDispatch();
     const [user, setUser] = useState<User>({} as User);
     const [province, setProvince] = useState<Province[]>([]);
-    const [district, setDistrict] = useState<district[]>([]);
-
+    const [districts, setDistricts] = useState([]);
     const cart: any = useSelector((state: RootState) => state.cart.cartItems);
     const { cartTotalAmount, cartItems } = useSelector((state: RootState) => state.cart);
 
     useEffect(() => {
         fetchProvince();
-        fetchDistrict();
         fetchUser();
     }, []);
 
@@ -56,11 +54,6 @@ function Checkout() {
         const user = localStorage.getItem('user');
         const DataUser = JSON.parse(user!);
         setUser(DataUser);
-    };
-
-    const fetchDistrict = async () => {
-        const districtData = await httpProvince.getDistrict();
-        setDistrict(districtData);
     };
 
     const fetchProvince = async () => {
@@ -104,11 +97,6 @@ function Checkout() {
         }
     };
 
-    const [districts, setDistricts] = useState([]);
-
-    // const [selectedProvince, setSelectedProvince] = useState('');
-    // const [selectedDistrict, setSelectedDistrict] = useState('');
-
     const {
         handleSubmit,
         control,
@@ -126,18 +114,16 @@ function Checkout() {
 
     const handleProvinceChange = (e: any) => {
         const provinceId = e.target.value;
-        // setSelectedProvince(provinceId);
         setValue('province', provinceId);
-        // Find the selected province's districts based on ID
         const selectedProvinceData: any = province.find((province: any) => province.id === parseInt(provinceId, 10));
         setDistricts(selectedProvinceData?.district || []);
-        // setSelectedDistrict(''); // Reset selected district when province changes
     };
 
     const handleDistrictChange = (e: any) => {
         const districtId = e.target.value;
         setValue('district', districtId);
     };
+
     return (
         <Grid bgcolor={'#eee'} pb={'170px'}>
             <Container
