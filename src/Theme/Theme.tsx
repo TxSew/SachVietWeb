@@ -101,7 +101,6 @@ export const Theme = createTheme({
                 root: {
                     backgroundColor: color.white,
                     '& .MuiOutlinedInput-input': {
-                        textAlign: 'center',
                         padding: '7px 14px',
                         fontWeight: 400,
                         color: 'gray',
@@ -116,7 +115,6 @@ export const Theme = createTheme({
             styleOverrides: {
                 root: {
                     '& .MuiOutlinedInput-input': {
-                        textAlign: 'center',
                         padding: '7px 14px',
                         fontWeight: 400,
                         color: 'gray',
