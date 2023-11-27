@@ -63,7 +63,12 @@ const CartProduct = () => {
         dispatch(decreaseCart(id));
     };
     const handleIncrement = (id: any) => {
-        dispatch(addToCart(id));
+        dispatch(
+            addToCart({
+                products: id,
+                quantity: 1,
+            })
+        );
     };
     const redirect = useNavigate();
     const {
@@ -305,14 +310,12 @@ const CartProduct = () => {
                                                     ''
                                                 ) : (
                                                     <Typography color={'#F39801'}>
-                                                        {
-                                                            element?.price_sale !== undefined &&
-                                                            element?.cartQuantity !== undefined
-                                                                ? `${numberFormat(
-                                                                      Number(element.price_sale * element.cartQuantity)
-                                                                  )} `
-                                                                : '' /* Replace "N/A" with your preferred placeholder */
-                                                        }
+                                                        {element?.price_sale !== undefined &&
+                                                        element?.cartQuantity !== undefined
+                                                            ? `${numberFormat(
+                                                                  Number(element.price_sale * element.cartQuantity)
+                                                              )} `
+                                                            : ''}
                                                     </Typography>
                                                 )}
                                             </Stack>
