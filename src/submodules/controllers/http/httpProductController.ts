@@ -1,11 +1,9 @@
 import axios, { AxiosInstance } from 'axios';
-import { TProductResponse } from '../../models/ProductModel/Product';
 import { AxiosConfig } from '../interface/axiosConfig';
 class HttpProductController {
     private axiosInstance: AxiosInstance;
 
     constructor(axiosConfig: AxiosConfig) {
-        // Create an Axios instance with the provided configuration
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token');
         const jwtToken = JSON.parse(token!);
@@ -52,7 +50,7 @@ class HttpProductController {
 
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     async getProductByCategory(slug: string): Promise<any> {
@@ -60,7 +58,7 @@ class HttpProductController {
             const response = await this.axiosInstance.post(`products/category?slug=${slug}`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     async post(product: any): Promise<any> {

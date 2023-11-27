@@ -42,7 +42,14 @@ function Sales() {
                 <Stack margin={'0 auto'} direction={'row'} spacing={3}>
                     {discount?.data?.map((e: Discount) => {
                         return (
-                            <DiscountItem id={e.id} code={e.code} expiration_date={e.expiration_date} desc={e.desc} />
+                            <DiscountItem
+                                id={e.id}
+                                code={e.code}
+                                expiration_date={e.expiration_date}
+                                desc={e.desc}
+                                number_used={e.number_used}
+                                limit_number={e.limit_number}
+                            />
                         );
                     })}
                 </Stack>

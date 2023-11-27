@@ -21,7 +21,7 @@ class HttpVoucherController {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOneVoucher(props: any) {
@@ -29,7 +29,7 @@ class HttpVoucherController {
             const response = await this.axiosInstance.post('/voucher/getVoucher', props);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async addVoucherUser(props: Voucher) {
@@ -40,7 +40,7 @@ class HttpVoucherController {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 }

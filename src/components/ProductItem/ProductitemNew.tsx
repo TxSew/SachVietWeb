@@ -131,16 +131,38 @@ const ProductItemNew = (Props: ProductItem) => {
                 </Stack>
                 <Box
                     sx={{
+                        position: 'relative',
                         width: '100%',
                         textAlign: 'center',
                         marginTop: '10px',
                         height: '20px',
-                        borderRadius: '10px',
+                        borderRadius: '30px',
                         color: color.white,
                         backgroundColor: color.linePay,
+                        '&:before': {
+                            position: 'absolute',
+                            zIndex: 1,
+                            content: "''",
+                            height: '20px',
+                            width: `${(Number(Props.products.soldQuantity) / Number(Props.products.quantity)) * 100}%`,
+                            maxWidth: '100%',
+                            borderRadius: '30px',
+                            backgroundColor: '#C92127',
+                            left: '0px',
+                        },
                     }}
                 >
-                    đã bán {Props.products.soldQuantity}
+                    <Typography
+                        sx={{
+                            position: 'absolute',
+                            left: '50%',
+                            top: '50%',
+                            zIndex: 4,
+                            transform: 'translate(-50%, -50%)',
+                        }}
+                    >
+                        {Number(Props.products.quantity) <= 10 ? 'Sắp hết' : `đã bán ${Props.products.soldQuantity}`}
+                    </Typography>
                 </Box>
             </CardContent>
         </Card>

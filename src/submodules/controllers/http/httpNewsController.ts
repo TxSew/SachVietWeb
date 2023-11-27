@@ -18,7 +18,7 @@ class HttpNewController {
             const response = await this.axiosInstance.post(`/news/filter`, props);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOne(id: number) {
@@ -26,7 +26,7 @@ class HttpNewController {
             const response = await this.axiosInstance.get(`/news/getMe/${id}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getDetail(slug: string) {
@@ -34,7 +34,7 @@ class HttpNewController {
             const response = await this.axiosInstance.get(`/news/detail/${slug}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async createNew(data: any) {
@@ -42,7 +42,7 @@ class HttpNewController {
             const response = await this.axiosInstance.post(`/news/createNews`, data);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async updateNew(data: any) {
@@ -50,7 +50,7 @@ class HttpNewController {
             const response = await this.axiosInstance.post(`/news/updateNews`, data);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async deleteNew(id: number) {
@@ -58,7 +58,7 @@ class HttpNewController {
             const response = await this.axiosInstance.delete(`/news/removeNews/${id}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 }

@@ -17,6 +17,7 @@ import { httpVoucher } from '../../../../../submodules/controllers/http/axiosCon
 import { Discount } from '../../../../../submodules/models/DiscountModel/Discount';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
+import { pushError, pushSuccess, pushWarning } from '../../../../../components/Toast/Toast';
 
 const CartProduct = () => {
     const { isMediumMD } = useMedia();
@@ -71,21 +72,27 @@ const CartProduct = () => {
         formState: {},
     } = useForm<any>();
 
-    const handleDiscount = (data: any) => {
+    const handleDiscount = async (data: any) => {
         const order = {
             money: cartTotalAmount,
             code: data.voucher,
         };
-        httpVoucher
-            .getOneVoucher(order)
-            .then((res) => {
-                setVoucher(res.discount.discount);
-                setCode(res.discount.code);
-            })
-            .catch((err) => {
-                console.log(err);
-                setVoucher(0);
-            });
+        try {
+            const data = await httpVoucher.getOneVoucher(order);
+            if (code) {
+                pushWarning('Mã giảm giá đã được thêm');
+            } else {
+                pushSuccess('Thêm mã giảm giá thành công');
+            }
+            setVoucher(data.discount.discount);
+            setCode(data.discount.code);
+        } catch (err: any) {
+            if (err.response.data.message == 'discount limited value') {
+                pushWarning('Mã giảm giá đã hết lượt sử dụng!');
+            }
+
+            setVoucher(0);
+        }
     };
     const handleCheckout = () => {
         if (code) {

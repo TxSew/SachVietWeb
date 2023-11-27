@@ -18,7 +18,7 @@ class HttpUserAddressController {
             const response = await this.axiosInstance.get('/userAddress/');
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async createUserAddress(props: any) {
@@ -26,7 +26,7 @@ class HttpUserAddressController {
             const response = await this.axiosInstance.post('/userAddress/createUserAddress', props);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async addVoucherUser(props: Voucher) {
@@ -37,7 +37,7 @@ class HttpUserAddressController {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 }

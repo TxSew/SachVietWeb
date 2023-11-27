@@ -25,7 +25,7 @@ class HttpProducerController {
             const response = await this.axiosInstance.get(`producer?page=${page}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOne(id: number): Promise<any> {
@@ -33,7 +33,7 @@ class HttpProducerController {
             const response = await this.axiosInstance.get(`producer/${id}`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 
@@ -42,7 +42,7 @@ class HttpProducerController {
             const response = await this.axiosInstance.post(`producer/store`, producer);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 
@@ -51,7 +51,7 @@ class HttpProducerController {
             const response = await this.axiosInstance.put(`producer/update/${id}`, data);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 

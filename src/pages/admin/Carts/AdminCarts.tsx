@@ -37,6 +37,7 @@ import { httpCart, httpProduct } from '../../../submodules/controllers/http/axio
 import { Order } from '../../../submodules/models/OrderModel/Order';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { pushError } from '../../../components/Toast/Toast';
+import { numberFormat } from '../../../helpers/formatPrice';
 
 export default function AdminCarts() {
     const [carts, setCarts] = React.useState<any>({});
@@ -195,9 +196,7 @@ export default function AdminCarts() {
                                         {e.userID == null ? 'Khách vãng lai' : e.users?.fullName}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {Intl.NumberFormat('en-US', {
-                                            currency: 'USD',
-                                        }).format(Number(e.money))}
+                                        {numberFormat(Number(e.money) - Number(e.coupon))}
                                     </TableCell>
                                     <TableCell align="center">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
                                     <TableCell align="right">

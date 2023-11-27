@@ -8,7 +8,6 @@ import {
     Button,
     Container,
     Grid,
-    Pagination,
     Rating,
     Stack,
     Table,
@@ -38,7 +37,6 @@ import ProductItem from '../../../components/ProductItem/ProductItem';
 import { numberFormat } from '../../../helpers/formatPrice';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { addToCart } from '../../../redux/features/cart/CartProducer';
-import { decrement, increment } from '../../../redux/features/counter/CounterProducer';
 import { RootState } from '../../../redux/storeClient';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
@@ -54,7 +52,8 @@ export const Details = () => {
     const redirect = useNavigate();
     const [Detail, setDetail] = useState<Product>({});
     const [image, setImage] = useState<string>('');
-
+    const [quantity, setQuantity] = useState<number>(1);
+    console.log('🚀 ~ file: Details.tsx:56 ~ Details ~ quantity:', quantity);
     const { id } = useParams();
     const Id: any = id;
 
@@ -81,12 +80,24 @@ export const Details = () => {
         }
     };
 
-    const handleAddToCart = (detail: any) => {
-        dispatch(addToCart(detail));
+    const handleAddToCart = (detail: any, quantity: number) => {
+        dispatch(
+            addToCart({
+                products: detail,
+                quantity: quantity,
+            })
+        );
+        setQuantity(1);
     };
 
-    const handleOrder = (detail: any) => {
-        dispatch(addToCart(detail));
+    const handleOrder = (detail: any, quantity: number) => {
+        dispatch(
+            addToCart({
+                products: detail,
+                quantity: quantity,
+            })
+        );
+        setQuantity(1);
         redirect('/cart');
     };
     const handleChangeImage = (e: any) => {
@@ -241,12 +252,12 @@ export const Details = () => {
                                                             color: 'white',
                                                         },
                                                     }}
-                                                    onClick={() => handleAddToCart(Detail)}
+                                                    onClick={() => handleAddToCart(Detail, quantity)}
                                                 >
                                                     Thêm vào giỏ hàng
                                                 </Button>
                                                 <Button
-                                                    onClick={() => handleOrder(Detail)}
+                                                    onClick={() => handleOrder(Detail, quantity)}
                                                     sx={{
                                                         fontWeight: 'bold',
                                                         backgroundColor: '#008C89',
@@ -458,14 +469,18 @@ export const Details = () => {
                                                         borderRadius={'5px'}
                                                     >
                                                         <RemoveIcon
-                                                            onClick={() => dispatch(decrement())}
+                                                            onClick={() =>
+                                                                setQuantity((prevQuantity) => prevQuantity - 1)
+                                                            }
                                                             sx={{
                                                                 fontSize: '17px',
                                                             }}
                                                         />
-                                                        <Typography variant="caption">{count}</Typography>
+                                                        <Typography variant="caption">{quantity}</Typography>
                                                         <AddIcon
-                                                            onClick={() => dispatch(increment())}
+                                                            onClick={() =>
+                                                                setQuantity((prevQuantity) => prevQuantity + 1)
+                                                            }
                                                             sx={{
                                                                 fontSize: '17px',
                                                             }}
@@ -496,7 +511,7 @@ export const Details = () => {
                                             borderRight={'1px solid white'}
                                         >
                                             <RemoveIcon
-                                                onClick={() => dispatch(decrement())}
+                                                onClick={() => setQuantity((prevQuantity) => prevQuantity - 1)}
                                                 sx={{
                                                     fontSize: '20px',
                                                     color: 'whitesmoke',
@@ -513,10 +528,10 @@ export const Details = () => {
                                                 }}
                                                 variant="caption"
                                             >
-                                                {count}
+                                                {quantity}
                                             </Typography>
                                             <AddIcon
-                                                onClick={() => dispatch(increment())}
+                                                onClick={() => setQuantity((prevQuantity) => prevQuantity + 1)}
                                                 sx={{
                                                     fontSize: '20px',
                                                     color: 'whitesmoke',
@@ -542,7 +557,7 @@ export const Details = () => {
                                                           cursor: 'pointer',
                                                       }
                                             }
-                                            onClick={() => handleAddToCart(Detail)}
+                                            onClick={() => handleAddToCart(Detail, quantity)}
                                         >
                                             Thêm vào giỏ hàng
                                         </Typography>
@@ -575,7 +590,7 @@ export const Details = () => {
                                                           },
                                                       }
                                             }
-                                            onClick={() => handleOrder(Detail)}
+                                            onClick={() => handleOrder(Detail, quantity)}
                                         >
                                             Mua ngay
                                         </Button>
@@ -586,7 +601,6 @@ export const Details = () => {
                     </Grid>
                 </Box>
 
-                {/* chi tiet san pham */}
                 <Box pb={2}>
                     <Box
                         bgcolor={color.white}

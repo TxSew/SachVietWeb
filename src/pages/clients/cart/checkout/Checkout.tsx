@@ -29,11 +29,10 @@ import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpPayment, httpProvince, httpVoucher } from '../../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
-import { Province, district } from '../../../../submodules/models/Province/Province';
+import { Province } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
-    const redirect = useNavigate();
     const dispatch = useDispatch();
     const [user, setUser] = useState<User>({} as User);
     const [province, setProvince] = useState<Province[]>([]);
@@ -43,6 +42,7 @@ function Checkout() {
     const [code, setCode] = useState<string>('');
     const cart: any = useSelector((state: RootState) => state.cart.cartItems);
     const { cartTotalAmount, cartItems } = useSelector((state: RootState) => state.cart);
+    const navigate = useNavigate();
     const value: any = searchParams.get('discount');
 
     useEffect(() => {
@@ -60,10 +60,8 @@ function Checkout() {
         const DataUser = JSON.parse(user!);
         setUser(DataUser);
     };
-    const fetchDiscount = () => {
-        console.log('🚀 ~ file: Checkout.tsx:64 ~ fetchDiscount ~ value:', value);
-        console.log(cartTotalAmount);
 
+    const fetchDiscount = () => {
         const order = {
             money: cartTotalAmount,
             code: value,
@@ -72,12 +70,10 @@ function Checkout() {
         httpVoucher
             .getOneVoucher(order)
             .then((res) => {
-                console.log('🚀 ~ file: Checkout.tsx:72 ~ .then ~ res:', res);
                 setVoucher(res.discount.discount);
                 setCode(res.discount.code);
             })
             .catch((err) => {
-                console.log('🚀 ~ file: Checkout.tsx:77 ~ fetchDiscount ~ err:', err);
                 console.log(err);
                 setVoucher(0);
             });
@@ -88,7 +84,6 @@ function Checkout() {
             setProvince(provinceData);
         }
     };
-    const navigate = useNavigate();
     const handleCheckout = async (data: any) => {
         const detailData = cart.map((e: Product) => {
             return {
@@ -100,8 +95,9 @@ function Checkout() {
             };
         });
 
-        const orders = {
+        let orders = {
             ...data,
+            orderCode: value,
             userID: user?.id ?? null,
             money: cartTotalAmount,
         };
@@ -113,6 +109,7 @@ function Checkout() {
         };
 
         const payment = await httpPayment.getPayment(orderData);
+
         localStorage.removeItem('cartItems');
         if (payment.paymentMethod == 'COD') {
             window.location.assign(payment.url);
@@ -485,14 +482,18 @@ function Checkout() {
                                 {numberFormat(Number(cartTotalAmount))}
                             </Typography>
                         </Stack>
-                        <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
-                            <Typography variant="body1" fontSize={'15.5px'}>
-                                Khuyến mãi
-                            </Typography>
-                            <Typography variant="body1" fontSize={'12.5px'} fontWeight={'bold'} color={color.sale}>
-                                {` - ${numberFormat(Number(20000))}`}
-                            </Typography>
-                        </Stack>
+                        {voucher > 0 ? (
+                            <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
+                                <Typography variant="body1" fontSize={'15.5px'}>
+                                    Khuyến mãi
+                                </Typography>
+                                <Typography variant="body1" fontSize={'12.5px'} fontWeight={'bold'} color={color.sale}>
+                                    {` - ${numberFormat(Number(voucher))}`}
+                                </Typography>
+                            </Stack>
+                        ) : (
+                            ''
+                        )}
                         <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
                             <Typography variant="body1" fontSize={isXSOnly ? '13px' : '15.5px'}>
                                 Phí vận chuyển (Giao hàng tiêu chuẩn)
@@ -506,7 +507,7 @@ function Checkout() {
                                 Tổng Số Tiền (gồm VAT)
                             </Typography>
                             <Typography variant="body1" fontSize={'15.5px'} fontWeight={'bold'} color={'#F39801'}>
-                                {numberFormat(Number(cartTotalAmount + 19000))}
+                                {numberFormat(Number(cartTotalAmount - Number(voucher)))}
                             </Typography>
                         </Stack>
                     </Box>

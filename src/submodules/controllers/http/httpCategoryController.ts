@@ -24,7 +24,7 @@ class HttpCategoryController {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getAll(page: number = 1): Promise<any> {
@@ -32,7 +32,7 @@ class HttpCategoryController {
             const response = await this.axiosInstance.get(`category?page=${page}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOne(id: number): Promise<any> {
@@ -40,7 +40,7 @@ class HttpCategoryController {
             const response = await this.axiosInstance.get(`category/${id}`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 
@@ -49,7 +49,7 @@ class HttpCategoryController {
             const response = await this.axiosInstance.post(`category/store`, category);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async put(id: number, data: Product): Promise<any> {
@@ -57,7 +57,7 @@ class HttpCategoryController {
             const response = await this.axiosInstance.put(`/category/update/${id}`, data);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 
@@ -66,7 +66,7 @@ class HttpCategoryController {
             const response = await this.axiosInstance.delete(`category/${id}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 }
