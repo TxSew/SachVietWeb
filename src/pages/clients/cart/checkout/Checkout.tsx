@@ -104,9 +104,15 @@ function Checkout() {
         }
     };
 
+    const [districts, setDistricts] = useState([]);
+
+    // const [selectedProvince, setSelectedProvince] = useState('');
+    // const [selectedDistrict, setSelectedDistrict] = useState('');
+
     const {
         handleSubmit,
         control,
+        setValue,
         formState: { errors, isSubmitting },
     } = useForm<Order>();
     const handelLogin = () => {
@@ -116,6 +122,21 @@ function Checkout() {
                 a: 'checkout',
             }).toString(),
         });
+    };
+
+    const handleProvinceChange = (e: any) => {
+        const provinceId = e.target.value;
+        // setSelectedProvince(provinceId);
+        setValue('province', provinceId);
+        // Find the selected province's districts based on ID
+        const selectedProvinceData: any = province.find((province: any) => province.id === parseInt(provinceId, 10));
+        setDistricts(selectedProvinceData?.district || []);
+        // setSelectedDistrict(''); // Reset selected district when province changes
+    };
+
+    const handleDistrictChange = (e: any) => {
+        const districtId = e.target.value;
+        setValue('district', districtId);
     };
     return (
         <Grid bgcolor={'#eee'} pb={'170px'}>
@@ -159,7 +180,7 @@ function Checkout() {
                             <Typography>Họ và tên người nhận</Typography>
                             <Controller
                                 control={control}
-                                defaultValue="" // Set an initial value here
+                                defaultValue=""
                                 name="fullName"
                                 rules={{
                                     required: 'Tên của bạn không được bỏ trống!',
@@ -205,7 +226,7 @@ function Checkout() {
                             <Typography>Số điện thoại</Typography>
                             <Controller
                                 control={control}
-                                defaultValue="" // Set an initial value here
+                                defaultValue=""
                                 name="phone"
                                 rules={{
                                     required: 'Vui lòng nhập số điện thoại',
@@ -226,16 +247,20 @@ function Checkout() {
                         </FormControl>
                         <FormControl>
                             <Typography>Tỉnh/Thành Phố</Typography>
-
                             <Controller
                                 control={control}
-                                defaultValue="" // Set an initial value here
+                                defaultValue=""
                                 name="province"
                                 rules={{
                                     required: 'Vui lòng nhập Tỉnh/ Thành phố',
                                 }}
                                 render={({ field }) => (
-                                    <Select {...field} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
+                                    <Select
+                                        {...field}
+                                        onChange={handleProvinceChange}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                    >
                                         {province.map((e: Province) => {
                                             return (
                                                 <MenuItem value={e.id}>
@@ -256,20 +281,23 @@ function Checkout() {
 
                             <Controller
                                 control={control}
-                                defaultValue="" // Set an initial value here
+                                defaultValue=""
                                 name="district"
                                 rules={{
                                     required: 'Vui lòng nhập Quận /Huyện',
                                 }}
                                 render={({ field }) => (
-                                    <Select {...field} displayEmpty inputProps={{ 'aria-label': 'Without label' }}>
-                                        {district.map((e: district) => {
-                                            return (
-                                                <MenuItem value={e.id}>
-                                                    <em>{e.name}</em>
-                                                </MenuItem>
-                                            );
-                                        })}
+                                    <Select
+                                        {...field}
+                                        onChange={handleDistrictChange}
+                                        displayEmpty
+                                        inputProps={{ 'aria-label': 'Without label' }}
+                                    >
+                                        {districts.map((e: any) => (
+                                            <MenuItem key={e.id} value={e.id}>
+                                                {e.name}
+                                            </MenuItem>
+                                        ))}
                                     </Select>
                                 )}
                             />
