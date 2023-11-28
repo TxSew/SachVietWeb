@@ -113,132 +113,146 @@ export default function AdminCarts() {
         setStatus(event.target.value);
     };
     return (
-        <Grid>
-            <Grid mt={0} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        <ShoppingBasketIcon
-                            sx={{
-                                mr: 1,
-                            }}
-                        />
-                        quản lý đơn hàng
-                    </Typography>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Label>Sắp xếp:</Label>
-                        <Select
-                            displayEmpty
-                            defaultValue={undefined}
-                            inputProps={{ 'aria-label': 'Without label' }}
-                            onChange={handleChangeSort}
-                        >
-                            <MenuItem value={undefined}>
-                                <em>-- Chọn trạng thái --</em>
-                            </MenuItem>
-                            <MenuItem value={`${null}`}> Đang chờ duyệt</MenuItem>
-                            <MenuItem value={1}>Đang giao </MenuItem>
-                            <MenuItem value={2}>Đã giao hàng</MenuItem>
-                            <MenuItem value={3}> Bị hủy</MenuItem>
-                        </Select>
-                    </FormControl>
-                </Stack>
-                <TableContainer component={Paper}>
-                    <Table
+        <Grid mt={0} width={'100%'}>
+            <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+                <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+                    <ShoppingBasketIcon
                         sx={{
-                            minWidth: 800,
+                            mr: 1,
                         }}
-                        aria-label="simple tablek w"
+                    />
+                    quản lý đơn hàng
+                </Typography>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <Select
+                        displayEmpty
+                        defaultValue={undefined}
+                        inputProps={{ 'aria-label': 'Without label' }}
+                        onChange={handleChangeSort}
                     >
-                        <TableHead
+                        <MenuItem value={undefined}>
+                            <em>-- Chọn trạng thái --</em>
+                        </MenuItem>
+                        <MenuItem value={`${null}`}> Đang chờ duyệt</MenuItem>
+                        <MenuItem value={1}>Đang giao </MenuItem>
+                        <MenuItem value={2}>Đã giao hàng</MenuItem>
+                        <MenuItem value={3}> Bị hủy</MenuItem>
+                    </Select>
+                </FormControl>
+            </Stack>
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{
+                        minWidth: 800,
+                    }}
+                    aria-label="simple tablek w"
+                >
+                    <TableHead
+                        sx={{
+                            border: '1px solid #eee',
+                        }}
+                    >
+                        <TableRow
                             sx={{
-                                border: '1px solid #eee',
+                                '& > th': {
+                                    fontWeight: 'bold',
+                                },
                             }}
                         >
-                            <TableRow
-                                sx={{
-                                    '& > th': {
-                                        fontWeight: 'bold',
-                                    },
-                                }}
-                            >
-                                <TableCell>
-                                    Mã đơn hàng
-                                    <OutlinedInput
-                                        type="number"
-                                        sx={{
-                                            display: 'block',
-                                            maxWidth: '100px',
-                                            mt: 1,
-                                            '& > input': {
-                                                p: '7px',
-                                            },
-                                        }}
-                                        fullWidth
-                                        onChange={handleChangeValue}
-                                    />
+                            <TableCell>
+                                Mã đơn hàng
+                                <OutlinedInput
+                                    type="number"
+                                    sx={{
+                                        display: 'block',
+                                        maxWidth: '100px',
+                                        mt: 1,
+                                        '& > input': {
+                                            p: '7px',
+                                        },
+                                    }}
+                                    fullWidth
+                                    onChange={handleChangeValue}
+                                />
+                            </TableCell>
+                            <TableCell>Khách hàng</TableCell>
+                            <TableCell align="center">Tổng tiền</TableCell>
+                            <TableCell align="center">Ngày tạo hóa đơn</TableCell>
+                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="center">Xử lý đơn</TableCell>
+                            <TableCell align="right">Thao tác</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {carts?.orders?.map((e: Order) => (
+                            <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">
+                                    {e.id}
                                 </TableCell>
-                                <TableCell>Khách hàng</TableCell>
-                                <TableCell align="center">Tổng tiền</TableCell>
-                                <TableCell align="center">Ngày tạo hóa đơn</TableCell>
-                                <TableCell align="right">Trạng thái</TableCell>
-                                <TableCell align="center">Xử lý đơn</TableCell>
-                                <TableCell align="right">Thao tác</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {carts?.orders?.map((e: Order) => (
-                                <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell component="th" scope="row">
-                                        {e.id}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {e.userID == null ? 'Khách vãng lai' : e.users?.fullName}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {Intl.NumberFormat('en-US', {
-                                            currency: 'USD',
-                                        }).format(Number(e.money))}
-                                    </TableCell>
-                                    <TableCell align="center">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
-                                    <TableCell align="right">
-                                        {e.status == null ? (
-                                            <Typography sx={{ color: 'gray', fontSize: '13px' }}>
-                                                Đang chờ duyệt
-                                            </Typography>
-                                        ) : e.status == 1 ? (
-                                            <Typography
-                                                sx={{
-                                                    color: 'blue',
-                                                    fontSize: '13px',
-                                                }}
-                                            >
-                                                {' '}
-                                                Đang giao hàng
-                                            </Typography>
-                                        ) : e.status == 2 ? (
-                                            <Typography color={'green'}> Đã giao </Typography>
-                                        ) : e.status == 3 ? (
-                                            <Typography color={'red'}>Đã bị hủy</Typography>
-                                        ) : (
-                                            ''
-                                        )}
-                                    </TableCell>
-                                    <TableCell align="center">
-                                        <Stack
-                                            direction={'row'}
-                                            color={color.text_color}
-                                            spacing={2}
-                                            justifyContent={'end'}
+                                <TableCell component="th" scope="row">
+                                    {e.userID == null ? 'Khách vãng lai' : e.users?.fullName}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {Intl.NumberFormat('en-US', {
+                                        currency: 'USD',
+                                    }).format(Number(e.money))}
+                                </TableCell>
+                                <TableCell align="center">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
+                                <TableCell align="right">
+                                    {e.status == null ? (
+                                        <Typography sx={{ color: 'gray', fontSize: '13px' }}>Đang chờ duyệt</Typography>
+                                    ) : e.status == 1 ? (
+                                        <Typography
+                                            sx={{
+                                                color: 'blue',
+                                                fontSize: '13px',
+                                            }}
                                         >
-                                            {e.status == null ? (
-                                                <>
+                                            {' '}
+                                            Đang giao hàng
+                                        </Typography>
+                                    ) : e.status == 2 ? (
+                                        <Typography color={'green'}> Đã giao </Typography>
+                                    ) : e.status == 3 ? (
+                                        <Typography color={'red'}>Đã bị hủy</Typography>
+                                    ) : (
+                                        ''
+                                    )}
+                                </TableCell>
+                                <TableCell align="center">
+                                    <Stack
+                                        direction={'row'}
+                                        color={color.text_color}
+                                        spacing={2}
+                                        justifyContent={'end'}
+                                    >
+                                        {e.status == null ? (
+                                            <>
+                                                <Stack
+                                                    sx={{
+                                                        cursor: 'pointer',
+                                                    }}
+                                                    onClick={async () => {
+                                                        const updated = await httpCart.put(Number(e.id), {
+                                                            status: 1,
+                                                        });
+                                                        window.location.reload();
+
+                                                        toast.success('updated order successfully', {
+                                                            position: 'bottom-right',
+                                                        });
+                                                    }}
+                                                >
+                                                    <Chip label="Duyệt đơn hàng" />
+                                                </Stack>
+                                                <Box>
                                                     <Stack
                                                         sx={{
                                                             cursor: 'pointer',
                                                         }}
                                                         onClick={async () => {
                                                             const updated = await httpCart.put(Number(e.id), {
-                                                                status: 1,
+                                                                status: 3,
                                                             });
                                                             window.location.reload();
 
@@ -247,182 +261,163 @@ export default function AdminCarts() {
                                                             });
                                                         }}
                                                     >
-                                                        <Chip label="Duyệt đơn hàng" />
-                                                    </Stack>
-                                                    <Box>
-                                                        <Stack
-                                                            sx={{
-                                                                cursor: 'pointer',
-                                                            }}
-                                                            onClick={async () => {
-                                                                const updated = await httpCart.put(Number(e.id), {
-                                                                    status: 3,
-                                                                });
-                                                                window.location.reload();
-
-                                                                toast.success('updated order successfully', {
-                                                                    position: 'bottom-right',
-                                                                });
-                                                            }}
-                                                        >
-                                                            <Chip
-                                                                color="error"
-                                                                label="Hủy đơn"
-                                                                sx={{
-                                                                    cursor: 'pointer',
-                                                                }}
-                                                            />
-                                                        </Stack>
-                                                    </Box>
-                                                </>
-                                            ) : e.status == 1 ? (
-                                                <>
-                                                    <Stack onClick={() => handleUpdateOrder(e.id)}>
                                                         <Chip
-                                                            color="success"
-                                                            label="Xác nhận thanh toán"
+                                                            color="error"
+                                                            label="Hủy đơn"
                                                             sx={{
                                                                 cursor: 'pointer',
                                                             }}
                                                         />
                                                     </Stack>
-                                                    <Box>
-                                                        <Stack
-                                                            onClick={async () => {
-                                                                const updated = await httpCart.put(Number(e.id), {
-                                                                    status: 0,
-                                                                });
-                                                                window.location.reload();
-                                                                toast.success('updated order successfully', {
-                                                                    position: 'bottom-right',
-                                                                });
-                                                            }}
-                                                        >
-                                                            <Chip
-                                                                color="error"
-                                                                label="Hủy đơn"
-                                                                sx={{
-                                                                    cursor: 'pointer',
-                                                                }}
-                                                            />
-                                                        </Stack>
-                                                    </Box>
-                                                </>
-                                            ) : (
-                                                ''
-                                            )}
-                                        </Stack>
-                                    </TableCell>
-
-                                    <TableCell align="center">
-                                        <Stack
-                                            sx={{
-                                                cursor: 'pointer',
-                                            }}
-                                            direction={'row'}
-                                            color={color.text_color}
-                                            spacing={2}
-                                            justifyContent={'end'}
-                                        >
-                                            <Link to={`/admin/orders/detail/${e.id}`}>
-                                                <VisibilityIcon
-                                                    sx={{
-                                                        color: 'green',
-                                                    }}
-                                                />
-                                            </Link>
-                                            <Box>
-                                                <DeleteForeverIcon
-                                                    sx={{
-                                                        color: 'red',
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    onClick={() => handleClickOpen(e)}
-                                                />
-
-                                                <Dialog
-                                                    open={open.isChecked}
-                                                    onClose={handleClickClose}
-                                                    TransitionComponent={Fade}
-                                                    aria-labelledby="customized-dialog-title"
-                                                >
-                                                    <DialogContent>
-                                                        <DialogContentText
-                                                            id="alert-dialog-slide-description"
-                                                            textAlign={'center'}
-                                                            padding={'0 24px '}
-                                                            sx={{
-                                                                color: 'red',
-                                                            }}
-                                                        >
-                                                            <DeleteForeverIcon
-                                                                sx={{
-                                                                    fontSize: '56px',
-                                                                    color: 'rgb(201, 33, 39)',
-                                                                }}
-                                                            />
-                                                            <DialogTitle fontSize={'16px'}>
-                                                                Bạn chắc chắn muốn xóa đơn hàng này?
-                                                            </DialogTitle>
-                                                        </DialogContentText>
-                                                    </DialogContent>
-                                                    <Box
-                                                        display={'flex'}
-                                                        paddingBottom={'24px'}
-                                                        justifyContent={'space-around'}
+                                                </Box>
+                                            </>
+                                        ) : e.status == 1 ? (
+                                            <>
+                                                <Stack onClick={() => handleUpdateOrder(e.id)}>
+                                                    <Chip
+                                                        color="success"
+                                                        label="Xác nhận thanh toán"
+                                                        sx={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                </Stack>
+                                                <Box>
+                                                    <Stack
+                                                        onClick={async () => {
+                                                            const updated = await httpCart.put(Number(e.id), {
+                                                                status: 0,
+                                                            });
+                                                            window.location.reload();
+                                                            toast.success('updated order successfully', {
+                                                                position: 'bottom-right',
+                                                            });
+                                                        }}
                                                     >
-                                                        <Button
-                                                            onClick={handleClickClose}
+                                                        <Chip
+                                                            color="error"
+                                                            label="Hủy đơn"
                                                             sx={{
-                                                                padding: '8px 16px',
-                                                                border: '1px solid #ccc',
-                                                                borderRadius: '12px',
-                                                                color: 'black',
-                                                                fontSize: '12px',
-                                                                fontWeight: 'bold',
-                                                                width: '96px',
+                                                                cursor: 'pointer',
                                                             }}
-                                                        >
-                                                            Hủy
-                                                        </Button>
-                                                        <Button
-                                                            onClick={() => handleDelete(open.id)}
+                                                        />
+                                                    </Stack>
+                                                </Box>
+                                            </>
+                                        ) : (
+                                            ''
+                                        )}
+                                    </Stack>
+                                </TableCell>
+
+                                <TableCell align="center">
+                                    <Stack
+                                        sx={{
+                                            cursor: 'pointer',
+                                        }}
+                                        direction={'row'}
+                                        color={color.text_color}
+                                        spacing={2}
+                                        justifyContent={'end'}
+                                    >
+                                        <Link to={`/admin/orders/detail/${e.id}`}>
+                                            <VisibilityIcon
+                                                sx={{
+                                                    color: 'green',
+                                                }}
+                                            />
+                                        </Link>
+                                        <Box>
+                                            <DeleteForeverIcon
+                                                sx={{
+                                                    color: 'red',
+                                                    cursor: 'pointer',
+                                                }}
+                                                onClick={() => handleClickOpen(e)}
+                                            />
+
+                                            <Dialog
+                                                open={open.isChecked}
+                                                onClose={handleClickClose}
+                                                TransitionComponent={Fade}
+                                                aria-labelledby="customized-dialog-title"
+                                            >
+                                                <DialogContent>
+                                                    <DialogContentText
+                                                        id="alert-dialog-slide-description"
+                                                        textAlign={'center'}
+                                                        padding={'0 24px '}
+                                                        sx={{
+                                                            color: 'red',
+                                                        }}
+                                                    >
+                                                        <DeleteForeverIcon
                                                             sx={{
-                                                                padding: '8px 16px',
-                                                                border: '1px solid red',
-                                                                borderRadius: '12px',
-                                                                background: 'red',
-                                                                color: 'white',
-                                                                fontSize: '12px',
-                                                                fontWeight: 'bold',
-                                                                width: '96px',
-                                                                ':hover': {
-                                                                    backgroundColor: 'rgb(201, 33, 39)',
-                                                                },
+                                                                fontSize: '56px',
+                                                                color: 'rgb(201, 33, 39)',
                                                             }}
-                                                        >
-                                                            Đồng ý
-                                                        </Button>
-                                                    </Box>
-                                                </Dialog>
-                                            </Box>
-                                        </Stack>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <Box
-                    mt={2}
-                    sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Pagination count={carts?.totalPage} page={page} onChange={handleChange} />
-                </Box>
-            </Grid>
+                                                        />
+                                                        <DialogTitle fontSize={'16px'}>
+                                                            Bạn chắc chắn muốn xóa đơn hàng này?
+                                                        </DialogTitle>
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <Box
+                                                    display={'flex'}
+                                                    paddingBottom={'24px'}
+                                                    justifyContent={'space-around'}
+                                                >
+                                                    <Button
+                                                        onClick={handleClickClose}
+                                                        sx={{
+                                                            padding: '8px 16px',
+                                                            border: '1px solid #ccc',
+                                                            borderRadius: '12px',
+                                                            color: 'black',
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                            width: '96px',
+                                                        }}
+                                                    >
+                                                        Hủy
+                                                    </Button>
+                                                    <Button
+                                                        onClick={() => handleDelete(open.id)}
+                                                        sx={{
+                                                            padding: '8px 16px',
+                                                            border: '1px solid red',
+                                                            borderRadius: '12px',
+                                                            background: 'red',
+                                                            color: 'white',
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                            width: '96px',
+                                                            ':hover': {
+                                                                backgroundColor: 'rgb(201, 33, 39)',
+                                                            },
+                                                        }}
+                                                    >
+                                                        Đồng ý
+                                                    </Button>
+                                                </Box>
+                                            </Dialog>
+                                        </Box>
+                                    </Stack>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Box
+                mt={2}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
+                <Pagination count={carts?.totalPage} page={page} onChange={handleChange} />
+            </Box>
         </Grid>
     );
 }
