@@ -147,7 +147,9 @@ function UserCartDetail() {
 
                             <Stack direction={'row'} mt={'10px'}>
                                 <Typography>Tổng tiền: </Typography>
-                                <Typography fontWeight={'bold'}>{numberFormat(orderCurrent.money)}</Typography>
+                                <Typography fontWeight={'bold'}>
+                                    {numberFormat(orderCurrent.money - orderCurrent.coupon)}
+                                </Typography>
                             </Stack>
 
                             <Stack direction={'row'} mt={'10px'}>

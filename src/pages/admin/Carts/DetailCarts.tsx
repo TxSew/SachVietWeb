@@ -18,11 +18,11 @@ import { color } from '../../../Theme/color';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
+import { OrderType } from '../../../submodules/models/OrderModel/Order';
 
 function DetailCarts() {
     const componentRef: any = useRef();
     const { id } = useParams();
-    console.log('🚀 ~ file: DetailCarts.tsx:25 ~ DetailCarts ~ id:', id);
     const [orderCurrent, setDetailOrder] = useState<any>({});
     useEffect(() => {
         fetchOrderDetail();
@@ -111,16 +111,117 @@ function DetailCarts() {
 
                     <Grid item xs={3}>
                         <Box mt={'60px'}>
-                            <Button
-                                variant="OutlinedRed"
+                            <Stack direction={'row'} mt={'10px'} spacing={2}>
+                                <Button
+                                    variant="containedGreen"
+                                    sx={{
+                                        mt: '10px',
+                                        borderRadius: '15px',
+                                        padding: '7px 27px',
+                                    }}
+                                >
+                                    <Typography textTransform={'capitalize'}>Xác nhận đơn hàng</Typography>
+                                </Button>
+                                <Button
+                                    variant="OutlinedRed"
+                                    sx={{
+                                        mt: '10px',
+                                        borderRadius: '15px',
+                                        padding: '7px 27px',
+                                    }}
+                                >
+                                    <Typography textTransform={'capitalize'}>Hủy đơn hàng</Typography>
+                                </Button>
+                            </Stack>
+                        </Box>
+                    </Grid>
+                </Grid>
+                <Grid
+                    container
+                    justifyContent={'space-between'}
+                    maxWidth="xl"
+                    sx={{
+                        backgroundColor: color.white,
+
+                        padding: '20px',
+                    }}
+                >
+                    <Grid item xs={3.8}>
+                        <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
+                            <Typography
                                 sx={{
-                                    mt: '10px',
-                                    borderRadius: '15px',
-                                    padding: '7px 27px',
+                                    padding: '7px 5px',
+                                    fontWeight: 'bold',
                                 }}
                             >
-                                <Typography textTransform={'capitalize'}>Hủy đơn hàng</Typography>
-                            </Button>
+                                Thông tin người nhận
+                            </Typography>
+                            <Box
+                                sx={{
+                                    padding: '10px',
+                                    display: 'flex',
+                                    borderTop: '1px solid #B7B4B4',
+                                    flexDirection: 'column',
+                                    rowGap: '5px',
+                                }}
+                            >
+                                <Typography variant="body1">{orderCurrent.fullName}</Typography>
+                                <Typography variant="body1">{orderCurrent.phone}</Typography>
+                                <Typography variant="body1">{orderCurrent.address}</Typography>
+                                <Typography>Tel:{orderCurrent.phone}</Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3.8}>
+                        <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
+                            <Typography
+                                sx={{
+                                    padding: '7px 5px',
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Phương thức vận chuyển
+                            </Typography>
+                            <Box
+                                sx={{
+                                    padding: '10px',
+                                    display: 'flex',
+                                    borderTop: '1px solid #B7B4B4',
+                                    flexDirection: 'column',
+                                    rowGap: '5px',
+                                }}
+                            >
+                                <Typography>Giao hàng tiêu chuẩn</Typography>
+                            </Box>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={3.8}>
+                        <Box mt={'20px'} border={'1px solid #B7B4B4'} height={'166px'}>
+                            <Typography
+                                sx={{
+                                    padding: '7px 5px',
+                                    fontWeight: 'bold',
+                                }}
+                            >
+                                Phương thức thanh toán
+                            </Typography>
+                            <Box
+                                sx={{
+                                    padding: '10px',
+                                    display: 'flex',
+                                    borderTop: '1px solid #B7B4B4',
+                                    flexDirection: 'column',
+                                    rowGap: '5px',
+                                }}
+                            >
+                                <Typography variant="body1">
+                                    {orderCurrent.orderType == OrderType.COD
+                                        ? 'Thanh toán bằng tiền mặt khi nhận hàng'
+                                        : OrderType.VISA
+                                        ? 'Thanh  toán bằng thẻ tín dụng'
+                                        : ''}
+                                </Typography>
+                            </Box>
                         </Box>
                     </Grid>
                 </Grid>

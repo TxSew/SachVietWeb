@@ -84,7 +84,9 @@ function UserMyCart() {
                                                             {e.id}
                                                         </TableCell>
                                                         <TableCell align="center">{formatDates(e.createdAt)}</TableCell>
-                                                        <TableCell align="center">{numberFormat(e.money)}</TableCell>
+                                                        <TableCell align="center">
+                                                            {numberFormat(Number(e.money) - Number(e.coupon))}
+                                                        </TableCell>
                                                         <TableCell align="center">{e.orderType}</TableCell>
                                                         <TableCell align="center">
                                                             {e.status == null ? (
