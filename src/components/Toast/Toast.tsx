@@ -61,7 +61,7 @@ const pushError = (message: string) => {
             background: '#F7E4E1',
             paddingLeft: `16px`,
             borderLeft: `2px solid ${color.error}`,
-            color: color.white,
+            color: color.text_color,
             boxShadow: 'none',
         },
     });

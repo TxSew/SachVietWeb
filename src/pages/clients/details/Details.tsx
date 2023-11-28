@@ -84,7 +84,7 @@ export const Details = () => {
         dispatch(
             addToCart({
                 products: detail,
-                quantity: quantity,
+                quantity: Number(quantity),
             })
         );
         setQuantity(1);
@@ -94,7 +94,7 @@ export const Details = () => {
         dispatch(
             addToCart({
                 products: detail,
-                quantity: quantity,
+                quantity: Number(quantity),
             })
         );
         setQuantity(1);
@@ -122,6 +122,7 @@ export const Details = () => {
             border: 'none',
         },
     }));
+    const handelQUantity = () => {};
 
     const htmlContent = Detail ? Detail.desc : ''; // Ha
     return (
@@ -465,37 +466,43 @@ export const Details = () => {
                                                         direction={'row'}
                                                         spacing={3}
                                                         border={'1px solid #eee'}
-                                                        p={'3px 12px'}
+                                                        alignItems={'center'}
+                                                        p={'5px 12px'}
                                                         borderRadius={'5px'}
                                                     >
                                                         <RemoveIcon
                                                             onClick={() =>
-                                                                setQuantity((prevQuantity) => prevQuantity - 1)
+                                                                setQuantity((prevQuantity) => Number(prevQuantity) - 1)
                                                             }
                                                             sx={{
                                                                 fontSize: '17px',
                                                                 cursor: 'pointer',
                                                             }}
                                                         />
-                                                        <OutlinedInput
+                                                        <input
                                                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                                 const inputValue: any = e.target.value;
-                                                                if (/^\d+$/.test(inputValue) || inputValue === '')
+                                                                if (
+                                                                    /^(?!0\d*$)\d+$/.test(inputValue) ||
+                                                                    inputValue == ''
+                                                                )
                                                                     setQuantity(inputValue);
                                                             }}
                                                             value={quantity}
                                                             type="text"
-                                                            sx={{
-                                                                maxWidth: '60px',
+                                                            style={{
+                                                                maxWidth: '40px',
+                                                                width: '100%',
                                                                 textAlign: 'center',
                                                                 justifyContent: 'center',
                                                                 alignContent: 'center',
-                                                                display: 'flex',
+                                                                outline: '1px solid #ddd',
+                                                                borderRadius: '3px',
                                                             }}
                                                         />
                                                         <AddIcon
                                                             onClick={() =>
-                                                                setQuantity((prevQuantity) => prevQuantity + 1)
+                                                                setQuantity((prevQuantity) => Number(prevQuantity) + 1)
                                                             }
                                                             sx={{
                                                                 fontSize: '17px',

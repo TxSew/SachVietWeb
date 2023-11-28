@@ -236,8 +236,9 @@ const CartProduct = () => {
                                                                     type="text"
                                                                     value={element?.cartQuantity}
                                                                     style={{
-                                                                        maxWidth: '36px',
-                                                                        padding: '0px 10px',
+                                                                        maxWidth: '60px',
+                                                                        width: 'max-content',
+                                                                        padding: '3px 10px',
                                                                         textAlign: 'center',
                                                                     }}
                                                                 />
@@ -293,7 +294,8 @@ const CartProduct = () => {
                                                         type="text"
                                                         value={element?.cartQuantity}
                                                         style={{
-                                                            maxWidth: '37px',
+                                                            maxWidth: '60px',
+                                                            width: 'max-content',
                                                             padding: '0px 10px',
                                                             textAlign: 'center',
                                                         }}
