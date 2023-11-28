@@ -1,10 +1,10 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, OutlinedInput, Slider, Stack, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { color } from '../../../../Theme/color';
 import { httpCategory, httpProducer } from '../../../../submodules/controllers/http/axiosController';
-import { NavLink } from 'react-router-dom';
-import './style.scss';
 import { Producer } from '../../../../submodules/models/producerModel/producer';
+import './style.scss';
 function valuetext(value: number) {
     return `${value}°C`;
 }

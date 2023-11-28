@@ -1,4 +1,4 @@
-import { Box, Grid, Stack } from '@mui/material';
+import { Box, Container, Grid, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
 import DiscountItem from '../../../components/discount/Discount';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
@@ -38,22 +38,24 @@ function Sales() {
                     <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2023/banner-halloween-t3-2.gif" alt="" />
                 </Box>
             </Grid>
-            <Grid container maxWidth={'xl'}>
-                <Stack margin={'0 auto'} direction={'row'} spacing={3}>
+            <Container>
+                <Grid container maxWidth={'xl'} mt={2}>
                     {discount?.data?.map((e: Discount) => {
                         return (
-                            <DiscountItem
-                                id={e.id}
-                                code={e.code}
-                                expiration_date={e.expiration_date}
-                                desc={e.desc}
-                                number_used={e.number_used}
-                                limit_number={e.limit_number}
-                            />
+                            <Grid item xs={6} md={4} mb={2} ml={'-8px'}>
+                                <DiscountItem
+                                    id={e.id}
+                                    code={e.code}
+                                    expiration_date={e.expiration_date}
+                                    desc={e.desc}
+                                    number_used={e.number_used}
+                                    limit_number={e.limit_number}
+                                />
+                            </Grid>
                         );
                     })}
-                </Stack>
-            </Grid>
+                </Grid>
+            </Container>
             <Box width={'10px'} height={'30px'}></Box>
         </Grid>
     );

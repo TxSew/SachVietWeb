@@ -42,6 +42,7 @@ class HttpDiscountController {
             throw err;
         }
     }
+
     async post(discount: any): Promise<any> {
         try {
             const response = await this.axiosInstance.post(`discount/store`, discount);

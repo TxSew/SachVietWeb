@@ -5,7 +5,6 @@ class HttpVoucherController {
     private axiosInstance: AxiosInstance;
 
     constructor(axiosConfig: AxiosConfig) {
-        // Create an Axios instance with the provided configuration
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token');
         const jwtToken = JSON.parse(token);
@@ -14,16 +13,24 @@ class HttpVoucherController {
             this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
         }
     }
-    async getAllVoucherByUser(userId: number) {
+
+    async getAllVoucherByUser() {
         try {
-            const response = await this.axiosInstance.post('/voucher/', {
-                userId: userId,
-            });
+            const response = await this.axiosInstance.post('/voucher');
             return response.data;
         } catch (error) {
             throw error;
         }
     }
+    async getAllVoucherByUserIsNull() {
+        try {
+            const response = await this.axiosInstance.post('/voucher/getVOucherUserIsNull');
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async getOneVoucher(props: any) {
         try {
             const response = await this.axiosInstance.post('/voucher/getVoucher', props);
@@ -32,8 +39,8 @@ class HttpVoucherController {
             throw error;
         }
     }
+
     async addVoucherUser(props: Voucher) {
-        console.log(props);
         try {
             const response = await this.axiosInstance.post('/voucher/add-voucher', {
                 ...props,

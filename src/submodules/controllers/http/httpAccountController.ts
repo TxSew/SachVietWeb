@@ -89,6 +89,14 @@ class HttpAccountController {
             throw error;
         }
     }
+    async getMe() {
+        try {
+            const response = await this.axiosInstance.get(`users/getMe`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default HttpAccountController;

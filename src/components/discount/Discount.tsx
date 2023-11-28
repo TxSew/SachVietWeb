@@ -1,36 +1,35 @@
 import { Box, Button, Stack, Typography } from '@mui/material';
-import { toast } from 'react-toastify';
 import { color } from '../../Theme/color';
 import { formatDates } from '../../helpers/FortmatDate';
+import useMedia from '../../hooks/useMedia/useMedia';
 import { httpVoucher } from '../../submodules/controllers/http/axiosController';
 import { Discount } from '../../submodules/models/DiscountModel/Discount';
+import { pushSuccess, pushWarning } from '../Toast/Toast';
 
 function DiscountItem(props: Discount) {
-    const handleSave = (ele: any) => {
+    const { isMediumMD } = useMedia();
+    const handleSave = (props: any) => {
         httpVoucher
-            .addVoucherUser(ele)
+            .addVoucherUser(props)
             .then((response) => {
                 if (response) {
-                    toast.success('Mã giảm giá đã được thêm vào ví voucher thành công', {
-                        position: 'top-right',
-                    });
+                    pushSuccess('Mã giảm giá đã được thêm vào ví voucher thành công');
                 }
             })
             .catch((error) => {
+                if (error.response.data.message == 'authorization') {
+                    pushWarning('Vui lòng đăng nhập để nhận mã giảm giá!');
+                }
                 if (error.response.data.message == 'voucher already exists') {
-                    toast.warning('Mã giảm giá đã tồn tại trong ví voucher!');
+                    pushWarning('Mã giảm giá đã tồn tại!, Vui lòng kiểm tra Ví voucher của bạn');
+                }
+                if (error.response.data.message == 'payment limit exceeded') {
+                    pushWarning('Mã giảm giá đã hết hạn sử dụng!, Không thể thêm vào ví voucher của bạn');
                 }
             });
     };
     return (
-        <Box
-            bgcolor={color.white}
-            borderRadius={3}
-            sx={{
-                width: '340px',
-                height: '144px',
-            }}
-        >
+        <Box bgcolor={color.white} borderRadius={3} p={2} ml={2} height={'150px'}>
             <Stack width={'100%'} direction={'row'} justifyContent={'space-between'} height={'100%'}>
                 <Box
                     padding={'10px'}
@@ -83,6 +82,7 @@ function DiscountItem(props: Discount) {
                         p={'8px'}
                         color={color.borderColor}
                         textTransform={'uppercase'}
+                        fontSize={!isMediumMD ? '15px' : '12px'}
                     >
                         {props.code}
                     </Typography>
@@ -98,7 +98,6 @@ function DiscountItem(props: Discount) {
                         onClick={() =>
                             handleSave({
                                 discountId: props.id,
-                                userId: 3,
                                 code: 45345,
                             })
                         }

@@ -1,7 +1,7 @@
 import { Box, Button, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { color } from '../../../Theme/color';
-import { pushSuccess } from '../../../components/Toast/Toast';
+import { pushError, pushSuccess } from '../../../components/Toast/Toast';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
@@ -18,8 +18,12 @@ const CreateDiscount = () => {
     });
 
     const handleAddDiscount = async (data: Discount) => {
-        await httpDiscount.post(data);
-        pushSuccess('Thêm mã giảm giá thành công');
+        try {
+            const discount = await httpDiscount.post(data);
+            pushSuccess('Thêm mã giảm giá thành công');
+        } catch (err) {
+            pushError('Mã giảm giá đã tồn tại!, Vui lòng nhập mã CODE mới');
+        }
     };
     return (
         <Box>

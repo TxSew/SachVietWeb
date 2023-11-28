@@ -32,17 +32,20 @@ function UserCartDetail() {
     useEffect(() => {
         getOrderUser();
     }, []);
+
     const [open, setOpen] = useState(false);
     const getOrderUser = async () => {
         const orderByUser = await httpCart.getOrderDetail(Number(id));
         if (orderByUser) setOrderCurrent(orderByUser);
     };
+
     const handleCancelOrder = async () => {
         httpCart.updateOrderUser(Number(id)).then((response) => {
             handleClickClose();
             if (response) window.location.reload();
         });
     };
+
     const handleClickOpen = (id: any) => {
         setOpen(true);
     };

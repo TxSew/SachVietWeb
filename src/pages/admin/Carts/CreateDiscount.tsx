@@ -1,22 +1,19 @@
 import { Box, Button, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
 const CreateDiscount = () => {
-    const redirect = useNavigate();
-
     const {
         handleSubmit,
         control,
-        register,
-        watch,
+        reset,
         formState: { errors },
-    } = useForm<Discount>({});
+    } = useForm<Discount>();
 
     const handleAddDiscount = async (data: Discount) => {
         await httpDiscount.post(data);
+        reset();
     };
 
     return (
@@ -38,7 +35,7 @@ const CreateDiscount = () => {
                         <Controller
                             control={control}
                             name="code"
-                            defaultValue="" // Set an initial value here
+                            defaultValue=""
                             rules={{
                                 required: 'Vui lòng nhập mã giảm giá',
                             }}

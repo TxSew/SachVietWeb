@@ -18,6 +18,7 @@ import { Discount } from '../../../../../submodules/models/DiscountModel/Discoun
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
 import { pushError, pushSuccess, pushWarning } from '../../../../../components/Toast/Toast';
+import { error } from 'console';
 
 const CartProduct = () => {
     const { isMediumMD } = useMedia();
@@ -34,9 +35,14 @@ const CartProduct = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }, []);
     const getDiscount = () => {
-        httpVoucher.getAllVoucherByUser(3).then((res) => {
-            setDiscount(res);
-        });
+        httpVoucher
+            .getAllVoucherByUserIsNull()
+            .then((res) => {
+                setDiscount(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     const [voucher, setVoucher] = useState<number>(0);
     const [code, setCode] = useState<string>('');
@@ -418,7 +424,9 @@ const CartProduct = () => {
                                 <Typography variant="body1">KHUYẾN MÃI</Typography>
                             </Stack>
                             <Stack color={color.text_color} direction={'row'}>
-                                <Typography variant="body1"> {voucher}</Typography>
+                                <Typography variant="body1" color={color.sale} fontWeight={'bold'}>
+                                    {numberFormat(voucher)}
+                                </Typography>
                             </Stack>
                         </Stack>
                         <Box pt={2}>
