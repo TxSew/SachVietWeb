@@ -23,17 +23,16 @@ const CreateCategory = () => {
 
     const handleAddCategory = async (data: Category) => {
         const image = await uploadImageFirebase(img);
-        console.log('🚀 ~ file: Createcategory.tsx:26 ~ handleAddCategory ~ image:', image);
-        // data.image = image;
-        // const category: Category = data;
-        // try {
-        //     const categoryDto = await httpCategory.store(category);
-        //     if (categoryDto) {
-        //         pushSuccess('Thêm danh mục sản phẩm thành công');
-        //     }
-        // } catch (err) {
-        //     pushWarning('tên danh mục đã tồn tại!');
-        // }
+        data.image = image;
+        const category: Category = data;
+        try {
+            const categoryDto = await httpCategory.store(category);
+            if (categoryDto) {
+                pushSuccess('Thêm danh mục sản phẩm thành công');
+            }
+        } catch (err) {
+            pushWarning('tên danh mục đã tồn tại!');
+        }
     };
 
     const {
