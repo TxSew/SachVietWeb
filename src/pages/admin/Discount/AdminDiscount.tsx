@@ -83,178 +83,176 @@ export default function AdminDiscount() {
     };
 
     return (
-        <Grid>
-            <Grid mt={3} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        <DiscountIcon
-                            sx={{
-                                mr: 1,
-                            }}
-                        />
-                        Quản lý Mã giảm giá
-                    </Typography>
-                    <OutlinedInput
+        <>
+            <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+                <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+                    <DiscountIcon
                         sx={{
-                            maxWidth: '300px',
-                            mt: 1,
-                            '& > input': {
-                                p: '7px',
-                            },
+                            mr: 1,
                         }}
-                        fullWidth
-                        placeholder="Tìm kiếm sản phẩm..."
                     />
-                    <Link to={'/admin/createDiscount'}>
-                        <Button variant="contained">Thêm mã giảm giá</Button>
-                    </Link>
-                </Stack>
-                <TableContainer component={Paper}>
-                    <Table
-                        sx={{
-                            minWidth: 800,
-                        }}
-                        aria-label="simple tablek w"
-                    >
-                        <TableHead>
-                            <TableRow
-                                sx={{
-                                    '& > th': {
-                                        fontWeight: 'bold',
-                                    },
-                                }}
-                            >
-                                <TableCell>ID</TableCell>
-                                <TableCell>Mã giảm giá</TableCell>
-                                <TableCell align="right">Số tiền giảm</TableCell>
-                                <TableCell align="right">Số tiền đơn hàng áp dụng tối thiểu</TableCell>
-                                <TableCell align="right">Số lần giới hạn nhập</TableCell>
-                                <TableCell align="right">Hạn nhập </TableCell>
-                                <TableCell align="right">Trạng thái</TableCell>
-                                <TableCell align="right">Thao tác</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {discount?.data?.map((e: Discount, i: number) => (
-                                <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell component="th" scope="row">
-                                        {e.id}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {e.code}
-                                    </TableCell>
-                                    <TableCell align="right">{numberFormat(e.discount)}</TableCell>
-                                    <TableCell align="right">{numberFormat(Number(e.payment_limit))}</TableCell>
-                                    <TableCell align="right">{e.limit_number}</TableCell>
-
-                                    <TableCell align="right">{formatDates(e.expiration_date)}</TableCell>
-                                    <TableCell align="right">
-                                        {e?.status == 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <Stack
-                                            direction={'row'}
-                                            color={color.text_color}
-                                            spacing={2}
-                                            justifyContent={'end'}
-                                        >
-                                            <Link to={`/admin/discount/${e.id}`}>
-                                                <EditCalendarIcon
-                                                    sx={{
-                                                        color: 'green',
-                                                    }}
-                                                />
-                                            </Link>
-                                            <Box>
-                                                <DeleteForeverIcon
-                                                    sx={{
-                                                        color: 'red',
-                                                    }}
-                                                    onClick={() => handleClickOpen(e)}
-                                                />
-                                                <Dialog
-                                                    open={open.isChecked}
-                                                    onClose={handleClickClose}
-                                                    TransitionComponent={Fade}
-                                                    aria-labelledby="customized-dialog-title"
-                                                >
-                                                    <DialogContent>
-                                                        <DialogContentText
-                                                            id="alert-dialog-slide-description"
-                                                            textAlign={'center'}
-                                                            padding={'0 24px '}
-                                                            sx={{
-                                                                color: 'red',
-                                                            }}
-                                                        >
-                                                            <DeleteForeverIcon
-                                                                sx={{
-                                                                    fontSize: '56px',
-                                                                    color: 'rgb(201, 33, 39)',
-                                                                }}
-                                                            />
-                                                            <DialogTitle fontSize={'16px'}>
-                                                                Bạn chắc chắn muốn xóa đơn hàng này?
-                                                            </DialogTitle>
-                                                        </DialogContentText>
-                                                    </DialogContent>
-                                                    <Box
-                                                        display={'flex'}
-                                                        paddingBottom={'24px'}
-                                                        justifyContent={'space-around'}
-                                                    >
-                                                        <Button
-                                                            onClick={handleClickClose}
-                                                            sx={{
-                                                                padding: '8px 16px',
-                                                                border: '1px solid #ccc',
-                                                                borderRadius: '12px',
-                                                                color: 'black',
-                                                                fontSize: '12px',
-                                                                fontWeight: 'bold',
-                                                                width: '96px',
-                                                            }}
-                                                        >
-                                                            Hủy
-                                                        </Button>
-                                                        <Button
-                                                            onClick={() => handleDelete(Number(open.id))}
-                                                            sx={{
-                                                                padding: '8px 16px',
-                                                                border: '1px solid red',
-                                                                borderRadius: '12px',
-                                                                background: 'red',
-                                                                color: 'white',
-                                                                fontSize: '12px',
-                                                                fontWeight: 'bold',
-                                                                width: '96px',
-                                                                ':hover': {
-                                                                    backgroundColor: 'rgb(201, 33, 39)',
-                                                                },
-                                                            }}
-                                                        >
-                                                            Đồng ý
-                                                        </Button>
-                                                    </Box>
-                                                </Dialog>
-                                            </Box>
-                                        </Stack>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <Box
-                    mt={2}
+                    Quản lý Mã giảm giá
+                </Typography>
+                <OutlinedInput
                     sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
+                        maxWidth: '300px',
+                        mt: 1,
+                        '& > input': {
+                            p: '7px',
+                        },
                     }}
+                    fullWidth
+                    placeholder="Tìm kiếm sản phẩm..."
+                />
+                <Link to={'/admin/createDiscount'}>
+                    <Button variant="contained">Thêm mã giảm giá</Button>
+                </Link>
+            </Stack>
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{
+                        minWidth: 800,
+                    }}
+                    aria-label="simple tablek w"
                 >
-                    <Pagination count={discount?.totalPage} page={page} onChange={handleChange} />
-                </Box>
-            </Grid>
-        </Grid>
+                    <TableHead>
+                        <TableRow
+                            sx={{
+                                '& > th': {
+                                    fontWeight: 'bold',
+                                },
+                            }}
+                        >
+                            <TableCell>ID</TableCell>
+                            <TableCell>Mã giảm giá</TableCell>
+                            <TableCell align="right">Số tiền giảm</TableCell>
+                            <TableCell align="right">Số tiền đơn hàng áp dụng tối thiểu</TableCell>
+                            <TableCell align="right">Số lần giới hạn nhập</TableCell>
+                            <TableCell align="right">Hạn nhập </TableCell>
+                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="right">Thao tác</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {discount?.data?.map((e: Discount, i: number) => (
+                            <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">
+                                    {e.id}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {e.code}
+                                </TableCell>
+                                <TableCell align="right">{numberFormat(e.discount)}</TableCell>
+                                <TableCell align="right">{numberFormat(Number(e.payment_limit))}</TableCell>
+                                <TableCell align="right">{e.limit_number}</TableCell>
+
+                                <TableCell align="right">{formatDates(e.expiration_date)}</TableCell>
+                                <TableCell align="right">
+                                    {e?.status == 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Stack
+                                        direction={'row'}
+                                        color={color.text_color}
+                                        spacing={2}
+                                        justifyContent={'end'}
+                                    >
+                                        <Link to={`/admin/discount/${e.id}`}>
+                                            <EditCalendarIcon
+                                                sx={{
+                                                    color: 'green',
+                                                }}
+                                            />
+                                        </Link>
+                                        <Box>
+                                            <DeleteForeverIcon
+                                                sx={{
+                                                    color: 'red',
+                                                }}
+                                                onClick={() => handleClickOpen(e)}
+                                            />
+                                            <Dialog
+                                                open={open.isChecked}
+                                                onClose={handleClickClose}
+                                                TransitionComponent={Fade}
+                                                aria-labelledby="customized-dialog-title"
+                                            >
+                                                <DialogContent>
+                                                    <DialogContentText
+                                                        id="alert-dialog-slide-description"
+                                                        textAlign={'center'}
+                                                        padding={'0 24px '}
+                                                        sx={{
+                                                            color: 'red',
+                                                        }}
+                                                    >
+                                                        <DeleteForeverIcon
+                                                            sx={{
+                                                                fontSize: '56px',
+                                                                color: 'rgb(201, 33, 39)',
+                                                            }}
+                                                        />
+                                                        <DialogTitle fontSize={'16px'}>
+                                                            Bạn chắc chắn muốn xóa đơn hàng này?
+                                                        </DialogTitle>
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <Box
+                                                    display={'flex'}
+                                                    paddingBottom={'24px'}
+                                                    justifyContent={'space-around'}
+                                                >
+                                                    <Button
+                                                        onClick={handleClickClose}
+                                                        sx={{
+                                                            padding: '8px 16px',
+                                                            border: '1px solid #ccc',
+                                                            borderRadius: '12px',
+                                                            color: 'black',
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                            width: '96px',
+                                                        }}
+                                                    >
+                                                        Hủy
+                                                    </Button>
+                                                    <Button
+                                                        onClick={() => handleDelete(Number(open.id))}
+                                                        sx={{
+                                                            padding: '8px 16px',
+                                                            border: '1px solid red',
+                                                            borderRadius: '12px',
+                                                            background: 'red',
+                                                            color: 'white',
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                            width: '96px',
+                                                            ':hover': {
+                                                                backgroundColor: 'rgb(201, 33, 39)',
+                                                            },
+                                                        }}
+                                                    >
+                                                        Đồng ý
+                                                    </Button>
+                                                </Box>
+                                            </Dialog>
+                                        </Box>
+                                    </Stack>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Box
+                mt={2}
+                sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
+                <Pagination count={discount?.totalPage} page={page} onChange={handleChange} />
+            </Box>
+        </>
     );
 }

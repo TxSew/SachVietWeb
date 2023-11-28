@@ -149,212 +149,204 @@ export default function AdminProductInventory() {
     };
 
     return (
-        <Grid>
-            <Grid mt={3} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        Quản lý tồn kho
+        <>
+            <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+                <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+                    Quản lý tồn kho
+                </Typography>
+                <Button onClick={onDownload} variant="contained">
+                    <Typography textTransform={'uppercase'} fontSize={16} color={'#fff'}>
+                        Xuất EXEL
                     </Typography>
-                </Stack>
-                <Stack mb={1} spacing={3} sx={{ minWidth: 300 }} direction={'row'}>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Select
-                            value={sort}
-                            onChange={handleChangeSort}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                        >
-                            <MenuItem value="">
-                                <em>Tùy chọn</em>
-                            </MenuItem>
-                            <MenuItem value={'old'}>Cũ nhất</MenuItem>
-                            <MenuItem value={'new'}>Mới nhất</MenuItem>
-                            <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
-                            <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
-                        </Select>
-                    </FormControl>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Select
-                            value={sortCategory}
-                            onChange={handleSortByCategory}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                        >
-                            <MenuItem value="">
-                                <em>Chọn danh mục</em>
-                            </MenuItem>
-                            {Category.map((e: Category) => {
-                                return <MenuItem value={e.slug}>{e.name}</MenuItem>;
-                            })}
-                        </Select>
-                    </FormControl>
-                    <Button
-                        onClick={onDownload}
-                        variant="outlinedGreen"
-                        sx={{
-                            border: '1px solid #ccc',
-                        }}
+                </Button>
+            </Stack>
+            <Stack mb={1} spacing={3} sx={{ minWidth: 300 }} direction={'row'}>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <Select
+                        value={sort}
+                        onChange={handleChangeSort}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
                     >
-                        <Typography textTransform={'capitalize'} fontSize={'12px'} color={'#333'}>
-                            Xuất EXEL
-                        </Typography>
-                    </Button>
-                    <OutlinedInput
-                        sx={{
-                            maxWidth: '300px',
-                            mt: 1,
-                            '& > input': {
-                                p: '7px',
-                            },
-                        }}
-                        fullWidth
-                        placeholder="Tìm kiếm sản phẩm..."
-                        onChange={handleChangeValue}
-                    />
-                </Stack>
+                        <MenuItem value="">
+                            <em>Tùy chọn</em>
+                        </MenuItem>
+                        <MenuItem value={'old'}>Cũ nhất</MenuItem>
+                        <MenuItem value={'new'}>Mới nhất</MenuItem>
+                        <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
+                        <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <Select
+                        value={sortCategory}
+                        onChange={handleSortByCategory}
+                        displayEmpty
+                        inputProps={{ 'aria-label': 'Without label' }}
+                    >
+                        <MenuItem value="">
+                            <em>Chọn danh mục</em>
+                        </MenuItem>
+                        {Category.map((e: Category) => {
+                            return <MenuItem value={e.slug}>{e.name}</MenuItem>;
+                        })}
+                    </Select>
+                </FormControl>
+                <OutlinedInput
+                    sx={{
+                        maxWidth: '300px',
+                        mt: 1,
+                        '& > input': {
+                            p: '7px',
+                        },
+                    }}
+                    fullWidth
+                    placeholder="Tìm kiếm sản phẩm..."
+                    onChange={handleChangeValue}
+                />
+            </Stack>
 
-                <TableContainer component={Paper} ref={tableRef}>
-                    <Table
-                        sx={{
-                            minWidth: 800,
-                        }}
-                        aria-label="simple tablek w"
-                    >
-                        <TableHead>
-                            <TableRow
-                                sx={{
-                                    '& > th': {
-                                        fontWeight: 'bold',
-                                    },
-                                }}
-                            >
-                                <TableCell>ID</TableCell>
-                                <TableCell>Hình ảnh</TableCell>
-                                <TableCell align="right">Tiêu đề</TableCell>
-                                <TableCell align="right">Số lượng tồn kho</TableCell>
-                                <TableCell align="right">số lượng đã bán</TableCell>
-                                <TableCell align="right">Giá</TableCell>
-                                <TableCell align="right">Trạng thái</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Products.map((e, i) => (
-                                <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell component="th" scope="row">
-                                        {e.id}
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        <img
-                                            style={{ objectFit: 'cover' }}
-                                            src={e?.image}
-                                            width={'70px'}
-                                            height={'70px'}
-                                            alt=""
+            <TableContainer component={Paper} ref={tableRef}>
+                <Table
+                    sx={{
+                        minWidth: 800,
+                    }}
+                    aria-label="simple tablek w"
+                >
+                    <TableHead>
+                        <TableRow
+                            sx={{
+                                '& > th': {
+                                    fontWeight: 'bold',
+                                },
+                            }}
+                        >
+                            <TableCell>ID</TableCell>
+                            <TableCell>Hình ảnh</TableCell>
+                            <TableCell align="right">Tiêu đề</TableCell>
+                            <TableCell align="right">Số lượng tồn kho</TableCell>
+                            <TableCell align="right">số lượng đã bán</TableCell>
+                            <TableCell align="right">Giá</TableCell>
+                            <TableCell align="right">Trạng thái</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {Products.map((e, i) => (
+                            <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">
+                                    {e.id}
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    <img
+                                        style={{ objectFit: 'cover' }}
+                                        src={e?.image}
+                                        width={'70px'}
+                                        height={'70px'}
+                                        alt=""
+                                    />
+                                </TableCell>
+                                <TableCell align="right">{e.title}</TableCell>
+                                <TableCell align="right">
+                                    <Typography color={Number(e.quantity) <= 5 ? color.error : ''}>
+                                        {e.quantity}
+                                    </Typography>
+                                </TableCell>
+                                <TableCell align="right">{e.soldQuantity}</TableCell>
+                                <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
+                                <TableCell align="right">
+                                    {Number(e.quantity) <= 0 ? (
+                                        <Chip color="error" label="Ngưng hoạt động" />
+                                    ) : (
+                                        <Chip label="Hoạt động" color="success" />
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Stack direction={'row'} spacing={1}>
+                                        <Link to={`/admin/productInventory/${e.id}`}>
+                                            <Chip label="Nhập hàng" color="primary" />
+                                        </Link>
+                                        <Chip
+                                            label="Xóa"
+                                            color="error"
+                                            onClick={() => {
+                                                handleClickOpen(e.id);
+                                            }}
                                         />
-                                    </TableCell>
-                                    <TableCell align="right">{e.title}</TableCell>
-                                    <TableCell align="right">
-                                        <Typography color={Number(e.quantity) <= 5 ? color.error : ''}>
-                                            {e.quantity}
-                                        </Typography>
-                                    </TableCell>
-                                    <TableCell align="right">{e.soldQuantity}</TableCell>
-                                    <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
-                                    <TableCell align="right">
-                                        {Number(e.quantity) <= 0 ? (
-                                            <Chip color="error" label="Ngưng hoạt động" />
-                                        ) : (
-                                            <Chip label="Hoạt động" color="success" />
-                                        )}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <Stack direction={'row'} spacing={1}>
-                                            <Link to={`/admin/productInventory/${e.id}`}>
-                                                <Chip label="Nhập hàng" color="primary" />
-                                            </Link>
-                                            <Chip
-                                                label="Xóa"
-                                                color="error"
-                                                onClick={() => {
-                                                    handleClickOpen(e.id);
-                                                }}
-                                            />
-                                            <Dialog
-                                                open={open.isChecked}
-                                                onClose={handleClickClose}
-                                                TransitionComponent={Fade}
-                                                aria-labelledby="customized-dialog-title"
-                                            >
-                                                <DialogContent>
-                                                    <DialogContentText
-                                                        id="alert-dialog-slide-description"
-                                                        textAlign={'center'}
-                                                        padding={'0 24px '}
-                                                        sx={{
-                                                            color: 'red',
-                                                        }}
-                                                    >
-                                                        <DeleteForeverIcon
-                                                            sx={{
-                                                                fontSize: '56px',
-                                                                color: 'rgb(201, 33, 39)',
-                                                            }}
-                                                        />
-                                                        <DialogTitle fontSize={'16px'}>
-                                                            Bạn chắc chắn muốn xóa sản phẩm này?
-                                                        </DialogTitle>
-                                                    </DialogContentText>
-                                                </DialogContent>
-                                                <Box
-                                                    display={'flex'}
-                                                    paddingBottom={'24px'}
-                                                    justifyContent={'space-around'}
+                                        <Dialog
+                                            open={open.isChecked}
+                                            onClose={handleClickClose}
+                                            TransitionComponent={Fade}
+                                            aria-labelledby="customized-dialog-title"
+                                        >
+                                            <DialogContent>
+                                                <DialogContentText
+                                                    id="alert-dialog-slide-description"
+                                                    textAlign={'center'}
+                                                    padding={'0 24px '}
+                                                    sx={{
+                                                        color: 'red',
+                                                    }}
                                                 >
-                                                    <Button
-                                                        onClick={handleClickClose}
+                                                    <DeleteForeverIcon
                                                         sx={{
-                                                            padding: '8px 16px',
-                                                            border: '1px solid #ccc',
-                                                            borderRadius: '12px',
-                                                            color: 'black',
-                                                            fontSize: '12px',
-                                                            fontWeight: 'bold',
-                                                            width: '96px',
+                                                            fontSize: '56px',
+                                                            color: 'rgb(201, 33, 39)',
                                                         }}
-                                                    >
-                                                        Hủy
-                                                    </Button>
-                                                    <Button
-                                                        onClick={() => handleDelete(open.id)}
-                                                        sx={{
-                                                            padding: '8px 16px',
-                                                            border: '1px solid red',
-                                                            borderRadius: '12px',
-                                                            background: 'red',
-                                                            color: 'white',
-                                                            fontSize: '12px',
-                                                            fontWeight: 'bold',
-                                                            width: '96px',
-                                                            ':hover': {
-                                                                backgroundColor: 'rgb(201, 33, 39)',
-                                                            },
-                                                        }}
-                                                    >
-                                                        Đồng ý
-                                                    </Button>
-                                                </Box>
-                                            </Dialog>
-                                        </Stack>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <Stack mt={2} textAlign={'center'} justifyContent={'center'} alignItems={''}>
-                    <Pagination count={pageCount} page={page} onChange={handleChange} />
-                </Stack>
-            </Grid>
-        </Grid>
+                                                    />
+                                                    <DialogTitle fontSize={'16px'}>
+                                                        Bạn chắc chắn muốn xóa sản phẩm này?
+                                                    </DialogTitle>
+                                                </DialogContentText>
+                                            </DialogContent>
+                                            <Box
+                                                display={'flex'}
+                                                paddingBottom={'24px'}
+                                                justifyContent={'space-around'}
+                                            >
+                                                <Button
+                                                    onClick={handleClickClose}
+                                                    sx={{
+                                                        padding: '8px 16px',
+                                                        border: '1px solid #ccc',
+                                                        borderRadius: '12px',
+                                                        color: 'black',
+                                                        fontSize: '12px',
+                                                        fontWeight: 'bold',
+                                                        width: '96px',
+                                                    }}
+                                                >
+                                                    Hủy
+                                                </Button>
+                                                <Button
+                                                    onClick={() => handleDelete(open.id)}
+                                                    sx={{
+                                                        padding: '8px 16px',
+                                                        border: '1px solid red',
+                                                        borderRadius: '12px',
+                                                        background: 'red',
+                                                        color: 'white',
+                                                        fontSize: '12px',
+                                                        fontWeight: 'bold',
+                                                        width: '96px',
+                                                        ':hover': {
+                                                            backgroundColor: 'rgb(201, 33, 39)',
+                                                        },
+                                                    }}
+                                                >
+                                                    Đồng ý
+                                                </Button>
+                                            </Box>
+                                        </Dialog>
+                                    </Stack>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Stack mt={2} textAlign={'center'} justifyContent={'center'} alignItems={''}>
+                <Pagination count={pageCount} page={page} onChange={handleChange} />
+            </Stack>
+        </>
     );
 }
