@@ -10,6 +10,7 @@ const CreateDiscount = () => {
     const {
         handleSubmit,
         control,
+        reset,
         formState: { errors },
     } = useForm<Discount>({
         defaultValues: {
@@ -21,6 +22,7 @@ const CreateDiscount = () => {
         try {
             const discount = await httpDiscount.post(data);
             pushSuccess('Thêm mã giảm giá thành công');
+            reset({});
         } catch (err) {
             pushError('Mã giảm giá đã tồn tại!, Vui lòng nhập mã CODE mới');
         }

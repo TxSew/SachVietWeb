@@ -90,16 +90,20 @@ const CartProduct = () => {
         };
         try {
             const data = await httpVoucher.getOneVoucher(order);
-            if (code) {
-                pushWarning('Mã giảm giá đã được thêm');
-            } else {
-                pushSuccess('Thêm mã giảm giá thành công');
-            }
+            pushSuccess('Thêm mã giảm giá thành công');
             setVoucher(data.discount.discount);
             setCode(data.discount.code);
         } catch (err: any) {
             if (err.response.data.message == 'discount limited value') {
                 pushWarning('Mã giảm giá đã hết lượt sử dụng!');
+            }
+            if (err.response.data.message == 'payment date exceeded') {
+                pushWarning(`Mã giảm giá đã hết hạn sử dụng!`);
+            }
+            if (err.response.data?.result?.message == 'payment limit exceeded') {
+                pushWarning(
+                    `Mã giảm giá chỉ hỗ trợ cho đơn hàng từ ${numberFormat(err.response.data.result.value)} trở lên `
+                );
             }
 
             setVoucher(0);

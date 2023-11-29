@@ -22,7 +22,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         setAnchorEl(null);
     };
     return (
-        <div className="dasb pb-3">
+        <div className="dasb ">
             <div className="dasb-wapper">
                 <input type="checkbox" id="tool" />
                 <div className="dasb-sidebar">

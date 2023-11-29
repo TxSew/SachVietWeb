@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
-import { pushSuccess } from '../../../components/Toast/Toast';
+import { pushSuccess, pushWarning } from '../../../components/Toast/Toast';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
 import useToast from '../../../hooks/useToast/useToast';
@@ -63,10 +63,17 @@ const UpdateCategory = () => {
         let thumbnail;
         if (img) thumbnail = await uploadImageFirebase(img);
         data.image = thumbnail;
-        const categoryDto = await httpCategory.put(Number(id), data);
-        if (categoryDto) {
-            pushSuccess('Danh mục cập nhật thành công');
-        }
+
+        httpCategory
+            .put(Number(id), data)
+            .then((res) => {
+                if (res) {
+                    pushSuccess('Danh mục cập nhật thành công');
+                }
+            })
+            .catch((err) => {
+                pushWarning('Tên danh mục đã tồn tại');
+            });
     };
 
     return (

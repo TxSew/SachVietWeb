@@ -29,6 +29,7 @@ const CreateCategory = () => {
             const categoryDto = await httpCategory.store(category);
             if (categoryDto) {
                 pushSuccess('Thêm danh mục sản phẩm thành công');
+                reset({});
             }
         } catch (err) {
             pushWarning('tên danh mục đã tồn tại!');
@@ -39,6 +40,7 @@ const CreateCategory = () => {
         handleSubmit,
         control,
         register,
+        reset,
         formState: { errors, isValid, isSubmitting },
     } = useForm<Category>({
         defaultValues: {
@@ -54,11 +56,9 @@ const CreateCategory = () => {
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
                         Thêm danh mục mới
                     </Typography>
-                    {isValid && (
-                        <Button type="submit" variant="contained" disabled={isSubmitting}>
-                            {isSubmitting ? 'Đang xử lý...' : 'Lưu'}
-                        </Button>
-                    )}
+                    <Button type="submit" variant="contained" disabled={isSubmitting}>
+                        {isSubmitting ? 'Đang xử lý...' : 'Lưu'}
+                    </Button>
                 </Stack>
                 <Grid bgcolor={color.white} p={2} container mt={0} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
