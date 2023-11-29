@@ -31,8 +31,10 @@ import { pushError } from '../../../components/Toast/Toast';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
-
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 export default function CategoryAdmin() {
+    const [search, setSearch] = React.useState<string>('');
+    const deBounce = useDebounce(search, 300);
     const [open, setOpen] = React.useState({
         isChecked: false,
         id: '',
@@ -54,12 +56,16 @@ export default function CategoryAdmin() {
     const [pageCount, setPageCount] = React.useState<number>(0);
     const [page, setPage] = React.useState<number>(1);
     React.useEffect(() => {
-        fetchData(page);
-    }, [page]);
+        const props = {
+            page: page,
+            keyword: deBounce,
+        };
+        fetchData(props);
+    }, [page, deBounce]);
 
-    const fetchData = async (page: number) => {
+    const fetchData = async (props: any) => {
         try {
-            const CategoryData: any = await httpCategory.getAll(page);
+            const CategoryData: any = await httpCategory.getAll(props);
             setPageCount(CategoryData.totalPage);
             const filteredData = CategoryData.category.filter((item: any) => item.parentId !== null);
             setCategory(filteredData);
@@ -83,7 +89,9 @@ export default function CategoryAdmin() {
         setCategory(filter);
         handleClickClose();
     };
-
+    const handleSearch = async (element: any) => {
+        setSearch(element.target.value);
+    };
     return (
         <Grid mt={0} width={'100%'}>
             <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
@@ -102,8 +110,9 @@ export default function CategoryAdmin() {
                         p: '7px',
                     },
                 }}
+                onChange={handleSearch}
                 fullWidth
-                placeholder="Tìm kiếm sản phẩm..."
+                placeholder="Tìm kiếm danh mục..."
             />
             <TableContainer component={Paper}>
                 <Table

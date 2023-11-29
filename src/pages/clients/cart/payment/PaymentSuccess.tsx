@@ -1,6 +1,6 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { httpCart } from '../../../../submodules/controllers/http/axiosController';
 
 function PaymentSuccess() {
@@ -40,7 +40,7 @@ function PaymentSuccess() {
                             fontWeight: 'bold',
                         }}
                     >
-                        Tiếp tục mua hàng
+                        <Link to={'/'}>Tiếp tục mua hàng</Link>
                     </Button>
                 </Box>
             </Container>
