@@ -31,8 +31,10 @@ import { pushError } from '../../../components/Toast/Toast';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
-
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 export default function CategoryAdmin() {
+    const [search, setSearch] = React.useState<string>('');
+    const deBounce = useDebounce(search, 300);
     const [open, setOpen] = React.useState({
         isChecked: false,
         id: '',
@@ -54,12 +56,16 @@ export default function CategoryAdmin() {
     const [pageCount, setPageCount] = React.useState<number>(0);
     const [page, setPage] = React.useState<number>(1);
     React.useEffect(() => {
-        fetchData(page);
-    }, [page]);
+        const props = {
+            page: page,
+            keyword: deBounce,
+        };
+        fetchData(props);
+    }, [page, deBounce]);
 
-    const fetchData = async (page: number) => {
+    const fetchData = async (props: any) => {
         try {
-            const CategoryData: any = await httpCategory.getAll(page);
+            const CategoryData: any = await httpCategory.getAll(props);
             setPageCount(CategoryData.totalPage);
             const filteredData = CategoryData.category.filter((item: any) => item.parentId !== null);
             setCategory(filteredData);
@@ -83,183 +89,178 @@ export default function CategoryAdmin() {
         setCategory(filter);
         handleClickClose();
     };
-
+    const handleSearch = async (element: any) => {
+        setSearch(element.target.value);
+    };
     return (
-        <Grid>
-            <Grid mt={0} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
-                        <CategoryIcon /> Quản lý danh mục
-                    </Typography>
-                    <OutlinedInput
-                        sx={{
-                            maxWidth: '300px',
-                            mt: 1,
-                            '& > input': {
-                                p: '7px',
-                            },
-                        }}
-                        fullWidth
-                        placeholder="Tìm kiếm sản phẩm..."
-                    />
-                </Stack>
-                <Link
-                    to={'/admin/createCategory'}
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'end',
-                    }}
-                >
+        <Grid mt={0} width={'100%'}>
+            <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+                <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+                    <CategoryIcon /> Quản lý danh mục
+                </Typography>
+                <Link to={'/admin/createCategory'}>
                     <Button variant="contained">Thêm Danh mục</Button>
                 </Link>
-                <TableContainer component={Paper}>
-                    <Table
-                        sx={{
-                            minWidth: 800,
-                        }}
-                        aria-label="simple tablek w"
-                    >
-                        <TableHead>
-                            <TableRow
-                                sx={{
-                                    '& > th': {
-                                        fontWeight: 'bold',
-                                    },
-                                }}
-                            >
-                                <TableCell>ID</TableCell>
-                                <TableCell>Hình ảnh</TableCell>
-                                <TableCell>Tên loại danh mục</TableCell>
-                                <TableCell align="right">Danh mục cha</TableCell>
-                                <TableCell align="right">Ngày tạo</TableCell>
-                                <TableCell align="right">Trạng thái</TableCell>
-                                <TableCell align="right">Hành động</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {category.map((e: Category, i) => (
-                                <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                                    <TableCell component="th" scope="row">
-                                        {e.id}
-                                    </TableCell>
+            </Stack>
+            <OutlinedInput
+                sx={{
+                    maxWidth: '300px',
+                    mt: 1,
+                    '& > input': {
+                        p: '7px',
+                    },
+                }}
+                onChange={handleSearch}
+                fullWidth
+                placeholder="Tìm kiếm danh mục..."
+            />
+            <TableContainer component={Paper}>
+                <Table
+                    sx={{
+                        minWidth: 800,
+                    }}
+                    aria-label="simple tablek w"
+                >
+                    <TableHead>
+                        <TableRow
+                            sx={{
+                                '& > th': {
+                                    fontWeight: 'bold',
+                                },
+                            }}
+                        >
+                            <TableCell>ID</TableCell>
+                            <TableCell>Hình ảnh</TableCell>
+                            <TableCell>Tên loại danh mục</TableCell>
+                            <TableCell align="right">Danh mục cha</TableCell>
+                            <TableCell align="right">Ngày tạo</TableCell>
+                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="right">Hành động</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {category.map((e: Category, i) => (
+                            <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                                <TableCell component="th" scope="row">
+                                    {e.id}
+                                </TableCell>
 
-                                    <TableCell component="th" scope="row">
-                                        <img src={e.image} alt="" width={'50px'} height={'70px'} />
-                                    </TableCell>
-                                    <TableCell component="th" scope="row">
-                                        {e.name}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        {e.parentName == null ? 'Danh mục gốc' : e.parentName}
-                                    </TableCell>
-                                    <TableCell align="right">{formatDates(e.createdAt)}</TableCell>
-                                    <TableCell align="right">
-                                        {e.status == null ? (
-                                            <Chip label="Hoạt động" color="success" />
-                                        ) : (
-                                            <Chip color="error" label="Ngưng hoạt động" />
-                                        )}
-                                    </TableCell>
-                                    <TableCell align="right">
-                                        <Stack
-                                            direction={'row'}
-                                            color={color.text_color}
-                                            spacing={2}
-                                            justifyContent={'end'}
-                                        >
-                                            <Link to={`${e.id}`}>
-                                                <EditCalendarIcon
-                                                    sx={{
-                                                        color: 'green',
-                                                    }}
-                                                />
-                                            </Link>
-                                            <Box>
-                                                <DeleteForeverIcon
-                                                    sx={{
-                                                        color: 'red',
-                                                    }}
-                                                    onClick={() => {
-                                                        handleClickOpen(e);
-                                                    }}
-                                                />
-                                                <Dialog
-                                                    open={open.isChecked}
-                                                    onClose={handleClickClose}
-                                                    TransitionComponent={Fade}
-                                                    aria-labelledby="customized-dialog-title"
-                                                >
-                                                    <DialogContent>
-                                                        <DialogContentText
-                                                            id="alert-dialog-slide-description"
-                                                            textAlign={'center'}
-                                                            padding={'0 24px '}
-                                                            sx={{
-                                                                color: 'red',
-                                                            }}
-                                                        >
-                                                            <DeleteForeverIcon
-                                                                sx={{
-                                                                    fontSize: '56px',
-                                                                    color: 'rgb(201, 33, 39)',
-                                                                }}
-                                                            />
-                                                            <DialogTitle fontSize={'16px'}>
-                                                                Bạn chắc chắn muốn xóa danh mục này?
-                                                            </DialogTitle>
-                                                        </DialogContentText>
-                                                    </DialogContent>
-                                                    <Box
-                                                        display={'flex'}
-                                                        paddingBottom={'24px'}
-                                                        justifyContent={'space-around'}
+                                <TableCell component="th" scope="row">
+                                    <img src={e.image} alt="" width={'50px'} height={'70px'} />
+                                </TableCell>
+                                <TableCell component="th" scope="row">
+                                    {e.name}
+                                </TableCell>
+                                <TableCell align="right">
+                                    {e.parentName == null ? 'Danh mục gốc' : e.parentName}
+                                </TableCell>
+                                <TableCell align="right">{formatDates(e.createdAt)}</TableCell>
+                                <TableCell align="right">
+                                    {e.status == null ? (
+                                        <Chip label="Hoạt động" color="success" />
+                                    ) : (
+                                        <Chip color="error" label="Ngưng hoạt động" />
+                                    )}
+                                </TableCell>
+                                <TableCell align="right">
+                                    <Stack
+                                        direction={'row'}
+                                        color={color.text_color}
+                                        spacing={2}
+                                        justifyContent={'end'}
+                                    >
+                                        <Link to={`${e.id}`}>
+                                            <EditCalendarIcon
+                                                sx={{
+                                                    color: 'green',
+                                                }}
+                                            />
+                                        </Link>
+                                        <Box>
+                                            <DeleteForeverIcon
+                                                sx={{
+                                                    color: 'red',
+                                                }}
+                                                onClick={() => {
+                                                    handleClickOpen(e);
+                                                }}
+                                            />
+                                            <Dialog
+                                                open={open.isChecked}
+                                                onClose={handleClickClose}
+                                                TransitionComponent={Fade}
+                                                aria-labelledby="customized-dialog-title"
+                                            >
+                                                <DialogContent>
+                                                    <DialogContentText
+                                                        id="alert-dialog-slide-description"
+                                                        textAlign={'center'}
+                                                        padding={'0 24px '}
+                                                        sx={{
+                                                            color: 'red',
+                                                        }}
                                                     >
-                                                        <Button
-                                                            onClick={handleClickClose}
+                                                        <DeleteForeverIcon
                                                             sx={{
-                                                                padding: '8px 16px',
-                                                                border: '1px solid #ccc',
-                                                                borderRadius: '12px',
-                                                                color: 'black',
-                                                                fontSize: '12px',
-                                                                fontWeight: 'bold',
-                                                                width: '96px',
+                                                                fontSize: '56px',
+                                                                color: 'rgb(201, 33, 39)',
                                                             }}
-                                                        >
-                                                            Hủy
-                                                        </Button>
-                                                        <Button
-                                                            onClick={() => handleDelete(open.id)}
-                                                            sx={{
-                                                                padding: '8px 16px',
-                                                                border: '1px solid red',
-                                                                borderRadius: '12px',
-                                                                background: 'red',
-                                                                color: 'white',
-                                                                fontSize: '12px',
-                                                                fontWeight: 'bold',
-                                                                width: '96px',
-                                                                ':hover': {
-                                                                    backgroundColor: 'rgb(201, 33, 39)',
-                                                                },
-                                                            }}
-                                                        >
-                                                            Đồng ý
-                                                        </Button>
-                                                    </Box>
-                                                </Dialog>
-                                            </Box>
-                                        </Stack>
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <Stack mt={2} justifyContent={'center'}>
-                    <Pagination count={pageCount} page={page} onChange={handleChange} />
-                </Stack>
-            </Grid>
+                                                        />
+                                                        <DialogTitle fontSize={'16px'}>
+                                                            Bạn chắc chắn muốn xóa danh mục này?
+                                                        </DialogTitle>
+                                                    </DialogContentText>
+                                                </DialogContent>
+                                                <Box
+                                                    display={'flex'}
+                                                    paddingBottom={'24px'}
+                                                    justifyContent={'space-around'}
+                                                >
+                                                    <Button
+                                                        onClick={handleClickClose}
+                                                        sx={{
+                                                            padding: '8px 16px',
+                                                            border: '1px solid #ccc',
+                                                            borderRadius: '12px',
+                                                            color: 'black',
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                            width: '96px',
+                                                        }}
+                                                    >
+                                                        Hủy
+                                                    </Button>
+                                                    <Button
+                                                        onClick={() => handleDelete(open.id)}
+                                                        sx={{
+                                                            padding: '8px 16px',
+                                                            border: '1px solid red',
+                                                            borderRadius: '12px',
+                                                            background: 'red',
+                                                            color: 'white',
+                                                            fontSize: '12px',
+                                                            fontWeight: 'bold',
+                                                            width: '96px',
+                                                            ':hover': {
+                                                                backgroundColor: 'rgb(201, 33, 39)',
+                                                            },
+                                                        }}
+                                                    >
+                                                        Đồng ý
+                                                    </Button>
+                                                </Box>
+                                            </Dialog>
+                                        </Box>
+                                    </Stack>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <Stack mt={2} justifyContent={'center'}>
+                <Pagination count={pageCount} page={page} onChange={handleChange} />
+            </Stack>
         </Grid>
     );
 }

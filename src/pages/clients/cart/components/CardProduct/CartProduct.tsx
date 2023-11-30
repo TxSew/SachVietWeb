@@ -17,6 +17,8 @@ import { httpVoucher } from '../../../../../submodules/controllers/http/axiosCon
 import { Discount } from '../../../../../submodules/models/DiscountModel/Discount';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
+import { pushError, pushSuccess, pushWarning } from '../../../../../components/Toast/Toast';
+import { error } from 'console';
 
 const CartProduct = () => {
     const { isMediumMD } = useMedia();
@@ -33,9 +35,14 @@ const CartProduct = () => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }, []);
     const getDiscount = () => {
-        httpVoucher.getAllVoucherByUser(3).then((res) => {
-            setDiscount(res);
-        });
+        httpVoucher
+            .getAllVoucherByUserIsNull()
+            .then((res) => {
+                setDiscount(res);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
     const [voucher, setVoucher] = useState<number>(0);
     const [code, setCode] = useState<string>('');
@@ -62,7 +69,12 @@ const CartProduct = () => {
         dispatch(decreaseCart(id));
     };
     const handleIncrement = (id: any) => {
-        dispatch(addToCart(id));
+        dispatch(
+            addToCart({
+                products: id,
+                quantity: 1,
+            })
+        );
     };
     const redirect = useNavigate();
     const {
@@ -71,31 +83,43 @@ const CartProduct = () => {
         formState: {},
     } = useForm<any>();
 
-    const handleDiscount = (data: any) => {
-        console.log('🚀 ~ file: CartProduct.tsx:74 ~ handleDiscount ~ data:', data);
+    const handleDiscount = async (data: any) => {
         const order = {
             money: cartTotalAmount,
             code: data.voucher,
         };
-        console.log('🚀 ~ file: CartProduct.tsx:79 ~ handleDiscount ~ order:', order);
-        httpVoucher
-            .getOneVoucher(order)
-            .then((res) => {
-                console.log('🚀 ~ file: CartProduct.tsx:83 ~ httpVoucher.getOneVoucher ~ s:', res);
-                setVoucher(res.discount.discount);
-            })
-            .catch((err) => {
-                console.log(err);
-                setVoucher(0);
-            });
+        try {
+            const data = await httpVoucher.getOneVoucher(order);
+            pushSuccess('Thêm mã giảm giá thành công');
+            setVoucher(data.discount.discount);
+            setCode(data.discount.code);
+        } catch (err: any) {
+            if (err.response.data.message == 'discount limited value') {
+                pushWarning('Mã giảm giá đã hết lượt sử dụng!');
+            }
+            if (err.response.data.message == 'payment date exceeded') {
+                pushWarning(`Mã giảm giá đã hết hạn sử dụng!`);
+            }
+            if (err.response.data?.result?.message == 'payment limit exceeded') {
+                pushWarning(
+                    `Mã giảm giá chỉ hỗ trợ cho đơn hàng từ ${numberFormat(err.response.data.result.value)} trở lên `
+                );
+            }
+
+            setVoucher(0);
+        }
     };
     const handleCheckout = () => {
-        redirect({
-            pathname: '/checkout',
-            search: createSearchParams({
-                dc: String(voucher),
-            }).toString(),
-        });
+        if (code) {
+            redirect({
+                pathname: '/checkout',
+                search: createSearchParams({
+                    discount: String(code),
+                }).toString(),
+            });
+        } else {
+            redirect('/checkout');
+        }
     };
     return (
         <Container maxWidth="xl">
@@ -222,8 +246,9 @@ const CartProduct = () => {
                                                                     type="text"
                                                                     value={element?.cartQuantity}
                                                                     style={{
-                                                                        maxWidth: '36px',
-                                                                        padding: '0px 10px',
+                                                                        maxWidth: '60px',
+                                                                        width: 'max-content',
+                                                                        padding: '3px 10px',
                                                                         textAlign: 'center',
                                                                     }}
                                                                 />
@@ -279,7 +304,8 @@ const CartProduct = () => {
                                                         type="text"
                                                         value={element?.cartQuantity}
                                                         style={{
-                                                            maxWidth: '37px',
+                                                            maxWidth: '60px',
+                                                            width: 'max-content',
                                                             padding: '0px 10px',
                                                             textAlign: 'center',
                                                         }}
@@ -296,14 +322,12 @@ const CartProduct = () => {
                                                     ''
                                                 ) : (
                                                     <Typography color={'#F39801'}>
-                                                        {
-                                                            element?.price_sale !== undefined &&
-                                                            element?.cartQuantity !== undefined
-                                                                ? `${numberFormat(
-                                                                      Number(element.price_sale * element.cartQuantity)
-                                                                  )} `
-                                                                : '' /* Replace "N/A" with your preferred placeholder */
-                                                        }
+                                                        {element?.price_sale !== undefined &&
+                                                        element?.cartQuantity !== undefined
+                                                            ? `${numberFormat(
+                                                                  Number(element.price_sale * element.cartQuantity)
+                                                              )} `
+                                                            : ''}
                                                     </Typography>
                                                 )}
                                             </Stack>
@@ -404,7 +428,9 @@ const CartProduct = () => {
                                 <Typography variant="body1">KHUYẾN MÃI</Typography>
                             </Stack>
                             <Stack color={color.text_color} direction={'row'}>
-                                <Typography variant="body1"> {voucher}</Typography>
+                                <Typography variant="body1" color={color.sale} fontWeight={'bold'}>
+                                    {numberFormat(voucher)}
+                                </Typography>
                             </Stack>
                         </Stack>
                         <Box pt={2}>

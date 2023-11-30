@@ -5,7 +5,6 @@ import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
-import Typography from '@mui/material/Typography';
 import React from 'react';
 import { BiBookAdd, BiSolidCategoryAlt } from 'react-icons/bi';
 import { FaBookOpen, FaHome, FaListUl } from 'react-icons/fa';
@@ -23,70 +22,72 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         setAnchorEl(null);
     };
     return (
-        <div className="dasb pb-3">
+        <div className="dasb ">
             <div className="dasb-wapper">
                 <input type="checkbox" id="tool" />
                 <div className="dasb-sidebar">
                     <div className="dasb-sidebar-logo">
                         <img width={'100px'} src={image.logo} alt="" />
                     </div>
-                    <ul className="">
-                        <NavLink to="/admin/statistical">
-                            <li className="">
-                                <FaHome />
-                                <span>Thống Kê</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/category">
-                            <li className="">
-                                <BiSolidCategoryAlt />
-                                <span>Danh mục</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/product">
-                            <li className="">
-                                <FaBookOpen />
-                                <span>Sản phẩm</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/productInventory">
-                            <li className="">
-                                <FaBookOpen />
-                                <span>Hàng tồn kho</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/orders">
-                            <li className="">
-                                <FaBookOpen />
-                                <span>Đơn hàng</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/producer">
-                            <li className="">
-                                <BiBookAdd />
-                                <span>Cung cấp</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/discount">
-                            <li className="">
-                                <BiBookAdd />
-                                <span>Giảm giá</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/customer">
-                            <li className="">
-                                <BiBookAdd />
-                                <span>Khách hàng</span>
-                            </li>
-                        </NavLink>
-                        <NavLink to="/admin/news">
-                            <li className="">
-                                <BiBookAdd />
-                                <span>Tin tức</span>
-                            </li>
-                        </NavLink>
-                        <div className="active start"></div>
-                    </ul>
+                    <div className="box-nav">
+                        <ul className="">
+                            <NavLink to="/admin/statistical">
+                                <li className="">
+                                    <FaHome />
+                                    <span>Thống Kê</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/category">
+                                <li className="">
+                                    <BiSolidCategoryAlt />
+                                    <span>Danh mục</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/product">
+                                <li className="">
+                                    <FaBookOpen />
+                                    <span>Sản phẩm</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/productInventory">
+                                <li className="">
+                                    <FaBookOpen />
+                                    <span>Hàng tồn kho</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/orders">
+                                <li className="">
+                                    <FaBookOpen />
+                                    <span>Đơn hàng</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/producer">
+                                <li className="">
+                                    <BiBookAdd />
+                                    <span>Cung cấp</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/discount">
+                                <li className="">
+                                    <BiBookAdd />
+                                    <span>Giảm giá</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/customer">
+                                <li className="">
+                                    <BiBookAdd />
+                                    <span>Khách hàng</span>
+                                </li>
+                            </NavLink>
+                            <NavLink to="/admin/news">
+                                <li className="">
+                                    <BiBookAdd />
+                                    <span>Tin tức</span>
+                                </li>
+                            </NavLink>
+                            <div className="active start"></div>
+                        </ul>
+                    </div>
                 </div>
                 <div className="dasb-wapper-main">
                     <div className="dasb-header row">

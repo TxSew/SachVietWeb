@@ -8,11 +8,13 @@ const UpdateDiscount = () => {
         handleSubmit,
         control,
         register,
+        reset,
         formState: { errors },
     } = useForm<Discount>({});
 
     const handleAddDiscount = async (data: Discount) => {
         const addDiscount = await httpDiscount.post(data);
+        if (addDiscount) reset();
     };
 
     return (

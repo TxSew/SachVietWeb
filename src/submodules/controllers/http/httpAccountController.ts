@@ -45,7 +45,7 @@ class HttpAccountController {
             const response = await this.axiosInstance.post('auth/changePassword', account);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 
@@ -86,7 +86,15 @@ class HttpAccountController {
 
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
+        }
+    }
+    async getMe() {
+        try {
+            const response = await this.axiosInstance.get(`users/getMe`);
+            return response.data;
+        } catch (error) {
+            throw error;
         }
     }
 }

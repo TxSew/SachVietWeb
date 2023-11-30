@@ -20,7 +20,7 @@ class HttpCartController {
             const response = await this.axiosInstance.post(`/order`, props);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOrderDetail(id: number) {
@@ -28,7 +28,7 @@ class HttpCartController {
             const response = await this.axiosInstance.get(`order/orderDetail/${id}`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     async getOrderbyUser(props: any): Promise<any> {
@@ -36,7 +36,7 @@ class HttpCartController {
             const response = await this.axiosInstance.post(`order/current`, props);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     async getOrderAdminbyUser(id: number, props: any): Promise<any> {
@@ -44,7 +44,7 @@ class HttpCartController {
             const response = await this.axiosInstance.post(`order/orderUser/${id}`, props);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 
@@ -53,7 +53,7 @@ class HttpCartController {
             const response = await this.axiosInstance.get(`products/currentUpdate/${id}`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 
@@ -96,7 +96,7 @@ class HttpCartController {
             const response = await this.axiosInstance.post(`order/addToCart`, data);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
     async getCart() {
@@ -104,7 +104,7 @@ class HttpCartController {
             const response = await this.axiosInstance.get(`cart`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
 }

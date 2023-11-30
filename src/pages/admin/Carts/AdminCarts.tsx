@@ -36,7 +36,8 @@ import { color } from '../../../Theme/color';
 import { httpCart, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../submodules/models/OrderModel/Order';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { pushError } from '../../../components/Toast/Toast';
+import { pushError, pushSuccess } from '../../../components/Toast/Toast';
+import { numberFormat } from '../../../helpers/formatPrice';
 
 export default function AdminCarts() {
     const [carts, setCarts] = React.useState<any>({});
@@ -241,10 +242,7 @@ export default function AdminCarts() {
                                                                 status: 1,
                                                             });
                                                             window.location.reload();
-
-                                                            toast.success('updated order successfully', {
-                                                                position: 'bottom-right',
-                                                            });
+                                                            pushSuccess('Duyệt đơn hàng thành công ');
                                                         }}
                                                     >
                                                         <Chip label="Duyệt đơn hàng" />
@@ -260,9 +258,7 @@ export default function AdminCarts() {
                                                                 });
                                                                 window.location.reload();
 
-                                                                toast.success('updated order successfully', {
-                                                                    position: 'bottom-right',
-                                                                });
+                                                                pushError('Đơn hàng đã bị hủy');
                                                             }}
                                                         >
                                                             <Chip
@@ -290,12 +286,10 @@ export default function AdminCarts() {
                                                         <Stack
                                                             onClick={async () => {
                                                                 const updated = await httpCart.put(Number(e.id), {
-                                                                    status: 0,
+                                                                    status: 3,
                                                                 });
                                                                 window.location.reload();
-                                                                toast.success('updated order successfully', {
-                                                                    position: 'bottom-right',
-                                                                });
+                                                                pushSuccess('Đơn hàng đã bị hủy');
                                                             }}
                                                         >
                                                             <Chip

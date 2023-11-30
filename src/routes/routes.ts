@@ -44,6 +44,7 @@ import AdminProductInventory from '../pages/admin/ProductInventory/AdminProductI
 import CreateNews from '../pages/admin/News/CreateNews';
 import AdminNews from '../pages/admin/News/AdminNews';
 import UpdateNews from '../pages/admin/News/UpdateNews';
+import SocketChat from '../pages/clients/SocketChat/SocketChat';
 
 const PublicRouter = [
     {
@@ -62,6 +63,10 @@ const PublicRouter = [
         path: '/checkout',
         component: Checkout,
         isRequired: true,
+    },
+    {
+        path: '/chat',
+        component: SocketChat,
     },
 
     {

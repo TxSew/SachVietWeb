@@ -23,7 +23,7 @@ class HttpDiscountController {
             });
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOne(id: number) {
@@ -31,7 +31,7 @@ class HttpDiscountController {
             const response = await this.axiosInstance.get(`discount/${id}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async getOneUpdate(id: number) {
@@ -39,15 +39,16 @@ class HttpDiscountController {
             const response = await this.axiosInstance.get(`products/currentUpdate/${id}`);
             return response.data;
         } catch (err) {
-            console.log(err);
+            throw err;
         }
     }
+
     async post(discount: any): Promise<any> {
         try {
             const response = await this.axiosInstance.post(`discount/store`, discount);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     async put(id: number, data: any): Promise<any> {
@@ -64,7 +65,7 @@ class HttpDiscountController {
             const response = await this.axiosInstance.delete(`discount/${id}`);
             return response.data;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
 }

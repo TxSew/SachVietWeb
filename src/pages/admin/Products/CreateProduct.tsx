@@ -79,6 +79,7 @@ const CreateProduct = () => {
       const storeProduct = await httpProduct.post(ProductDto);
       if (storeProduct)
         pushSuccess("Thêm sản phẩm thành công");
+        reset({});
     }
   };
 
@@ -96,7 +97,6 @@ const CreateProduct = () => {
 
   const handleFileChanges = (event: any) => {
     const files = event.target.files;
-    console.log(files);
     setImgs(files);
     console.log(imgs);
     const fileArray = Array.from(files);
@@ -147,6 +147,7 @@ const CreateProduct = () => {
     control,
     register,
     watch,
+     reset,
     formState: { errors },
   } = useForm<Product>({
     defaultValues: {

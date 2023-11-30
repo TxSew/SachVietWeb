@@ -23,23 +23,24 @@ const CreateCategory = () => {
 
     const handleAddCategory = async (data: Category) => {
         const image = await uploadImageFirebase(img);
-        console.log('🚀 ~ file: Createcategory.tsx:26 ~ handleAddCategory ~ image:', image);
-        // data.image = image;
-        // const category: Category = data;
-        // try {
-        //     const categoryDto = await httpCategory.store(category);
-        //     if (categoryDto) {
-        //         pushSuccess('Thêm danh mục sản phẩm thành công');
-        //     }
-        // } catch (err) {
-        //     pushWarning('tên danh mục đã tồn tại!');
-        // }
+        data.image = image;
+        const category: Category = data;
+        try {
+            const categoryDto = await httpCategory.store(category);
+            if (categoryDto) {
+                pushSuccess('Thêm danh mục sản phẩm thành công');
+                reset({});
+            }
+        } catch (err) {
+            pushWarning('tên danh mục đã tồn tại!');
+        }
     };
 
     const {
         handleSubmit,
         control,
         register,
+        reset,
         formState: { errors, isValid, isSubmitting },
     } = useForm<Category>({
         defaultValues: {
@@ -55,11 +56,9 @@ const CreateCategory = () => {
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
                         Thêm danh mục mới
                     </Typography>
-                    {isValid && (
-                        <Button type="submit" variant="contained" disabled={isSubmitting}>
-                            {isSubmitting ? 'Đang xử lý...' : 'Lưu'}
-                        </Button>
-                    )}
+                    <Button type="submit" variant="contained" disabled={isSubmitting}>
+                        {isSubmitting ? 'Đang xử lý...' : 'Lưu'}
+                    </Button>
                 </Stack>
                 <Grid bgcolor={color.white} p={2} container mt={0} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
