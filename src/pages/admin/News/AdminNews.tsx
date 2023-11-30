@@ -125,7 +125,7 @@ export default function AdminNews() {
 
     return (
         <Grid>
-            <Grid mt={3} width={'100%'}>
+            <Grid width={'100%'}>
                 <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                         Quản lý bài viết
@@ -189,7 +189,7 @@ export default function AdminNews() {
                 <TableContainer component={Paper} ref={tableRef}>
                     <Table
                         sx={{
-                            minWidth: 800,
+                            minWidth: '1020px',
                         }}
                         aria-label="simple tablek w"
                     >

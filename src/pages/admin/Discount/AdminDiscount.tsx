@@ -84,8 +84,14 @@ export default function AdminDiscount() {
 
     return (
         <Grid>
-            <Grid mt={3} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+            <Grid width={'100%'}>
+                <Stack
+                    direction={{ xs: 'column', md: 'row' }}
+                    mb={2}
+                    alignItems={'center'}
+                    spacing={2}
+                    justifyContent={'space-between'}
+                >
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                         <DiscountIcon
                             sx={{
@@ -112,7 +118,7 @@ export default function AdminDiscount() {
                 <TableContainer component={Paper}>
                     <Table
                         sx={{
-                            minWidth: 800,
+                            minWidth: '1020px',
                         }}
                         aria-label="simple tablek w"
                     >

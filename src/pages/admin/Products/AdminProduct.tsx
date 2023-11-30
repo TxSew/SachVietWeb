@@ -157,8 +157,14 @@ export default function AdminProduct() {
 
     return (
         <Grid>
-            <Grid mt={3} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+            <Grid width={'100%'}>
+                <Stack
+                    direction={{ xs: 'column', md: 'row' }}
+                    mb={2}
+                    alignItems={'center'}
+                    spacing={2}
+                    justifyContent={'space-between'}
+                >
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                         Quản lý Sản phẩm
                     </Typography>
@@ -247,7 +253,7 @@ export default function AdminProduct() {
                 <TableContainer component={Paper} ref={tableRef}>
                     <Table
                         sx={{
-                            minWidth: 800,
+                            minWidth: '1020px',
                         }}
                         aria-label="simple tablek w"
                     >

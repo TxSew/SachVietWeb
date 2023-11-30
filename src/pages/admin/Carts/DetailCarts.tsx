@@ -45,11 +45,7 @@ function DetailCarts() {
 
     return (
         <Box bgcolor={color.text_color}>
-            <Box
-                sx={{
-                    marginTop: '18px',
-                }}
-            >
+            <Box sx={{}}>
                 <Grid
                     container
                     maxWidth="xl"

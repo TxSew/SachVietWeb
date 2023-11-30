@@ -19,8 +19,7 @@ function AdminStatistical() {
     return (
         <Box
             sx={{
-                mt: 5,
-                px: 5,
+                px: 3,
             }}
         >
             <Typography variant="h3" fontSize={'30px'} fontWeight={'bold'} textTransform={'uppercase'}>

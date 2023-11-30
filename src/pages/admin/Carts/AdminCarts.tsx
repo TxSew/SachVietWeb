@@ -114,18 +114,25 @@ export default function AdminCarts() {
     };
     return (
         <Grid>
-            <Grid mt={0} width={'100%'}>
-                <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
+            <Grid width={'100%'}>
+                <Stack
+                    direction={{ xs: 'column', md: 'row' }}
+                    mb={2}
+                    textAlign={'left'}
+                    alignItems={'center'}
+                    spacing={2}
+                    justifyContent={'space-between'}
+                >
                     <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                         <ShoppingBasketIcon
                             sx={{
                                 mr: 1,
+                                textAlign: 'left',
                             }}
                         />
                         quản lý đơn hàng
                     </Typography>
                     <FormControl sx={{ m: 1, minWidth: 120 }}>
-                        <Label>Sắp xếp:</Label>
                         <Select
                             displayEmpty
                             defaultValue={undefined}
@@ -145,7 +152,7 @@ export default function AdminCarts() {
                 <TableContainer component={Paper}>
                     <Table
                         sx={{
-                            minWidth: 800,
+                            minWidth: '1020px',
                         }}
                         aria-label="simple tablek w"
                     >
