@@ -10,8 +10,19 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
 import { ResponseStatus } from '../../../../helpers/ResponsiveStatus';
 import { pushError, pushWarning } from '../../../../components/Toast/Toast';
+// import { FacebookProvider, LoginButton } from 'react-facebook';
+// import { signInWithPopup } from '@firebase/auth';
+// import { auth, provider } from '../../../../configs/fireBaseConfig';
 
 const Login = () => {
+    // function handleSuccess(response: any) {
+    //     console.log(response.status);
+    // }
+
+    // function handleError(error: any) {
+    //     console.log(error);
+    // }
+
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [showPassword, setShowPassword] = useState(false);
@@ -57,153 +68,162 @@ const Login = () => {
             }
         }
     };
+    // const handleClick = () => {
+    //     signInWithPopup(auth, provider).then((data: any) => {
+    //         console.log(data);
+    //         localStorage.setItem('email', data.user.email);
+    //     });
+    // };
     return (
-        <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
-            <FormControl
-                sx={{
-                    mt: '10px',
-                }}
-                fullWidth
-            >
-                <label>Email</label>
-                <Controller
-                    control={control}
-                    name="email"
-                    defaultValue=""
-                    rules={{
-                        required: 'Vui lòng nhập email của bạn!',
-                        pattern: {
-                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                            message: 'Tài khoản email không hợp lệ!',
-                        },
-                    }}
-                    render={({ field }) => (
-                        <OutlinedInput {...field} key={2} fullWidth placeholder="Vui lòng nhập Email của bạn!" />
-                    )}
-                />
-                <Typography variant="caption" color={color.error}>
-                    {errors.email && errors.email.message}
-                </Typography>
-            </FormControl>
-            <FormControl
-                sx={{
-                    mt: '16px',
-                }}
-                fullWidth
-            >
-                <Typography>Mật khẩu</Typography>
-                <Controller
-                    control={control}
-                    defaultValue="" // Set an initial value here
-                    name="password"
-                    rules={{
-                        required: 'Mật khẩu không được để trống!',
-                        minLength: {
-                            value: 5,
-                            message: 'Mật khẩu yêu cầu 5 kí tự trở lên!',
-                        },
-                        maxLength: {
-                            value: 30,
-                            message: 'Mật khẩu yêu cầu 30 kí tự trở xuống!',
-                        },
-                    }}
-                    render={({ field }) => (
-                        <OutlinedInput
-                            key={1}
-                            {...field}
-                            fullWidth
-                            placeholder="Vui lòng nhập mật khẩu"
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                                <InputAdornment position="end">
-                                    <IconButton
-                                        aria-label="toggle password visibility"
-                                        onClick={handleClickShowPassword}
-                                        onMouseDown={handleMouseDownPassword}
-                                    >
-                                        {showPassword ? (
-                                            <VisibilityOff
-                                                sx={{
-                                                    fontSize: '14px',
-                                                }}
-                                            />
-                                        ) : (
-                                            <Visibility
-                                                sx={{
-                                                    fontSize: '14px',
-                                                }}
-                                            />
-                                        )}
-                                    </IconButton>
-                                </InputAdornment>
-                            }
-                        />
-                    )}
-                />
-                <Typography variant="caption" color={color.error}>
-                    {errors.password && errors.password.message}
-                </Typography>
-            </FormControl>
-            <Typography variant="caption" display={'flex'} textAlign={'end'} justifyContent={'end'} pt={2}>
-                <Link to={'ChangePassword'} style={{ color: 'red' }}>
-                    Quên mật khẩu?
-                </Link>
-            </Typography>
-            <Box
-                mt={2}
-                sx={{
-                    clear: 'both',
-                    display: 'flex',
-                    direction: 'column',
-                    justifyContent: 'center',
-                }}
-            >
-                <Button
-                    type="submit"
-                    variant="outlined"
+        <>
+            <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
+                <FormControl
                     sx={{
-                        width: '100%',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        background: '#008C89',
-                        color: '#fff',
-                        padding: '8px 0',
-                        '&:hover': {
-                            padding: '8px 0',
+                        mt: '10px',
+                    }}
+                    fullWidth
+                >
+                    <label>Email</label>
+                    <Controller
+                        control={control}
+                        name="email"
+                        defaultValue=""
+                        rules={{
+                            required: 'Vui lòng nhập email của bạn!',
+                            pattern: {
+                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                message: 'Tài khoản email không hợp lệ!',
+                            },
+                        }}
+                        render={({ field }) => (
+                            <OutlinedInput {...field} key={2} fullWidth placeholder="Vui lòng nhập Email của bạn!" />
+                        )}
+                    />
+                    <Typography variant="caption" color={color.error}>
+                        {errors.email && errors.email.message}
+                    </Typography>
+                </FormControl>
+                <FormControl
+                    sx={{
+                        mt: '16px',
+                    }}
+                    fullWidth
+                >
+                    <Typography>Mật khẩu</Typography>
+                    <Controller
+                        control={control}
+                        defaultValue="" // Set an initial value here
+                        name="password"
+                        rules={{
+                            required: 'Mật khẩu không được để trống!',
+                            minLength: {
+                                value: 5,
+                                message: 'Mật khẩu yêu cầu 5 kí tự trở lên!',
+                            },
+                            maxLength: {
+                                value: 30,
+                                message: 'Mật khẩu yêu cầu 30 kí tự trở xuống!',
+                            },
+                        }}
+                        render={({ field }) => (
+                            <OutlinedInput
+                                key={1}
+                                {...field}
+                                fullWidth
+                                placeholder="Vui lòng nhập mật khẩu"
+                                type={showPassword ? 'text' : 'password'}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton
+                                            aria-label="toggle password visibility"
+                                            onClick={handleClickShowPassword}
+                                            onMouseDown={handleMouseDownPassword}
+                                        >
+                                            {showPassword ? (
+                                                <VisibilityOff
+                                                    sx={{
+                                                        fontSize: '14px',
+                                                    }}
+                                                />
+                                            ) : (
+                                                <Visibility
+                                                    sx={{
+                                                        fontSize: '14px',
+                                                    }}
+                                                />
+                                            )}
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
+                        )}
+                    />
+                    <Typography variant="caption" color={color.error}>
+                        {errors.password && errors.password.message}
+                    </Typography>
+                </FormControl>
+                <Typography variant="caption" display={'flex'} textAlign={'end'} justifyContent={'end'} pt={2}>
+                    <Link to={'ChangePassword'} style={{ color: 'red' }}>
+                        Quên mật khẩu?
+                    </Link>
+                </Typography>
+                <Box
+                    mt={2}
+                    sx={{
+                        clear: 'both',
+                        display: 'flex',
+                        direction: 'column',
+                        justifyContent: 'center',
+                    }}
+                >
+                    <Button
+                        type="submit"
+                        variant="outlined"
+                        sx={{
+                            width: '100%',
+                            fontSize: '12px',
+                            fontWeight: 'bold',
                             background: '#008C89',
-                            opacity: 0.9,
-                        },
+                            color: '#fff',
+                            padding: '8px 0',
+                            '&:hover': {
+                                padding: '8px 0',
+                                background: '#008C89',
+                                opacity: 0.9,
+                            },
+                        }}
+                    >
+                        Đăng nhập
+                    </Button>
+                </Box>
+                <Box
+                    mt={2}
+                    sx={{
+                        clear: 'both',
+                        display: 'flex',
+                        direction: 'column',
+                        justifyContent: 'center',
                     }}
                 >
-                    Đăng nhập
-                </Button>
-            </Box>
-            <Box
-                mt={2}
-                sx={{
-                    clear: 'both',
-                    display: 'flex',
-                    direction: 'column',
-                    justifyContent: 'center',
-                }}
-            >
-                <Button
-                    type="submit"
-                    variant="outlined"
-                    style={{
-                        width: '100%',
-                        fontSize: '12px',
-                        fontWeight: 'bold',
-                        background: '#2489F4',
-                        color: '#fff',
-                        border: 'none',
-                        padding: '8px 0',
-                    }}
-                >
-                    Đăng nhập bằng facebook
-                </Button>
-            </Box>
-        </form>
+                    <Button
+                        type="submit"
+                        variant="outlined"
+                        style={{
+                            width: '100%',
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            background: '#2489F4',
+                            color: '#fff',
+                            border: 'none',
+                            padding: '8px 0',
+                        }}
+                    >
+                        Đăng nhập bằng facebook
+                    </Button>
+                </Box>
+            </form>
+            {/* <button onClick={handleClick}>Signin With Google</button> */}
+        </>
     );
 };
 
