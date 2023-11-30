@@ -8,9 +8,11 @@ import {
     Button,
     Container,
     Grid,
+    OutlinedInput,
     Pagination,
     Rating,
     Stack,
+    Tab,
     Table,
     TableBody,
     TableCell,
@@ -18,7 +20,7 @@ import {
     Typography,
     tableCellClasses,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import {
@@ -46,6 +48,10 @@ import './style.scss';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { FormControl, TextField } from '@mui/material';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -113,6 +119,13 @@ export const Details = () => {
     }));
 
     const htmlContent = Detail ? Detail.desc : ''; // Ha
+    const [value, setValue] = React.useState('1');
+
+    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+        setValue(newValue);
+    };
+    const [rating, setRating] = React.useState<number | null>(1);
+
     return (
         <Box bgcolor={'#eee'}>
             <Container maxWidth="xl">
@@ -144,7 +157,7 @@ export const Details = () => {
                                                 src={Detail?.image}
                                                 style={{
                                                     border: '2px solid #eee',
-
+                                                    objectFit: 'contain',
                                                     marginBottom: '2px',
                                                 }}
                                                 onClick={() => handleChangeImage(Detail.image)}
@@ -318,25 +331,6 @@ export const Details = () => {
                                                     }}
                                                 >
                                                     {Detail?.author}
-                                                </NavLink>
-                                            </Typography>
-                                        </Stack>
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={1}
-                                            sx={{
-                                                width: '50%',
-                                            }}
-                                        >
-                                            <Typography>Nhà xuất bản</Typography>
-                                            <Typography fontWeight={'bold'}>
-                                                <NavLink
-                                                    to=""
-                                                    style={{
-                                                        color: '#1976D2',
-                                                    }}
-                                                >
-                                                    ?
                                                 </NavLink>
                                             </Typography>
                                         </Stack>
@@ -661,57 +655,247 @@ export const Details = () => {
                     <Box
                         bgcolor={color.white}
                         sx={{
-                            p: 2,
                             pt: 0,
                         }}
                     >
-                        <Typography
-                            variant="h2"
-                            fontSize={'18px'}
-                            textTransform={'uppercase'}
-                            sx={{
-                                p: '16px 0',
-                            }}
-                        >
-                            Giới thiệu sản phẩm
-                        </Typography>
-                        <Box p="2" textAlign={'center'}>
-                            <Typography
-                                textAlign={'center'}
-                                fontSize={'16px'}
-                                color={'#F7941E'}
-                                textTransform={'capitalize'}
-                                fontWeight={'bold'}
-                                p={2}
-                                variant="h2"
-                            >
-                                {Detail?.title}
-                            </Typography>
-                            <div
-                                className={`small-text ${TextMore && 'long-text'} `}
-                                style={{
-                                    textAlign: 'left',
-                                    fontSize: '14px',
-                                }}
-                                dangerouslySetInnerHTML={{
-                                    __html: htmlContent as unknown as TrustedHTML,
-                                }}
-                            />
-                            <Button
-                                variant="OutlinedRed"
-                                sx={{
-                                    marginTop: '10px',
-                                }}
-                                onClick={() => setTextMore((pre) => !pre)}
-                            >
-                                <Typography
+                        <Box sx={{ width: '100%', typography: 'body1' }}>
+                            <TabContext value={value}>
+                                <Box sx={{ borderBottom: 1, borderColor: 'divider', px: 0 }}>
+                                    <TabList onChange={handleChange} aria-label="lab API tabs example">
+                                        <Tab label="Giới thiệu sản phẩm" value="1" />
+                                        <Tab label="Bình luận" value="2" />
+                                    </TabList>
+                                </Box>
+                                <TabPanel
+                                    value="1"
                                     sx={{
-                                        textTransform: 'capitalize',
+                                        px: 2,
                                     }}
                                 >
-                                    {!TextMore ? 'Xem thêm' : 'Rút gọn'}
-                                </Typography>
-                            </Button>
+                                    {' '}
+                                    <Box textAlign={'center'}>
+                                        <Typography
+                                            textAlign={'center'}
+                                            fontSize={'16px'}
+                                            color={'#F7941E'}
+                                            textTransform={'capitalize'}
+                                            fontWeight={'bold'}
+                                            p={2}
+                                            variant="h2"
+                                        >
+                                            {Detail?.title}
+                                        </Typography>
+                                        <div
+                                            className={`small-text ${TextMore && 'long-text'} `}
+                                            style={{
+                                                textAlign: 'justify',
+                                                fontSize: '14px',
+                                                lineHeight: '24px',
+                                            }}
+                                            dangerouslySetInnerHTML={{
+                                                __html: htmlContent as unknown as TrustedHTML,
+                                            }}
+                                        />
+                                        <Button
+                                            variant="OutlinedRed"
+                                            sx={{
+                                                marginTop: '10px',
+                                            }}
+                                            onClick={() => setTextMore((pre) => !pre)}
+                                        >
+                                            <Typography
+                                                sx={{
+                                                    textTransform: 'capitalize',
+                                                }}
+                                            >
+                                                {!TextMore ? 'Xem thêm' : 'Rút gọn'}
+                                            </Typography>
+                                        </Button>
+                                    </Box>
+                                </TabPanel>
+                                <TabPanel
+                                    sx={{
+                                        px: 2,
+                                    }}
+                                    value="2"
+                                >
+                                    <Grid container>
+                                        <Grid xs={12} md={4} pb={2}>
+                                            <FormControl>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        pb: 1,
+                                                        width: '100%',
+                                                    }}
+                                                >
+                                                    <Typography component="legend">Chọn đánh giá của bạn:</Typography>
+                                                    <Rating
+                                                        name="size-large"
+                                                        size="large"
+                                                        value={rating}
+                                                        onChange={(event, newRating) => {
+                                                            setRating(newRating);
+                                                        }}
+                                                        sx={{ fontSize: '240px' }}
+                                                    />
+                                                </Box>
+                                                <textarea
+                                                    style={{
+                                                        resize: 'none',
+                                                        padding: '12px',
+                                                        borderRadius: '4px',
+                                                        outline: 'none',
+                                                        border: '1px solid #ccc',
+                                                    }}
+                                                    name=""
+                                                    id=""
+                                                    rows={6}
+                                                    placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
+                                                ></textarea>
+                                                <Box py={1}>
+                                                    <Typography variant="body1" color="initial">
+                                                        Tải hình ảnh :
+                                                    </Typography>
+                                                    <OutlinedInput
+                                                        type="file"
+                                                        inputProps={{ multiple: true }}
+                                                        placeholder="Vui lòng nhập OTP của bạn!"
+                                                    />
+                                                </Box>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    sx={{ mt: 3, background: '#F39801' }}
+                                                >
+                                                    Gửi nhận xét
+                                                </Button>
+                                            </FormControl>
+                                        </Grid>
+                                        <Grid xs={12} md={8} pb={2}>
+                                            <Box bgcolor={'#eee'} width={'100%'} height={'100%'} p={2}>
+                                                <Box
+                                                    pb={2}
+                                                    borderBottom={'1px solid #ccc'}
+                                                    display={'flex'}
+                                                    justifyContent={'start'}
+                                                    gap={1}
+                                                >
+                                                    <Box>
+                                                        <img
+                                                            src="https://down-vn.img.susercontent.com/file/ffb79bec4ee0fddca9d0b0679ab9248d_tn"
+                                                            alt=""
+                                                            width={'40px'}
+                                                            height={'40px'}
+                                                            style={{
+                                                                borderRadius: '50%',
+                                                                objectFit: 'contain',
+                                                            }}
+                                                        />
+                                                    </Box>
+                                                    <Box>
+                                                        <Box pb={2}>
+                                                            <Typography
+                                                                variant="subtitle1"
+                                                                fontSize={12}
+                                                                fontWeight={700}
+                                                            >
+                                                                Tên người dùng
+                                                            </Typography>
+                                                            <Rating
+                                                                name="custom-rating-filter-operator"
+                                                                defaultChecked={true}
+                                                                defaultValue={2}
+                                                                size="medium"
+                                                                precision={0.5}
+                                                                readOnly
+                                                            />
+                                                            <Typography
+                                                                variant="subtitle1"
+                                                                fontSize={12}
+                                                                color={'#0000008a'}
+                                                            >
+                                                                Ngày bình luận
+                                                            </Typography>
+                                                        </Box>
+                                                        <Typography
+                                                            variant="subtitle1"
+                                                            fontSize={12}
+                                                            pb={2}
+                                                            color={'#000000DE'}
+                                                        >
+                                                            Bình luận
+                                                        </Typography>
+                                                        <Box
+                                                            display={'flex'}
+                                                            alignItems={'center'}
+                                                            width={'100%'}
+                                                            flexWrap={'wrap'}
+                                                        >
+                                                            <Box pr={'20px'} pb={'20px'}>
+                                                                <img
+                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                    alt=""
+                                                                    width={72}
+                                                                    height={72}
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                />
+                                                            </Box>
+                                                            <Box pr={'20px'} pb={'20px'}>
+                                                                <img
+                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                    alt=""
+                                                                    width={72}
+                                                                    height={72}
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                />
+                                                            </Box>
+                                                            <Box pr={'20px'} pb={'20px'}>
+                                                                <img
+                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                    alt=""
+                                                                    width={72}
+                                                                    height={72}
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                />
+                                                            </Box>
+                                                            <Box pr={'20px'} pb={'20px'}>
+                                                                <img
+                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                    alt=""
+                                                                    width={72}
+                                                                    height={72}
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                />
+                                                            </Box>
+                                                            <Box pr={'20px'} pb={'20px'}>
+                                                                <img
+                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                    alt=""
+                                                                    width={72}
+                                                                    height={72}
+                                                                    style={{
+                                                                        objectFit: 'cover',
+                                                                    }}
+                                                                />
+                                                            </Box>
+                                                        </Box>
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                        </Grid>
+                                    </Grid>
+                                </TabPanel>
+                            </TabContext>
                         </Box>
                     </Box>
                 </Box>
