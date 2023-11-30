@@ -9,7 +9,6 @@ import {
     Container,
     Grid,
     OutlinedInput,
-
     Pagination,
     Rating,
     Stack,
@@ -18,6 +17,7 @@ import {
     TableBody,
     TableCell,
     TableRow,
+    TextareaAutosize,
     Typography,
     tableCellClasses,
 } from '@mui/material';
@@ -42,7 +42,7 @@ import { numberFormat } from '../../../helpers/formatPrice';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { addToCart } from '../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../redux/storeClient';
-import { httpProduct } from '../../../submodules/controllers/http/axiosController';
+import { httpComment, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import './style.scss';
 
@@ -52,6 +52,10 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { FormControl, TextField } from '@mui/material';
+import { formatDates } from '../../../helpers/FortmatDate';
+import { Controller, useForm } from 'react-hook-form';
+import { pushSuccess } from '../../../components/Toast/Toast';
+import { setPriority } from 'os';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -60,6 +64,7 @@ export const Details = () => {
     const redirect = useNavigate();
     const [Detail, setDetail] = useState<Product>({});
     const [image, setImage] = useState<string>('');
+    const [comments, setComments] = useState<any[]>([]);
     const [quantity, setQuantity] = useState<number>(1);
     const { id } = useParams();
     const Id: any = id;
@@ -74,12 +79,17 @@ export const Details = () => {
     useEffect(() => {
         FetchProductOne();
     }, [id]);
-
+    const [idProduct, setProductId] = useState<any>({});
     const FetchProductOne = async () => {
         try {
             const detailValue = await httpProduct.getOne(Id);
-            if (detailValue) {
-            }
+            const props = { productId: detailValue.product.id };
+            setProductId(detailValue.product.id);
+            httpComment.getCommentByProduct(props).then((comments) => {
+                if (comments.length) {
+                    setComments(comments);
+                }
+            });
             setDetail(detailValue.product);
             setRelatedProduct(detailValue.relatedProducts);
         } catch (err) {
@@ -132,13 +142,30 @@ export const Details = () => {
     const handelQUantity = () => {};
 
     const htmlContent = Detail ? Detail.desc : ''; // Ha
-    const [value, setValue] = React.useState('1');
+    const [value, setTab] = React.useState('1');
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
+        setTab(newValue);
     };
-    const [rating, setRating] = React.useState<number | null>(1);
 
+    const {
+        handleSubmit,
+        control,
+        formState: { errors },
+        setValue,
+        reset,
+    } = useForm<any>({ mode: 'all' });
+
+    const handelComment = (data: any) => {
+        let props = {
+            productId: idProduct,
+            ...data,
+        } as any;
+        httpComment.addComment(props).then((response) => {
+            pushSuccess('Đánh giá sản phẩm thành công');
+        });
+        FetchProductOne();
+    };
     return (
         <Box bgcolor={'#eee'}>
             <Container maxWidth="xl">
@@ -769,44 +796,73 @@ export const Details = () => {
                                                         width: '100%',
                                                     }}
                                                 >
-                                                    <Typography component="legend">Chọn đánh giá của bạn:</Typography>
-                                                    <Rating
-                                                        name="size-large"
-                                                        size="large"
-                                                        value={rating}
-                                                        onChange={(event, newRating) => {
-                                                            setRating(newRating);
-                                                        }}
-                                                        sx={{ fontSize: '240px' }}
-                                                    />
+                                                    <FormControl>
+                                                        <Typography component="legend">
+                                                            Chọn đánh giá của bạn:
+                                                        </Typography>
+                                                        <Controller
+                                                            control={control}
+                                                            render={({ field }) => (
+                                                                <Rating
+                                                                    {...field}
+                                                                    defaultValue={3}
+                                                                    name="size-large"
+                                                                    size="large"
+                                                                    onChange={(event, newRating) => {
+                                                                        setValue('star', newRating);
+                                                                    }}
+                                                                    sx={{ fontSize: '240px' }}
+                                                                />
+                                                            )}
+                                                            name={'star'}
+                                                        />
+                                                    </FormControl>
                                                 </Box>
-                                                <textarea
-                                                    style={{
-                                                        resize: 'none',
-                                                        padding: '12px',
-                                                        borderRadius: '4px',
-                                                        outline: 'none',
-                                                        border: '1px solid #ccc',
-                                                    }}
-                                                    name=""
-                                                    id=""
-                                                    rows={6}
-                                                    placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
-                                                ></textarea>
-                                                <Box py={1}>
-                                                    <Typography variant="body1" color="initial">
-                                                        Tải hình ảnh :
-                                                    </Typography>
-                                                    <OutlinedInput
-                                                        type="file"
-                                                        inputProps={{ multiple: true }}
-                                                        placeholder="Vui lòng nhập OTP của bạn!"
+                                                <FormControl>
+                                                    <Controller
+                                                        name="content"
+                                                        control={control}
+                                                        render={({ field }) => (
+                                                            <TextareaAutosize
+                                                                {...field}
+                                                                style={{
+                                                                    resize: 'none',
+                                                                    padding: '12px',
+                                                                    borderRadius: '4px',
+                                                                    outline: 'none',
+                                                                    border: '1px solid #ccc',
+                                                                }}
+                                                                minRows={4}
+                                                                name=""
+                                                                id=""
+                                                                placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
+                                                            ></TextareaAutosize>
+                                                        )}
                                                     />
-                                                </Box>
+                                                </FormControl>
+                                                <Controller
+                                                    name="image"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Box py={1}>
+                                                            <Typography variant="body1" color="initial">
+                                                                Tải hình ảnh :
+                                                            </Typography>
+                                                            <OutlinedInput
+                                                                {...field}
+                                                                type="file"
+                                                                inputProps={{ multiple: true }}
+                                                                placeholder="Vui lòng nhập OTP của bạn!"
+                                                            />
+                                                        </Box>
+                                                    )}
+                                                />
+
                                                 <Button
                                                     variant="contained"
                                                     color="primary"
                                                     sx={{ mt: 3, background: '#F39801' }}
+                                                    onClick={handleSubmit(handelComment)}
                                                 >
                                                     Gửi nhận xét
                                                 </Button>
@@ -814,122 +870,104 @@ export const Details = () => {
                                         </Grid>
                                         <Grid xs={12} md={8} pb={2}>
                                             <Box bgcolor={'#eee'} width={'100%'} height={'100%'} p={2}>
-                                                <Box
-                                                    pb={2}
-                                                    borderBottom={'1px solid #ccc'}
-                                                    display={'flex'}
-                                                    justifyContent={'start'}
-                                                    gap={1}
-                                                >
-                                                    <Box>
-                                                        <img
-                                                            src="https://down-vn.img.susercontent.com/file/ffb79bec4ee0fddca9d0b0679ab9248d_tn"
-                                                            alt=""
-                                                            width={'40px'}
-                                                            height={'40px'}
-                                                            style={{
-                                                                borderRadius: '50%',
-                                                                objectFit: 'contain',
-                                                            }}
-                                                        />
-                                                    </Box>
-                                                    <Box>
-                                                        <Box pb={2}>
-                                                            <Typography
-                                                                variant="subtitle1"
-                                                                fontSize={12}
-                                                                fontWeight={700}
-                                                            >
-                                                                Tên người dùng
-                                                            </Typography>
-                                                            <Rating
-                                                                name="custom-rating-filter-operator"
-                                                                defaultChecked={true}
-                                                                defaultValue={2}
-                                                                size="medium"
-                                                                precision={0.5}
-                                                                readOnly
-                                                            />
-                                                            <Typography
-                                                                variant="subtitle1"
-                                                                fontSize={12}
-                                                                color={'#0000008a'}
-                                                            >
-                                                                Ngày bình luận
-                                                            </Typography>
-                                                        </Box>
-                                                        <Typography
-                                                            variant="subtitle1"
-                                                            fontSize={12}
-                                                            pb={2}
-                                                            color={'#000000DE'}
-                                                        >
-                                                            Bình luận
-                                                        </Typography>
+                                                {comments.map((e) => {
+                                                    return (
                                                         <Box
+                                                            pt={2}
+                                                            borderBottom={'1px solid #ccc'}
                                                             display={'flex'}
-                                                            alignItems={'center'}
-                                                            width={'100%'}
-                                                            flexWrap={'wrap'}
+                                                            justifyContent={'start'}
+                                                            gap={1}
                                                         >
-                                                            <Box pr={'20px'} pb={'20px'}>
+                                                            <Box>
                                                                 <img
-                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                    src="https://down-vn.img.susercontent.com/file/ffb79bec4ee0fddca9d0b0679ab9248d_tn"
                                                                     alt=""
-                                                                    width={72}
-                                                                    height={72}
+                                                                    width={'40px'}
+                                                                    height={'40px'}
                                                                     style={{
-                                                                        objectFit: 'cover',
+                                                                        borderRadius: '50%',
+                                                                        objectFit: 'contain',
                                                                     }}
                                                                 />
                                                             </Box>
-                                                            <Box pr={'20px'} pb={'20px'}>
-                                                                <img
-                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                    alt=""
-                                                                    width={72}
-                                                                    height={72}
-                                                                    style={{
-                                                                        objectFit: 'cover',
-                                                                    }}
-                                                                />
-                                                            </Box>
-                                                            <Box pr={'20px'} pb={'20px'}>
-                                                                <img
-                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                    alt=""
-                                                                    width={72}
-                                                                    height={72}
-                                                                    style={{
-                                                                        objectFit: 'cover',
-                                                                    }}
-                                                                />
-                                                            </Box>
-                                                            <Box pr={'20px'} pb={'20px'}>
-                                                                <img
-                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                    alt=""
-                                                                    width={72}
-                                                                    height={72}
-                                                                    style={{
-                                                                        objectFit: 'cover',
-                                                                    }}
-                                                                />
-                                                            </Box>
-                                                            <Box pr={'20px'} pb={'20px'}>
-                                                                <img
-                                                                    src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                    alt=""
-                                                                    width={72}
-                                                                    height={72}
-                                                                    style={{
-                                                                        objectFit: 'cover',
-                                                                    }}
-                                                                />
+                                                            <Box>
+                                                                <Box pb={2}>
+                                                                    <Typography
+                                                                        variant="subtitle1"
+                                                                        fontSize={12}
+                                                                        fontWeight={700}
+                                                                    >
+                                                                        {e.userComment.fullName}
+                                                                    </Typography>
+                                                                    <Rating
+                                                                        name="custom-rating-filter-operator"
+                                                                        defaultChecked={true}
+                                                                        defaultValue={e.star}
+                                                                        size="medium"
+                                                                        precision={0.5}
+                                                                        readOnly
+                                                                    />
+                                                                    <Typography
+                                                                        variant="subtitle1"
+                                                                        fontSize={12}
+                                                                        color={'#0000008a'}
+                                                                    >
+                                                                        {formatDates(e.createdAt)}
+                                                                    </Typography>
+                                                                </Box>
+                                                                <Typography
+                                                                    variant="subtitle1"
+                                                                    fontSize={12}
+                                                                    pb={2}
+                                                                    color={'#000000DE'}
+                                                                >
+                                                                    {e.content}
+                                                                </Typography>
+                                                                <Stack
+                                                                    direction={'row'}
+                                                                    alignItems={'center'}
+                                                                    width={'100%'}
+                                                                    flexWrap={'wrap'}
+                                                                >
+                                                                    <Box pr={'20px'} pb={'20px'}>
+                                                                        <img
+                                                                            src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                            alt=""
+                                                                            width={72}
+                                                                            height={72}
+                                                                            style={{
+                                                                                objectFit: 'cover',
+                                                                            }}
+                                                                        />
+                                                                    </Box>
+                                                                    <Box pr={'20px'} pb={'20px'}>
+                                                                        <img
+                                                                            src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                            alt=""
+                                                                            width={72}
+                                                                            height={72}
+                                                                            style={{
+                                                                                objectFit: 'cover',
+                                                                            }}
+                                                                        />
+                                                                    </Box>
+                                                                    <Box pr={'20px'} pb={'20px'}>
+                                                                        <img
+                                                                            src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
+                                                                            alt=""
+                                                                            width={72}
+                                                                            height={72}
+                                                                            style={{
+                                                                                objectFit: 'cover',
+                                                                            }}
+                                                                        />
+                                                                    </Box>
+                                                                </Stack>
                                                             </Box>
                                                         </Box>
-                                                    </Box>
-                                                </Box>
+                                                    );
+                                                })}
                                             </Box>
                                         </Grid>
                                     </Grid>
