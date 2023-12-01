@@ -4,6 +4,7 @@ import {
     CSSObject,
     CssBaseline,
     Divider,
+    Link,
     ListItem,
     ListItemButton,
     ListItemText,
@@ -22,27 +23,25 @@ import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import React from 'react';
-import { BiBookAdd, BiSolidCategoryAlt } from 'react-icons/bi';
-import { FaBookOpen, FaHome, FaListUl } from 'react-icons/fa';
+import { FaListUl } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import './style.scss';
 import { image } from '../../assets';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import HomeIcon from '@mui/icons-material/Home';
 import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import useMedia from '../../hooks/useMedia/useMedia';
 import { Logout, PersonAdd, Settings } from '@mui/icons-material';
 import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import SettingsIcon from '@mui/icons-material/Settings';
 import FiberNewIcon from '@mui/icons-material/FiberNew';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import SellIcon from '@mui/icons-material/Sell';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import InventoryIcon from '@mui/icons-material/Inventory';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const drawerWidth = 260;
@@ -164,12 +163,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
             <div className="dasb-sidebar-logo">
                 <img width={'100px'} src={image.logo} alt="" />
             </div>
-            <NavLink
-                to="/admin/statistical"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/statistical">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -193,12 +187,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/category"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/category">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -222,12 +211,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/product"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/product">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -251,12 +235,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/productInventory"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/productInventory">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -280,12 +259,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/orders"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/orders">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -309,12 +283,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/producer"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/producer">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -338,12 +307,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/discount"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/discount">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -367,12 +331,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/customer"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/customer">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -396,12 +355,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
-            <NavLink
-                to="/admin/news"
-                style={{
-                    color: 'white',
-                }}
-            >
+            <NavLink to="/admin/news">
                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                     <ListItemButton
                         sx={{
@@ -422,35 +376,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                             <FiberNewIcon />
                         </ListItemIcon>
                         <ListItemText primary="Quản lý tin tức" sx={{ opacity: open ? 1 : 1 }} />
-                    </ListItemButton>
-                </ListItem>
-            </NavLink>
-            <NavLink
-                to="/admin/setting"
-                style={{
-                    color: 'white',
-                }}
-            >
-                <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
-                    <ListItemButton
-                        sx={{
-                            minHeight: 48,
-                            justifyContent: open ? 'initial' : 'center',
-                            px: 2.5,
-                        }}
-                    >
-                        <ListItemIcon
-                            sx={{
-                                minWidth: 0,
-                                mr: open ? 3 : 3,
-                                justifyContent: 'center',
-                                color: '#ccc',
-                            }}
-                        >
-                            {' '}
-                            <SettingsIcon />
-                        </ListItemIcon>
-                        <ListItemText primary="Cài đặt" sx={{ opacity: open ? 1 : 1 }} />
                     </ListItemButton>
                 </ListItem>
             </NavLink>
@@ -588,7 +513,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </div>
                 </div>
             ) : (
-                <Box display={{ xs: 'block', md: 'flex' }}>
+                <Box display={{ xs: 'flex', md: 'flex' }}>
                     <CssBaseline />
                     <AppBar position="fixed" open={open}>
                         <Toolbar
@@ -608,9 +533,84 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                             >
                                 <MenuIcon />
                             </IconButton>
-                            <Typography variant="h6" noWrap component="div">
-                                Mini variant drawer
+                            <Typography
+                                variant="h6"
+                                noWrap
+                                color={'#F39801'}
+                                textTransform={'uppercase'}
+                                fontWeight={'bold'}
+                            >
+                                Trang quản lý của SACHVIET
                             </Typography>
+                            <Box marginLeft={'auto'}>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                        padding: '0 16px',
+                                    }}
+                                >
+                                    <Tooltip title="Account settings">
+                                        <IconButton
+                                            onClick={handleClick}
+                                            size="small"
+                                            sx={{ ml: 2 }}
+                                            aria-controls={openpro ? 'account-menu' : undefined}
+                                            aria-haspopup="true"
+                                            aria-expanded={openpro ? 'true' : undefined}
+                                        >
+                                            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                                        </IconButton>
+                                    </Tooltip>
+                                </Box>
+                                <Menu
+                                    anchorEl={anchorEl}
+                                    id="account-menu"
+                                    open={openpro}
+                                    onClose={handleClose}
+                                    onClick={handleClose}
+                                    PaperProps={{
+                                        elevation: 0,
+                                        sx: {
+                                            overflow: 'visible',
+                                            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                            mt: 1.5,
+                                            '& .MuiAvatar-root': {
+                                                width: 32,
+                                                height: 32,
+                                                ml: -0.5,
+                                                mr: 1,
+                                            },
+                                            '&:before': {
+                                                content: '""',
+                                                display: 'block',
+                                                position: 'absolute',
+                                                top: 0,
+                                                right: 14,
+                                                width: 10,
+                                                height: 10,
+                                                bgcolor: 'background.paper',
+                                                transform: 'translateY(-50%) rotate(45deg)',
+                                                zIndex: 0,
+                                            },
+                                        },
+                                    }}
+                                    transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                >
+                                    <MenuItem onClick={handleClose}>
+                                        <Avatar /> My account
+                                    </MenuItem>
+                                    <Divider />
+                                    <MenuItem onClick={handleClose}>
+                                        <ListItemIcon>
+                                            <Logout fontSize="small" />
+                                        </ListItemIcon>
+                                        Logout
+                                    </MenuItem>
+                                </Menu>
+                            </Box>
                         </Toolbar>
                     </AppBar>
                     <Drawer variant="permanent" open={open}>
@@ -626,13 +626,9 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                 {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                             </IconButton>
                         </DrawerHeader>
-                        <Box bgcolor={'#222d32'} height={'100vh'}>
-                            <NavLink
-                                to="/admin/statistical"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+
+                        <Box bgcolor={'#222d32'} height={'100%'}>
+                            <NavLink to="/admin/statistical">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -656,12 +652,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/category"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/category">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -685,12 +676,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/product"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/product">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -714,12 +700,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/productInventory"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/productInventory">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -743,12 +724,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/orders"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/orders">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -772,12 +748,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/producer"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/producer">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -801,12 +772,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/discount"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/discount">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -830,12 +796,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/customer"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/customer">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -859,12 +820,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/news"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/admin/news">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -888,12 +844,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
-                            <NavLink
-                                to="/admin/setting"
-                                style={{
-                                    color: 'white',
-                                }}
-                            >
+                            <NavLink to="/">
                                 <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
                                     <ListItemButton
                                         sx={{
@@ -911,15 +862,22 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                             }}
                                         >
                                             {' '}
-                                            <SettingsIcon />
+                                            <ArrowBackIcon />
                                         </ListItemIcon>
-                                        <ListItemText primary="Cài đặt" sx={{ opacity: open ? 1 : 0 }} />
+                                        <ListItemText primary="Về trang chủ" sx={{ opacity: open ? 1 : 0 }} />
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>
                         </Box>
                     </Drawer>
-                    <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+                    <Box
+                        component="main"
+                        display={'block'}
+                        sx={{
+                            flexGrow: 2,
+                        }}
+                        width={`calc(100% - ${drawerWidth}px)`}
+                    >
                         <DrawerHeader />
                         <div className="dasb-wapper-main-bg">
                             <div className="content">{children} </div>
