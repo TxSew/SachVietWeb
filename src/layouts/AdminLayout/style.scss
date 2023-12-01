@@ -144,8 +144,6 @@
     }
 
     &-wapper {
-        display: flex;
-        position: relative;
 
         &>input {
             display: none;
@@ -179,12 +177,12 @@
         }
 
         &>input:checked~.dasb-wapper-main {
-            width: calc(100% - 70px);
+            width: calc(100% - 90px);
         }
 
         &-main {
             position: relative;
-            width: calc(100% - 240px);
+            width: calc(100% - 260px);
             transition: all .3s ease-in-out;
 
             &-bg {
@@ -201,7 +199,7 @@
 
     &-sidebar {
         position: relative;
-        width: 240px;
+        width: 260px;
         background: #222d32;
         transition: all .3s ease-out;
 
@@ -238,20 +236,30 @@
         li {
             display: flex;
             align-items: center;
-            color: #b8c7ce;
-            transition: all .3s ease-out;
-            transition: all .3s ease-in-out;
             padding: 16px 48px;
+            color: #b8c7ce;
+            border-left: 5px solid #222d32;
+            border-top: 1px solid #222d32;
+            border-bottom: 1px solid #222d32;
+            transition: all .3s ease-in-out;
         }
 
         a.active li {
-            border-left: 3px solid #dd4b39;
-             background-color: #161515;
-            color: #fff;
+            border-left: 5px solid #dd4b39;
+            border-top: 1px solid #dd4b39;
+            border-bottom: 1px solid #dd4b39;
+            background-color: #161515;
+        }
+
+        a.active li div {
+            background-color: #161515;
+            color: #dd4b39;
+            padding: -1px 0;
         }
 
         a:hover li {
             border-left: 5px solid #dd4b39;
+            background-color: #161515;
         }
 
         span {
@@ -259,4 +267,31 @@
             padding-left: 8px;
         }
     }
+}
+
+.navdb {
+    align-items: center;
+    color: #b8c7ce;
+    border-left: 5px solid #222d32;
+    border-top: 1px solid #222d32;
+    border-bottom: 1px solid #222d32;
+    transition: all .3s ease-in-out;
+}
+
+a.active li {
+    border-left: 5px solid #dd4b39;
+    border-top: 1px solid #dd4b39;
+    border-bottom: 1px solid #dd4b39;
+    background-color: #161515;
+}
+
+a.active li div {
+    background-color: #161515;
+    color: #dd4b39;
+    padding: -1px 0;
+}
+
+a:hover li {
+    border-left: 5px solid #dd4b39;
+    background-color: #161515;
 }
