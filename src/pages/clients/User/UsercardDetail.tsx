@@ -25,8 +25,10 @@ import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
 import NavUser from './layout/NavUser';
+import CustomizedSteppers from './Stepper';
 function UserCartDetail() {
     const { id } = useParams();
+    console.log('🚀 ~ file: UsercardDetail.tsx:31 ~ UserCartDetail ~ id:', id);
     const [orderCurrent, setOrderCurrent] = useState<any>({});
 
     useEffect(() => {
@@ -36,6 +38,7 @@ function UserCartDetail() {
     const [open, setOpen] = useState(false);
     const getOrderUser = async () => {
         const orderByUser = await httpCart.getOrderDetail(Number(id));
+        console.log('🚀 ~ file: UsercardDetail.tsx:41 ~ getOrderUser ~ orderByUser:', orderByUser);
         if (orderByUser) setOrderCurrent(orderByUser);
     };
 
@@ -140,7 +143,7 @@ function UserCartDetail() {
                         <Box>
                             <Stack direction={'row'} mt={'10px'}>
                                 <Typography>Mã đơn hàng:</Typography>
-                                <Typography fontWeight={'bold'}>{orderCurrent.id}</Typography>
+                                <Typography fontWeight={'bold'}>{orderCurrent?.id}</Typography>
                             </Stack>
 
                             <Stack direction={'row'} mt={'10px'}>
@@ -334,6 +337,7 @@ function UserCartDetail() {
                             </Box>
                         </Box>
                     </Grid>
+                    <CustomizedSteppers status={orderCurrent.status} />
                 </Grid>
                 <Box
                     sx={{
@@ -344,7 +348,7 @@ function UserCartDetail() {
                 >
                     <Stack direction={'row'}>
                         <Typography variant="body1">Đơn hàng:</Typography>
-                        <Typography variant="body1">{`#${orderCurrent.id}`}</Typography>
+                        <Typography variant="body1">{`#${orderCurrent?.id}`}</Typography>
                     </Stack>
 
                     <Stack direction={'row'} mt={'18px'}>
@@ -380,52 +384,57 @@ function UserCartDetail() {
                             </TableHead>
                             <TableBody>
                                 {orderCurrent?.orderDetail?.map((order: any) => {
-                                    return (
-                                        <TableRow>
-                                            <TableCell>{order.product.id}</TableCell>
-                                            <TableCell>
-                                                <img
-                                                    width={'80px'}
-                                                    height={'70px'}
-                                                    src={order.product.image}
-                                                    alt=""
-                                                    style={{
-                                                        margin: 'auto',
-                                                        objectFit: 'contain',
-                                                    }}
-                                                />
-                                            </TableCell>
-                                            <TableCell align="center">
-                                                <Link
-                                                    to={`/products/${order.product.slug}`}
-                                                    style={{
-                                                        flexShrink: 0,
-                                                        color: '#333333',
-                                                    }}
-                                                >
-                                                    <Typography fontSize={'12px'}>{order.product.title}</Typography>
-                                                </Link>
-                                            </TableCell>
+                                    if (order.product) {
+                                        return (
+                                            <TableRow key={order.product.id}>
+                                                <TableCell>{order?.product?.id}</TableCell>
+                                                <TableCell>
+                                                    <img
+                                                        width={'80px'}
+                                                        height={'70px'}
+                                                        src={order.product.image}
+                                                        alt=""
+                                                        style={{
+                                                            margin: 'auto',
+                                                            objectFit: 'contain',
+                                                        }}
+                                                    />
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <Link
+                                                        to={`/products/${order.product.slug}`}
+                                                        style={{
+                                                            flexShrink: 0,
+                                                            color: '#333333',
+                                                        }}
+                                                    >
+                                                        <Typography fontSize={'12px'}>{order.product.title}</Typography>
+                                                    </Link>
+                                                </TableCell>
 
-                                            <TableCell align="center">
-                                                <Typography fontSize={'12px'}>{order.product.id}</Typography>
-                                            </TableCell>
+                                                <TableCell align="center">
+                                                    <Typography fontSize={'12px'}>{order.product.id}</Typography>
+                                                </TableCell>
 
-                                            <TableCell align="center">
-                                                <Typography fontSize={'12px'}>{order.product.price_sale}</Typography>
-                                            </TableCell>
+                                                <TableCell align="center">
+                                                    <Typography fontSize={'12px'}>
+                                                        {order.product.price_sale}
+                                                    </Typography>
+                                                </TableCell>
 
-                                            <TableCell align="center">
-                                                <Typography fontSize={'12px'}>{order.quantity}</Typography>
-                                            </TableCell>
+                                                <TableCell align="center">
+                                                    <Typography fontSize={'12px'}>{order.quantity}</Typography>
+                                                </TableCell>
 
-                                            <TableCell align="center">
-                                                <Typography fontSize={'12px'}>
-                                                    {numberFormat(order.quantity * order.product.price_sale)}
-                                                </Typography>
-                                            </TableCell>
-                                        </TableRow>
-                                    );
+                                                <TableCell align="center">
+                                                    <Typography fontSize={'12px'}>
+                                                        {numberFormat(order.quantity * order.product.price_sale)}
+                                                    </Typography>
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    }
+                                    return '';
                                 })}
                             </TableBody>
                         </Table>

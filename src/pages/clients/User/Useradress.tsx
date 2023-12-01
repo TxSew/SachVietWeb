@@ -61,12 +61,7 @@ function UserAdress() {
     return (
         <NavUser>
             {isLength ? (
-                <Box
-                    bgcolor={color.white}
-                    sx={{
-                        mt: '20px',
-                    }}
-                >
+                <Box bgcolor={color.white}>
                     <Box bgcolor={color.white} p={2}>
                         <Stack direction={'row'} justifyContent={'space-between'}>
                             <Typography
@@ -173,6 +168,7 @@ function UserAdress() {
             ) : (
                 <Box
                     sx={{
+                        mt: 2,
                         pb: '20px',
                         backgroundColor: color.white,
                     }}
