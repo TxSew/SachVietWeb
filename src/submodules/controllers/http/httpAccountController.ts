@@ -40,6 +40,15 @@ class HttpAccountController {
         }
     }
 
+    async loginGoogle(props: string) {
+        try {
+            const response = await this.axiosInstance.post('auth/loginGoogle', props);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+
     async changePassword(account: User) {
         try {
             const response = await this.axiosInstance.post('auth/changePassword', account);

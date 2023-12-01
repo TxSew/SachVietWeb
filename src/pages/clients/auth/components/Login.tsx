@@ -1,27 +1,27 @@
+import { signInWithPopup } from '@firebase/auth';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, Button, FormControl, IconButton, InputAdornment, OutlinedInput, Typography } from '@mui/material';
+import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { color } from '../../../../Theme/color';
+import { pushError, pushWarning } from '../../../../components/Toast/Toast';
 import { BaseAPi } from '../../../../configs/BaseApi';
+import { auth, provider } from '../../../../configs/fireBaseConfig';
+import { ResponseStatus } from '../../../../helpers/ResponsiveStatus';
+import { httpAccount } from '../../../../submodules/controllers/http/axiosController';
 import HttpAccountController from '../../../../submodules/controllers/http/httpAccountController';
 import { User } from '../../../../submodules/models/UserModel/User';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
-import { ResponseStatus } from '../../../../helpers/ResponsiveStatus';
-import { pushError, pushWarning } from '../../../../components/Toast/Toast';
-// import { FacebookProvider, LoginButton } from 'react-facebook';
-// import { signInWithPopup } from '@firebase/auth';
-// import { auth, provider } from '../../../../configs/fireBaseConfig';
 
 const Login = () => {
-    // function handleSuccess(response: any) {
-    //     console.log(response.status);
-    // }
+    function handleSuccess(response: any) {
+        console.log(response.status);
+    }
 
-    // function handleError(error: any) {
-    //     console.log(error);
-    // }
+    function handleError(error: any) {
+        console.log(error);
+    }
 
     const [searchParams, setSearchParams] = useSearchParams();
 
@@ -68,12 +68,15 @@ const Login = () => {
             }
         }
     };
-    // const handleClick = () => {
-    //     signInWithPopup(auth, provider).then((data: any) => {
-    //         console.log(data);
-    //         localStorage.setItem('email', data.user.email);
-    //     });
-    // };
+    const handleLoginGoogle = () => {
+        signInWithPopup(auth, provider).then((data: any) => {
+            console.log(data);
+            httpAccount.loginGoogle(data.user.accessToken).then((res) => {
+                console.log(res);
+            });
+            // localStorage.setItem('email', data.user.email);
+        });
+    };
     return (
         <>
             <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
@@ -206,7 +209,7 @@ const Login = () => {
                     }}
                 >
                     <Button
-                        type="submit"
+                        onClick={handleLoginGoogle}
                         variant="outlined"
                         style={{
                             width: '100%',
@@ -222,7 +225,6 @@ const Login = () => {
                     </Button>
                 </Box>
             </form>
-            {/* <button onClick={handleClick}>Signin With Google</button> */}
         </>
     );
 };

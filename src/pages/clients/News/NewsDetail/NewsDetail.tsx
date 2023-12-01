@@ -1,9 +1,9 @@
-import { Box, CardMedia, Container, Grid, Stack, Typography } from '@mui/material';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import { NavLink, useParams } from 'react-router-dom';
+import { Box, CardMedia, Container, Grid, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { httpNews } from '../../../../submodules/controllers/http/axiosController';
+import { NavLink, useParams } from 'react-router-dom';
 import { formatDates } from '../../../../helpers/FortmatDate';
+import { httpNews } from '../../../../submodules/controllers/http/axiosController';
 
 function NewsDetail() {
     const { slug } = useParams();

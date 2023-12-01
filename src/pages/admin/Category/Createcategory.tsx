@@ -41,7 +41,7 @@ const CreateCategory = () => {
         control,
         register,
         reset,
-        formState: { errors, isValid, isSubmitting },
+        formState: { errors, isSubmitting },
     } = useForm<Category>({
         defaultValues: {
             status: '1',

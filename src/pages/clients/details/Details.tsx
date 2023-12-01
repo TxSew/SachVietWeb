@@ -46,16 +46,15 @@ import { httpComment, httpProduct } from '../../../submodules/controllers/http/a
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import './style.scss';
 
-import 'swiper/css';
-import 'swiper/css/navigation';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { FormControl, TextField } from '@mui/material';
-import { formatDates } from '../../../helpers/FortmatDate';
+import { FormControl } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
+import 'swiper/css';
+import 'swiper/css/navigation';
 import { pushSuccess } from '../../../components/Toast/Toast';
-import { setPriority } from 'os';
+import { formatDates } from '../../../helpers/FortmatDate';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -64,8 +63,9 @@ export const Details = () => {
     const redirect = useNavigate();
     const [Detail, setDetail] = useState<Product>({});
     const [image, setImage] = useState<string>('');
-    const [comments, setComments] = useState<any[]>([]);
+    const [comments, setComments] = useState<any>({});
     const [quantity, setQuantity] = useState<number>(1);
+    const [page, setPage] = useState<number>(1);
     const { id } = useParams();
     const Id: any = id;
 
@@ -77,18 +77,19 @@ export const Details = () => {
     }, [id]);
 
     useEffect(() => {
-        FetchProductOne();
-    }, [id]);
+        const props = {
+            page: page,
+        };
+        FetchProductOne(props);
+    }, [id, page]);
     const [idProduct, setProductId] = useState<any>({});
-    const FetchProductOne = async () => {
+    const FetchProductOne = async (items: any) => {
         try {
             const detailValue = await httpProduct.getOne(Id);
-            const props = { productId: detailValue.product.id };
+            const props = { productId: detailValue.product.id, ...items };
             setProductId(detailValue.product.id);
-            httpComment.getCommentByProduct(props).then((comments) => {
-                if (comments.length) {
-                    setComments(comments);
-                }
+            httpComment.getCommentByProduct(props).then((res) => {
+                setComments(res);
             });
             setDetail(detailValue.product);
             setRelatedProduct(detailValue.relatedProducts);
@@ -147,6 +148,9 @@ export const Details = () => {
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setTab(newValue);
     };
+    const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(Number(value));
+    };
 
     const {
         handleSubmit,
@@ -164,7 +168,7 @@ export const Details = () => {
         httpComment.addComment(props).then((response) => {
             pushSuccess('Đánh giá sản phẩm thành công');
         });
-        FetchProductOne();
+        FetchProductOne(page);
     };
     return (
         <Box bgcolor={'#eee'}>
@@ -869,12 +873,12 @@ export const Details = () => {
                                             </FormControl>
                                         </Grid>
                                         <Grid xs={12} md={8} pb={2}>
-                                            <Box bgcolor={'#eee'} width={'100%'} height={'100%'} p={2}>
-                                                {comments.map((e) => {
+                                            <Box width={'100%'} border={'1px solid #eee'} height={'100%'} p={2}>
+                                                {comments?.comments?.map((e: any) => {
                                                     return (
                                                         <Box
                                                             pt={2}
-                                                            borderBottom={'1px solid #ccc'}
+                                                            borderBottom={'1px solid #eee'}
                                                             display={'flex'}
                                                             justifyContent={'start'}
                                                             gap={1}
@@ -968,6 +972,13 @@ export const Details = () => {
                                                         </Box>
                                                     );
                                                 })}
+                                                <Box>
+                                                    <Pagination
+                                                        count={comments?.totalPage}
+                                                        page={page}
+                                                        onChange={handleChangePage}
+                                                    />
+                                                </Box>
                                             </Box>
                                         </Grid>
                                     </Grid>
@@ -981,7 +992,6 @@ export const Details = () => {
                         <Typography variant="h2" fontWeight={'bold'} fontSize={'18.85px'}>
                             Sản phẩm liên quan
                         </Typography>
-
                         <Grid container mt={2}>
                             {RelatedProduct.map((e) => {
                                 return (
