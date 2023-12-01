@@ -67,6 +67,7 @@ const UpdateCategory = () => {
         httpCategory
             .put(Number(id), data)
             .then((res) => {
+                console.log(res);
                 if (res) {
                     pushSuccess('Danh mục cập nhật thành công');
                 }

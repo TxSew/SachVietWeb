@@ -20,7 +20,7 @@ const UpdateDiscount = () => {
     return (
         <Box>
             <form action="" onSubmit={handleSubmit(handleAddDiscount)}>
-                <Stack direction={'row'} justifyContent={'space-between'}>
+                <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Cập nhật Mã giảm giá
                     </Typography>

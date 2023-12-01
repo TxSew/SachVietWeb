@@ -67,7 +67,7 @@ const UpdateNews = () => {
     return (
         <Box>
             <form action="" onSubmit={handleSubmit(handleUpdateNew)}>
-                <Stack direction={'row'} justifyContent={'space-between'}>
+                <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
                         Cập nhật Tin tức
                     </Typography>

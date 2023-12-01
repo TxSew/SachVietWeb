@@ -3,12 +3,11 @@ import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
-import { validateForm } from '../../../helpers/validateForm';
+import { pushSuccess } from '../../../components/Toast/Toast';
 import { httpCategory, httpProducer, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
-import { pushSuccess } from '../../../components/Toast/Toast';
 
 const AddProductInventory = () => {
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
@@ -78,7 +77,7 @@ const AddProductInventory = () => {
     return (
         <Box>
             <form action="" onSubmit={handleSubmit(handleUpdateProductInventory)}>
-                <Stack direction={'row'} justifyContent={'space-between'}>
+                <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Nhập hàng
                     </Typography>

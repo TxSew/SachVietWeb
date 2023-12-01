@@ -79,7 +79,7 @@ function NewsDetail() {
                             <div
                                 className={``}
                                 style={{
-                                    textAlign: 'left',
+                                    textAlign: 'justify',
                                     fontSize: '14px',
                                 }}
                                 dangerouslySetInnerHTML={{
