@@ -31,7 +31,7 @@ const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
         },
     },
     [`& .${stepConnectorClasses.line}`]: {
-        height: 3,
+        height: 4,
         border: 0,
         backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[800] : '#eaeaf0',
         borderRadius: 1,
@@ -43,7 +43,7 @@ const ColorlibStepIconRoot = styled('div')<{
 }>(({ theme, ownerState }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#ccc',
     zIndex: 1,
-    color: '#fff',
+    color: '#000',
     width: 50,
     height: 50,
     display: 'flex',
@@ -52,6 +52,7 @@ const ColorlibStepIconRoot = styled('div')<{
     alignItems: 'center',
     ...(ownerState.active && {
         boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+        color: '#fff',
     }),
     ...(ownerState.completed && {}),
 }));
