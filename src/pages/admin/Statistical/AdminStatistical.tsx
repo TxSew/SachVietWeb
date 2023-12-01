@@ -4,6 +4,7 @@ import { image } from '../../../assets';
 import { httpStatistical } from '../../../submodules/controllers/http/axiosController';
 import { StatisticalDto } from '../../../submodules/models/Statistical/Statistical';
 import StatisticalItem from './components/StatisticalItem';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 
 function AdminStatistical() {
     const [StatisticalCount, setStatisticalCount] = useState<StatisticalDto>();
@@ -19,7 +20,7 @@ function AdminStatistical() {
             <Typography variant="h3" fontSize={'30px'} fontWeight={'bold'} textTransform={'uppercase'}>
                 Thống kê
             </Typography>
-            <Box mt={2}>
+            {/* <Box mt={2}>
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
@@ -181,6 +182,21 @@ function AdminStatistical() {
                         </Grid>
                     </Grid>
                 </Grid>
+            </Box> */}
+
+            <Box mt={2}>
+                <Grid2 xs={12} md={4}>
+                    <Grid2>
+                        <Box
+                            sx={{
+                                boxShadow:
+                                    '0px 8px 10px -6px rgba(30, 143, 142, 0.04), 0px 25px 50px -12px rgba(30, 143, 142, 0.12), 0px 0px 0px 5px rgba(30, 143, 142, 0.12)',
+                            }}
+                        >
+                            ss
+                        </Box>
+                    </Grid2>
+                </Grid2>
             </Box>
         </>
     );
