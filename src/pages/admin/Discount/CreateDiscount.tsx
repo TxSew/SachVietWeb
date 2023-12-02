@@ -5,6 +5,7 @@ import { pushError, pushSuccess } from '../../../components/Toast/Toast';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 const CreateDiscount = () => {
     const {
@@ -29,6 +30,7 @@ const CreateDiscount = () => {
     };
     return (
         <Box>
+            {TitleHelmet('Quản lý Mã giảm giá')}
             <form action="" onSubmit={handleSubmit(handleAddDiscount)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>

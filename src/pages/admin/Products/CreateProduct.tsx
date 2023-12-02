@@ -12,6 +12,7 @@ import { httpCategory, httpProducer, httpProduct } from '../../../submodules/con
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 const CreateProduct = () => {
     const [urls, setUrls] = useState<any[]>([]);
@@ -106,6 +107,7 @@ const CreateProduct = () => {
     });
     return (
         <Box>
+            {TitleHelmet('Thêm sản phẩm')}
             <form action="" onSubmit={handleSubmit(handleAddProduct)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

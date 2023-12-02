@@ -6,6 +6,7 @@ import { color } from '../../../Theme/color';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
+import { TitleHelmet } from '../../../constants/Helmet';
 const UpdateDiscount = () => {
     const [discount, setDiscount] = useState<Discount>({});
     const { id } = useParams();
@@ -41,6 +42,7 @@ const UpdateDiscount = () => {
 
     return (
         <Box>
+            {TitleHelmet('Cập nhật Mã giảm giá')}
             <form action="" onSubmit={handleSubmit(handelUpdateDiscount)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

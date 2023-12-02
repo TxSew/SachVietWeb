@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { color } from '../../../Theme/color';
 import { httpProducer } from '../../../submodules/controllers/http/axiosController';
 import { Producer } from '../../../submodules/models/producerModel/producer';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 const UpdateProducer = () => {
     const { id } = useParams();
@@ -47,6 +48,7 @@ const UpdateProducer = () => {
     };
     return (
         <Box>
+            {TitleHelmet('Cập nhật Nhà cung cấp')}
             <form action="" onSubmit={handleSubmit(handleUpdate)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

@@ -9,6 +9,7 @@ import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
 import useToast from '../../../hooks/useToast/useToast';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 const UpdateCategory = () => {
     const { id } = useParams();
@@ -79,6 +80,7 @@ const UpdateCategory = () => {
 
     return (
         <Box>
+            {TitleHelmet('Cập nhật danh mục ')}
             <form action="" onSubmit={handleSubmit(handelUpdateCategory)}>
                 <Stack direction={'row'} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

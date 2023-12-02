@@ -8,6 +8,7 @@ import { httpCategory, httpProducer, httpProduct } from '../../../submodules/con
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 const AddProductInventory = () => {
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
@@ -73,6 +74,7 @@ const AddProductInventory = () => {
     };
     return (
         <Box>
+            {TitleHelmet('Cập nhật Hàng')}
             <form action="" onSubmit={handleSubmit(handleUpdateProductInventory)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

@@ -21,6 +21,7 @@ import useMedia from '../../../hooks/useMedia/useMedia';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import Tabbar from './components/Tabbar';
+import { TitleHelmet } from '../../../constants/Helmet';
 export interface props {
     handleChanges: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
@@ -127,6 +128,8 @@ function Category() {
 
     return (
         <Box bgcolor={'#eee'} py={3}>
+            {TitleHelmet('Danh mục sản phẩm')}
+
             <Container maxWidth={'xl'}>
                 <Grid container bgcolor={color.white} py={3} px={3}>
                     {isMediumMD ? (

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { formatDates } from '../../../../helpers/FortmatDate';
 import { httpNews } from '../../../../submodules/controllers/http/axiosController';
+import { TitleHelmet } from '../../../../constants/Helmet';
 
 function NewsDetail() {
     const { slug } = useParams();
@@ -18,6 +19,7 @@ function NewsDetail() {
     const htmlContent = detailNew ? detailNew.desc : ''; // Ha
     return (
         <Box bgcolor={'#eee'}>
+            {TitleHelmet('Chi tiết tin tức')}
             <Container
                 sx={{
                     background: '#eee',

@@ -21,6 +21,7 @@ import { BaseAPi } from '../../../../configs/BaseApi';
 import { toast } from 'react-toastify';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { TitleHelmet } from '../../../../constants/Helmet';
 const http = new HttpAccountController(BaseAPi);
 const ForgotPasswordPage = () => {
     const redirect = useNavigate();
@@ -122,6 +123,7 @@ const ForgotPasswordPage = () => {
     const email = watch('email', '');
     return (
         <Grid bgcolor={'#eee'}>
+            {TitleHelmet('Quên mật khẩu')}
             <Container
                 maxWidth="xl"
                 sx={{
