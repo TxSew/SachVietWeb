@@ -38,7 +38,7 @@ function Tabbar(props: Props) {
             }}
         >
             <Box borderBottom={'1px solid #eee'}>
-                <Typography variant="body1" fontWeight={'bold'} textTransform={'uppercase'}>
+                <Typography variant="h1" fontWeight={'bold'} textTransform={'uppercase'}>
                     Danh mục sản phẩm
                 </Typography>
                 <Box>

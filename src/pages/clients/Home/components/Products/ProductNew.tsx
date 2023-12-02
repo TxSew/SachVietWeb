@@ -64,16 +64,14 @@ function ProductNew() {
                                     objectFit: 'cover',
                                 }}
                             />
-                            <Typography
-                                variant="h3"
-                                sx={{
+                            <h2
+                                style={{
                                     fontSize: 'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)',
+                                    fontWeight: 'bold',
                                 }}
-                                fontWeight={'bold'}
-                                textTransform={'uppercase'}
                             >
                                 Sách Mới Phát Hành
-                            </Typography>
+                            </h2>
                         </Stack>
                     </Box>
                     <Grid container p={'10px'}>

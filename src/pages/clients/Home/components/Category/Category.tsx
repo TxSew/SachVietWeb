@@ -70,9 +70,15 @@ const CategoryNav = () => {
                             objectFit: 'cover',
                         }}
                     />
-                    <Typography variant="h3" fontSize={'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)'} fontWeight={'bold'}>
+                    <h1
+                        style={{
+                            fontSize: 'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)',
+                            fontWeight: 'bold',
+                            textTransform: 'uppercase',
+                        }}
+                    >
                         Danh mục sản phẩm
-                    </Typography>
+                    </h1>
                 </Stack>
 
                 <Grid container px={2} mt={2}>

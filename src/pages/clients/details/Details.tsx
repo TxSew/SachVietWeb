@@ -328,7 +328,7 @@ export const Details = () => {
                         <Grid item xs={12} md={7}>
                             <Box p={2}>
                                 <Typography
-                                    variant="h2"
+                                    variant="h1"
                                     fontSize={'22.1px'}
                                     textTransform={'capitalize'}
                                     fontWeight={500}
