@@ -56,6 +56,7 @@ import { formatDates } from '../../../helpers/FortmatDate';
 import { Controller, useForm } from 'react-hook-form';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { setPriority } from 'os';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -168,6 +169,7 @@ export const Details = () => {
     };
     return (
         <Box bgcolor={'#eee'}>
+            {TitleHelmet('Chi tiết sản phẩm')}
             <Container maxWidth="xl">
                 <Stack
                     direction={'row'}

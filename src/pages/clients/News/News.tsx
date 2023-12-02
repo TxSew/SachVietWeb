@@ -4,6 +4,7 @@ import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { httpNews } from '../../../submodules/controllers/http/axiosController';
 import { useEffect, useState } from 'react';
 import { New } from '../../../submodules/models/NewsModel/new';
+import { Helmet } from 'react-helmet';
 
 function News() {
     const [news, setNews] = useState<any>({});
@@ -14,6 +15,9 @@ function News() {
     }, []);
     return (
         <Box bgcolor={'#eee'}>
+            <Helmet>
+                <title>Tin tức</title>
+            </Helmet>
             <Container
                 sx={{
                     background: '#eee',
