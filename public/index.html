@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link href="http://www.sachviet.net.vn/upload/photo/sach-viet-netvn-9110.png" rel="shortcut icon" type="image/x-icon" />
-    <link rel="icon" href="http://www.sachviet.net.vn/upload/photo/sach-viet-netvn-9110.png" />
-    <meta name="zalo-platform-site-verification" content="ROMm0kw68XfjzxC5wCfX8sYri3Y4ms9bEJOn" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta property="zalo-platform-site-verification" content="ROMm0kw68XfjzxC5wCfX8sYri3Y4ms9bEJOn" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <script
-      src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js"
-      referrerpolicy="origin"
-    ></script>
-    <script>
-      tinymce.init({
-        selector: "#mytextarea",
-      });
-    </script>
-    <script
-      src="https://cdn.tiny.cloud/1/y6r6bf309zyr8a2wfdmqtbg9k3ppxi62522uau0w63mssgiz/tinymce/6/tinymce.min.js"
-      referrerpolicy="origin"
-    ></script>
-    <!--
+    <head>
+        <meta charset="utf-8" />
+        <link
+            href="http://www.sachviet.net.vn/upload/photo/sach-viet-netvn-9110.png"
+            rel="shortcut icon"
+            type="image/x-icon"
+        />
+        <link rel="icon" href="http://www.sachviet.net.vn/upload/photo/sach-viet-netvn-9110.png" />
+        <meta name="zalo-platform-site-verification" content="ROMm0kw68XfjzxC5wCfX8sYri3Y4ms9bEJOn" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta property="zalo-platform-site-verification" content="ROMm0kw68XfjzxC5wCfX8sYri3Y4ms9bEJOn" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="google-site-verification" content="jJeAiJkHhxw9U8G21u_R3vfEOb9ATAnw93W880kHFN4" />
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRP8WCF94T" type="text/rlscript"></script>
+        <script type="text/rlscript">
+            window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}gtag('js', new Date());gtag('config', 'G-FRP8WCF94T');
+        </script>
+      
+        <!-- /SEO by Squirrly SEO - WordPress SEO Plugin -->
+
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="pingback" href="https://sachviet.us/xmlrpc.php" />
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119874838-1" type="text/rlscript"></script>
+        <script type="text/rlscript">
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'UA-119874838-1');
+        </script>
+
+        <!-- Google tag (gtag.js) GA4 -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-FRP8WCF94T" type="text/rlscript"></script>
+        <script type="text/rlscript">
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-FRP8WCF94T');
+        </script>
+        <meta name="description" content="Web site created using create-react-app" />
+        <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#mytextarea',
+            });
+        </script>
+        <script
+            src="https://cdn.tiny.cloud/1/y6r6bf309zyr8a2wfdmqtbg9k3ppxi62522uau0w63mssgiz/tinymce/6/tinymce.min.js"
+            referrerpolicy="origin"
+        ></script>
+        <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
 
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -45,56 +70,58 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <script type="text/javascript">
-      tinymce.init({
-        selector: "#myTextarea",
-        width: 600,
-        height: 500,
-        selector: "textarea", // change this value according to your HTML
-        automatic_uploads: true,
-        images_upload_url: "postAcceptor.php",
-        images_reuse_filename: true,
-        plugins: [
-          "advlist autolink link image lists charmap print preview hr anchor pagebreak",
-          "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
-          "table emoticons template paste help",
-        ],
-        toolbar:
-          "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | " +
-          "bullist numlist outdent indent | link image | print preview media fullscreen | " +
-          "forecolor backcolor emoticons | help",
-        menu: {
-          favs: {
-            title: "My Favorites",
-            items: "code visualaid | searchreplace | emoticons",
-          },
-        },
-        menubar: "favs file edit view insert format tools table help",
-        content_css: "css/content.css",
-      });
-    </script>
-    <!-- <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script> -->
-    <!-- <df-messenger
+        <script type="text/javascript">
+            tinymce.init({
+                selector: '#myTextarea',
+                width: 600,
+                height: 500,
+                selector: 'textarea', // change this value according to your HTML
+                automatic_uploads: true,
+                images_upload_url: 'postAcceptor.php',
+                images_reuse_filename: true,
+                plugins: [
+                    'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+                    'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                    'table emoticons template paste help',
+                ],
+                toolbar:
+                    'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | ' +
+                    'bullist numlist outdent indent | link image | print preview media fullscreen | ' +
+                    'forecolor backcolor emoticons | help',
+                menu: {
+                    favs: {
+                        title: 'My Favorites',
+                        items: 'code visualaid | searchreplace | emoticons',
+                    },
+                },
+                menubar: 'favs file edit view insert format tools table help',
+                content_css: 'css/content.css',
+            });
+        </script>
+        <!-- <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script> -->
+        <!-- <df-messenger
       intent="WELCOME"
       chat-title="NewAgent"
       agent-id="905d13ef-3217-4f07-80fa-6f02f928faf3"
       language-code="en"
     ></df-messenger> -->
-    <title>Nhà sách trực tuyến Sachviet</title>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QEL6KP9P77"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        <title>Nhà sách trực tuyến Sachviet</title>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QEL6KP9P77"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+                dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
 
-  gtag('config', 'G-QEL6KP9P77');
-</script>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
+            gtag('config', 'G-QEL6KP9P77');
+        </script>
+    </head>
+    <body>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root"></div>
+        <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -103,6 +130,5 @@
 
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+    --></body>
 </html>
