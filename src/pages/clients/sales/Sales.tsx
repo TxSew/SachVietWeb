@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import DiscountItem from '../../../components/discount/Discount';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 function Sales() {
     const [discount, setDiscount] = useState<any>({});
@@ -17,6 +18,7 @@ function Sales() {
 
     return (
         <Grid bgcolor={'#241a32'}>
+            {TitleHelmet('Khuyến mãi')}
             <Box>
                 <img
                     src="https://cdn0.fahasa.com/media/wysiwyg/Thang-10-2023/FahasaSaleThu3_W3_T1023_banner_Mainbanner_1920x700.jpg"

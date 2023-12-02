@@ -55,6 +55,8 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { formatDates } from '../../../helpers/FortmatDate';
+import { setPriority } from 'os';
+import { TitleHelmet } from '../../../constants/Helmet';
 
 export const Details = () => {
     const { isMediumMD } = useMedia();
@@ -172,6 +174,7 @@ export const Details = () => {
     };
     return (
         <Box bgcolor={'#eee'}>
+            {TitleHelmet('Chi tiết sản phẩm')}
             <Container maxWidth="xl">
                 <Stack
                     direction={'row'}

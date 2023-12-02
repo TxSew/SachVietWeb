@@ -31,6 +31,8 @@ import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
+import { TitleHelmet } from '../../../../constants/Helmet';
+import { Helmet } from 'react-helmet';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
     const dispatch = useDispatch();
@@ -149,6 +151,8 @@ function Checkout() {
 
     return (
         <Grid bgcolor={'#eee'} pb={'170px'}>
+            {TitleHelmet('Thanh toán')}
+
             <Container
                 maxWidth="xl"
                 sx={{
