@@ -9,7 +9,6 @@ import {
     DialogContentText,
     DialogTitle,
     Fade,
-    Grid,
     OutlinedInput,
     Pagination,
     Stack,
@@ -25,18 +24,20 @@ import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { color } from '../../../Theme/color';
+import { pushError } from '../../../components/Toast/Toast';
 import { httpProducer } from '../../../submodules/controllers/http/axiosController';
 import { Producer } from '../../../submodules/models/producerModel/producer';
-import { pushError } from '../../../components/Toast/Toast';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 
 export default function ProducerAdmin() {
-    const [count, setCount] = React.useState<number>(1);
+    const [search, setSearch] = React.useState<string>('');
     const [page, setPage] = React.useState<number>(1);
-    const [producer, setProducer] = React.useState<Producer[]>([]);
+    const [producer, setProducer] = React.useState<any>({});
     const [open, setOpen] = React.useState({
         isChecked: false,
         id: '',
     });
+    const debounce = useDebounce(search, 300);
     const handleClickClose = () => {
         setOpen({
             isChecked: false,
@@ -52,24 +53,32 @@ export default function ProducerAdmin() {
     };
 
     React.useEffect(() => {
-        fetchData(page);
-    }, [page]);
+        const props = {
+            page: page,
+            keyword: debounce,
+        };
+        fetchData(props);
+    }, [page, debounce]);
 
-    const fetchData = async (page: number = 1) => {
-        const producerData: any = await httpProducer.getAll(page);
-        setCount(producerData?.totalPage);
-        setProducer(producerData?.producers);
+    const fetchData = async (props: any) => {
+        const producerData: any = await httpProducer.getAll(props);
+        setProducer(producerData);
     };
 
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
-        console.log(value);
     };
 
     async function handleRemove(id: number) {
         await httpProducer.delete(Number(id));
-        const filter = producer.filter((e: any) => e.id !== id);
-        setProducer(filter);
+        const filter = producer?.producers?.filter((e: any) => e.id !== id);
+        const { producers, ...rest } = producer as any;
+        const data = {
+            ...rest,
+            producers: filter,
+        };
+
+        setProducer(data);
         pushError('Nhà cung cấp đã bị xóa');
         handleClickClose();
     }
@@ -88,6 +97,10 @@ export default function ProducerAdmin() {
                         },
                     }}
                     fullWidth
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                        setPage(1);
+                    }}
                     placeholder="Tìm kiếm sản phẩm..."
                 />
                 <Link to={'/admin/createProducer'}>
@@ -118,7 +131,7 @@ export default function ProducerAdmin() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {producer?.map((e: Producer) => (
+                        {producer?.producers?.map((e: Producer) => (
                             <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell component="th" scope="row">
                                     {e.id}
@@ -240,7 +253,7 @@ export default function ProducerAdmin() {
                     justifyContent: 'center',
                 }}
             >
-                <Pagination count={count} page={page} onChange={handleChange} />
+                <Pagination count={producer?.totalPage} page={page} onChange={handleChange} />
             </Box>
         </>
     );

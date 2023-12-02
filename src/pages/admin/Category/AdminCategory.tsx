@@ -91,6 +91,7 @@ export default function CategoryAdmin() {
     };
     const handleSearch = async (element: any) => {
         setSearch(element.target.value);
+        setPage(1);
     };
     return (
         <Grid mt={0} width={'100%'}>

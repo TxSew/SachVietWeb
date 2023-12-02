@@ -215,13 +215,13 @@ const Login = () => {
                             width: '100%',
                             fontSize: '12px',
                             fontWeight: 'bold',
-                            background: '#2489F4',
+                            background: '#ba1a1aff',
                             color: '#fff',
                             border: 'none',
                             padding: '8px 0',
                         }}
                     >
-                        Đăng nhập bằng facebook
+                        Đăng nhập bằng Google
                     </Button>
                 </Box>
             </form>

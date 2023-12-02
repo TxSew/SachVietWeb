@@ -1,6 +1,5 @@
 import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
-import { ref, uploadBytes } from 'firebase/storage';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -15,13 +14,14 @@ import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
 
 const CreateProduct = () => {
-    const [urls, setUrls] = useState<string[]>([]);
+    const [urls, setUrls] = useState<any[]>([]);
     const [img, setImg] = useState<string[]>([]);
     const [imgs, setImgs] = useState<any>({});
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
     const [image, setImage] = useState(null);
     const [Category, setCategory] = useState<Category[]>([] as Category[]);
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
+    const [imageFiles, setImageFiles] = useState<any[]>([]);
     const editorRef = useRef<any>(null);
     const redirect = useNavigate();
 
@@ -32,7 +32,7 @@ const CreateProduct = () => {
 
     const fetchProducer = async () => {
         try {
-            const producer: any = await httpProducer.getAll();
+            const producer: any = await httpProducer.getAll({});
             setProducer(producer.producers);
         } catch (error) {
             console.log(error);
@@ -47,84 +47,48 @@ const CreateProduct = () => {
             console.error(err);
         }
     };
+
+    const uploadImages = async () => {
+        const storageRef = storage.ref();
+
+        const uploadTasks = imageFiles.map((file) => {
+            const uploadTask = storageRef.child(`imageUpload/${file.name}`).put(file);
+            return uploadTask;
+        });
+
+        const uploadedUrls = await Promise.all(
+            uploadTasks.map(async (task) => {
+                try {
+                    const snapshot = await task;
+                    const downloadUrl = await snapshot.ref.getDownloadURL();
+                    return downloadUrl;
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                    return null;
+                }
+            })
+        );
+
+        return uploadedUrls.filter((url: any) => url !== null);
+    };
+
     const handleAddProduct = async (data: any) => {
         const image = await uploadImageFirebase(img);
-        const images = await loadImagesFiles(imgs);
-        if (images) {
-            data.image = image;
-            const thumb = urls.map((e) => {
-                return {
-                    image: e,
-                };
-            });
-            const ProductDto = {
-                product: data,
-                productImages: thumb,
+        const images = await uploadImages();
+        data.image = image;
+        const thumb = images.map((e) => {
+            return {
+                image: e,
             };
-
-            const storeProduct = await httpProduct.post(ProductDto);
-            if (storeProduct) pushSuccess('Thêm sản phẩm thành công');
-            reset({});
-        }
-    };
-
-    const handleImageChange = (event: any) => {
-        const file = event.target.files[0];
-        setImg(event.target.files);
-        if (file) {
-            const reader: any = new FileReader();
-            reader.onloadend = () => {
-                setImage(reader.result);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const handleFileChanges = (event: any) => {
-        const files = event.target.files;
-        setImgs(files);
-        console.log(imgs);
-        const fileArray = Array.from(files);
-        Promise.all(
-            fileArray.map((file: any) => {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-
-                    reader.onload = (e: any) => {
-                        resolve(e.target.result);
-                    };
-
-                    reader.onerror = (e) => {
-                        reject(e);
-                    };
-
-                    reader.readAsDataURL(file);
-                });
-            })
-        ).then((results) => {
-            setSelectedFiles(results);
         });
-    };
-
-    const loadImagesFiles = async (images: any) => {
-        for (let i = 0; i < images.length; i++) {
-            const imageRef = ref(storage, `imageUpload/${images[i].name}`);
-            const data = await uploadBytes(imageRef, images[i])
-                .then(() => {
-                    return storage
-                        .ref('imageUpload')
-                        .child(images[i].name)
-                        .getDownloadURL()
-                        .then((url: any) => {
-                            setUrls((prev) => [...prev, url]);
-                            return url;
-                        });
-                })
-                .catch((err) => {
-                    alert(err);
-                });
-            return data;
-        }
+        const { productImages, ...rest } = data;
+        const ProductDto = {
+            product: rest,
+            productImages: thumb,
+        };
+        const storeProduct = await httpProduct.post(ProductDto);
+        if (storeProduct) pushSuccess('Thêm sản phẩm thành công');
+        reset({});
     };
 
     const {
@@ -132,7 +96,6 @@ const CreateProduct = () => {
         control,
         register,
         reset,
-        watch,
         formState: { errors },
     } = useForm<Product>({
         defaultValues: {
@@ -145,7 +108,7 @@ const CreateProduct = () => {
         <Box>
             <form action="" onSubmit={handleSubmit(handleAddProduct)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
+                    <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Thêm sản phẩm mới
                     </Typography>
                     <Button type="submit" variant="contained">
@@ -399,6 +362,9 @@ const CreateProduct = () => {
                         </Typography>
                         <Controller
                             control={control}
+                            rules={{
+                                required: 'Vui lòng nhập kích thước sản phẩm',
+                            }}
                             name="size"
                             render={({ field }) => (
                                 <OutlinedInput
@@ -515,45 +481,107 @@ const CreateProduct = () => {
                         <Typography variant="caption" color={color.error}>
                             {errors.quantity && errors.quantity.message}
                         </Typography>
-                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Ảnh nổi bật
-                        </Typography>
 
-                        <OutlinedInput
-                            // onChange={(e: any) => loadImagesFiles(e.target.files)}
-                            onChange={handleImageChange}
-                            type="file"
-                            sx={{
-                                mt: 1,
-                                '& > input': {
-                                    p: '7px',
-                                },
-                            }}
-                            fullWidth
-                            placeholder="Vui lòng nhập Ten của bạn!"
-                        />
+                        <FormControl>
+                            <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
+                                Ảnh nổi bật
+                            </Typography>
+
+                            <Controller
+                                name="image"
+                                rules={{
+                                    required: { value: true, message: 'Vui lòng chọn ảnh nổi bật cho sản phẩm' },
+                                }}
+                                control={control}
+                                render={({ field }) => {
+                                    return (
+                                        <OutlinedInput
+                                            {...field}
+                                            onChange={(event: any) => {
+                                                const file = event.target.files[0];
+                                                setImg(event.target.files);
+                                                if (file) {
+                                                    const reader: any = new FileReader();
+                                                    reader.onloadend = () => {
+                                                        setImage(reader.result);
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                                field.onChange(event);
+                                            }}
+                                            type="file"
+                                            sx={{
+                                                mt: 1,
+                                                '& > input': {
+                                                    p: '7px',
+                                                },
+                                            }}
+                                            fullWidth
+                                            placeholder="Vui lòng nhập Ten của bạn!"
+                                        />
+                                    );
+                                }}
+                            />
+                            <Typography variant="caption" color={color.error}>
+                                {errors.image && errors.image.message}
+                            </Typography>
+                        </FormControl>
+
                         {image && (
                             <div>
                                 <img src={image} alt="Uploaded preview" style={{ maxWidth: '100px' }} />
                             </div>
                         )}
 
-                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Ảnh chi tiết
-                        </Typography>
-                        <OutlinedInput
-                            type="file"
-                            onChange={handleFileChanges}
-                            // onChange={(e: any) => loadImagesFiles(e.target.files)}
-                            inputProps={{ multiple: true }}
-                            sx={{
-                                mt: 1,
-                                '& > input': {
-                                    p: '7px',
-                                },
+                        <Controller
+                            name="productImages"
+                            control={control}
+                            render={({ field }) => {
+                                return (
+                                    <FormControl>
+                                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
+                                            Ảnh chi tiết
+                                        </Typography>
+                                        <OutlinedInput
+                                            {...field}
+                                            type="file"
+                                            onChange={(event: any) => {
+                                                const files = event.target.files;
+                                                const selectedFiles = event.target.files;
+                                                setImageFiles([...imageFiles, ...selectedFiles]);
+                                                setImgs(files);
+                                                const fileArray = Array.from(files);
+                                                field.onChange(event);
+                                                Promise.all(
+                                                    fileArray.map((file: any) => {
+                                                        return new Promise((resolve, reject) => {
+                                                            const reader = new FileReader();
+                                                            reader.onload = (e: any) => {
+                                                                resolve(e.target.result);
+                                                            };
+                                                            reader.onerror = (e) => {
+                                                                reject(e);
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        });
+                                                    })
+                                                ).then((results) => {
+                                                    setSelectedFiles(results);
+                                                });
+                                            }}
+                                            inputProps={{ multiple: true }}
+                                            sx={{
+                                                mt: 1,
+                                                '& > input': {
+                                                    p: '7px',
+                                                },
+                                            }}
+                                            fullWidth
+                                            placeholder="Vui lòng nhập Ten của bạn!"
+                                        />
+                                    </FormControl>
+                                );
                             }}
-                            fullWidth
-                            placeholder="Vui lòng nhập Ten của bạn!"
                         />
                         <Box
                             sx={{

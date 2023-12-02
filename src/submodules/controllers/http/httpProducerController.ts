@@ -20,9 +20,9 @@ class HttpProducerController {
         }
     }
 
-    async getAll(page: number = 1): Promise<any> {
+    async getAll(props: any): Promise<any> {
         try {
-            const response = await this.axiosInstance.get(`producer?page=${page}`);
+            const response = await this.axiosInstance.post(`producer`, props);
             return response.data;
         } catch (error) {
             throw error;

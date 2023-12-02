@@ -1,6 +1,8 @@
-import GroupAddIcon from '@mui/icons-material/GroupAdd';
-import SettingsIcon from '@mui/icons-material/Settings';
-import VideoLabelIcon from '@mui/icons-material/VideoLabel';
+import ClearIcon from '@mui/icons-material/Clear';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import Stack from '@mui/material/Stack';
 import Step from '@mui/material/Step';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
@@ -10,11 +12,6 @@ import Stepper from '@mui/material/Stepper';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { color } from '../../../Theme/color';
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
-import ClearIcon from '@mui/icons-material/Clear';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
-import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 const ColorlibConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {

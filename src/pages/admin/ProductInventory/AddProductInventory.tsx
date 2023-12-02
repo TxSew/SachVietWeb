@@ -23,7 +23,7 @@ const AddProductInventory = () => {
 
     const fetchProducer = async () => {
         try {
-            const producer: any = await httpProducer.getAll();
+            const producer: any = await httpProducer.getAll({});
             setProducer(producer.producers);
         } catch (error) {
             console.log(error);
@@ -59,15 +59,12 @@ const AddProductInventory = () => {
     } = useForm<Product>({});
 
     const handleUpdateProductInventory = async (data: any) => {
+        console.log(data);
         const props = {
             id: id,
             ...data,
         };
         httpProduct.updateProductInventory(props).then((response) => {
-            console.log(
-                '🚀 ~ file: AddProductInventory.tsx:68 ~ httpProduct.updateProductInventory ~ response:',
-                response
-            );
             if (response.message) {
                 pushSuccess('Nhập hàng thành công');
                 redirect('/admin/productInventory');

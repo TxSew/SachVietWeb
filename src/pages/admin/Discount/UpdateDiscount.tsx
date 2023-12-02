@@ -16,9 +16,7 @@ const UpdateDiscount = () => {
         setValue,
         formState: { errors },
     } = useForm<Discount>({
-        defaultValues: {
-            status: '1',
-        },
+        defaultValues: {},
     });
     useEffect(() => {
         setValue('code', discount.code);

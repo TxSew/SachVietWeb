@@ -11,11 +11,11 @@ import {
     DialogContentText,
     DialogTitle,
     Fade,
-    Grid,
     OutlinedInput,
     Pagination,
     Stack,
     Typography,
+    debounce,
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -32,10 +32,13 @@ import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 
 export default function AdminDiscount() {
     const [discount, setDiscount] = React.useState<any>({});
     const [page, setPage] = React.useState(1);
+    const [search, setSearch] = React.useState<string>('');
+    const debounce = useDebounce(search, 300);
 
     const [open, setOpen] = React.useState({
         isChecked: false,
@@ -56,9 +59,12 @@ export default function AdminDiscount() {
     };
 
     React.useEffect(() => {
-        const props = {};
+        const props = {
+            keyword: debounce,
+            page: page,
+        };
         fetchData(props);
-    }, []);
+    }, [debounce, page]);
 
     const fetchData = async (props: any) => {
         try {
@@ -74,10 +80,15 @@ export default function AdminDiscount() {
     };
 
     const handleDelete = async (element: number) => {
-        console.log('🚀 ~ file: AdminDiscount.tsx:77 ~ handleDelete ~ element:', element);
         await httpDiscount.delete(Number(element));
-        const filter = discount?.data?.filter((e: any) => e.id !== element);
-        setDiscount(filter);
+        const { data, ...rest } = discount as any;
+        const filter = discount?.data.filter((e: any) => e.id !== element);
+        const value = {
+            ...rest,
+            data: filter,
+        };
+
+        setDiscount(value);
         pushError('Mã giảm giá đã bị xóa');
         handleClickClose();
     };
@@ -100,6 +111,10 @@ export default function AdminDiscount() {
                         '& > input': {
                             p: '7px',
                         },
+                    }}
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                        setPage(1);
                     }}
                     fullWidth
                     placeholder="Tìm kiếm sản phẩm..."

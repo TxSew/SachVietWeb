@@ -21,7 +21,7 @@ function Tabbar(props: Props) {
     const [producer, setProducer] = useState<any>({});
 
     useEffect(() => {
-        httpProducer.getAll().then((res) => {
+        httpProducer.getAll({}).then((res) => {
             if (res) {
                 setProducer(res);
             }

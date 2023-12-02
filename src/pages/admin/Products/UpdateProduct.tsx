@@ -1,12 +1,12 @@
-import { Box, Button, CircularProgress, FormControl, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
-import { ref, uploadBytes } from 'firebase/storage';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { storage } from '../../../configs/fireBaseConfig';
+import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpCategory, httpProducer, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
@@ -14,13 +14,14 @@ import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
 
 const UpdateProduct = () => {
-    const [urls, setUrls] = useState<string[]>([]);
-    const [url, setUrl] = useState<string[]>([]);
+    const [urls, setUrls] = useState<any[]>([]);
+    const [img, setImg] = useState<string[]>([]);
+    const [imgs, setImgs] = useState<any>({});
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
+    const [image, setImage] = useState(null);
     const [Category, setCategory] = useState<Category[]>([] as Category[]);
-    const [isLoadings, setIsLoadings] = useState<boolean>(false);
-
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [selectedFiles, setSelectedFiles] = useState<any>([]);
+    const [imageFiles, setImageFiles] = useState<any[]>([]);
     const editorRef = useRef<any>(null);
     const redirect = useNavigate();
     const { id } = useParams();
@@ -33,12 +34,13 @@ const UpdateProduct = () => {
 
     const fetchProducer = async () => {
         try {
-            const producer: any = await httpProducer.getAll();
+            const producer: any = await httpProducer.getAll({});
             setProducer(producer.producers);
         } catch (error) {
             console.log(error);
         }
     };
+
     const fetchCategory = async () => {
         try {
             const category: any = await httpCategory.getCategory({});
@@ -63,69 +65,48 @@ const UpdateProduct = () => {
                 size: product.size,
             });
     };
+    const uploadImages = async () => {
+        const storageRef = storage.ref();
 
-    const handleUpdateProduct = async (data: any) => {
-        data.image = url[0];
-        const images = urls.map((e) => {
+        const uploadTasks = imageFiles.map((file) => {
+            const uploadTask = storageRef.child(`imageUpload/${file.name}`).put(file);
+            return uploadTask;
+        });
+
+        const uploadedUrls = await Promise.all(
+            uploadTasks.map(async (task) => {
+                try {
+                    const snapshot = await task;
+                    const downloadUrl = await snapshot.ref.getDownloadURL();
+                    return downloadUrl;
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                    return null;
+                }
+            })
+        );
+
+        return uploadedUrls.filter((url: any) => url !== null);
+    };
+
+    const handleAddProduct = async (data: any) => {
+        const image = await uploadImageFirebase(img);
+        const images = await uploadImages();
+        data.image = image;
+        const thumb = images.map((e) => {
             return {
                 image: e,
             };
         });
+        const { productImages, ...rest } = data;
         const ProductDto = {
-            product: data,
-            productImages: images,
+            product: rest,
+            productImages: thumb,
         };
-
         const storeProduct = await httpProduct.put(Number(id), ProductDto);
         if (storeProduct) {
             pushSuccess('Cập nhật sản phẩm thành công');
             redirect('/admin/product');
-        }
-    };
-    const loadImagesFile = async (images: any) => {
-        if (images) {
-            setIsLoadings(true);
-        }
-        for (let i = 0; i < images.length; i++) {
-            const imageRef = ref(storage, `multipleFiles/${images[i].name}`);
-            await uploadBytes(imageRef, images[i])
-                .then(() => {
-                    storage
-                        .ref('multipleFiles')
-                        .child(images[i].name)
-                        .getDownloadURL()
-                        .then((url: any) => {
-                            setUrl((prev) => [...prev, url]);
-                            setIsLoadings(false);
-                            return url;
-                        });
-                })
-                .catch((err) => {
-                    console.log(err);
-                });
-        }
-    };
-    const loadImagesFiles = async (images: any) => {
-        if (images) {
-            setIsLoading(true);
-        }
-        for (let i = 0; i < images.length; i++) {
-            const imageRef = ref(storage, `imageUpload/${images[i].name}`);
-            await uploadBytes(imageRef, images[i])
-                .then(() => {
-                    storage
-                        .ref('imageUpload')
-                        .child(images[i].name)
-                        .getDownloadURL()
-                        .then((url: any) => {
-                            setUrls((prev) => [...prev, url]);
-                            setIsLoading(false);
-                            return url;
-                        });
-                })
-                .catch((err) => {
-                    alert(err);
-                });
         }
     };
 
@@ -135,11 +116,14 @@ const UpdateProduct = () => {
         register,
         reset,
         formState: { errors },
-    } = useForm<Product>({});
-
+    } = useForm<Product>({
+        defaultValues: {
+            sale: 0,
+        },
+    });
     return (
         <Box>
-            <form action="" onSubmit={handleSubmit(handleUpdateProduct)}>
+            <form action="" onSubmit={handleSubmit(handleAddProduct)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Cập nhật sản phẩm
@@ -156,6 +140,7 @@ const UpdateProduct = () => {
                         <Controller
                             control={control}
                             name="title"
+                            defaultValue=""
                             rules={{
                                 validate: validateForm,
                                 required: 'Tên sản phẩm không được bỏ trống!',
@@ -170,9 +155,6 @@ const UpdateProduct = () => {
                                         },
                                     }}
                                     fullWidth
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
                                     placeholder="Vui lòng nhập Ten của bạn!"
                                 />
                             )}
@@ -219,9 +201,8 @@ const UpdateProduct = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Nhà cung cấp
+                                    Nhà xuất bản
                                 </Typography>
-                                {/* Producer */}
                                 <Controller
                                     control={control}
                                     name="producerID"
@@ -272,9 +253,6 @@ const UpdateProduct = () => {
                                         <OutlinedInput
                                             type="text"
                                             {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                            }}
                                             sx={{
                                                 mt: 1,
                                                 '& > input': {
@@ -294,7 +272,6 @@ const UpdateProduct = () => {
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
                                     Số trang
                                 </Typography>
-                                {/* Producer */}
                                 <Controller
                                     control={control}
                                     name="pageNumber"
@@ -305,9 +282,6 @@ const UpdateProduct = () => {
                                         <OutlinedInput
                                             type="number"
                                             {...field}
-                                            onChange={(e) => {
-                                                field.onChange(e);
-                                            }}
                                             sx={{
                                                 mt: 1,
                                                 '& > input': {
@@ -347,17 +321,18 @@ const UpdateProduct = () => {
                                                 automatic_uploads: true,
                                                 file_picker_types: 'image',
                                                 file_picker_callback: function (callback, value, meta) {
-                                                    if (meta.filetype == 'file')
+                                                    if (meta.filetype == 'file') {
                                                         callback('mypage.html', { text: 'My text' });
-
-                                                    if (meta.filetype == 'image')
+                                                    }
+                                                    if (meta.filetype == 'image') {
                                                         callback('myimage.jpg', { alt: 'My alt text' });
-
-                                                    if (meta.filetype == 'media')
+                                                    }
+                                                    if (meta.filetype == 'media') {
                                                         callback('movie.mp4', {
                                                             source2: 'alt.ogg',
                                                             poster: 'image.jpg',
                                                         });
+                                                    }
                                                 },
                                                 plugins: [
                                                     'advlist',
@@ -402,14 +377,14 @@ const UpdateProduct = () => {
                         </Typography>
                         <Controller
                             control={control}
+                            rules={{
+                                required: 'Vui lòng nhập kích thước sản phẩm',
+                            }}
                             name="size"
                             render={({ field }) => (
                                 <OutlinedInput
                                     type="text"
                                     {...field}
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
                                     sx={{
                                         mt: 1,
                                         '& > input': {
@@ -444,9 +419,6 @@ const UpdateProduct = () => {
                                 <OutlinedInput
                                     type="number"
                                     {...field}
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
                                     sx={{
                                         mt: 1,
                                         '& > input': {
@@ -510,9 +482,6 @@ const UpdateProduct = () => {
                                 <OutlinedInput
                                     {...field}
                                     type="number"
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
                                     sx={{
                                         mt: 1,
                                         '& > input': {
@@ -527,66 +496,125 @@ const UpdateProduct = () => {
                         <Typography variant="caption" color={color.error}>
                             {errors.quantity && errors.quantity.message}
                         </Typography>
-                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Ảnh nổi bật
-                        </Typography>
 
-                        <OutlinedInput
-                            onChange={(e: any) => loadImagesFile(e.target.files)}
-                            type="file"
-                            sx={{
-                                mt: 1,
-                                '& > input': {
-                                    p: '7px',
-                                },
-                            }}
-                            fullWidth
-                            placeholder="Vui lòng nhập Ten của bạn!"
-                        />
-                        {isLoadings ? (
-                            <Box
-                                sx={{
-                                    ml: 2,
-                                    mt: 1,
+                        <FormControl>
+                            <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
+                                Ảnh nổi bật
+                            </Typography>
+
+                            <Controller
+                                name="image"
+                                control={control}
+                                render={({ field }) => {
+                                    return (
+                                        <OutlinedInput
+                                            {...field}
+                                            onChange={(event: any) => {
+                                                const file = event.target.files[0];
+                                                setImg(event.target.files);
+                                                if (file) {
+                                                    const reader: any = new FileReader();
+                                                    reader.onloadend = () => {
+                                                        setImage(reader.result);
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                                field.onChange(event);
+                                            }}
+                                            type="file"
+                                            sx={{
+                                                mt: 1,
+                                                '& > input': {
+                                                    p: '7px',
+                                                },
+                                            }}
+                                            fullWidth
+                                            placeholder="Vui lòng nhập Ten của bạn!"
+                                        />
+                                    );
                                 }}
-                            >
-                                <CircularProgress />
-                            </Box>
-                        ) : url.length > 0 ? (
-                            url.map((url, index) => (
-                                <img key={index} src={url} width={'100px'} alt={`Image ${index}`} />
-                            ))
-                        ) : (
-                            <div></div>
+                            />
+                            <Typography variant="caption" color={color.error}>
+                                {errors.image && errors.image.message}
+                            </Typography>
+                        </FormControl>
+
+                        {image && (
+                            <div>
+                                <img src={image} alt="Uploaded preview" style={{ maxWidth: '100px' }} />
+                            </div>
                         )}
 
-                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Ảnh chi tiết
-                        </Typography>
-                        <OutlinedInput
-                            type="file"
-                            onChange={(e: any) => loadImagesFiles(e.target.files)}
-                            inputProps={{ multiple: true }}
-                            sx={{
-                                mt: 1,
-                                '& > input': {
-                                    p: '7px',
-                                },
+                        <Controller
+                            name="productImages"
+                            control={control}
+                            render={({ field }) => {
+                                return (
+                                    <FormControl>
+                                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
+                                            Ảnh chi tiết
+                                        </Typography>
+                                        <OutlinedInput
+                                            {...field}
+                                            type="file"
+                                            onChange={(event: any) => {
+                                                const files = event.target.files;
+                                                const selectedFiles = event.target.files;
+                                                setImageFiles([...imageFiles, ...selectedFiles]);
+                                                setImgs(files);
+                                                const fileArray = Array.from(files);
+                                                field.onChange(event);
+                                                Promise.all(
+                                                    fileArray.map((file: any) => {
+                                                        return new Promise((resolve, reject) => {
+                                                            const reader = new FileReader();
+                                                            reader.onload = (e: any) => {
+                                                                resolve(e.target.result);
+                                                            };
+                                                            reader.onerror = (e) => {
+                                                                reject(e);
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        });
+                                                    })
+                                                ).then((results) => {
+                                                    setSelectedFiles(results);
+                                                });
+                                            }}
+                                            inputProps={{ multiple: true }}
+                                            sx={{
+                                                mt: 1,
+                                                '& > input': {
+                                                    p: '7px',
+                                                },
+                                            }}
+                                            fullWidth
+                                            placeholder="Vui lòng nhập Ten của bạn!"
+                                        />
+                                    </FormControl>
+                                );
                             }}
-                            fullWidth
-                            placeholder="Vui lòng nhập Ten của bạn!"
                         />
-                        <Stack direction={'row'} flexWrap={'wrap'}>
-                            {isLoading ? (
-                                <CircularProgress />
-                            ) : urls.length > 0 ? (
-                                urls.map((url, index) => (
-                                    <img key={index} src={url} width={'100px'} alt={`Image ${index}`} />
-                                ))
-                            ) : (
-                                <div></div>
-                            )}
-                        </Stack>
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                gap: '2px',
+                            }}
+                        >
+                            {selectedFiles.map((dataUrl: any, index: number) => (
+                                <img
+                                    key={index}
+                                    src={dataUrl}
+                                    alt={`preview-${index}`}
+                                    style={{
+                                        width: '70px',
+                                        height: '70px',
+                                        margin: '5px',
+                                        border: '2px solid #ccc',
+                                    }}
+                                />
+                            ))}
+                        </Box>
                     </Grid>
                 </Grid>
             </form>

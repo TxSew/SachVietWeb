@@ -13,9 +13,9 @@ class HttpAccountController {
             this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
         }
     }
-    async getAll(page: number = 1) {
+    async getAll(props: any) {
         try {
-            const response = await this.axiosInstance.get(`/users?page=${page}`);
+            const response = await this.axiosInstance.post(`/users`, props);
             return response.data;
         } catch (error) {
             throw error;

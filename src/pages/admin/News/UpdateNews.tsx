@@ -1,8 +1,8 @@
-import { Box, Button, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
@@ -15,20 +15,20 @@ const UpdateNews = () => {
     const [image, setImage] = useState(null);
     const editorRef = useRef<any>(null);
     const { id } = useParams();
+     const redirect = useNavigate()
     useEffect(() => {
         httpNews.getOne(Number(id)).then((res) => {
             reset({
                 author: res.author,
                 title: res.title,
-                image: res.image,
                 desc: res.desc,
+                descShort: res.descShort,
             });
         });
     }, []);
 
     const handleUpdateNew = async (data: any) => {
-        let thumbnail;
-        if (img) thumbnail = await uploadImageFirebase(img);
+        let thumbnail = await uploadImageFirebase(img);
         data.image = thumbnail;
         const props = {
             id: Number(id),
@@ -38,6 +38,7 @@ const UpdateNews = () => {
             httpNews.updateNew(props).then((news) => {
                 if (news) {
                     pushSuccess('cập nhật bài viết thành công');
+                     redirect('/admin/news')
                 }
             });
         }
@@ -69,57 +70,118 @@ const UpdateNews = () => {
             <form action="" onSubmit={handleSubmit(handleUpdateNew)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
-                        Cập nhật Tin tức
+                        Thêm Tin tức
                     </Typography>
                 </Stack>
-                <Grid bgcolor={color.white} p={2} container mt={3} justifyContent={'space-between'}>
-                    <Grid xs={12} md={7.8} mb={3} fontSize={'20px'}>
-                        <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Tên tiêu đề
-                        </Typography>
-                        <Controller
-                            control={control}
-                            name="title"
-                            defaultValue=""
-                            rules={{
-                                validate: validateForm,
-                                required: 'Tên sản phẩm không được bỏ trống!',
-                            }}
-                            render={({ field }) => (
-                                <OutlinedInput
-                                    {...field}
-                                    sx={{
-                                        mt: 1,
-                                        '& > input': {
-                                            p: '7px',
-                                        },
+                <Grid bgcolor={color.white} container mt={3} justifyContent={'space-between'}>
+                    <Grid xs={12} md={7.8} fontSize={'20px'}>
+                        <Grid container justifyContent={'space-between'}>
+                            <Grid xs={5.8}>
+                                <Controller
+                                    control={control}
+                                    name="title"
+                                    defaultValue=""
+                                    rules={{
+                                        validate: validateForm,
+                                        required: 'Tên sản phẩm không được bỏ trống!',
                                     }}
-                                    fullWidth
-                                    placeholder="Vui lòng nhập Ten của bạn!"
+                                    render={({ field }) => (
+                                        <FormControl>
+                                            <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
+                                                Tên tiêu đề
+                                            </Typography>
+                                            <OutlinedInput
+                                                {...field}
+                                                sx={{
+                                                    mt: 1,
+                                                    '& > input': {
+                                                        p: '7px',
+                                                    },
+                                                }}
+                                                fullWidth
+                                                placeholder="Vui lòng nhập Ten của bạn!"
+                                            />
+                                            <Typography variant="caption" color={color.error}>
+                                                {errors.title && errors.title.message}
+                                            </Typography>
+                                        </FormControl>
+                                    )}
                                 />
-                            )}
-                        />
-                        <Typography variant="caption" color={color.error}>
-                            {errors.title && errors.title.message}
-                        </Typography>
+                            </Grid>
+                            <Grid xs={5.8}>
+                                <Controller
+                                    control={control}
+                                    name="author"
+                                    rules={{
+                                        required: 'Vui lòng nhập tên tác giả',
+                                    }}
+                                    render={({ field }) => (
+                                        <FormControl>
+                                            <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
+                                                Tên tác giả
+                                            </Typography>
+                                            <OutlinedInput
+                                                type="text"
+                                                {...field}
+                                                sx={{
+                                                    mt: 1,
+                                                    '& > input': {
+                                                        p: '7px',
+                                                    },
+                                                }}
+                                                fullWidth
+                                                placeholder="Vui lòng nhập tác giả cho bài viết"
+                                            />
+                                            <Typography variant="caption" color={color.error} mt={1}>
+                                                {errors.author && errors.author.message}
+                                            </Typography>
+                                        </FormControl>
+                                    )}
+                                />
+                            </Grid>
+                        </Grid>
 
                         <Grid container mt={2} justifyContent={'space-between'}>
                             <Grid xs={5.8}>
-                                <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Ảnh nổi bật
-                                </Typography>
-
-                                <OutlinedInput
-                                    onChange={handleImageChange}
-                                    type="file"
-                                    sx={{
-                                        mt: 1,
-                                        '& > input': {
-                                            p: '7px',
-                                        },
+                                <Controller
+                                    name="image"
+                                    control={control}
+                                    render={({ field }) => {
+                                        return (
+                                            <FormControl>
+                                                <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
+                                                    Ảnh nổi bật
+                                                </Typography>
+                                                <OutlinedInput
+                                                    {...field}
+                                                    onChange={(event: any) => {
+                                                        const file = event.target.files[0];
+                                                        setImg(event.target.files);
+                                                        if (file) {
+                                                            const reader: any = new FileReader();
+                                                            reader.onloadend = () => {
+                                                                setImage(reader.result);
+                                                            };
+                                                            reader.readAsDataURL(file);
+                                                        }
+                                                        field.onChange(event);
+                                                    }}
+                                                    type="file"
+                                                    sx={{
+                                                        mt: 1,
+                                                        '& > input': {
+                                                            p: '7px',
+                                                        },
+                                                    }}
+                                                    fullWidth
+                                                    placeholder="Vui lòng nhập tiêu đề bài viết!"
+                                                />
+                                                <Typography color={color.error} mt={1}>
+                                                    {errors.image && errors.image.message}
+                                                </Typography>
+                                            </FormControl>
+                                        );
                                     }}
-                                    fullWidth
-                                    placeholder="Vui lòng nhập tiêu đề bài viết!"
                                 />
 
                                 {image && (
@@ -130,14 +192,17 @@ const UpdateNews = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Tên tác giả
+                                    Mô tả ngắn
                                 </Typography>
                                 <Controller
                                     control={control}
-                                    name="author"
+                                    name="descShort"
+                                    defaultValue=""
+                                    rules={{
+                                        required: 'Vui lòng nhập mô tả ngắn',
+                                    }}
                                     render={({ field }) => (
                                         <OutlinedInput
-                                            type="text"
                                             {...field}
                                             sx={{
                                                 mt: 1,
@@ -146,13 +211,10 @@ const UpdateNews = () => {
                                                 },
                                             }}
                                             fullWidth
-                                            placeholder="Vui lòng nhập tác giả cho bài viết"
+                                            placeholder="Vui lòng nhập mô tả ngắn!"
                                         />
                                     )}
                                 />
-                                <Typography variant="caption" color={color.error}>
-                                    {errors.author && errors.author.message}
-                                </Typography>
                             </Grid>
                         </Grid>
                         <Box>

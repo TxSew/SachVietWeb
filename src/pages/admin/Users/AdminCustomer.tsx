@@ -1,6 +1,6 @@
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
-import { Box, Chip, Grid, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
+import { Box, Chip, OutlinedInput, Pagination, Stack, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,21 +13,24 @@ import { Link } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { httpAccount } from '../../../submodules/controllers/http/axiosController';
 import { TUser, User } from '../../../submodules/models/UserModel/User';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 
 export default function AdminCustomer() {
-    const [customer, setCustomer] = React.useState<User[]>([]);
+    const [customer, setCustomer] = React.useState<any>({});
     const [page, setPage] = React.useState(1);
-    const [count, setCount] = React.useState(1);
+    const [search, setSearch] = React.useState<string>('');
+    const debounce = useDebounce(search, 300);
     React.useEffect(() => {
-        fetchData(page);
-    }, [page]);
+        const props = {
+            page: page,
+            keyword: debounce,
+        };
+        fetchData(props);
+    }, [page, debounce]);
 
-    const fetchData = async (page: number = 1) => {
-        const user: TUser = await httpAccount.getAll(page);
-        if (user) {
-            setCustomer(user.Users);
-            setCount(user.totalPage);
-        }
+    const fetchData = async (props: any) => {
+        const user: TUser = await httpAccount.getAll(props);
+        setCustomer(user);
     };
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(value);
@@ -49,7 +52,10 @@ export default function AdminCustomer() {
                         },
                     }}
                     fullWidth
-                    placeholder="Tìm kiếm sản phẩm..."
+                    onChange={(e) => {
+                        setSearch(e.target.value);
+                    }}
+                    placeholder="Tìm kiếm tên khách hàng"
                 />
             </Stack>
             <TableContainer component={Paper}>
@@ -76,7 +82,7 @@ export default function AdminCustomer() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {customer.map((e: User, i) => (
+                        {customer?.Users?.map((e: User) => (
                             <TableRow key={e.id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                                 <TableCell component="th" scope="row">
                                     {e.id}
@@ -121,7 +127,7 @@ export default function AdminCustomer() {
                     justifyContent: 'center',
                 }}
             >
-                <Pagination count={count} page={page} onChange={handleChange} />
+                <Pagination count={customer.totalPage} page={page} onChange={handleChange} />
             </Box>
         </>
     );

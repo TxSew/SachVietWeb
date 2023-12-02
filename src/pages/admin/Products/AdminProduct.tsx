@@ -28,7 +28,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import * as React from 'react';
 import { useDownloadExcel } from 'react-export-table-to-excel';
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushError } from '../../../components/Toast/Toast';
 import { numberFormat } from '../../../helpers/formatPrice';
@@ -54,6 +54,7 @@ export default function AdminProduct() {
     const [sort, setSort] = React.useState('');
     const [sortCategory, setSortCategory] = React.useState('');
     const debounce = useDebounce(search, 400);
+    const navigator = useNavigate();
 
     const tableRef = React.useRef<any>(null);
     const { onDownload } = useDownloadExcel({
@@ -299,17 +300,20 @@ export default function AdminProduct() {
                                 <TableCell align="right">
                                     <Stack
                                         direction={'row'}
+                                        ml={'12px'}
                                         color={color.text_color}
                                         spacing={2}
                                         justifyContent={'end'}
                                     >
-                                        <Link to={`/admin/product/${e.id}`}>
-                                            <EditCalendarIcon
-                                                sx={{
-                                                    color: 'green',
-                                                }}
-                                            />
-                                        </Link>
+                                        <EditCalendarIcon
+                                            sx={{
+                                                color: 'green',
+                                                cursor: 'pointer',
+                                            }}
+                                            onClick={() => {
+                                                navigator(`/admin/product/${e.id}`);
+                                            }}
+                                        />
                                         <DeleteForeverIcon
                                             sx={{
                                                 color: 'red',

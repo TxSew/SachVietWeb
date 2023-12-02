@@ -45,7 +45,7 @@ const CreateCategory = () => {
     } = useForm<Category>({
         defaultValues: {
             status: '1',
-            parentId: '1',
+            parentId: '',
         },
     });
 
@@ -106,7 +106,6 @@ const CreateCategory = () => {
                                     <FormControl fullWidth>
                                         <Select
                                             {...field}
-                                            {...register('parentId')}
                                             displayEmpty
                                             inputProps={{ 'aria-label': 'Without label' }}
                                             sx={{
@@ -117,6 +116,9 @@ const CreateCategory = () => {
                                             }}
                                             defaultValue="2"
                                         >
+                                            <MenuItem value="">
+                                                <em>-- Chọn danh mục --</em>
+                                            </MenuItem>
                                             {category.map((e: any) => {
                                                 return (
                                                     <MenuItem key={e.id} value={e.id}>
@@ -125,39 +127,40 @@ const CreateCategory = () => {
                                                 );
                                             })}
                                         </Select>
+                                        <Typography variant="caption" color={color.error}>
+                                            {errors.parentId && errors.parentId.message}
+                                        </Typography>
                                     </FormControl>
                                 )}
                             />
-                            <Typography variant="caption" color={color.error}>
-                                {errors.parentId && errors.parentId.message}
-                            </Typography>
                             <Grid xs={5.8}></Grid>
                         </Grid>
                     </Grid>
-                    <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                        Hình ảnh danh mục
-                    </Typography>
-                    <OutlinedInput
-                        type="file"
-                        {...register('image')}
-                        onChange={handleImageChange}
-                        sx={{
-                            mt: 1,
-                            '& > input': {
-                                p: '7px',
-                            },
-                        }}
-                        fullWidth
-                    />
-                    {errors.image && <span>{errors.image.message}</span>}
-                    {image && (
-                        <div>
-                            <img src={image} alt="Uploaded preview" style={{ maxWidth: '100px' }} />
-                        </div>
-                    )}
-                    <Typography variant="caption" color={color.error}>
-                        {errors.level && errors.level.message}
-                    </Typography>
+                    <FormControl>
+                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
+                            Hình ảnh danh mục
+                        </Typography>
+                        <OutlinedInput
+                            type="file"
+                            onChange={handleImageChange}
+                            sx={{
+                                mt: 1,
+                                '& > input': {
+                                    p: '7px',
+                                },
+                            }}
+                            fullWidth
+                        />
+                        {errors.image && <span>{errors.image.message}</span>}
+                        {image && (
+                            <div>
+                                <img src={image} alt="Uploaded preview" style={{ maxWidth: '100px' }} />
+                            </div>
+                        )}
+                        <Typography variant="caption" color={color.error}>
+                            {errors.level && errors.level.message}
+                        </Typography>
+                    </FormControl>
                 </Grid>
             </form>
         </Box>
