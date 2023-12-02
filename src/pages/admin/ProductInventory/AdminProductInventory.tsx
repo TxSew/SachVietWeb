@@ -208,7 +208,7 @@ export default function AdminProductInventory() {
             <TableContainer component={Paper} ref={tableRef}>
                 <Table
                     sx={{
-                        minWidth: 800,
+                        minWidth: 1280,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -221,11 +221,11 @@ export default function AdminProductInventory() {
                             }}
                         >
                             <TableCell>ID</TableCell>
-                            <TableCell>Hình ảnh</TableCell>
-                            <TableCell align="right">Tiêu đề</TableCell>
-                            <TableCell align="right">Số lượng tồn kho</TableCell>
-                            <TableCell align="right">số lượng đã bán</TableCell>
-                            <TableCell align="right">Giá</TableCell>
+                            <TableCell align="center">Hình ảnh</TableCell>
+                            <TableCell align="left">Tiêu đề</TableCell>
+                            <TableCell align="center">Số lượng tồn kho</TableCell>
+                            <TableCell align="center">số lượng đã bán</TableCell>
+                            <TableCell align="center">Giá</TableCell>
                             <TableCell align="right">Trạng thái</TableCell>
                         </TableRow>
                     </TableHead>
@@ -244,15 +244,15 @@ export default function AdminProductInventory() {
                                         alt=""
                                     />
                                 </TableCell>
-                                <TableCell align="right">{e.title}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.title}</TableCell>
+                                <TableCell align="center">
                                     <Typography color={Number(e.quantity) <= 5 ? color.error : ''}>
                                         {e.quantity}
                                     </Typography>
                                 </TableCell>
-                                <TableCell align="right">{e.soldQuantity}</TableCell>
-                                <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">{e.soldQuantity}</TableCell>
+                                <TableCell align="center">{numberFormat(Number(e.price_sale))}</TableCell>
+                                <TableCell align="center">
                                     {Number(e.quantity) <= 0 ? (
                                         <Chip color="error" label="Ngưng hoạt động" />
                                     ) : (

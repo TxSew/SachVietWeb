@@ -97,7 +97,7 @@ export default function ProducerAdmin() {
             <TableContainer component={Paper}>
                 <Table
                     sx={{
-                        minWidth: 800,
+                        minWidth: 1280,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -111,9 +111,9 @@ export default function ProducerAdmin() {
                         >
                             <TableCell>ID</TableCell>
                             <TableCell>Tên nhà cung cấp</TableCell>
-                            <TableCell align="right">Code</TableCell>
-                            <TableCell align="right">Keyword</TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="center">Code</TableCell>
+                            <TableCell align="center">Keyword</TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Thao tác </TableCell>
                         </TableRow>
                     </TableHead>
@@ -125,18 +125,18 @@ export default function ProducerAdmin() {
                                 </TableCell>
 
                                 <TableCell>{e.name}</TableCell>
-                                <TableCell component="th" scope="row" align="right">
+                                <TableCell component="th" scope="row" align="center">
                                     {e.code}
                                 </TableCell>
-                                <TableCell align="right">{e.keyword}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">{e.keyword}</TableCell>
+                                <TableCell align="center">
                                     {e.status == null ? (
                                         <Chip label="Hoạt động" color="success" />
                                     ) : (
                                         <Chip color="error" label="Ngưng hoạt động" />
                                     )}
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
                                     <Stack
                                         direction={'row'}
                                         color={color.text_color}

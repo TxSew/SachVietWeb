@@ -188,7 +188,7 @@ export default function AdminNews() {
             <TableContainer component={Paper} ref={tableRef}>
                 <Table
                     sx={{
-                        minWidth: 800,
+                        minWidth: 1280,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -201,10 +201,10 @@ export default function AdminNews() {
                             }}
                         >
                             <TableCell>ID</TableCell>
-                            <TableCell align="center">Tiêu đề</TableCell>
+                            <TableCell>Tiêu đề</TableCell>
                             <TableCell align="center">Hình ảnh</TableCell>
-                            <TableCell align="right">Tác giả</TableCell>
-                            <TableCell align="right"> Trạng thái</TableCell>
+                            <TableCell align="center">Tác giả</TableCell>
+                            <TableCell align="center"> Trạng thái</TableCell>
                             <TableCell align="right">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -214,7 +214,9 @@ export default function AdminNews() {
                                 <TableCell component="th" scope="row">
                                     {e.id}
                                 </TableCell>
-                                <TableCell align="center">{e.title}</TableCell>
+                                <TableCell component="th" scope="row">
+                                    {e.title}
+                                </TableCell>
                                 <TableCell
                                     sx={{
                                         display: 'flex',
@@ -231,8 +233,8 @@ export default function AdminNews() {
                                     />
                                 </TableCell>
 
-                                <TableCell align="right">{e.author}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">{e.author}</TableCell>
+                                <TableCell align="center">
                                     {e.status == null ? (
                                         <Chip label="Xuất bản" color="success" />
                                     ) : (

@@ -19,9 +19,9 @@ function AdminStatistical() {
             <Typography variant="h3" fontSize={'30px'} fontWeight={'bold'} textTransform={'uppercase'}>
                 Thống kê
             </Typography>
-            <Box mt={2}>
+            <Box py={2}>
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StatisticalItem
                             image={image.category}
                             path=""
@@ -29,7 +29,7 @@ function AdminStatistical() {
                             quantity={Number(StatisticalCount?.Statistical.categoryCount)}
                         />
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StatisticalItem
                             image={image.quantityProduct}
                             path=""
@@ -38,7 +38,7 @@ function AdminStatistical() {
                         />
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StatisticalItem
                             image={image.quantityOrder}
                             path=""
@@ -47,7 +47,7 @@ function AdminStatistical() {
                         />
                     </Grid>
 
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StatisticalItem
                             image={image.producer}
                             path=""
@@ -55,7 +55,7 @@ function AdminStatistical() {
                             quantity={Number(StatisticalCount?.Statistical.producerCount)}
                         />
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StatisticalItem
                             image={image.sale}
                             path=""
@@ -63,7 +63,7 @@ function AdminStatistical() {
                             quantity={Number(StatisticalCount?.Statistical.producerCount)}
                         />
                     </Grid>
-                    <Grid item xs={12} md={4}>
+                    <Grid item xs={12} md={6} lg={4}>
                         <StatisticalItem
                             image={image.quantityCustomer}
                             path=""
@@ -117,67 +117,22 @@ function AdminStatistical() {
                             </Button>
                         </Box>
                     </Box>
-                    <Grid container display={'flex'} justifyContent={'center'} gap={2}>
-                        <Grid xs={4}>
-                            <Box
-                                sx={{
-                                    backgroundColor: '#fff',
-                                    borderRadius: 2,
-                                    display: 'flex',
-                                    gap: 2,
-                                    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
-                                    p: 2,
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                    <img
-                                        src={image.price}
-                                        style={{
-                                            width: '100px',
-                                            height: '65px',
-                                        }}
-                                        alt="err"
-                                    />
-                                </Grid>
-                                <Grid xs={8} textAlign={'center'}>
-                                    <Typography variant="body1" color="initial">
-                                        Tổng tiền sản phẩm bán ra
-                                    </Typography>
-
-                                    <Typography variant="body1" color="initial">
-                                        5
-                                    </Typography>
-                                </Grid>
-                            </Box>
+                    <Grid container display={'flex'} justifyContent={'center'} spacing={2}>
+                        <Grid item xs={12} md={6} lg={4}>
+                            <StatisticalItem
+                                image={image.price}
+                                path=""
+                                name="Tổng tiền sản phẩm bán ra"
+                                quantity={Number(StatisticalCount?.Statistical.UserCount)}
+                            />
                         </Grid>
-                        <Grid xs={4}>
-                            <Box
-                                sx={{
-                                    backgroundColor: '#fff',
-                                    borderRadius: 2,
-                                    display: 'flex',
-                                    gap: 2,
-                                    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
-                                    p: 2,
-                                }}
-                            >
-                                <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                    <img
-                                        src={image.quantityProduct}
-                                        alt="err"
-                                        style={{
-                                            width: '100px',
-                                            height: '65px',
-                                        }}
-                                    />
-                                </Grid>
-                                <Grid xs={8}>
-                                    <Typography variant="body1" color="initial">
-                                        Sản phẩm
-                                    </Typography>
-                                </Grid>
-                            </Box>
+                        <Grid item xs={12} md={6} lg={4}>
+                            <StatisticalItem
+                                image={image.quantityProduct}
+                                path=""
+                                name="Sản phẩm"
+                                quantity={Number(StatisticalCount?.Statistical.UserCount)}
+                            />
                         </Grid>
                     </Grid>
                 </Grid>

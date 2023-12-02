@@ -876,7 +876,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                         sx={{
                             flexGrow: 2,
                         }}
-                        width={`calc(100% - ${drawerWidth}px)`}
+                        width={`calc(1280px - ${drawerWidth}px)`}
                     >
                         <DrawerHeader />
                         <div className="dasb-wapper-main-bg">

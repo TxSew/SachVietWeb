@@ -111,7 +111,7 @@ export default function AdminDiscount() {
             <TableContainer component={Paper}>
                 <Table
                     sx={{
-                        minWidth: 800,
+                        minWidth: 1280,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -125,11 +125,11 @@ export default function AdminDiscount() {
                         >
                             <TableCell>ID</TableCell>
                             <TableCell>Mã giảm giá</TableCell>
-                            <TableCell align="right">Số tiền giảm</TableCell>
-                            <TableCell align="right">Số tiền đơn hàng áp dụng tối thiểu</TableCell>
-                            <TableCell align="right">Số lần giới hạn nhập</TableCell>
-                            <TableCell align="right">Hạn nhập </TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="left">Số tiền giảm</TableCell>
+                            <TableCell align="center">Số tiền đơn hàng áp dụng tối thiểu</TableCell>
+                            <TableCell align="center">Số lần giới hạn nhập</TableCell>
+                            <TableCell align="left">Hạn nhập </TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Thao tác</TableCell>
                         </TableRow>
                     </TableHead>
@@ -142,12 +142,12 @@ export default function AdminDiscount() {
                                 <TableCell component="th" scope="row">
                                     {e.code}
                                 </TableCell>
-                                <TableCell align="right">{numberFormat(e.discount)}</TableCell>
-                                <TableCell align="right">{numberFormat(Number(e.payment_limit))}</TableCell>
-                                <TableCell align="right">{e.limit_number}</TableCell>
+                                <TableCell align="left">{numberFormat(e.discount)}</TableCell>
+                                <TableCell align="center">{numberFormat(Number(e.payment_limit))}</TableCell>
+                                <TableCell align="center">{e.limit_number}</TableCell>
 
-                                <TableCell align="right">{formatDates(e.expiration_date)}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{formatDates(e.expiration_date)}</TableCell>
+                                <TableCell align="center">
                                     {e?.status == 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
                                 </TableCell>
                                 <TableCell align="right">

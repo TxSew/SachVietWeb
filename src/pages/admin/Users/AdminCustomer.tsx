@@ -55,7 +55,7 @@ export default function AdminCustomer() {
             <TableContainer component={Paper}>
                 <Table
                     sx={{
-                        minWidth: 800,
+                        minWidth: 1280,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -69,9 +69,9 @@ export default function AdminCustomer() {
                         >
                             <TableCell>ID</TableCell>
                             <TableCell>Họ tên</TableCell>
-                            <TableCell align="right"> Email </TableCell>
-                            <TableCell align="right">Số điện thoại</TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="left"> Email </TableCell>
+                            <TableCell align="center">Số điện thoại</TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Thao tác </TableCell>
                         </TableRow>
                     </TableHead>
@@ -84,9 +84,9 @@ export default function AdminCustomer() {
                                 <TableCell component="th" scope="row">
                                     {e.fullName}
                                 </TableCell>
-                                <TableCell align="right">{e.email}</TableCell>
-                                <TableCell align="right">{e.phone}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.email}</TableCell>
+                                <TableCell align="center">{e.phone}</TableCell>
+                                <TableCell align="center">
                                     {e.status == null ? (
                                         <Chip label="Hoạt động" color="success" />
                                     ) : (

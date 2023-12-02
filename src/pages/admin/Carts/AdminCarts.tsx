@@ -185,10 +185,10 @@ export default function AdminCarts() {
                                         onChange={handleChangeValue}
                                     />
                                 </TableCell>
-                                <TableCell>Khách hàng</TableCell>
+                                <TableCell align="center">Khách hàng</TableCell>
                                 <TableCell align="center">Tổng tiền</TableCell>
                                 <TableCell align="center">Ngày tạo hóa đơn</TableCell>
-                                <TableCell align="right">Trạng thái</TableCell>
+                                <TableCell align="center">Trạng thái</TableCell>
                                 <TableCell align="center">Xử lý đơn</TableCell>
                                 <TableCell align="right">Thao tác</TableCell>
                             </TableRow>
@@ -199,16 +199,16 @@ export default function AdminCarts() {
                                     <TableCell component="th" scope="row">
                                         {e.id}
                                     </TableCell>
-                                    <TableCell component="th" scope="row">
+                                    <TableCell component="th" scope="row" align="center">
                                         {e.userID == null ? 'Khách vãng lai' : e.users?.fullName}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell align="center">
                                         {Intl.NumberFormat('en-US', {
                                             currency: 'USD',
                                         }).format(Number(e.money))}
                                     </TableCell>
                                     <TableCell align="center">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell align="center">
                                         {e.status == null ? (
                                             <Typography sx={{ color: 'gray', fontSize: '13px' }}>
                                                 Đang chờ duyệt

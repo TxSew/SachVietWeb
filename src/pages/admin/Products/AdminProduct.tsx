@@ -246,7 +246,7 @@ export default function AdminProduct() {
             <TableContainer component={Paper} ref={tableRef}>
                 <Table
                     sx={{
-                        minWidth: 800,
+                        minWidth: 1280,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -259,13 +259,13 @@ export default function AdminProduct() {
                             }}
                         >
                             <TableCell>ID</TableCell>
-                            <TableCell>Hình ảnh</TableCell>
-                            <TableCell align="right">Tiêu đề</TableCell>
-                            <TableCell align="right">Số lượng sản phẩm</TableCell>
-                            <TableCell align="right">Danh mục</TableCell>
-                            <TableCell align="right">Giá</TableCell>
-                            <TableCell align="right">Nhà cung cấp</TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="center">Hình ảnh</TableCell>
+                            <TableCell align="left">Tiêu đề</TableCell>
+                            <TableCell align="left">Số lượng sản phẩm</TableCell>
+                            <TableCell align="left">Danh mục</TableCell>
+                            <TableCell align="center">Giá</TableCell>
+                            <TableCell align="center">Nhà cung cấp</TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -277,19 +277,19 @@ export default function AdminProduct() {
                                 </TableCell>
                                 <TableCell component="th" scope="row">
                                     <img
-                                        style={{ objectFit: 'cover' }}
+                                        style={{ objectFit: 'cover', margin: 'auto' }}
                                         src={e?.image}
                                         width={'70px'}
                                         height={'70px'}
                                         alt=""
                                     />
                                 </TableCell>
-                                <TableCell align="right">{e.title}</TableCell>
-                                <TableCell align="right">{e.quantity}</TableCell>
-                                <TableCell align="right">{e.category?.name}</TableCell>
-                                <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
-                                <TableCell align="right">{e.producer?.name}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.title}</TableCell>
+                                <TableCell align="left">{e.quantity}</TableCell>
+                                <TableCell align="left">{e.category?.name}</TableCell>
+                                <TableCell align="center">{numberFormat(Number(e.price_sale))}</TableCell>
+                                <TableCell align="center">{e.producer?.name}</TableCell>
+                                <TableCell align="center">
                                     {Number(e.quantity) > 0 ? (
                                         <Chip label="Còn hàng" color="success" />
                                     ) : (
