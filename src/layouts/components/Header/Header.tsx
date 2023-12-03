@@ -91,6 +91,7 @@ const Header = () => {
         setCategories(results);
         const { products } = data;
         setProducts(products);
+    
     }
     useEffect(() => {
         const user = localStorage.getItem('user');

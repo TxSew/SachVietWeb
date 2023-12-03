@@ -54,11 +54,14 @@ import { Controller, useForm } from 'react-hook-form';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { pushSuccess } from '../../../components/Toast/Toast';
-import { formatDates } from '../../../helpers/FortmatDate';
-import { setPriority } from 'os';
 import { TitleHelmet } from '../../../constants/Helmet';
+import { formatDates } from '../../../helpers/FortmatDate';
+import { storage } from '../../../configs/fireBaseConfig';
 
 export const Details = () => {
+    const [selectedFiles, setSelectedFiles] = useState<any>([]);
+    const [imageFiles, setImageFiles] = useState<any[]>([]);
+    const [imgs, setImgs] = useState<any>({});
     const { isMediumMD } = useMedia();
     const [TextMore, setTextMore] = useState(false);
     const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
@@ -153,21 +156,56 @@ export const Details = () => {
     const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(Number(value));
     };
+    const uploadImages = async () => {
+        const storageRef = storage.ref();
+
+        const uploadTasks = imageFiles.map((file) => {
+            const uploadTask = storageRef.child(`imageUpload/${file.name}`).put(file);
+            return uploadTask;
+        });
+
+        const uploadedUrls = await Promise.all(
+            uploadTasks.map(async (task) => {
+                try {
+                    const snapshot = await task;
+                    const downloadUrl = await snapshot.ref.getDownloadURL();
+                    return downloadUrl;
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                    return null;
+                }
+            })
+        );
+
+        return uploadedUrls.filter((url: any) => url !== null);
+    };
 
     const {
         handleSubmit,
         control,
         formState: { errors },
         setValue,
-        reset,
     } = useForm<any>({ mode: 'all' });
 
-    const handelComment = (data: any) => {
+    const handelComment = async (data: any) => {
+        let { image, ...rest } = data as any;
+
         let props = {
             productId: idProduct,
-            ...data,
+            ...rest,
         } as any;
-        httpComment.addComment(props).then((response) => {
+        const listImg = await uploadImages();
+        const thumb = listImg.map((e) => {
+            return {
+                images: e,
+            };
+        });
+        const comment = {
+            content: props,
+            images: thumb,
+        };
+        httpComment.addComment(comment).then((response) => {
+            console.log('🚀 ~ file: Details.tsx:203 ~ httpComment.addComment ~ response:', response);
             pushSuccess('Đánh giá sản phẩm thành công');
         });
         FetchProductOne(page);
@@ -447,7 +485,6 @@ export const Details = () => {
                                         )}
                                     </Stack>
                                 </Box>
-                                {/* order by */}
                                 <Box mt={2}>
                                     <Stack direction={'row'} justifyContent={'space-between'}>
                                         <Stack direction={'row'} spacing={2}>
@@ -462,7 +499,6 @@ export const Details = () => {
                                                 >
                                                     <FacebookMessengerIcon size={32} round />
                                                 </FacebookMessengerShareButton>
-
                                                 <PinterestShareButton
                                                     url={String(window.location)}
                                                     media={`${String(window.location)}`}
@@ -857,10 +893,46 @@ export const Details = () => {
                                                             </Typography>
                                                             <OutlinedInput
                                                                 {...field}
-                                                                type="file"
+                                                                onChange={(event: any) => {
+                                                                    const files = event.target.files;
+                                                                    const selectedFiles = event.target.files;
+                                                                    setImageFiles([...imageFiles, ...selectedFiles]);
+                                                                    setImgs(files);
+                                                                    const fileArray = Array.from(files);
+                                                                    field.onChange(event);
+                                                                    Promise.all(
+                                                                        fileArray.map((file: any) => {
+                                                                            return new Promise((resolve, reject) => {
+                                                                                const reader = new FileReader();
+                                                                                reader.onload = (e: any) => {
+                                                                                    resolve(e.target.result);
+                                                                                };
+                                                                                reader.onerror = (e) => {
+                                                                                    reject(e);
+                                                                                };
+                                                                                reader.readAsDataURL(file);
+                                                                            });
+                                                                        })
+                                                                    ).then((results) => {
+                                                                        setSelectedFiles(results);
+                                                                    });
+                                                                }}
                                                                 inputProps={{ multiple: true }}
-                                                                placeholder="Vui lòng nhập OTP của bạn!"
+                                                                type="file"
                                                             />
+                                                            {selectedFiles.map((dataUrl: any, index: number) => (
+                                                                <img
+                                                                    key={index}
+                                                                    src={dataUrl}
+                                                                    alt={`preview-${index}`}
+                                                                    style={{
+                                                                        width: '70px',
+                                                                        height: '70px',
+                                                                        margin: '5px',
+                                                                        border: '2px solid #ccc',
+                                                                    }}
+                                                                />
+                                                            ))}
                                                         </Box>
                                                     )}
                                                 />
@@ -937,39 +1009,21 @@ export const Details = () => {
                                                                     width={'100%'}
                                                                     flexWrap={'wrap'}
                                                                 >
-                                                                    <Box pr={'20px'} pb={'20px'}>
-                                                                        <img
-                                                                            src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                            alt=""
-                                                                            width={72}
-                                                                            height={72}
-                                                                            style={{
-                                                                                objectFit: 'cover',
-                                                                            }}
-                                                                        />
-                                                                    </Box>
-                                                                    <Box pr={'20px'} pb={'20px'}>
-                                                                        <img
-                                                                            src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                            alt=""
-                                                                            width={72}
-                                                                            height={72}
-                                                                            style={{
-                                                                                objectFit: 'cover',
-                                                                            }}
-                                                                        />
-                                                                    </Box>
-                                                                    <Box pr={'20px'} pb={'20px'}>
-                                                                        <img
-                                                                            src="https://down-tx-vn.img.susercontent.com/vn-11134103-7qukw-ljkvwo97hc508b_tn.webp"
-                                                                            alt=""
-                                                                            width={72}
-                                                                            height={72}
-                                                                            style={{
-                                                                                objectFit: 'cover',
-                                                                            }}
-                                                                        />
-                                                                    </Box>
+                                                                    {e?.comment?.map((e: any) => {
+                                                                        return (
+                                                                            <Box pr={'20px'} pb={'20px'}>
+                                                                                <img
+                                                                                    src={e.images}
+                                                                                    alt=""
+                                                                                    width={72}
+                                                                                    height={72}
+                                                                                    style={{
+                                                                                        objectFit: 'cover',
+                                                                                    }}
+                                                                                />
+                                                                            </Box>
+                                                                        );
+                                                                    })}
                                                                 </Stack>
                                                             </Box>
                                                         </Box>
