@@ -387,9 +387,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                 <div className="dasb">
                     <div className="dasb-wapper">
                         <input type="checkbox" id="tool" />
-
                         <div></div>
-
                         <Box className="dasb-wapper-main" width={'100%'}>
                             <div className="dasb-header row">
                                 {isMediumMD ? (
@@ -613,7 +611,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                             </Box>
                         </Toolbar>
                     </AppBar>
-                    <Drawer variant="permanent" open={open}>
+                    <Drawer variant="permanent" open={open} sx={{ background: '#222d32' }}>
                         <DrawerHeader
                             sx={{
                                 background: '#020202',

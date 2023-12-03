@@ -33,7 +33,10 @@ import { httpCategory } from '../../../submodules/controllers/http/axiosControll
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { TitleHelmet } from '../../../constants/Helmet';
+import useMedia from '../../../hooks/useMedia/useMedia';
 export default function CategoryAdmin() {
+    const { isMediumMD } = useMedia();
+
     const [search, setSearch] = React.useState<string>('');
     const deBounce = useDebounce(search, 300);
     const [open, setOpen] = React.useState({
@@ -105,19 +108,30 @@ export default function CategoryAdmin() {
                     <Button variant="contained">Thêm Danh mục</Button>
                 </Link>
             </Stack>
-            <OutlinedInput
-                sx={{
-                    maxWidth: '300px',
-                    mt: 1,
-                    '& > input': {
-                        p: '7px',
-                    },
-                }}
-                onChange={handleSearch}
-                fullWidth
-                placeholder="Tìm kiếm danh mục..."
-            />
-            <TableContainer component={Paper}>
+            <Box width={'100%'} ml={'auto'}>
+                <OutlinedInput
+                    sx={
+                        isMediumMD
+                            ? {
+                                  mt: 1,
+                                  '& > input': {
+                                      p: '7px',
+                                  },
+                              }
+                            : {
+                                  width: '300px',
+                                  mt: 1,
+                                  '& > input': {
+                                      p: '7px',
+                                  },
+                              }
+                    }
+                    onChange={handleSearch}
+                    fullWidth
+                    placeholder="Tìm kiếm danh mục..."
+                />
+            </Box>
+            <TableContainer component={Paper} sx={{ mt: 3 }}>
                 <Table
                     sx={{
                         minWidth: 800,

@@ -28,7 +28,10 @@ import {
     Divider,
     Grid,
     IconButton,
+    ListItem,
+    ListItemButton,
     ListItemIcon,
+    ListItemText,
     Menu,
     MenuItem,
     Modal,
@@ -58,6 +61,9 @@ import HttpProductController from '../../../submodules/controllers/http/httpProd
 import { User } from '../../../submodules/models/UserModel/User';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { TransitionProps } from '@mui/material/transitions';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import MuiDrawer from '@mui/material/Drawer';
+type Anchor = 'top' | 'left' | 'bottom' | 'right';
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement;
@@ -91,7 +97,6 @@ const Header = () => {
         setCategories(results);
         const { products } = data;
         setProducts(products);
-    
     }
     useEffect(() => {
         const user = localStorage.getItem('user');
@@ -201,6 +206,119 @@ const Header = () => {
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
         setValue(newValue);
     };
+
+    const [state, setState] = React.useState({
+        top: false,
+        left: false,
+        bottom: false,
+        right: false,
+    });
+
+    const toggleDrawer = (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+        if (
+            event.type === 'keydown' &&
+            ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
+        ) {
+            return;
+        }
+
+        setState({ ...state, [anchor]: open });
+    };
+
+    const list = (anchor: Anchor) => (
+        <Box
+            sx={{
+                width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 260,
+                background: '#fff',
+                height: '100vh',
+            }}
+            role="presentation"
+        >
+            <div className="dasb-sidebar-menu">
+                <img width={'100px'} src={image.logo} alt="" />
+            </div>
+            <NavLink to="/">
+                <ListItem className="act-header" disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: 'initial',
+                            px: 2,
+                            transition: 'all .3s ease-in-out',
+                        }}
+                    >
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                color: '#000',
+                                mr: 3,
+                            }}
+                        >
+                            {' '}
+                            <CardMedia
+                                component="img"
+                                sx={{
+                                    width: '38px',
+                                    height: '38px',
+                                    objectFit: 'contain',
+                                    p: 1,
+                                }}
+                                title=""
+                                image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
+                            />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Quản lý nhà cung cấp"
+                            sx={{
+                                opacity: open ? 1 : 1,
+                                color: 'black',
+                            }}
+                        />
+                    </ListItemButton>
+                </ListItem>
+            </NavLink>
+            <NavLink to="/cart">
+                <ListItem className="act-header" disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: 'initial',
+                            px: 2,
+                            transition: 'all .3s ease-in-out',
+                        }}
+                    >
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                color: '#000',
+                                mr: 3,
+                            }}
+                        >
+                            {' '}
+                            <CardMedia
+                                component="img"
+                                sx={{
+                                    width: '38px',
+                                    height: '38px',
+                                    objectFit: 'contain',
+                                    p: 1,
+                                }}
+                                title=""
+                                image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
+                            />
+                        </ListItemIcon>
+                        <ListItemText
+                            primary="Quản lý nhà cung cấp"
+                            sx={{
+                                opacity: open ? 1 : 1,
+                                color: 'black',
+                            }}
+                        />
+                    </ListItemButton>
+                </ListItem>
+            </NavLink>
+        </Box>
+    );
 
     return (
         <>
@@ -680,168 +798,19 @@ const Header = () => {
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    <Dialog
-                                        fullScreen
-                                        open={openSearch}
-                                        onClose={handleCloseSearch}
-                                        TransitionComponent={Transition}
-                                    >
-                                        <AppBar sx={{ position: 'relative' }}>
-                                            <Toolbar
-                                                sx={{
-                                                    position: 'fixed',
-                                                    top: 0,
-                                                    width: '100%',
-                                                    background: '#008C89',
-                                                }}
+                                    {(['left'] as const).map((anchor) => (
+                                        <React.Fragment key={anchor}>
+                                            <MenuIcon onClick={toggleDrawer(anchor, true)} />
+
+                                            <MuiDrawer
+                                                anchor={anchor}
+                                                open={state[anchor]}
+                                                onClose={toggleDrawer(anchor, false)}
                                             >
-                                                <IconButton
-                                                    edge="start"
-                                                    color="inherit"
-                                                    onClick={handleCloseSearch}
-                                                    aria-label="close"
-                                                >
-                                                    <ArrowBackIcon />
-                                                </IconButton>
-                                                <Typography
-                                                    sx={{ ml: 2, flex: 1 }}
-                                                    textAlign={'center'}
-                                                    fontSize={'18px'}
-                                                    fontWeight={'bold'}
-                                                    variant="h6"
-                                                    component="div"
-                                                >
-                                                    Danh Mục Sản Phẩm
-                                                </Typography>
-                                            </Toolbar>
-                                        </AppBar>
-                                        <Box
-                                            sx={{
-                                                height: '100%',
-                                                pt: '56px',
-                                            }}
-                                        >
-                                            <TabContext value={value}>
-                                                <Grid
-                                                    container
-                                                    sx={{
-                                                        height: '100%',
-                                                    }}
-                                                >
-                                                    <Grid
-                                                        xs={3}
-                                                        sx={{
-                                                            borderRight: 2,
-                                                            borderColor: 'divider',
-                                                        }}
-                                                    >
-                                                        <Box
-                                                            sx={{
-                                                                width: '100%',
-                                                            }}
-                                                        >
-                                                            <TabList
-                                                                onChange={handleChange}
-                                                                aria-label="lab API tabs example"
-                                                            >
-                                                                <Tab
-                                                                    icon={
-                                                                        <CardMedia
-                                                                            component="img"
-                                                                            sx={{
-                                                                                width: '38px',
-                                                                                height: '38px',
-                                                                                objectFit: 'contain',
-                                                                                margin: 'auto',
-                                                                                p: 1,
-                                                                            }}
-                                                                            title=""
-                                                                            image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
-                                                                        />
-                                                                    }
-                                                                    label="Tên danh mục"
-                                                                    value="1"
-                                                                    sx={{
-                                                                        width: '100%',
-                                                                        padding: '4px',
-                                                                        fontWeight: 'bold',
-                                                                        fontSize: '12px',
-                                                                    }}
-                                                                />
-                                                            </TabList>
-                                                            <TabList
-                                                                onChange={handleChange}
-                                                                aria-label="lab API tabs example"
-                                                            >
-                                                                <Tab
-                                                                    icon={
-                                                                        <CardMedia
-                                                                            component="img"
-                                                                            sx={{
-                                                                                width: '38px',
-                                                                                height: '38px',
-                                                                                objectFit: 'contain',
-                                                                                margin: 'auto',
-                                                                                p: 1,
-                                                                            }}
-                                                                            title=""
-                                                                            image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
-                                                                        />
-                                                                    }
-                                                                    label="Tên danh mục"
-                                                                    value="2"
-                                                                    sx={{
-                                                                        width: '100%',
-                                                                        padding: '4px',
-                                                                        fontWeight: 'bold',
-                                                                        fontSize: '12px',
-                                                                    }}
-                                                                />
-                                                            </TabList>
-                                                            <TabList
-                                                                onChange={handleChange}
-                                                                aria-label="lab API tabs example"
-                                                            >
-                                                                <Tab
-                                                                    icon={
-                                                                        <CardMedia
-                                                                            component="img"
-                                                                            sx={{
-                                                                                width: '38px',
-                                                                                height: '38px',
-                                                                                objectFit: 'contain',
-                                                                                margin: 'auto',
-                                                                                p: 1,
-                                                                            }}
-                                                                            title=""
-                                                                            image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
-                                                                        />
-                                                                    }
-                                                                    label="Tên danh mục"
-                                                                    value="3"
-                                                                    sx={{
-                                                                        width: '100%',
-                                                                        padding: '4px',
-                                                                        fontWeight: 'bold',
-                                                                        fontSize: '12px',
-                                                                    }}
-                                                                />
-                                                            </TabList>
-                                                        </Box>
-                                                    </Grid>
-                                                    <Grid xs={9}>
-                                                        {' '}
-                                                        <Box>
-                                                            <TabPanel value="1">Item One</TabPanel>
-                                                            <TabPanel value="2">Item Two</TabPanel>
-                                                            <TabPanel value="3">Item Three</TabPanel>
-                                                        </Box>
-                                                    </Grid>
-                                                </Grid>
-                                            </TabContext>
-                                        </Box>
-                                    </Dialog>
-                                    <MenuIcon onClick={handleOpenSearch} />
+                                                {list(anchor)}
+                                            </MuiDrawer>
+                                        </React.Fragment>
+                                    ))}
                                 </Box>
                                 <NavLink
                                     to={'/'}
@@ -1014,7 +983,7 @@ const Header = () => {
                                                             marginRight: '8px',
                                                         }}
                                                     />{' '}
-                                                    Login
+                                                    Đăng nhập
                                                 </MenuItem>
                                             </NavLink>
                                             <NavLink to={'/auth'}>
@@ -1029,28 +998,9 @@ const Header = () => {
                                                             marginRight: '8px',
                                                         }}
                                                     />{' '}
-                                                    Register
+                                                    Đăng ký
                                                 </MenuItem>
                                             </NavLink>
-                                            <Divider />
-                                            <MenuItem onClick={handleClose}>
-                                                <ListItemIcon>
-                                                    <PersonAdd fontSize="small" />
-                                                </ListItemIcon>
-                                                Add another account
-                                            </MenuItem>
-                                            <MenuItem onClick={handleClose}>
-                                                <ListItemIcon>
-                                                    <Settings fontSize="small" />
-                                                </ListItemIcon>
-                                                Settings
-                                            </MenuItem>
-                                            <MenuItem onClick={handleClose}>
-                                                <ListItemIcon>
-                                                    <Logout fontSize="small" />
-                                                </ListItemIcon>
-                                                Logout
-                                            </MenuItem>
                                         </Menu>
                                     )}
                                 </Box>
