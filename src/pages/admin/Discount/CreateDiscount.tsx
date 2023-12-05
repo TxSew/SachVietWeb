@@ -43,7 +43,7 @@ const CreateDiscount = () => {
                 <Grid bgcolor={color.white} p={2} container mt={3} justifyContent={'space-between'}>
                     <Grid xs={12} md={7.8} mb={3} fontSize={'20px'}>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Mã giảm giá
+                            Mã giảm giá <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -72,7 +72,7 @@ const CreateDiscount = () => {
                         </Typography>
                         {/*desc  */}
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
-                            Số tiền giảm giá
+                            Số tiền giảm giá <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -99,7 +99,7 @@ const CreateDiscount = () => {
                             {errors.discount && errors.discount.message}
                         </Typography>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
-                            Số tiền giới hạn nhập
+                            Số tiền giới hạn nhập <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -125,7 +125,8 @@ const CreateDiscount = () => {
                             {errors.payment_limit && errors.payment_limit.message}
                         </Typography>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
-                            Số lần tối thiểu được áp dụng
+                            Số lần tối thiểu được áp dụng{' '}
+                            <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -154,6 +155,7 @@ const CreateDiscount = () => {
                     <Grid xs={12} md={3.8}>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
                             Ngày giới hạn nhập
+                            <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}

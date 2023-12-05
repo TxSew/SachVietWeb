@@ -62,7 +62,7 @@ const CreateCategory = () => {
                 </Stack>
                 <Grid bgcolor={color.white} p={2} container mt={0} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                        Tên danh mục
+                        Tên danh mục <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                     </Typography>
                     <Controller
                         control={control}
@@ -94,7 +94,7 @@ const CreateCategory = () => {
                     <Grid container mt={2} justifyContent={'space-between'}>
                         <Grid xs={5.8}>
                             <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                Danh mục cha
+                                Danh mục cha <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                             </Typography>
                             <Controller
                                 control={control}
@@ -138,7 +138,7 @@ const CreateCategory = () => {
                     </Grid>
                     <FormControl>
                         <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Hình ảnh danh mục
+                            Hình ảnh danh mục <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <OutlinedInput
                             type="file"

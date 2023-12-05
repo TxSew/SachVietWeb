@@ -53,6 +53,14 @@ class HttpProductController {
             throw err;
         }
     }
+    async checkQuantity(props: any) {
+        try {
+            const response = await this.axiosInstance.post(`products/checkQuantity`, props);
+            return response.data;
+        } catch (err) {
+            throw err;
+        }
+    }
     async getProductByCategory(slug: string): Promise<any> {
         try {
             const response = await this.axiosInstance.post(`products/category?slug=${slug}`);

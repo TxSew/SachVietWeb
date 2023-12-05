@@ -117,6 +117,7 @@ const AddProductInventory = () => {
                                     render={({ field }) => (
                                         <select
                                             className=""
+                                            disabled
                                             value={field.value}
                                             style={{
                                                 marginTop: '10px',
@@ -149,6 +150,7 @@ const AddProductInventory = () => {
                                             <select
                                                 className=""
                                                 value={field.value}
+                                                disabled
                                                 style={{
                                                     marginTop: '10px',
                                                     width: '100%',
@@ -240,7 +242,7 @@ const AddProductInventory = () => {
                             )}
                         />
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
-                            Nhập số lượng nhập thêm
+                            Nhập số lượng nhập thêm <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}

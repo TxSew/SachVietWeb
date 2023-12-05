@@ -18,14 +18,14 @@ import { color } from '../../../Theme/color';
 import { httpProvince, httpUserAddress } from '../../../submodules/controllers/http/axiosController';
 import { Province, district } from '../../../submodules/models/Province/Province';
 import { useEffect, useState } from 'react';
+import { Order } from '../../../submodules/models/OrderModel/Order';
 function UserAdress() {
-    const [province, setprovince] = useState<Province[]>([]);
-    const [district, setDistrict] = useState<district[]>([]);
+    const [province, setProvince] = useState<Province[]>([]);
+    const [districts, setDistricts] = useState([]);
     const [userAddress, setUserAddress] = useState([] as any);
     const [isLength, setIsLength] = useState(false);
     useEffect(() => {
         fetchProvince();
-        fetchDistrict();
         fetchUserAddress();
     }, []);
     const fetchUserAddress = async () => {
@@ -36,27 +36,37 @@ function UserAdress() {
             }
         });
     };
-    const fetchDistrict = async () => {
-        const districtData = await httpProvince.getDistrict();
-        setDistrict(districtData);
-    };
 
     const fetchProvince = async () => {
         const provinceData = await httpProvince.getAll();
         if (provinceData) {
-            setprovince(provinceData);
+            setProvince(provinceData);
         }
     };
 
     const {
         handleSubmit,
         control,
+        setValue,
         formState: { errors },
-    } = useForm({});
+    } = useForm<Order>({});
+
     const handleAddUserAddress = (data: any) => {
         httpUserAddress.createUserAddress(data).then((res) => {
             setUserAddress(res);
         });
+    };
+
+    const handleProvinceChange = (e: any) => {
+        const provinceId = e.target.value;
+        setValue('province', provinceId);
+        const selectedProvinceData: any = province.find((province: any) => province.id === parseInt(provinceId, 10));
+        setDistricts(selectedProvinceData?.district || []);
+    };
+
+    const handleDistrictChange = (e: any) => {
+        const districtId = e.target.value;
+        setValue('district', districtId);
     };
     return (
         <NavUser>
@@ -74,7 +84,7 @@ function UserAdress() {
                             </Typography>
                             <Button variant="OutlinedRed">
                                 <Typography fontSize={'13px'} fontWeight={'bold'}>
-                                    Thêm địa chỉ mới
+                                    Thêm địa chỉ thanh toán
                                 </Typography>
                             </Button>
                         </Stack>
@@ -181,7 +191,7 @@ function UserAdress() {
                                 textTransform: 'uppercase',
                             }}
                         >
-                            Thêm địa chỉ của bạn
+                            Thêm thông tin thanh toán
                         </Typography>
                     </Box>
                     <form action="" style={{}} onSubmit={handleSubmit(handleAddUserAddress)}>
@@ -202,7 +212,7 @@ function UserAdress() {
                                     }}
                                 >
                                     <Typography variant="h2" fontSize={'14px'}>
-                                        Họ Tên
+                                        Họ Tên <span style={{ color: color.error }}>*</span>
                                     </Typography>
                                     <Controller
                                         control={control}
@@ -225,7 +235,9 @@ function UserAdress() {
                                             />
                                         )}
                                     />
-                                    <Typography variant="caption" color={color.error}></Typography>
+                                    <Typography variant="caption" color={color.error}>
+                                        {errors.fullName && errors.fullName.message}
+                                    </Typography>
                                 </FormControl>
                                 <FormControl
                                     fullWidth
@@ -234,11 +246,48 @@ function UserAdress() {
                                     }}
                                 >
                                     <Typography variant="h2" fontSize={'14px'}>
-                                        Số điện thoại
+                                        Email <span style={{ color: color.error }}>*</span>
+                                    </Typography>
+                                    <Controller
+                                        control={control}
+                                        rules={{
+                                            required: 'Vui lòng nhập địa chỉ email của bạn!',
+                                        }}
+                                        name="email"
+                                        render={({ field }) => (
+                                            <OutlinedInput
+                                                type="text"
+                                                {...field}
+                                                sx={{
+                                                    mt: 1,
+                                                    '& > input': {
+                                                        p: '7px',
+                                                    },
+                                                }}
+                                                fullWidth
+                                                placeholder="Vui lòng nhập địa chỉ email"
+                                            />
+                                        )}
+                                    />
+                                    <Typography variant="caption" color={color.error}>
+                                        {errors.email && errors.email.message}
+                                    </Typography>
+                                </FormControl>
+                                <FormControl
+                                    fullWidth
+                                    sx={{
+                                        mt: '10px',
+                                    }}
+                                >
+                                    <Typography variant="h2" fontSize={'14px'}>
+                                        Số điện thoại <span style={{ color: color.error }}>*</span>
                                     </Typography>
                                     <Controller
                                         control={control}
                                         name="phone"
+                                        rules={{
+                                            required: 'Vui lòng nhập số điện thoại của bạn!',
+                                        }}
                                         render={({ field }) => (
                                             <OutlinedInput
                                                 type="number"
@@ -254,23 +303,28 @@ function UserAdress() {
                                             />
                                         )}
                                     />
-                                    <Typography variant="caption" color={color.error}></Typography>
+                                    <Typography variant="caption" color={color.error}>
+                                        {errors.phone && errors.phone.message}
+                                    </Typography>
                                 </FormControl>
                             </Grid>
                             <Grid xs={12} md={5}>
                                 <FormControl fullWidth>
-                                    <Typography>Tỉnh/Thành Phố</Typography>
-
+                                    <Typography>
+                                        Tỉnh/Thành Phố <span style={{ color: color.error }}>*</span>
+                                    </Typography>
                                     <Controller
                                         control={control}
-                                        defaultValue="" // Set an initial value here
+                                        defaultValue=""
                                         name="province"
                                         rules={{
                                             required: 'Vui lòng nhập Tỉnh/ Thành phố',
                                         }}
                                         render={({ field }) => (
                                             <Select
+                                                fullWidth
                                                 {...field}
+                                                onChange={handleProvinceChange}
                                                 displayEmpty
                                                 inputProps={{ 'aria-label': 'Without label' }}
                                             >
@@ -285,14 +339,19 @@ function UserAdress() {
                                         )}
                                     />
 
-                                    <FormHelperText sx={{ color: color.error }}></FormHelperText>
+                                    <FormHelperText sx={{ color: color.error }}>
+                                        {errors.province && errors.province.message}
+                                    </FormHelperText>
                                 </FormControl>
                                 <FormControl fullWidth>
-                                    <Typography>Quận/Huyện</Typography>
+                                    <Typography>
+                                        Quận/Huyện
+                                        <span style={{ color: color.error }}>*</span>
+                                    </Typography>
 
                                     <Controller
                                         control={control}
-                                        defaultValue="" // Set an initial value here
+                                        defaultValue=""
                                         name="district"
                                         rules={{
                                             required: 'Vui lòng nhập Quận /Huyện',
@@ -300,23 +359,23 @@ function UserAdress() {
                                         render={({ field }) => (
                                             <Select
                                                 {...field}
+                                                onChange={handleDistrictChange}
                                                 displayEmpty
                                                 inputProps={{ 'aria-label': 'Without label' }}
                                             >
-                                                {district.map((e) => {
-                                                    return (
-                                                        <MenuItem value={e.id}>
-                                                            <em>{e.name}</em>
-                                                        </MenuItem>
-                                                    );
-                                                })}
+                                                {districts.map((e: any) => (
+                                                    <MenuItem key={e.id} value={e.id}>
+                                                        {e.name}
+                                                    </MenuItem>
+                                                ))}
                                             </Select>
                                         )}
                                     />
 
-                                    <FormHelperText sx={{ color: color.error }}></FormHelperText>
+                                    <FormHelperText sx={{ color: color.error }}>
+                                        {errors.district && errors.district.message}
+                                    </FormHelperText>
                                 </FormControl>
-
                                 <FormControl
                                     sx={{
                                         mt: '10px',
@@ -324,11 +383,14 @@ function UserAdress() {
                                     fullWidth
                                 >
                                     <Typography variant="h2" fontSize={'14px'}>
-                                        Địa chỉ
+                                        Địa chỉ cụ thể <span style={{ color: color.error }}>*</span>
                                     </Typography>
                                     <Controller
                                         control={control}
                                         name="address"
+                                        rules={{
+                                            required: 'Vui lòng nhập địa chỉ cụ thể của bạn!',
+                                        }}
                                         render={({ field }) => (
                                             <OutlinedInput
                                                 type="address"
@@ -344,6 +406,9 @@ function UserAdress() {
                                             />
                                         )}
                                     />
+                                    <Typography color={color.error}>
+                                        {errors.address && errors.address.message}
+                                    </Typography>
                                 </FormControl>
                             </Grid>
                         </Grid>

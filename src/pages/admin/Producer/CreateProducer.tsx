@@ -40,6 +40,7 @@ const UpdateProducer = () => {
                         <FormControl fullWidth>
                             <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
                                 Tên nhà cung cấp
+                                <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                             </Typography>
                             <Controller
                                 control={control}
@@ -72,6 +73,7 @@ const UpdateProducer = () => {
                         <FormControl fullWidth>
                             <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
                                 Mã Code
+                                <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                             </Typography>
                             <Controller
                                 control={control}
@@ -102,6 +104,7 @@ const UpdateProducer = () => {
                         <FormControl fullWidth>
                             <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
                                 Từ khóa
+                                <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                             </Typography>
                             <Controller
                                 control={control}

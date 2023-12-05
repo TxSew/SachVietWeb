@@ -262,7 +262,6 @@ export default function AdminProduct() {
                             <TableCell>ID</TableCell>
                             <TableCell>Hình ảnh</TableCell>
                             <TableCell align="right">Tiêu đề</TableCell>
-                            <TableCell align="right">Số lượng sản phẩm</TableCell>
                             <TableCell align="right">Danh mục</TableCell>
                             <TableCell align="right">Giá</TableCell>
                             <TableCell align="right">Nhà cung cấp</TableCell>
@@ -286,7 +285,6 @@ export default function AdminProduct() {
                                     />
                                 </TableCell>
                                 <TableCell align="right">{e.title}</TableCell>
-                                <TableCell align="right">{e.quantity}</TableCell>
                                 <TableCell align="right">{e.category?.name}</TableCell>
                                 <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
                                 <TableCell align="right">{e.producer?.name}</TableCell>

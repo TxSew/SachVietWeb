@@ -22,8 +22,14 @@ import {
     tableCellClasses,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+
+import TabContext from '@mui/lab/TabContext';
+import TabList from '@mui/lab/TabList';
+import TabPanel from '@mui/lab/TabPanel';
+import { FormControl } from '@mui/material';
 import {
     FacebookIcon,
     FacebookMessengerIcon,
@@ -34,30 +40,26 @@ import {
     TwitterIcon,
     TwitterShareButton,
 } from 'react-share';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { color } from '../../../Theme/color';
 import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
 import ProductItem from '../../../components/ProductItem/ProductItem';
+import { pushSuccess, pushWarning } from '../../../components/Toast/Toast';
+import { storage } from '../../../configs/fireBaseConfig';
+import { TitleHelmet } from '../../../constants/Helmet';
 import { numberFormat } from '../../../helpers/formatPrice';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { addToCart } from '../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../redux/storeClient';
 import { httpComment, httpProduct } from '../../../submodules/controllers/http/axiosController';
+import { Comment } from '../../../submodules/models/CommentModel/Comment';
 import { Product } from '../../../submodules/models/ProductModel/Product';
+import { User } from '../../../submodules/models/UserModel/User';
+import CommentItem from './components/comments/CommentItem';
 import './style.scss';
-
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { FormControl } from '@mui/material';
-import { Controller, useForm } from 'react-hook-form';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { pushSuccess } from '../../../components/Toast/Toast';
-import { TitleHelmet } from '../../../constants/Helmet';
-import { formatDates } from '../../../helpers/FortmatDate';
-import { storage } from '../../../configs/fireBaseConfig';
-
 export const Details = () => {
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
     const [imageFiles, setImageFiles] = useState<any[]>([]);
@@ -69,6 +71,7 @@ export const Details = () => {
     const [Detail, setDetail] = useState<Product>({});
     const [image, setImage] = useState<string>('');
     const [comments, setComments] = useState<any>({});
+    const [user, setUser] = useState<User>({} as User);
     const [quantity, setQuantity] = useState<number>(1);
     const [page, setPage] = useState<number>(1);
     const { id } = useParams();
@@ -78,6 +81,7 @@ export const Details = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        fetchUser();
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }, [id]);
 
@@ -87,6 +91,13 @@ export const Details = () => {
         };
         FetchProductOne(props);
     }, [id, page]);
+
+    const fetchUser = () => {
+        const user = localStorage.getItem('user');
+        const DataUser = JSON.parse(user!);
+        setUser(DataUser);
+    };
+
     const [idProduct, setProductId] = useState<any>({});
     const FetchProductOne = async (items: any) => {
         try {
@@ -104,29 +115,60 @@ export const Details = () => {
     };
 
     const handleAddToCart = (detail: any, quantity: number) => {
-        dispatch(
-            addToCart({
-                products: detail,
-                quantity: Number(quantity),
+        const props = {
+            productId: detail.id,
+            quantity: Number(quantity),
+        };
+
+        httpProduct
+            .checkQuantity(props)
+            .then((response) => {
+                if (response.message === 'quantity successfully')
+                    dispatch(
+                        addToCart({
+                            products: detail,
+                            quantity: Number(quantity),
+                        })
+                    );
+                setQuantity(1);
             })
-        );
-        setQuantity(1);
+            .catch((error: any) => {
+                if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
+                    pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
+                }
+            });
     };
 
     const handleOrder = (detail: any, quantity: number) => {
-        dispatch(
-            addToCart({
-                products: detail,
-                quantity: Number(quantity),
+        const props = {
+            productId: detail.id,
+            quantity: Number(quantity),
+        };
+
+        httpProduct
+            .checkQuantity(props)
+            .then((response) => {
+                console.log('🚀 ~ file: Details.tsx:152 ~ .then ~ response:', response);
+                if (response.message === 'quantity successfully')
+                    dispatch(
+                        addToCart({
+                            products: detail,
+                            quantity: Number(quantity),
+                        })
+                    );
+                setQuantity(1);
+                redirect('/cart');
             })
-        );
-        setQuantity(1);
-        redirect('/cart');
+            .catch((error: any) => {
+                if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
+                    pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
+                }
+            });
     };
     const handleChangeImage = (e: any) => {
         setImage(e.image);
     };
-    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    const StyledTableCell = styled(TableCell)(({ theme }: any) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: '#f5f5f5',
             color: '#fff',
@@ -137,7 +179,7 @@ export const Details = () => {
         },
     }));
 
-    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
         '&:nth-of-type(odd)': {
             backgroundColor: '#f5f5f5',
         },
@@ -145,9 +187,16 @@ export const Details = () => {
             border: 'none',
         },
     }));
-    const handelQUantity = () => {};
+    const handelLogin = () => {
+        redirect({
+            pathname: '/auth',
+            search: createSearchParams({
+                q: 'comment',
+            }).toString(),
+        });
+    };
 
-    const htmlContent = Detail ? Detail.desc : ''; // Ha
+    const htmlContent = Detail ? Detail.desc : '';
     const [value, setTab] = React.useState('1');
 
     const handleChange = (event: React.SyntheticEvent, newValue: string) => {
@@ -179,14 +228,6 @@ export const Details = () => {
 
         return uploadedUrls.filter((url: any) => url !== null);
     };
-
-    const {
-        handleSubmit,
-        control,
-        formState: { errors },
-        setValue,
-    } = useForm<any>({ mode: 'all' });
-
     const handelComment = async (data: any) => {
         let { image, ...rest } = data as any;
 
@@ -205,11 +246,20 @@ export const Details = () => {
             images: thumb,
         };
         httpComment.addComment(comment).then((response) => {
-            console.log('🚀 ~ file: Details.tsx:203 ~ httpComment.addComment ~ response:', response);
             pushSuccess('Đánh giá sản phẩm thành công');
+            reset({});
         });
         FetchProductOne(page);
     };
+
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+        setValue,
+    } = useForm<Comment>({});
+
     return (
         <Box bgcolor={'#eee'}>
             {TitleHelmet('Chi tiết sản phẩm')}
@@ -445,7 +495,7 @@ export const Details = () => {
                                         name="custom-rating-filter-operator"
                                         defaultChecked={true}
                                         defaultValue={2}
-                                        size="medium"
+                                        size="small"
                                         precision={0.5}
                                         readOnly
                                     />
@@ -536,9 +586,13 @@ export const Details = () => {
                                                         borderRadius={'5px'}
                                                     >
                                                         <RemoveIcon
-                                                            onClick={() =>
-                                                                setQuantity((prevQuantity) => Number(prevQuantity) - 1)
-                                                            }
+                                                            onClick={() => {
+                                                                if (quantity <= 1) {
+                                                                    setQuantity(1);
+                                                                } else {
+                                                                    setQuantity((prevQuantity) => prevQuantity - 1);
+                                                                }
+                                                            }}
                                                             sx={{
                                                                 fontSize: '17px',
                                                                 cursor: 'pointer',
@@ -547,8 +601,10 @@ export const Details = () => {
                                                         <input
                                                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                                                 const inputValue: any = e.target.value;
+                                                                const maxLength = 3;
                                                                 if (
-                                                                    /^(?!0\d*$)\d+$/.test(inputValue) ||
+                                                                    (/^(?!0\d*$)\d+$/.test(inputValue) &&
+                                                                        inputValue.length <= maxLength) ||
                                                                     inputValue == ''
                                                                 )
                                                                     setQuantity(inputValue);
@@ -600,27 +656,44 @@ export const Details = () => {
                                             borderRight={'1px solid white'}
                                         >
                                             <RemoveIcon
-                                                onClick={() => setQuantity((prevQuantity) => prevQuantity - 1)}
+                                                onClick={() => {
+                                                    if (quantity <= 1) {
+                                                        setQuantity(1);
+                                                    } else {
+                                                        setQuantity((prevQuantity) => prevQuantity - 1);
+                                                    }
+                                                }}
                                                 sx={{
                                                     fontSize: '20px',
                                                     color: 'whitesmoke',
                                                     cursor: 'pointer',
                                                 }}
                                             />
-                                            <Typography
-                                                sx={{
-                                                    fontSize: '14px',
-                                                    fontWeight: 'bold',
-                                                    color: 'white',
-                                                    width: '30px',
-                                                    textAlign: 'center',
+                                            <input
+                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                    const inputValue: any = e.target.value;
+                                                    const maxLength = 3;
+                                                    if (
+                                                        (/^(?!0\d*$)\d+$/.test(inputValue) &&
+                                                            inputValue.length <= maxLength) ||
+                                                        inputValue == ''
+                                                    )
+                                                        setQuantity(inputValue);
                                                 }}
-                                                variant="caption"
-                                            >
-                                                {quantity}
-                                            </Typography>
+                                                value={quantity}
+                                                type="text"
+                                                style={{
+                                                    maxWidth: '40px',
+                                                    width: '100%',
+                                                    textAlign: 'center',
+                                                    justifyContent: 'center',
+                                                    alignContent: 'center',
+                                                    outline: '1px solid #ddd',
+                                                    borderRadius: '3px',
+                                                }}
+                                            />
                                             <AddIcon
-                                                onClick={() => setQuantity((prevQuantity) => prevQuantity + 1)}
+                                                onClick={() => setQuantity((prevQuantity) => Number(prevQuantity) + 1)}
                                                 sx={{
                                                     fontSize: '20px',
                                                     color: 'whitesmoke',
@@ -830,206 +903,193 @@ export const Details = () => {
                                 >
                                     <Grid container>
                                         <Grid xs={12} md={4} pb={2}>
-                                            <FormControl>
-                                                <Box
-                                                    sx={{
-                                                        display: 'flex',
-                                                        alignItems: 'center',
-                                                        pb: 1,
-                                                        width: '100%',
-                                                    }}
-                                                >
-                                                    <FormControl>
-                                                        <Typography component="legend">
-                                                            Chọn đánh giá của bạn:
-                                                        </Typography>
-                                                        <Controller
-                                                            control={control}
-                                                            render={({ field }) => (
-                                                                <Rating
-                                                                    {...field}
-                                                                    defaultValue={3}
-                                                                    name="size-large"
-                                                                    size="large"
-                                                                    onChange={(event, newRating) => {
-                                                                        setValue('star', newRating);
-                                                                    }}
-                                                                    sx={{ fontSize: '240px' }}
-                                                                />
-                                                            )}
-                                                            name={'star'}
-                                                        />
-                                                    </FormControl>
-                                                </Box>
+                                            {user ? (
                                                 <FormControl>
+                                                    <Box
+                                                        sx={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            pb: 1,
+                                                            width: '100%',
+                                                        }}
+                                                    >
+                                                        <FormControl>
+                                                            <Typography component="legend">
+                                                                Chọn đánh giá của bạn:
+                                                            </Typography>
+                                                            <Controller
+                                                                name={'star'}
+                                                                rules={{
+                                                                    required: 'Vui lòng đánh giá sản phẩm',
+                                                                }}
+                                                                control={control}
+                                                                render={({ field }) => (
+                                                                    <Rating
+                                                                        {...field}
+                                                                        defaultValue={3}
+                                                                        size="small"
+                                                                        name="simple-controlled"
+                                                                        onChange={(event, newRating: any) => {
+                                                                            setValue('star', newRating);
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            />
+                                                            <Typography variant="caption" color={color.error}>
+                                                                {errors.star && errors.star.message}
+                                                            </Typography>
+                                                        </FormControl>
+                                                    </Box>
+                                                    <FormControl>
+                                                        <Controller
+                                                            name="content"
+                                                            control={control}
+                                                            rules={{
+                                                                required: 'Vui lòng nhập nội dung đánh giá',
+                                                            }}
+                                                            render={({ field }) => (
+                                                                <TextareaAutosize
+                                                                    {...field}
+                                                                    style={{
+                                                                        resize: 'none',
+                                                                        padding: '12px',
+                                                                        borderRadius: '4px',
+                                                                        outline: 'none',
+                                                                        border: '1px solid #ccc',
+                                                                    }}
+                                                                    minRows={4}
+                                                                    name=""
+                                                                    id=""
+                                                                    placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
+                                                                ></TextareaAutosize>
+                                                            )}
+                                                        />
+
+                                                        <Typography variant="caption" color={color.error}>
+                                                            {errors.content && errors.content.message}
+                                                        </Typography>
+                                                    </FormControl>
                                                     <Controller
-                                                        name="content"
+                                                        name="image"
                                                         control={control}
                                                         render={({ field }) => (
-                                                            <TextareaAutosize
-                                                                {...field}
-                                                                style={{
-                                                                    resize: 'none',
-                                                                    padding: '12px',
-                                                                    borderRadius: '4px',
-                                                                    outline: 'none',
-                                                                    border: '1px solid #ccc',
-                                                                }}
-                                                                minRows={4}
-                                                                name=""
-                                                                id=""
-                                                                placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
-                                                            ></TextareaAutosize>
+                                                            <Box py={1}>
+                                                                <Typography variant="body1" color="initial">
+                                                                    Tải hình ảnh :
+                                                                </Typography>
+                                                                <OutlinedInput
+                                                                    {...field}
+                                                                    onChange={(event: any) => {
+                                                                        const files = event.target.files;
+                                                                        const selectedFiles = event.target.files;
+                                                                        setImageFiles([
+                                                                            ...imageFiles,
+                                                                            ...selectedFiles,
+                                                                        ]);
+                                                                        setImgs(files);
+                                                                        const fileArray = Array.from(files);
+                                                                        field.onChange(event);
+                                                                        Promise.all(
+                                                                            fileArray.map((file: any) => {
+                                                                                return new Promise(
+                                                                                    (resolve, reject) => {
+                                                                                        const reader = new FileReader();
+                                                                                        reader.onload = (e: any) => {
+                                                                                            resolve(e.target.result);
+                                                                                        };
+                                                                                        reader.onerror = (e) => {
+                                                                                            reject(e);
+                                                                                        };
+                                                                                        reader.readAsDataURL(file);
+                                                                                    }
+                                                                                );
+                                                                            })
+                                                                        ).then((results) => {
+                                                                            setSelectedFiles(results);
+                                                                        });
+                                                                    }}
+                                                                    inputProps={{ multiple: true }}
+                                                                    type="file"
+                                                                />
+                                                                <Stack>
+                                                                    {selectedFiles.map(
+                                                                        (dataUrl: any, index: number) => (
+                                                                            <img
+                                                                                key={index}
+                                                                                src={dataUrl}
+                                                                                alt={`preview-${index}`}
+                                                                                style={{
+                                                                                    width: '70px',
+                                                                                    height: '70px',
+                                                                                    margin: '5px',
+                                                                                    border: '2px solid #ccc',
+                                                                                }}
+                                                                            />
+                                                                        )
+                                                                    )}
+                                                                </Stack>
+                                                            </Box>
                                                         )}
                                                     />
-                                                </FormControl>
-                                                <Controller
-                                                    name="image"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <Box py={1}>
-                                                            <Typography variant="body1" color="initial">
-                                                                Tải hình ảnh :
-                                                            </Typography>
-                                                            <OutlinedInput
-                                                                {...field}
-                                                                onChange={(event: any) => {
-                                                                    const files = event.target.files;
-                                                                    const selectedFiles = event.target.files;
-                                                                    setImageFiles([...imageFiles, ...selectedFiles]);
-                                                                    setImgs(files);
-                                                                    const fileArray = Array.from(files);
-                                                                    field.onChange(event);
-                                                                    Promise.all(
-                                                                        fileArray.map((file: any) => {
-                                                                            return new Promise((resolve, reject) => {
-                                                                                const reader = new FileReader();
-                                                                                reader.onload = (e: any) => {
-                                                                                    resolve(e.target.result);
-                                                                                };
-                                                                                reader.onerror = (e) => {
-                                                                                    reject(e);
-                                                                                };
-                                                                                reader.readAsDataURL(file);
-                                                                            });
-                                                                        })
-                                                                    ).then((results) => {
-                                                                        setSelectedFiles(results);
-                                                                    });
-                                                                }}
-                                                                inputProps={{ multiple: true }}
-                                                                type="file"
-                                                            />
-                                                            {selectedFiles.map((dataUrl: any, index: number) => (
-                                                                <img
-                                                                    key={index}
-                                                                    src={dataUrl}
-                                                                    alt={`preview-${index}`}
-                                                                    style={{
-                                                                        width: '70px',
-                                                                        height: '70px',
-                                                                        margin: '5px',
-                                                                        border: '2px solid #ccc',
-                                                                    }}
-                                                                />
-                                                            ))}
-                                                        </Box>
-                                                    )}
-                                                />
 
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    sx={{ mt: 3, background: '#F39801' }}
-                                                    onClick={handleSubmit(handelComment)}
-                                                >
-                                                    Gửi nhận xét
-                                                </Button>
-                                            </FormControl>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        sx={{ mt: 3, background: '#F39801' }}
+                                                        onClick={handleSubmit(handelComment)}
+                                                    >
+                                                        Gửi nhận xét
+                                                    </Button>
+                                                </FormControl>
+                                            ) : (
+                                                <Stack>
+                                                    <Typography>
+                                                        Đăng nhập mới được bình luận
+                                                        <Typography
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                color: color.sale,
+                                                                textDecoration: 'underline',
+                                                            }}
+                                                            onClick={handelLogin}
+                                                        >
+                                                            Đăng nhập ngay
+                                                        </Typography>
+                                                    </Typography>
+                                                </Stack>
+                                            )}
                                         </Grid>
                                         <Grid xs={12} md={8} pb={2}>
                                             <Box width={'100%'} border={'1px solid #eee'} height={'100%'} p={2}>
-                                                {comments?.comments?.map((e: any) => {
-                                                    return (
-                                                        <Box
-                                                            pt={2}
-                                                            borderBottom={'1px solid #eee'}
-                                                            display={'flex'}
-                                                            justifyContent={'start'}
-                                                            gap={1}
-                                                        >
-                                                            <Box>
-                                                                <img
-                                                                    src="https://down-vn.img.susercontent.com/file/ffb79bec4ee0fddca9d0b0679ab9248d_tn"
-                                                                    alt=""
-                                                                    width={'40px'}
-                                                                    height={'40px'}
-                                                                    style={{
-                                                                        borderRadius: '50%',
-                                                                        objectFit: 'contain',
-                                                                    }}
-                                                                />
-                                                            </Box>
-                                                            <Box>
-                                                                <Box pb={2}>
-                                                                    <Typography
-                                                                        variant="subtitle1"
-                                                                        fontSize={12}
-                                                                        fontWeight={700}
-                                                                    >
-                                                                        {e.userComment.fullName}
-                                                                    </Typography>
-                                                                    <Rating
-                                                                        name="custom-rating-filter-operator"
-                                                                        defaultChecked={true}
-                                                                        defaultValue={e.star}
-                                                                        size="medium"
-                                                                        precision={0.5}
-                                                                        readOnly
-                                                                    />
-                                                                    <Typography
-                                                                        variant="subtitle1"
-                                                                        fontSize={12}
-                                                                        color={'#0000008a'}
-                                                                    >
-                                                                        {formatDates(e.createdAt)}
-                                                                    </Typography>
-                                                                </Box>
-                                                                <Typography
-                                                                    variant="subtitle1"
-                                                                    fontSize={12}
-                                                                    pb={2}
-                                                                    color={'#000000DE'}
-                                                                >
-                                                                    {e.content}
-                                                                </Typography>
-                                                                <Stack
-                                                                    direction={'row'}
-                                                                    alignItems={'center'}
-                                                                    width={'100%'}
-                                                                    flexWrap={'wrap'}
-                                                                >
-                                                                    {e?.comment?.map((e: any) => {
-                                                                        return (
-                                                                            <Box pr={'20px'} pb={'20px'}>
-                                                                                <img
-                                                                                    src={e.images}
-                                                                                    alt=""
-                                                                                    width={72}
-                                                                                    height={72}
-                                                                                    style={{
-                                                                                        objectFit: 'cover',
-                                                                                    }}
-                                                                                />
-                                                                            </Box>
-                                                                        );
-                                                                    })}
-                                                                </Stack>
-                                                            </Box>
-                                                        </Box>
-                                                    );
-                                                })}
-                                                <Box>
+                                                {comments?.comments?.length > 0 ? (
+                                                    comments?.comments?.map((e: any) => {
+                                                        return (
+                                                            <CommentItem
+                                                                fullName={e.userComment.fullName}
+                                                                star={e.star}
+                                                                date={e.createdAt}
+                                                                content={e.content}
+                                                                images={e.comment}
+                                                            />
+                                                        );
+                                                    })
+                                                ) : (
+                                                    <img
+                                                        src={
+                                                            'blob:https://chat.zalo.me/88e844fd-c7e0-4710-9e49-66672783f806'
+                                                        }
+                                                        alt=""
+                                                    />
+                                                )}
+                                                <Box
+                                                    sx={{
+                                                        mt: 2,
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        width: '100%',
+                                                        marginX: 'auto',
+                                                    }}
+                                                >
                                                     <Pagination
                                                         count={comments?.totalPage}
                                                         page={page}

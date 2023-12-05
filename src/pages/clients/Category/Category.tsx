@@ -119,6 +119,7 @@ function Category() {
     };
 
     const handleCHnage = (event: Event, newValue: number | number[]) => {
+        console.log('🚀 ~ file: Category.tsx:122 ~ handleCHnage ~ newValue:', newValue);
         setValue(newValue as number[]);
     };
 

@@ -30,7 +30,18 @@ function Tabbar(props: Props) {
             setCategory(res);
         });
     }, []);
+    const [selectedValue, setSelectedValue] = useState('');
 
+    const handleCheckboxChange = (event: any) => {
+        const value = event.target.value;
+        console.log('🚀 ~ file: Tabbar.tsx:37 ~ handleCheckboxChange ~ value:', value);
+
+        if (selectedValue !== value) {
+            setSelectedValue(value);
+        } else {
+            setSelectedValue('');
+        }
+    };
     return (
         <Box
             sx={{
@@ -64,16 +75,59 @@ function Tabbar(props: Props) {
                     })}
                 </Box>
             </Box>
+
             <Box sx={{ width: 300 }}></Box>
             <Box pt={2} pb={2} borderBottom={'1px solid #eee'}>
                 <Typography variant="h3" fontWeight={'bold'} fontSize={'17px'}>
                     Giá
                 </Typography>
                 <FormGroup color={color.text_color} onChange={props.handlePrice}>
-                    <FormControlLabel value={'max150'} control={<Checkbox />} label="0đ - 150.000đ" />
-                    <FormControlLabel value={'max300'} control={<Checkbox />} label="150.000đ - 300.000đ" />
-                    <FormControlLabel value={'max500'} control={<Checkbox />} label="300.000đ - 500.000đ" />
-                    <FormControlLabel value={'max700'} control={<Checkbox />} label="300.000đ - 500.000đ" />
+                    <FormGroup onChange={props.handlePrice}>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedValue === 'max150'}
+                                    onChange={handleCheckboxChange}
+                                    value={'max150'}
+                                    color="primary"
+                                />
+                            }
+                            label="0đ - 150.000đ"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedValue === 'max300'}
+                                    onChange={handleCheckboxChange}
+                                    value={'max300'}
+                                    color="primary"
+                                />
+                            }
+                            label="150.000đ - 300.000đ"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedValue === 'max500'}
+                                    onChange={handleCheckboxChange}
+                                    value={'max500'}
+                                    color="primary"
+                                />
+                            }
+                            label="300.000đ - 500.000đ"
+                        />
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedValue === 'max700'}
+                                    onChange={handleCheckboxChange}
+                                    value={'max700'}
+                                    color="primary"
+                                />
+                            }
+                            label="300.000đ - 500.000đ"
+                        />
+                    </FormGroup>
                 </FormGroup>
                 <Typography variant="h3" fontSize={'17px'} mt={2}>
                     Hoặc chọn mức giá phù hợp
@@ -103,7 +157,6 @@ function Tabbar(props: Props) {
                             width: '100px',
                             fontSize: '11px',
                             textAlign: 'center',
-
                             '& > input': {},
                         }}
                         fullWidth
@@ -131,7 +184,14 @@ function Tabbar(props: Props) {
                 </Typography>
                 <FormGroup color={color.text_color} sx={{}} onChange={props.handleProducer}>
                     {producer?.producers?.map((producer: Producer) => {
-                        return <FormControlLabel value={producer.id} control={<Checkbox />} label={producer.name} />;
+                        return (
+                            <FormControlLabel
+                                value={producer.id}
+                                onChange={handleCheckboxChange}
+                                control={<Checkbox checked={selectedValue == String(producer.id)} />}
+                                label={producer.name}
+                            />
+                        );
                     })}
                 </FormGroup>
             </Box>

@@ -120,7 +120,7 @@ const CreateProduct = () => {
                 <Grid bgcolor={color.white} p={2} container mt={3} justifyContent={'space-between'}>
                     <Grid xs={12} md={7.8} mb={3} fontSize={'20px'}>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Tên sản phẩm
+                            Tên sản phẩm <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -150,7 +150,7 @@ const CreateProduct = () => {
                         <Grid container mt={2} justifyContent={'space-between'}>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Loại sản phẩm
+                                    Loại sản phẩm <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                 </Typography>
                                 <Controller
                                     control={control}
@@ -188,7 +188,7 @@ const CreateProduct = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Nhà xuất bản
+                                    Nhà xuất bản <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                 </Typography>
                                 <Controller
                                     control={control}
@@ -228,7 +228,7 @@ const CreateProduct = () => {
                         <Grid container mt={2} justifyContent={'space-between'}>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Tên Tác giả
+                                    Tên Tác giả <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                 </Typography>
                                 <Controller
                                     control={control}
@@ -257,7 +257,7 @@ const CreateProduct = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Số trang
+                                    Số trang <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                 </Typography>
                                 <Controller
                                     control={control}
@@ -360,7 +360,7 @@ const CreateProduct = () => {
                     </Grid>
                     <Grid xs={12} md={3.8}>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Kích thước
+                            Kích thước <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -387,7 +387,7 @@ const CreateProduct = () => {
                             {errors.size && errors.size.message}
                         </Typography>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
-                            Giá gốc
+                            Giá gốc <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -457,7 +457,7 @@ const CreateProduct = () => {
                             {errors.sale && errors.sale.message}
                         </Typography>
                         <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Số lượng
+                            Số lượng <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -486,7 +486,7 @@ const CreateProduct = () => {
 
                         <FormControl>
                             <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                                Ảnh nổi bật
+                                Ảnh nổi bật <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                             </Typography>
 
                             <Controller

@@ -68,7 +68,8 @@ const CreateNews = () => {
                                     render={({ field }) => (
                                         <FormControl>
                                             <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                                Tên tiêu đề
+                                                Tên tiêu đề{' '}
+                                                <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                             </Typography>
                                             <OutlinedInput
                                                 {...field}
@@ -99,6 +100,7 @@ const CreateNews = () => {
                                         <FormControl>
                                             <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
                                                 Tên tác giả
+                                                <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                             </Typography>
                                             <OutlinedInput
                                                 type="text"
@@ -133,7 +135,8 @@ const CreateNews = () => {
                                         return (
                                             <FormControl>
                                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                                    Ảnh nổi bật
+                                                    Ảnh nổi bật{' '}
+                                                    <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                                 </Typography>
                                                 <OutlinedInput
                                                     {...field}
@@ -175,7 +178,8 @@ const CreateNews = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Lịch đăng bài
+                                    Nội dung ngắn
+                                    <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                 </Typography>
                                 <Controller
                                     control={control}
@@ -208,6 +212,7 @@ const CreateNews = () => {
                                     <>
                                         <Typography variant="h2" mt={3} fontSize={'18px'} fontWeight={'bold'}>
                                             Nội dung bài viết
+                                            <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                         </Typography>
                                         <Editor
                                             apiKey="i6krl4na00k3s7n08vuwluc3ynywgw9pt6kd46v0dn1knm3i"

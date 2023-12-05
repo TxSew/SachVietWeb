@@ -1,4 +1,5 @@
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
+
 import {
     Box,
     Button,
@@ -197,7 +198,7 @@ function UserCartDetail() {
                                             color: 'red',
                                         }}
                                     >
-                                        <DeleteForeverIcon
+                                        <RemoveShoppingCartIcon
                                             sx={{
                                                 fontSize: '56px',
                                                 color: 'rgb(201, 33, 39)',
