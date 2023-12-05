@@ -203,6 +203,20 @@
         background: #222d32;
         transition: all .3s ease-out;
 
+        &-menu {
+            position: sticky;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+            font-size: 20px;
+            color: white;
+            z-index: 1;
+            border-bottom: 3px solid #ccc;
+
+        }
+
         &-logo {
             position: sticky;
             top: 0;
@@ -285,6 +299,17 @@ a.active .navdb div {
     color: #dd4b39;
 }
 
+
+
+
+
+a.active .navdb div {
+    background-color: #161515;
+    color: #dd4b39;
+}
+
+
+
 a:hover .navdb {
     border-left: 5px solid #dd4b39;
     background-color: #161515;
@@ -292,12 +317,42 @@ a:hover .navdb {
 
 
 
-a.active li div {
-    background-color: #161515;
-    color: #dd4b39;
+
+
+
+
+.act-header {
+    transition: all .3s ease-in-out;
 }
 
-a:hover li {
-    border-left: 5px solid #dd4b39;
-    background-color: #161515;
+a.active .act-header {
+    background-color: #F39801;
+}
+
+a.active .act-header div {
+    background-color: #F39801;
+    color: #fff;
+}
+
+a.active .act-header div {
+    background-color: #F39801;
+    color: #fff;
+}
+
+
+a:hover .act-header {
+    background-color: #F39801;
+}
+
+a .act-header {
+    transition: all .3s ease-in-out;
+    border-bottom: 1px solid #ccc;
+}
+
+a .act-header div {
+    transition: all .3s ease-in-out;
+}
+
+a:hover .act-header div {
+    color: #fff
 }
