@@ -43,6 +43,7 @@ import {
 
 import 'swiper/css';
 import 'swiper/css/navigation';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { color } from '../../../Theme/color';
 import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
@@ -59,6 +60,7 @@ import { Comment } from '../../../submodules/models/CommentModel/Comment';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { User } from '../../../submodules/models/UserModel/User';
 import CommentItem from './components/comments/CommentItem';
+
 import './style.scss';
 export const Details = () => {
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
@@ -168,6 +170,7 @@ export const Details = () => {
     const handleChangeImage = (e: any) => {
         setImage(e.image);
     };
+
     const StyledTableCell = styled(TableCell)(({ theme }: any) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: '#f5f5f5',
