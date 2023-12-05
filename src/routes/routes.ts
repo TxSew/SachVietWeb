@@ -111,6 +111,7 @@ const PublicRouter = [
         component: NewsDetail,
     },
 ];
+
 const PrivateRouter = [
     {
         path: '/admin/product',
@@ -205,6 +206,7 @@ const PrivateRouter = [
         component: AdminStatistical,
     },
 ];
+
 
 const userProvide = [
     {

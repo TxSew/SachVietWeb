@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-import { TProductResponse } from '../../models/ProductModel/Product';
 import { AxiosConfig } from '../interface/axiosConfig';
 class HttpStatisticalController {
     private axiosInstance: AxiosInstance;
@@ -17,6 +16,14 @@ class HttpStatisticalController {
     async getStatistical(): Promise<any> {
         try {
             const response = await this.axiosInstance.get('/statistical');
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getTwelveMonthsData() {
+        try {
+            const response = await this.axiosInstance.get('/statistical/twelveMonthsData');
             return response.data;
         } catch (error) {
             throw error;

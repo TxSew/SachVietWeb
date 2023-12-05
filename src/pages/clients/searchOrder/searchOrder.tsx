@@ -12,22 +12,23 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Typography,
+    Typography
 } from '@mui/material';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
+import { formatDates } from '../../../helpers/FortmatDate';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
-import CartNotFound from '../cart/components/CartNotFound/CartNotFound';
 
 function SearchOrder() {
     const [orderUser, setOrderUser] = useState<any>([]);
     const { control, handleSubmit } = useForm<any>({
         defaultValues: {},
     });
+
     const [isRole, setIsRole] = useState<boolean>(false);
+
     const handleSearch = (data: any) => {
         httpCart.getAll(data).then((response) => {
             if (response?.orders?.length > 0) {
@@ -38,6 +39,7 @@ function SearchOrder() {
             setOrderUser(response);
         });
     };
+
     return (
         <Box>
             <Container maxWidth="xs">
