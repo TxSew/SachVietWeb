@@ -2,7 +2,7 @@ import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title
 import { Bar } from 'react-chartjs-2';
 import { color } from '../../../../Theme/color';
 
-export function ChartMOney(props: { statistical: any }) {
+export function ChartMOney(props: { statistical: any; orderCountData: any }) {
     ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
     const options = {
         responsive: true,
@@ -38,6 +38,11 @@ export function ChartMOney(props: { statistical: any }) {
                 label: 'Doanh thu',
                 data: props.statistical,
                 backgroundColor: color.BtnDartGreen,
+            },
+            {
+                label: 'Đơn hàng',
+                data: props.orderCountData,
+                backgroundColor: color.linePay,
             },
         ],
     };

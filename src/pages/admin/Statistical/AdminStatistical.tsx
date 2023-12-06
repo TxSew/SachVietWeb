@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import { PickersShortcutsItem } from '@mui/x-date-pickers';
 import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 import { DateRange } from '@mui/x-date-pickers-pro/internals/models';
@@ -22,6 +22,7 @@ function AdminStatistical() {
     const [StatisticalCount, setStatisticalCount] = useState<StatisticalDto>();
     const [dateRange, setDateRange] = useState<any>([]);
     const [statistical, setStatistical] = useState<number[]>([]);
+    const [orderCount, setOrderCount] = useState<number[]>([]);
     const [revenue, setRevenue] = useState<any>({});
     const [statisticalToday, setStatisticalToday] = useState<any>({});
     useEffect(() => {
@@ -33,10 +34,18 @@ function AdminStatistical() {
         httpStatistical.getTwelveMonthsData(props).then((res) => {
             setRevenue(res);
             const revenueByMonth = new Array(12).fill(0);
+            const orderCountByMonth = new Array(12).fill(0);
+
             res?.data.forEach(({ month, revenue }: any) => {
                 revenueByMonth[month - 1] = Number(revenue);
             });
+
+            res?.data.forEach(({ month, orderCount }: any) => {
+                orderCountByMonth[month - 1] = Number(orderCount);
+            });
+
             setStatistical(revenueByMonth);
+            setOrderCount(orderCountByMonth);
         });
     }, [dateRange]);
     useEffect(() => {
@@ -179,7 +188,7 @@ function AdminStatistical() {
                                     </DemoContainer>
                                 </LocalizationProvider>
                             </Box>
-                            <ChartMOney statistical={statistical} />
+                            <ChartMOney orderCountData={orderCount} statistical={statistical} />
                         </Box>
 
                         <Grid container display={'flex'} justifyContent={'center'} gap={2}>
@@ -239,7 +248,7 @@ function AdminStatistical() {
                                     </Grid>
                                     <Grid xs={8}>
                                         <Typography variant="body1" color="initial">
-                                            Tổng đơn hàng
+                                            Tổng đơn hàng đã bán
                                         </Typography>
                                         <Typography variant="body1" color={color.sale} fontWeight="bold">
                                             {`${revenue.totalOrders} `}

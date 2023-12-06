@@ -1,10 +1,11 @@
-import { Logout, PersonAdd, Settings } from '@mui/icons-material';
+import { async } from '@firebase/util';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import HowToRegSharpIcon from '@mui/icons-material/HowToRegSharp';
 import InfoIcon from '@mui/icons-material/Info';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginSharpIcon from '@mui/icons-material/LoginSharp';
+import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Person3Icon from '@mui/icons-material/Person3';
@@ -14,17 +15,10 @@ import SellIcon from '@mui/icons-material/Sell';
 import ShoppingBasketSharpIcon from '@mui/icons-material/ShoppingBasketSharp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import LogoutIcon from '@mui/icons-material/Logout';
 import {
-    AppBar,
     Avatar,
     Badge,
     CardMedia,
-    Dialog,
     Divider,
     Grid,
     IconButton,
@@ -38,17 +32,17 @@ import {
     Slide,
     Stack,
     TextField,
-    Toolbar,
     Tooltip,
 } from '@mui/material';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container/Container';
-import List from '@mui/material/List';
+import MuiDrawer from '@mui/material/Drawer';
+import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography/Typography';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link, NavLink, createSearchParams, useNavigate } from 'react-router-dom';
+import { createSearchParams, Link, NavLink, useNavigate } from 'react-router-dom';
 import { image } from '../../../assets';
 import Image from '../../../components/Image/Image';
 import { BaseAPi } from '../../../configs/BaseApi';
@@ -59,10 +53,6 @@ import { RootState } from '../../../redux/storeClient';
 import HttpCategoryController from '../../../submodules/controllers/http/httpCategoryController';
 import HttpProductController from '../../../submodules/controllers/http/httpProductController';
 import { User } from '../../../submodules/models/UserModel/User';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import { TransitionProps } from '@mui/material/transitions';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import MuiDrawer from '@mui/material/Drawer';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
@@ -75,18 +65,28 @@ const Transition = React.forwardRef(function Transition(
 const Header = () => {
     const http = new HttpProductController(BaseAPi);
     const httpCategory = new HttpCategoryController(BaseAPi);
+
     const [user, setUser] = useState<User>({} as User);
     const [search, setSearch] = React.useState<string>('');
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const cart = useSelector((state: RootState) => state.cart.cartItems);
     const [Products, setProducts] = useState<any>([]);
     const [categories, setCategories] = useState<any>([]);
+    const [categoryHeaderMobile, setCategoryHeaderMobile] = useState<any>([]);
     const dataSearch = useDebounce(search, 300);
     const redirect = useNavigate();
     const { isMediumMD } = useMedia();
     useEffect(() => {
         fetchValueSearch(dataSearch);
     }, [dataSearch]);
+    useEffect(() => {
+        fetchCategories();
+    }, []);
+    const fetchCategories = async () => {
+        const category = await httpCategory.getCategory({});
+        const filteredData = category.filter((item: any) => item.parentId !== null);
+        setCategoryHeaderMobile(filteredData);
+    };
     async function fetchValueSearch(props: any) {
         const data = await http.getAll({
             keyword: props,
@@ -237,86 +237,50 @@ const Header = () => {
             <div className="dasb-sidebar-menu">
                 <img width={'100px'} src={image.logo} alt="" />
             </div>
-            <NavLink to="/">
-                <ListItem className="act-header" disablePadding sx={{ display: 'block' }}>
-                    <ListItemButton
-                        sx={{
-                            minHeight: 48,
-                            justifyContent: 'initial',
-                            px: 2,
-                            transition: 'all .3s ease-in-out',
-                        }}
-                    >
-                        <ListItemIcon
-                            sx={{
-                                minWidth: 0,
-                                color: '#000',
-                                mr: 3,
-                            }}
-                        >
-                            {' '}
-                            <CardMedia
-                                component="img"
+
+            {categoryHeaderMobile.map((e: any) => {
+                return (
+                    <NavLink to={`/category?category=${e.slug}`}>
+                        <ListItem className="act-header" disablePadding sx={{ display: 'block' }}>
+                            <ListItemButton
                                 sx={{
-                                    width: '38px',
-                                    height: '38px',
-                                    objectFit: 'contain',
-                                    p: 1,
+                                    minHeight: 48,
+                                    justifyContent: 'initial',
+                                    px: 2,
+                                    transition: 'all .3s ease-in-out',
                                 }}
-                                title=""
-                                image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
-                            />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Quản lý nhà cung cấp"
-                            sx={{
-                                opacity: open ? 1 : 1,
-                                color: 'black',
-                            }}
-                        />
-                    </ListItemButton>
-                </ListItem>
-            </NavLink>
-            <NavLink to="/cart">
-                <ListItem className="act-header" disablePadding sx={{ display: 'block' }}>
-                    <ListItemButton
-                        sx={{
-                            minHeight: 48,
-                            justifyContent: 'initial',
-                            px: 2,
-                            transition: 'all .3s ease-in-out',
-                        }}
-                    >
-                        <ListItemIcon
-                            sx={{
-                                minWidth: 0,
-                                color: '#000',
-                                mr: 3,
-                            }}
-                        >
-                            {' '}
-                            <CardMedia
-                                component="img"
-                                sx={{
-                                    width: '38px',
-                                    height: '38px',
-                                    objectFit: 'contain',
-                                    p: 1,
-                                }}
-                                title=""
-                                image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
-                            />
-                        </ListItemIcon>
-                        <ListItemText
-                            primary="Quản lý nhà cung cấp"
-                            sx={{
-                                opacity: open ? 1 : 1,
-                                color: 'black',
-                            }}
-                        />
-                    </ListItemButton>
-                </ListItem>
-            </NavLink>
+                            >
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        color: '#000',
+                                        mr: 3,
+                                    }}
+                                >
+                                    <CardMedia
+                                        component="img"
+                                        sx={{
+                                            width: '38px',
+                                            height: '38px',
+                                            objectFit: 'contain',
+                                            p: 1,
+                                        }}
+                                        title=""
+                                        image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
+                                    />
+                                </ListItemIcon>
+                                <ListItemText
+                                    primary={e.name}
+                                    sx={{
+                                        opacity: open ? 1 : 1,
+                                        color: 'black',
+                                    }}
+                                />
+                            </ListItemButton>
+                        </ListItem>
+                    </NavLink>
+                );
+            })}
         </Box>
     );
 
