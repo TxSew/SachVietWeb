@@ -22,7 +22,6 @@ import {
     tableCellClasses,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
 
@@ -30,6 +29,7 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { FormControl } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
 import {
     FacebookIcon,
     FacebookMessengerIcon,
@@ -40,10 +40,8 @@ import {
     TwitterIcon,
     TwitterShareButton,
 } from 'react-share';
-
 import 'swiper/css';
 import 'swiper/css/navigation';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { color } from '../../../Theme/color';
 import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
@@ -56,13 +54,12 @@ import useMedia from '../../../hooks/useMedia/useMedia';
 import { addToCart } from '../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../redux/storeClient';
 import { httpComment, httpProduct } from '../../../submodules/controllers/http/axiosController';
-import { Comment } from '../../../submodules/models/CommentModel/Comment';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { User } from '../../../submodules/models/UserModel/User';
 import CommentItem from './components/comments/CommentItem';
-
 import './style.scss';
 export const Details = () => {
+    const [searchParams, setSearchParams] = useSearchParams();
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
     const [imageFiles, setImageFiles] = useState<any[]>([]);
     const [imgs, setImgs] = useState<any>({});
@@ -170,8 +167,7 @@ export const Details = () => {
     const handleChangeImage = (e: any) => {
         setImage(e.image);
     };
-
-    const StyledTableCell = styled(TableCell)(({ theme }: any) => ({
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
             backgroundColor: '#f5f5f5',
             color: '#fff',
@@ -182,7 +178,7 @@ export const Details = () => {
         },
     }));
 
-    const StyledTableRow = styled(TableRow)(({ theme }: any) => ({
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
         '&:nth-of-type(odd)': {
             backgroundColor: '#f5f5f5',
         },
@@ -190,6 +186,7 @@ export const Details = () => {
             border: 'none',
         },
     }));
+    const handelQUantity = () => {};
     const handelLogin = () => {
         redirect({
             pathname: '/auth',
@@ -231,6 +228,15 @@ export const Details = () => {
 
         return uploadedUrls.filter((url: any) => url !== null);
     };
+
+    const {
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors },
+        setValue,
+    } = useForm<Comment>({ mode: 'all' });
+
     const handelComment = async (data: any) => {
         let { image, ...rest } = data as any;
 
@@ -254,15 +260,6 @@ export const Details = () => {
         });
         FetchProductOne(page);
     };
-
-    const {
-        handleSubmit,
-        control,
-        reset,
-        formState: { errors },
-        setValue,
-    } = useForm<Comment>({});
-
     return (
         <Box bgcolor={'#eee'}>
             {TitleHelmet('Chi tiết sản phẩm')}
@@ -282,7 +279,18 @@ export const Details = () => {
                 >
                     <Typography variant="caption">{Detail?.category?.name}</Typography>
                     <ChevronRightOutlinedIcon />
-                    <Typography variant="caption">{Detail?.title}</Typography>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            overflow: 'hidden',
+                            display: '-webkit-box',
+                            lineClamp: 2,
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                        }}
+                    >
+                        {Detail?.title}
+                    </Typography>
                 </Stack>
                 <Box pb={2}>
                     <Grid container bgcolor={'#fff'} p={2}>
@@ -423,7 +431,15 @@ export const Details = () => {
                                     fontSize={'22.1px'}
                                     textTransform={'capitalize'}
                                     fontWeight={500}
-                                    sx={{ textTransform: 'capitalize' }}
+                                    sx={{
+                                        textTransform: 'capitalize',
+                                        overflow: 'hidden',
+                                        display: '-webkit-box',
+                                        lineClamp: 3,
+                                        WebkitLineClamp: 3,
+                                        WebkitBoxOrient: 'vertical',
+                                        flexShrink: 0,
+                                    }}
                                 >
                                     {Detail?.title}
                                 </Typography>
@@ -932,7 +948,7 @@ export const Details = () => {
                                                                         defaultValue={3}
                                                                         size="small"
                                                                         name="simple-controlled"
-                                                                        onChange={(event, newRating: any) => {
+                                                                        onChange={(event, newRating) => {
                                                                             setValue('star', newRating);
                                                                         }}
                                                                     />
@@ -1053,6 +1069,7 @@ export const Details = () => {
                                                                 cursor: 'pointer',
                                                                 color: color.sale,
                                                                 textDecoration: 'underline',
+                                                                pl: '3px',
                                                             }}
                                                             onClick={handelLogin}
                                                         >

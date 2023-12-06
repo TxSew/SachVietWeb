@@ -133,18 +133,14 @@ function Category() {
 
             <Container maxWidth={'xl'}>
                 <Grid container bgcolor={color.white} py={3} px={3}>
-                    {isMediumMD ? (
-                        ''
-                    ) : (
-                        <Grid item className="hiddenTab" xs={3}>
-                            <Tabbar
-                                handlePrice={handelChangePrice}
-                                handleChange={handleCHnage}
-                                valueSlider={values}
-                                handleProducer={handelSortProducer}
-                            />
-                        </Grid>
-                    )}
+                    <Grid item className="hiddenTab" xs={12} md={3}>
+                        <Tabbar
+                            handlePrice={handelChangePrice}
+                            handleChange={handleCHnage}
+                            valueSlider={values}
+                            handleProducer={handelSortProducer}
+                        />
+                    </Grid>
                     <Grid item xs={isMediumMD ? 12 : 9}>
                         <Box>
                             <Box>
@@ -167,7 +163,7 @@ function Category() {
                                     </Typography>
                                 )}
                             </Box>
-                            <Stack sx={{ minWidth: 300 }} direction={'row'}>
+                            <Stack direction={'row'} justifyContent={isMediumMD ? 'space-between' : 'flex-start'}>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                                     <Select
                                         value={sort}

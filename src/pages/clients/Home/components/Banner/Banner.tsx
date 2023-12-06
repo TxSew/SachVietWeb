@@ -35,7 +35,9 @@ function Banner() {
                                         src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
                                         alt="Banner tùy chỉnh"
                                         style={{
+                                            height: '160px',
                                             width: '100%',
+                                            objectFit: 'cover',
                                             borderRadius: '10px',
                                         }}
                                     />
@@ -52,6 +54,8 @@ function Banner() {
                                         alt=""
                                         style={{
                                             borderRadius: '10px',
+                                            height: '160px',
+                                            objectFit: 'cover',
                                             width: '100%',
                                         }}
                                     />

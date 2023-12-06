@@ -84,7 +84,7 @@ const CategoryNav = () => {
                 <Grid container px={2} mt={2}>
                     <Swiper
                         watchSlidesProgress={true}
-                        slidesPerView={isMediumMD ? 4 : 10}
+                        slidesPerView={isMediumMD ? 3 : 10}
                         className="mySwiper categorySwiper"
                     >
                         {isLoading
