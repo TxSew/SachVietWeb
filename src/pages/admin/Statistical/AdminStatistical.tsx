@@ -53,14 +53,6 @@ function AdminStatistical() {
             },
         },
         {
-            label: 'Tuần sau',
-            getValue: () => {
-                const today = dayjs();
-                const prevWeek = today.subtract(7, 'day');
-                return [prevWeek.startOf('week'), prevWeek.endOf('week')];
-            },
-        },
-        {
             label: '7 ngày trước',
             getValue: () => {
                 const today = dayjs();
@@ -165,38 +157,7 @@ function AdminStatistical() {
                             >
                                 Thống kê doanh thu
                             </Typography>
-                            <Box
-                                sx={{
-                                    backgroundColor: '#fff',
-                                    borderRadius: 2,
-                                    gap: 2,
-                                    display: 'flex',
-                                    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
-                                    p: 2,
-                                    maxWidth: '350px',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                    <img
-                                        src={image.price}
-                                        style={{
-                                            width: '100px',
-                                            height: '65px',
-                                        }}
-                                        alt="err"
-                                    />
-                                </Grid>
-                                <Grid xs={8} textAlign={'center'}>
-                                    <Typography variant="body1" color="initial">
-                                        Doanh thu hôm nay
-                                    </Typography>
 
-                                    <Typography variant="body1" color={color.sale} fontWeight="bold">
-                                        {numberFormat(statisticalToday.totalMoneyByCustomer)}
-                                    </Typography>
-                                </Grid>
-                            </Box>
                             <Box
                                 display={'flex'}
                                 justifyContent="center"
@@ -286,6 +247,38 @@ function AdminStatistical() {
                                     </Grid>
                                 </Box>
                             </Grid>
+                            <Box
+                                sx={{
+                                    backgroundColor: '#fff',
+                                    borderRadius: 2,
+                                    gap: 2,
+                                    display: 'flex',
+                                    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
+                                    p: 2,
+                                    maxWidth: '350px',
+                                    alignItems: 'center',
+                                }}
+                            >
+                                <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
+                                    <img
+                                        src={image.price}
+                                        style={{
+                                            width: '100px',
+                                            height: '65px',
+                                        }}
+                                        alt="err"
+                                    />
+                                </Grid>
+                                <Grid xs={8} textAlign={'center'}>
+                                    <Typography variant="body1" color="initial">
+                                        Doanh thu hôm nay
+                                    </Typography>
+
+                                    <Typography variant="body1" color={color.sale} fontWeight="bold">
+                                        {numberFormat(statisticalToday.totalMoneyByCustomer)}
+                                    </Typography>
+                                </Grid>
+                            </Box>
                         </Grid>
                     </Container>
                 </Grid>
