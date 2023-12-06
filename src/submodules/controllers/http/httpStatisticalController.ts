@@ -21,9 +21,17 @@ class HttpStatisticalController {
             throw error;
         }
     }
-    async getTwelveMonthsData() {
+    async getStatisticalByToday() {
         try {
-            const response = await this.axiosInstance.get('/statistical/twelveMonthsData');
+            const response = await this.axiosInstance.get('/statistical/revenueToday');
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async getTwelveMonthsData(props: any) {
+        try {
+            const response = await this.axiosInstance.post('/statistical/twelveMonthsData', props);
             return response.data;
         } catch (error) {
             throw error;

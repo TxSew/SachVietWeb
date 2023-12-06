@@ -1,22 +1,9 @@
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useEffect, useState } from 'react';
-import { httpStatistical } from '../../../../submodules/controllers/http/axiosController';
 import { color } from '../../../../Theme/color';
 
-export function ChartMOney() {
+export function ChartMOney(props: { statistical: any }) {
     ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
-    const [statistical, setStatistical] = useState<number[]>([]);
-    useEffect(() => {
-        httpStatistical.getTwelveMonthsData().then((res) => {
-            const revenueByMonth = new Array(12).fill(0);
-            res.forEach(({ month, revenue }: any) => {
-                revenueByMonth[month - 1] = Number(revenue);
-            });
-            setStatistical(revenueByMonth);
-        });
-    }, []);
-
     const options = {
         responsive: true,
         plugins: {
@@ -49,7 +36,7 @@ export function ChartMOney() {
         datasets: [
             {
                 label: 'Doanh thu',
-                data: statistical,
+                data: props.statistical,
                 backgroundColor: color.BtnDartGreen,
             },
         ],
