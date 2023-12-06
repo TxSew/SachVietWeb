@@ -154,9 +154,7 @@ const ProductItemNew = (Props: ProductItem) => {
                 >
                     <Typography
                         sx={{
-                            position: 'absolute',
-                            left: '50%',
-                            top: '50%',
+                            position: 'relative',
                             zIndex: 4,
                             transform: 'translate(-50%, -50%)',
                         }}

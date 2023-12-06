@@ -78,7 +78,7 @@ function OrderUser() {
                                                 {e.id}
                                             </TableCell>
                                             <TableCell align="center">{formatDates(e.createdAt)}</TableCell>
-                                            <TableCell align="center">{numberFormat(e.money)}</TableCell>
+                                            <TableCell align="center">{numberFormat(Number(e.money))}</TableCell>
                                             <TableCell align="center">{e.orderType}</TableCell>
                                             <TableCell align="center">
                                                 {e.status === null ? (

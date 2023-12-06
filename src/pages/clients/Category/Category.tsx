@@ -134,7 +134,7 @@ function Category() {
             <Container maxWidth={'xl'}>
                 <Grid container bgcolor={color.white} py={3} px={3}>
                     {isMediumMD ? (
-                        <MenuIcon />
+                        ''
                     ) : (
                         <Grid item className="hiddenTab" xs={3}>
                             <Tabbar
@@ -168,7 +168,6 @@ function Category() {
                                 )}
                             </Box>
                             <Stack sx={{ minWidth: 300 }} direction={'row'}>
-                                <Typography>Sắp xếp:</Typography>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                                     <Select
                                         value={sort}

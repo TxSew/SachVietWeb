@@ -159,7 +159,7 @@ export default function AdminDiscount() {
                                 <TableCell component="th" scope="row">
                                     {e.code}
                                 </TableCell>
-                                <TableCell align="right">{numberFormat(e.discount)}</TableCell>
+                                <TableCell align="right">{numberFormat(Number(e.discount))}</TableCell>
                                 <TableCell align="right">{numberFormat(Number(e.payment_limit))}</TableCell>
                                 <TableCell align="right">{e.limit_number}</TableCell>
 
