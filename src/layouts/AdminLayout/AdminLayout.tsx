@@ -816,7 +816,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                             {' '}
                                             <PeopleAltIcon />
                                         </ListItemIcon>
-                                        <ListItemText primary="Quản lý khách hàng" sx={{ opacity: open ? 1 : 0 }} />
+                                        <ListItemText primary="Quản lý khcy hàng" sx={{ opacity: open ? 1 : 0 }} />
                                     </ListItemButton>
                                 </ListItem>
                             </NavLink>

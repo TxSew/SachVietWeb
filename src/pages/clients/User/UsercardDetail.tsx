@@ -29,7 +29,6 @@ import NavUser from './layout/NavUser';
 import CustomizedSteppers from './Stepper';
 function UserCartDetail() {
     const { id } = useParams();
-    console.log('🚀 ~ file: UsercardDetail.tsx:31 ~ UserCartDetail ~ id:', id);
     const [orderCurrent, setOrderCurrent] = useState<any>({});
 
     useEffect(() => {
@@ -39,7 +38,6 @@ function UserCartDetail() {
     const [open, setOpen] = useState(false);
     const getOrderUser = async () => {
         const orderByUser = await httpCart.getOrderDetail(Number(id));
-        console.log('🚀 ~ file: UsercardDetail.tsx:41 ~ getOrderUser ~ orderByUser:', orderByUser);
         if (orderByUser) setOrderCurrent(orderByUser);
     };
 

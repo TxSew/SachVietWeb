@@ -4,8 +4,6 @@
   "private": true,
   "ngrok-skip-browser-warning": "69420",
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^39.0.2",
-    "@ckeditor/ckeditor5-react": "^6.1.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^8.1.0",
@@ -21,7 +19,6 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@tinymce/tinymce-react": "^4.3.0",
-    "@tippyjs/react": "^4.2.6",
     "@types/faker": "^6.6.9",
     "@types/firebase": "^3.2.1",
     "@types/jest": "^27.5.2",
@@ -36,6 +33,7 @@
     "firebase": "^10.4.0",
     "i18next": "^23.4.6",
     "moment": "^2.29.4",
+    "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
@@ -57,21 +55,18 @@
     "recharts": "^2.8.0",
     "sass": "^1.66.1",
     "sequelize": "^6.33.0",
-    "socket.io-client": "^4.7.2",
     "stripe": "^14.1.0",
-    "styled-components": "^5.3.11",
     "swiped": "^0.1.4",
     "swiper": "^9.4.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts --max_old_space_size=4096 start",
-    "build": "react-scripts --max_old_space_size=4096 build",
+    "start": "react-scripts --max_old_space_size=8192 start",
+    "build": "react-scripts --max_old_space_size=8192 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
-
-},
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

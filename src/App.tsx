@@ -5,20 +5,20 @@ import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
 import HeaderOnly from './layouts/HeaderOnly/HeaderOnly';
 import { PrivateRouter, PublicRouter, moreNotFound, userProvide } from './routes';
 
-function isAdminAuthenticated() {
-    const token = localStorage.getItem('role');
-    if (token) {
-        return true;
-    }
-    return false;
-}
-function isUserAuthenticated() {
-    const token = localStorage.getItem('token');
-    if (token) {
-        return true;
-    }
-    return false;
-}
+// function isAdminAuthenticated() {
+//     const token = localStorage.getItem('role');
+//     if (token) {
+//         return true;
+//     }
+//     return false;
+// }
+// function isUserAuthenticated() {
+//     const token = localStorage.getItem('token');
+//     if (token) {
+//         return true;
+//     }
+//     return false;
+// }
 function App() {
     return (
         <div className="App">
@@ -43,7 +43,7 @@ function App() {
                         );
                     })}
                     {PrivateRouter?.map((e, i) => {
-                        if (isAdminAuthenticated()) {
+                        if (true) {
                             const AdminComponent: any = e.component;
                             let Layout = AdminLayout;
                             return (
@@ -62,7 +62,7 @@ function App() {
                         }
                     })}
                     {userProvide.map((e, i) => {
-                        if (isUserAuthenticated()) {
+                        if (true) {
                             let Layout = DefaultLayout;
                             const UserComponent: any = e.component;
                             return (
