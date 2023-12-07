@@ -33,7 +33,6 @@ import { numberFormat } from '../../../helpers/formatPrice';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 export default function AdminDiscount() {
     const [discount, setDiscount] = React.useState<any>({});
@@ -96,7 +95,6 @@ export default function AdminDiscount() {
 
     return (
         <>
-            {TitleHelmet('Quản lý Mã giảm giá')}
             <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                 <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                     <DiscountIcon

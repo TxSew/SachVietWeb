@@ -25,7 +25,6 @@ const UpdateProducer = () => {
     };
     return (
         <Box>
-            {TitleHelmet('Thêm Nhà cung cấp')}
             <form action="" onSubmit={handleSubmit(handleAddProducer)}>
                 <Stack direction={'row'} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

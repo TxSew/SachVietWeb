@@ -8,7 +8,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/en';
-import 'dayjs/locale/vi'; // Import Vietnamese locale
+import 'dayjs/locale/vi';
 import { useEffect, useState } from 'react';
 import { image } from '../../../assets';
 import { numberFormat } from '../../../helpers/formatPrice';

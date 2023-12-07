@@ -32,7 +32,6 @@ import { formatDates } from '../../../helpers/FortmatDate';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { TitleHelmet } from '../../../constants/Helmet';
 export default function CategoryAdmin() {
     const [search, setSearch] = React.useState<string>('');
     const deBounce = useDebounce(search, 300);
@@ -96,7 +95,7 @@ export default function CategoryAdmin() {
     };
     return (
         <Grid mt={0} width={'100%'}>
-            {TitleHelmet('Quản lý danh mục ')}
+            {/* {TitleHelmet('Quản lý danh mục ')} */}
             <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                 <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                     <CategoryIcon /> Quản lý danh mục

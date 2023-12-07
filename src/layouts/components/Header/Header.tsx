@@ -79,6 +79,7 @@ const Header = () => {
     useEffect(() => {
         fetchValueSearch(dataSearch);
     }, [dataSearch]);
+
     useEffect(() => {
         fetchCategories();
     }, []);

@@ -5,7 +5,6 @@ import { TitleHelmet } from '../../../constants/Helmet';
 export default function Error() {
     return (
         <div id="notfound">
-            {TitleHelmet('NotFound')}
             <div className="notfound">
                 <div className="notfound-404">
                     <div></div>

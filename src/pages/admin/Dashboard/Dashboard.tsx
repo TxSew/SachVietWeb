@@ -77,7 +77,6 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            {TitleHelmet('Thống kê')}
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <AppBar position="absolute" open={open}>

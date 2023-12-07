@@ -27,6 +27,7 @@ const UpdateDiscount = () => {
         setValue('payment_limit', discount.payment_limit);
         setValue('desc', discount.desc);
     }, [discount.code, discount.desc, discount.limit_number, discount.number_used, discount.expiration_date, setValue]);
+
     useEffect(() => {
         httpDiscount.getOne(Number(id)).then((res) => {
             if (res) setDiscount(res);
@@ -42,7 +43,6 @@ const UpdateDiscount = () => {
 
     return (
         <Box>
-            {TitleHelmet('Cập nhật Mã giảm giá')}
             <form action="" onSubmit={handleSubmit(handelUpdateDiscount)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

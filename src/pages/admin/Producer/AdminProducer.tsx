@@ -28,7 +28,6 @@ import { pushError } from '../../../components/Toast/Toast';
 import { httpProducer } from '../../../submodules/controllers/http/axiosController';
 import { Producer } from '../../../submodules/models/producerModel/producer';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 export default function ProducerAdmin() {
     const [search, setSearch] = React.useState<string>('');
@@ -85,7 +84,6 @@ export default function ProducerAdmin() {
     }
     return (
         <>
-            {TitleHelmet('Quản Nhà cung cấp')}
             <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
                 <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
                     Quản lý Nhà cung cấp
