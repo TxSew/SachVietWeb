@@ -35,9 +35,7 @@ const CategoryNav = () => {
             const category = await httpCategory.getCategory({});
             const filteredData = category.filter((item: any) => item.parentId !== null);
             if (filteredData) {
-                setTimeout(() => {
                     stopLoading();
-                }, 300);
             }
             SetCategory(filteredData);
         } catch (error) {

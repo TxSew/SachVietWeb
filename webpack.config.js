@@ -4,6 +4,7 @@ module.exports = {
   // Cấu hình khác của webpack
   optimization: {
     minimize: true,
+    
     minimizer: [
       new TerserPlugin({
         // Các tùy chọn tại đây

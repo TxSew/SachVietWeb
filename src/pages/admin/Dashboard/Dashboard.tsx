@@ -13,8 +13,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import * as React from 'react';
-import { mainListItems, secondaryListItems } from './listItems';
 import { TitleHelmet } from '../../../constants/Helmet';
+import { mainListItems, secondaryListItems } from './listItems';
 
 const drawerWidth: number = 240;
 

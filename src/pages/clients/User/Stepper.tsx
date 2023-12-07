@@ -104,7 +104,15 @@ export default function CustomizedSteppers(props: { status: number }) {
             <Stepper
                 alternativeLabel
                 activeStep={
-                    props.status == null ? 0 : props.status == 1 ? 1 : props.status == 2 ? 2 : props.status == 3 ? 3 : 0
+                    props.status === null
+                        ? 0
+                        : props.status === 1
+                        ? 1
+                        : props.status === 2
+                        ? 2
+                        : props.status == 3
+                        ? 3
+                        : 0
                 }
                 connector={<ColorlibConnector />}
                 sx={{
@@ -114,7 +122,7 @@ export default function CustomizedSteppers(props: { status: number }) {
                 <Step>
                     <StepLabel StepIconComponent={ColorlibStepIcon}>Đơn hàng mới</StepLabel>
                 </Step>
-                {props.status == 3 ? (
+                {props.status === 3 ? (
                     <Step>
                         <StepLabel StepIconComponent={ClearIcon}>Hủy đơn</StepLabel>
                     </Step>
@@ -123,7 +131,7 @@ export default function CustomizedSteppers(props: { status: number }) {
                         <StepLabel StepIconComponent={ColorlibStepIcon}>Đang giao hàng</StepLabel>
                     </Step>
                 )}
-                {props.status == 3 ? (
+                {props.status === 3 ? (
                     <Step>
                         <StepLabel StepIconComponent={ColorlibStepIconError}>Đã hủy đơn</StepLabel>
                     </Step>

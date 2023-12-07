@@ -78,26 +78,25 @@ const ForgotPasswordPage = () => {
         };
         http.verifyOtpAndResetPassword(data)
             .then((res) => {
-                if (res.message == 'success') {
+                if (res.message === 'success') {
                     toast.success('Cập nhật mật khẩu thành công', {
                         position: 'top-right',
                     });
                     redirect('/auth');
                 }
-                if (res.message == 'jwt expired') {
+                if (res.message === 'jwt expired') {
                     toast.error('Mã OTP đã hết hạn, Vui lòng gửi lại mã OTP!', {
                         position: 'top-right',
                     });
                 }
-                if (res.message == 'Invalid OTP Code') {
+                if (res.message === 'Invalid OTP Code') {
                     toast.error('Mã OTP không đúng , vui lòng nhập lại!', {
                         position: 'top-right',
                     });
                 }
             })
             .catch((err) => {
-                console.log('🚀 ~ file: forgotPassword.tsx:106 ~ handleForgotPassword ~ err:', err);
-                if ((err.message = 'jwt must be provided')) {
+                if (err.message === 'jwt must be provided') {
                     toast.error('Mã OTP đã hết hạn, Vui lòng gửi lại mã OTP!', {
                         position: 'top-right',
                     });

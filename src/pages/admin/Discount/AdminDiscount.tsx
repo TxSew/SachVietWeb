@@ -15,7 +15,6 @@ import {
     Pagination,
     Stack,
     Typography,
-    debounce,
 } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -28,12 +27,12 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushError } from '../../../components/Toast/Toast';
+import { TitleHelmet } from '../../../constants/Helmet';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
-import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 export default function AdminDiscount() {
     const [discount, setDiscount] = React.useState<any>({});
@@ -165,7 +164,7 @@ export default function AdminDiscount() {
 
                                 <TableCell align="right">{formatDates(e.expiration_date)}</TableCell>
                                 <TableCell align="right">
-                                    {e?.status == 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
+                                    {e?.status === 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
                                 </TableCell>
                                 <TableCell align="right">
                                     <Stack

@@ -1,5 +1,4 @@
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import { inject } from '@vercel/analytics';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -9,8 +8,6 @@ import { Theme } from './Theme/Theme';
 import { store } from './redux/storeClient';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyle from './sass/GlobalStyle';
-
-inject();
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 const LazyLoader = ({ children }: any) => <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>;

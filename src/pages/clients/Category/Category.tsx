@@ -1,4 +1,3 @@
-import MenuIcon from '@mui/icons-material/Menu';
 import {
     Box,
     Container,
@@ -16,12 +15,12 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import ProductItem from '../../../components/ProductItem/ProductItem';
+import { TitleHelmet } from '../../../constants/Helmet';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import Tabbar from './components/Tabbar';
-import { TitleHelmet } from '../../../constants/Helmet';
 export interface props {
     handleChanges: (event: React.ChangeEvent<unknown>, value: number) => void;
 }
@@ -119,7 +118,6 @@ function Category() {
     };
 
     const handleCHnage = (event: Event, newValue: number | number[]) => {
-        console.log('🚀 ~ file: Category.tsx:122 ~ handleCHnage ~ newValue:', newValue);
         setValue(newValue as number[]);
     };
 
@@ -133,18 +131,14 @@ function Category() {
 
             <Container maxWidth={'xl'}>
                 <Grid container bgcolor={color.white} py={3} px={3}>
-                    {isMediumMD ? (
-                        ''
-                    ) : (
-                        <Grid item className="hiddenTab" xs={3}>
-                            <Tabbar
-                                handlePrice={handelChangePrice}
-                                handleChange={handleCHnage}
-                                valueSlider={values}
-                                handleProducer={handelSortProducer}
-                            />
-                        </Grid>
-                    )}
+                    <Grid item className="hiddenTab" xs={12} md={3}>
+                        <Tabbar
+                            handlePrice={handelChangePrice}
+                            handleChange={handleCHnage}
+                            valueSlider={values}
+                            handleProducer={handelSortProducer}
+                        />
+                    </Grid>
                     <Grid item xs={isMediumMD ? 12 : 9}>
                         <Box>
                             <Box>
@@ -167,7 +161,7 @@ function Category() {
                                     </Typography>
                                 )}
                             </Box>
-                            <Stack sx={{ minWidth: 300 }} direction={'row'}>
+                            <Stack direction={'row'} justifyContent={isMediumMD ? 'space-between' : 'flex-start'}>
                                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                                     <Select
                                         value={sort}

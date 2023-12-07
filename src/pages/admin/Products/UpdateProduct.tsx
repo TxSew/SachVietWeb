@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -12,7 +12,6 @@ import { httpCategory, httpProducer, httpProduct } from '../../../submodules/con
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 const UpdateProduct = () => {
     const [urls, setUrls] = useState<any[]>([]);
@@ -124,7 +123,6 @@ const UpdateProduct = () => {
     });
     return (
         <Box>
-            {TitleHelmet('Cập nhật sản phẩm')}
             <form action="" onSubmit={handleSubmit(handleAddProduct)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>

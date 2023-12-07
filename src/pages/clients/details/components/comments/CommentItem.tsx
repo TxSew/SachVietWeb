@@ -23,7 +23,6 @@ const CommentItem = (props: Props) => {
             </Box>
             <Box>
                 <Box pb={2}>
-                     
                     <Typography variant="subtitle1" fontSize={12} fontWeight={700}>
                         {props.fullName}
                     </Typography>

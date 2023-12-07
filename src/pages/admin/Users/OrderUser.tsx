@@ -12,8 +12,6 @@ import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../submodules/models/OrderModel/Order';
-// import CartNotFound from '../cart/components/CartNotFound/CartNotFound';
-// import NavUser from './layout/NavUser';
 import CartNotFound from '../../clients/cart/components/CartNotFound/CartNotFound';
 
 function OrderUser() {

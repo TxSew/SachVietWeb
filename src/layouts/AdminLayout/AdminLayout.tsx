@@ -1,10 +1,23 @@
+import { Logout, PersonAdd, Settings } from '@mui/icons-material';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import FiberNewIcon from '@mui/icons-material/FiberNew';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import ImportContactsIcon from '@mui/icons-material/ImportContacts';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import MenuIcon from '@mui/icons-material/Menu';
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import SellIcon from '@mui/icons-material/Sell';
+import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
+import StorefrontIcon from '@mui/icons-material/Storefront';
 import {
     Avatar,
     Button,
     CSSObject,
     CssBaseline,
     Divider,
-    Link,
     ListItem,
     ListItemButton,
     ListItemText,
@@ -18,30 +31,16 @@ import {
     useTheme,
 } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import MuiDrawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
+import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import React from 'react';
 import { FaListUl } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
-import './style.scss';
 import { image } from '../../assets';
-import MenuIcon from '@mui/icons-material/Menu';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import StackedLineChartIcon from '@mui/icons-material/StackedLineChart';
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import useMedia from '../../hooks/useMedia/useMedia';
-import { Logout, PersonAdd, Settings } from '@mui/icons-material';
-import ImportContactsIcon from '@mui/icons-material/ImportContacts';
-import FiberNewIcon from '@mui/icons-material/FiberNew';
-import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-import SellIcon from '@mui/icons-material/Sell';
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import InventoryIcon from '@mui/icons-material/Inventory';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import './style.scss';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
 
 const drawerWidth = 260;

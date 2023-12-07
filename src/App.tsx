@@ -1,5 +1,4 @@
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import './index.css';
 import AdminLayout from './layouts/AdminLayout/AdminLayout';
 import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
 import HeaderOnly from './layouts/HeaderOnly/HeaderOnly';

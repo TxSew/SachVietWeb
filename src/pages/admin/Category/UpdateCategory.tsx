@@ -6,7 +6,6 @@ import { color } from '../../../Theme/color';
 import { pushSuccess, pushWarning } from '../../../components/Toast/Toast';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import useImageUpload from '../../../hooks/useImageUpload/useImageUpload';
-import useToast from '../../../hooks/useToast/useToast';
 import { httpCategory } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { TitleHelmet } from '../../../constants/Helmet';
@@ -15,7 +14,6 @@ const UpdateCategory = () => {
     const { id } = useParams();
     const [category, setCategory] = useState([]);
     const [detail, setDetail] = useState<Category>({});
-    const { showToast } = useToast();
     const { handleImageChange, image, img } = useImageUpload();
 
     useEffect(() => {
