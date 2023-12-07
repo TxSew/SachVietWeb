@@ -1,4 +1,4 @@
-import { async } from '@firebase/util';
+import Container from '@mui/material/Container/Container';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import HowToRegSharpIcon from '@mui/icons-material/HowToRegSharp';
@@ -35,7 +35,6 @@ import {
     Tooltip,
 } from '@mui/material';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container/Container';
 import MuiDrawer from '@mui/material/Drawer';
 import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography/Typography';
@@ -54,6 +53,7 @@ import HttpCategoryController from '../../../submodules/controllers/http/httpCat
 import HttpProductController from '../../../submodules/controllers/http/httpProductController';
 import { User } from '../../../submodules/models/UserModel/User';
 type Anchor = 'top' | 'left' | 'bottom' | 'right';
+
 const Transition = React.forwardRef(function Transition(
     props: TransitionProps & {
         children: React.ReactElement;

@@ -2,6 +2,7 @@
   "name": "books_client",
   "version": "0.1.0",
   "private": true,
+   "type": "module",
   "ngrok-skip-browser-warning": "69420",
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -87,6 +88,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/preset-typescript": "^7.23.3",
     "@types/react-helmet": "^6.1.9",
     "@types/react-scroll": "^1.8.8",
     "@types/swiper": "^6.0.0",

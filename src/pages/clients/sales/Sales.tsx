@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Stack } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import DiscountItem from '../../../components/discount/Discount';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';

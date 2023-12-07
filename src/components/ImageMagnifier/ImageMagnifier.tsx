@@ -30,18 +30,15 @@ function ImageMagnifier({
                 src={src}
                 style={{ height: height, width: width }}
                 onMouseEnter={(e) => {
-                    // update image size and turn-on magnifier
                     const elem = e.currentTarget;
                     const { width, height } = elem.getBoundingClientRect();
                     setSize([width, height]);
                     setShowMagnifier(true);
                 }}
                 onMouseMove={(e) => {
-                    // update cursor position
                     const elem = e.currentTarget;
                     const { top, left } = elem.getBoundingClientRect();
 
-                    // calculate cursor position on the image
                     const x = e.pageX - left - window.pageXOffset;
                     const y = e.pageY - top - window.pageYOffset;
                     setXY([x, y]);
