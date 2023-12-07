@@ -1,4 +1,3 @@
-import { async } from '@firebase/util';
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import HowToRegSharpIcon from '@mui/icons-material/HowToRegSharp';
@@ -37,12 +36,12 @@ import {
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container/Container';
 import MuiDrawer from '@mui/material/Drawer';
-import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography/Typography';
+import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { createSearchParams, Link, NavLink, useNavigate } from 'react-router-dom';
+import { Link, NavLink, createSearchParams, useNavigate } from 'react-router-dom';
 import { image } from '../../../assets';
 import Image from '../../../components/Image/Image';
 import { BaseAPi } from '../../../configs/BaseApi';
@@ -121,20 +120,6 @@ const Header = () => {
         borderRadius: '8px',
     };
 
-    const boxmodal = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '240px',
-        height: '100%',
-        bgcolor: 'background.paper',
-        borderRight: '1px solid #000',
-        boxShadow: 24,
-        outline: 'none',
-        p: 4,
-        pt: 2,
-    };
-
     const hditem = {
         display: 'flex',
         alignItems: 'center',
@@ -179,7 +164,6 @@ const Header = () => {
         if (event.target.value) {
             setSearch(event.target.value);
         }
-        // setSearch(event.target.value);
     };
     const navigate = useNavigate();
     const handleKeydown = async (event: any) => {
@@ -201,11 +185,6 @@ const Header = () => {
                 q: search,
             }).toString(),
         });
-    };
-    const [value, setValue] = React.useState('1');
-
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
     };
 
     const [state, setState] = React.useState({
@@ -565,9 +544,9 @@ const Header = () => {
                                                                 </Box>
                                                             </Stack>
                                                         ) : (
-                                                            Products.slice(0, 6).map((e: any) => {
+                                                            Products.slice(0, 6).map((e: any, i: number) => {
                                                                 return (
-                                                                    <Grid item xs={6} md={4}>
+                                                                    <Grid key={i} item xs={6} md={4}>
                                                                         <Link
                                                                             to={`/products/${e.slug}`}
                                                                             onClick={handleCloseSearch}

@@ -15,7 +15,6 @@ import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
 
 const UpdateProduct = () => {
-    const [urls, setUrls] = useState<any[]>([]);
     const [img, setImg] = useState<string[]>([]);
     const [imgs, setImgs] = useState<any>({});
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);

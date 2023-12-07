@@ -86,9 +86,9 @@ const CategoryNav = () => {
                         className="mySwiper categorySwiper"
                     >
                         {isLoading
-                            ? Array.from({ length: category.length }).map((e) => {
+                            ? Array.from({ length: category.length }).map((e, i) => {
                                   return (
-                                      <SwiperSlide>
+                                      <SwiperSlide key={i}>
                                           <Grid flexWrap={'wrap'} item>
                                               <Box p={'0 5px'} alignItems={'center'} textAlign={'center'}>
                                                   <Skeleton
@@ -111,9 +111,9 @@ const CategoryNav = () => {
                                       </SwiperSlide>
                                   );
                               })
-                            : category.map((e: Category) => {
+                            : category.map((e: Category, i: number) => {
                                   return (
-                                      <SwiperSlide>
+                                      <SwiperSlide key={i}>
                                           <Grid
                                               item
                                               flexWrap={'wrap'}

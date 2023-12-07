@@ -154,7 +154,7 @@ function Footer() {
 
                     {isMediumMD ? (
                         <Grid item xs={12} md={8} sm={12} display={'flex'} container>
-                            <Grid md={4} xs={6}>
+                            <Grid item md={4} xs={6}>
                                 {' '}
                                 <Typography sx={ftItemhdmb} variant="h2" height={'50px'}>
                                     tài khoản của tôi

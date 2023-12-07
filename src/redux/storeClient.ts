@@ -1,12 +1,12 @@
-import { configureStore } from "@reduxjs/toolkit";
-import CounterProducer from "./features/counter/CounterProducer";
-import CartProducer from "./features/cart/CartProducer";
+import { configureStore } from '@reduxjs/toolkit';
+import CounterProducer from './features/counter/CounterProducer';
+import CartProducer from './features/cart/CartProducer';
 
 export const store = configureStore({
-  reducer: {
-    counter: CounterProducer,
-    cart: CartProducer,
-  },
+    reducer: {
+        counter: CounterProducer,
+        cart: CartProducer,
+    },
 });
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

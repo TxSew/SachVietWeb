@@ -2,10 +2,10 @@ import { Box, Checkbox, FormControlLabel, FormGroup, OutlinedInput, Slider, Stac
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { color } from '../../../../Theme/color';
+import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpCategory, httpProducer } from '../../../../submodules/controllers/http/axiosController';
 import { Producer } from '../../../../submodules/models/producerModel/producer';
 import './style.scss';
-import useMedia from '../../../../hooks/useMedia/useMedia';
 function valuetext(value: number) {
     return `${value}°C`;
 }

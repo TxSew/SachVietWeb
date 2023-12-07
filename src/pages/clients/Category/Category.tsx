@@ -1,4 +1,3 @@
-import MenuIcon from '@mui/icons-material/Menu';
 import {
     Box,
     Container,
@@ -16,12 +15,12 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import ProductItem from '../../../components/ProductItem/ProductItem';
+import { TitleHelmet } from '../../../constants/Helmet';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import Tabbar from './components/Tabbar';
-import { TitleHelmet } from '../../../constants/Helmet';
 export interface props {
     handleChanges: (event: React.ChangeEvent<unknown>, value: number) => void;
 }

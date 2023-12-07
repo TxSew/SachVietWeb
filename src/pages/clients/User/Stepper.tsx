@@ -104,7 +104,15 @@ export default function CustomizedSteppers(props: { status: number }) {
             <Stepper
                 alternativeLabel
                 activeStep={
-                    props.status == null ? 0 : props.status == 1 ? 1 : props.status == 2 ? 2 : props.status == 3 ? 3 : 0
+                    props.status === null
+                        ? 0
+                        : props.status === 1
+                        ? 1
+                        : props.status === 2
+                        ? 2
+                        : props.status === 3
+                        ? 3
+                        : 0
                 }
                 connector={<ColorlibConnector />}
                 sx={{
