@@ -2,11 +2,6 @@
     height: auto;
     position: relative;
 
-
-    li {
-        list-style: none;
-    }
-
     &-header {
         z-index: 1;
         position: sticky;
@@ -175,7 +170,6 @@
             }
 
         }
-
         &>input:checked~.dasb-wapper-main {
             width: calc(100% - 90px);
         }
