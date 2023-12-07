@@ -4,9 +4,7 @@ import 'firebase/compat/database';
 import 'firebase/compat/storage';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider } from 'firebase/auth';
-// TODO: Add SDKs for Firebase products that you want to use
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
 const firebaseConfig = {
     apiKey: 'AIzaSyBgx-OfSGwkYa0Gdhu1KkMYkiHdLbWI8v8',
     authDomain: 'bookscloud-3fd83.firebaseapp.com',
@@ -17,7 +15,6 @@ const firebaseConfig = {
     measurementId: 'G-NC15MJKRMH',
 };
 
-// Initialize Firebase
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const app = initializeApp(firebaseConfig);

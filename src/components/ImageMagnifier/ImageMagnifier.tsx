@@ -47,7 +47,6 @@ function ImageMagnifier({
                     setXY([x, y]);
                 }}
                 onMouseLeave={() => {
-                    // close magnifier
                     setShowMagnifier(false);
                 }}
                 alt={'img'}

@@ -7,7 +7,6 @@ class HttpDiscountController {
     }
     private axiosInstance: AxiosInstance;
     constructor(axiosConfig: AxiosConfig) {
-        // Create an Axios instance with the provided configuration
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token'!);
         const jwtToken = JSON.parse(token);
@@ -16,6 +15,7 @@ class HttpDiscountController {
         }
         this.axiosInstance.defaults.headers.common['ngrok-skip-browser-warning'] = '69420';
     }
+
     async getAll(props: any): Promise<any> {
         try {
             const response = await this.axiosInstance.post('discount', {
