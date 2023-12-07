@@ -14,7 +14,6 @@ import Typography from '@mui/material/Typography';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import * as React from 'react';
 import { TitleHelmet } from '../../../constants/Helmet';
-import { mainListItems, secondaryListItems } from './listItems';
 
 const drawerWidth: number = 240;
 
@@ -122,11 +121,6 @@ export default function Dashboard({ children }: { children: React.ReactNode }) {
                         </IconButton>
                     </Toolbar>
                     <Divider />
-                    <List component="nav">
-                        {mainListItems}
-                        <Divider sx={{ my: 1 }} />
-                        {secondaryListItems}
-                    </List>
                 </Drawer>
                 <Box mt={10}>{children}</Box>
             </Box>
