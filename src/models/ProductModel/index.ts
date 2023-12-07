@@ -1,8 +1,8 @@
-import { BaseModel } from "../BaseModel";
+import { BaseModel } from '../BaseModel';
 
-// export interface Product extends BaseModel {
-//   name?: string;
-//   price?: number;
-//   desc?: string;
-//   categoryID?: string;
-// }
+export interface Product extends BaseModel {
+    name?: string;
+    price?: number;
+    desc?: string;
+    categoryID?: string;
+}

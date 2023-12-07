@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import './style.scss';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 export default function Error() {
     return (

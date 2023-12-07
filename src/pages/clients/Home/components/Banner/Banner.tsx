@@ -1,15 +1,11 @@
 import { Box, Container, Grid } from '@mui/material';
-// Import the Swiper library's original types
-import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
-// Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
 
-// import required modules
-// import { Navigation } from "swiper/modules";
 function Banner() {
     const { isMediumMD } = useMedia();
     return (

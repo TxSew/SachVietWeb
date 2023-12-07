@@ -1,4 +1,4 @@
-import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
+import { Box, Button, FormControl, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -6,13 +6,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { storage } from '../../../configs/fireBaseConfig';
+import { TitleHelmet } from '../../../constants/Helmet';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpCategory, httpProducer, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 const UpdateProduct = () => {
     const [urls, setUrls] = useState<any[]>([]);

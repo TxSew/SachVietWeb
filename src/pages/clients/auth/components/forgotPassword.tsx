@@ -1,3 +1,4 @@
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 import {
     Box,
     Button,
@@ -14,14 +15,13 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { color } from '../../../../Theme/color';
-import { ForgotPassword } from '../../../../submodules/models/UserModel/User';
-import HttpAccountController from '../../../../submodules/controllers/http/httpAccountController';
-import { BaseAPi } from '../../../../configs/BaseApi';
-import { toast } from 'react-toastify';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { color } from '../../../../Theme/color';
+import { BaseAPi } from '../../../../configs/BaseApi';
 import { TitleHelmet } from '../../../../constants/Helmet';
+import HttpAccountController from '../../../../submodules/controllers/http/httpAccountController';
+import { ForgotPassword } from '../../../../submodules/models/UserModel/User';
 const http = new HttpAccountController(BaseAPi);
 const ForgotPasswordPage = () => {
     const redirect = useNavigate();
@@ -78,26 +78,25 @@ const ForgotPasswordPage = () => {
         };
         http.verifyOtpAndResetPassword(data)
             .then((res) => {
-                if (res.message == 'success') {
+                if (res.message === 'success') {
                     toast.success('Cập nhật mật khẩu thành công', {
                         position: 'top-right',
                     });
                     redirect('/auth');
                 }
-                if (res.message == 'jwt expired') {
+                if (res.message === 'jwt expired') {
                     toast.error('Mã OTP đã hết hạn, Vui lòng gửi lại mã OTP!', {
                         position: 'top-right',
                     });
                 }
-                if (res.message == 'Invalid OTP Code') {
+                if (res.message === 'Invalid OTP Code') {
                     toast.error('Mã OTP không đúng , vui lòng nhập lại!', {
                         position: 'top-right',
                     });
                 }
             })
             .catch((err) => {
-                console.log('🚀 ~ file: forgotPassword.tsx:106 ~ handleForgotPassword ~ err:', err);
-                if ((err.message = 'jwt must be provided')) {
+                if (err.message === 'jwt must be provided') {
                     toast.error('Mã OTP đã hết hạn, Vui lòng gửi lại mã OTP!', {
                         position: 'top-right',
                     });

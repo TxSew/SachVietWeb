@@ -27,9 +27,13 @@ import { Cart } from '../pages/clients/cart/Cart';
 import { Details } from '../pages/clients/details/Details';
 import Sales from '../pages/clients/sales/Sales';
 
+import AdminNews from '../pages/admin/News/AdminNews';
+import CreateNews from '../pages/admin/News/CreateNews';
+import UpdateNews from '../pages/admin/News/UpdateNews';
 import AddProductInventory from '../pages/admin/ProductInventory/AddProductInventory';
-import AdminProductInvetory from '../pages/admin/ProductInventory/AdminProductInventory';
 import OrderUser from '../pages/admin/Users/OrderUser';
+import News from '../pages/clients/News/News';
+import NewsDetail from '../pages/clients/News/NewsDetail/NewsDetail';
 import VoucherUser from '../pages/clients/User/UserVoucher';
 import ForgotPasswordPage from '../pages/clients/auth/components/forgotPassword';
 import Checkout from '../pages/clients/cart/checkout/Checkout';
@@ -38,12 +42,7 @@ import PaymentSuccess from '../pages/clients/cart/payment/PaymentSuccess';
 import Invoice from '../pages/clients/invoice/invoice';
 import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
-import News from '../pages/clients/News/News';
-import NewsDetail from '../pages/clients/News/NewsDetail/NewsDetail';
 import AdminProductInventory from '../pages/admin/ProductInventory/AdminProductInventory';
-import CreateNews from '../pages/admin/News/CreateNews';
-import AdminNews from '../pages/admin/News/AdminNews';
-import UpdateNews from '../pages/admin/News/UpdateNews';
 
 const PublicRouter = [
     {

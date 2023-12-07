@@ -24,9 +24,7 @@ function ProductHots() {
             const { products } = productData;
             startLoading();
             if (products) {
-                setTimeout(() => {
-                    stopLoading();
-                }, 500);
+                stopLoading();
             }
             setProducts(products);
         } catch (err) {

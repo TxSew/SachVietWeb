@@ -8,17 +8,16 @@ import LoyaltyIcon from '@mui/icons-material/Loyalty';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, createSearchParams, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import { color } from '../../../../../Theme/color';
+import { pushSuccess, pushWarning } from '../../../../../components/Toast/Toast';
 import { numberFormat } from '../../../../../helpers/formatPrice';
+import useMedia from '../../../../../hooks/useMedia/useMedia';
 import { addToCart, decreaseCart, getTotals, removeFromCart } from '../../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../../redux/storeClient';
 import { httpVoucher } from '../../../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../../../submodules/models/DiscountModel/Discount';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
-import useMedia from '../../../../../hooks/useMedia/useMedia';
-import { pushError, pushSuccess, pushWarning } from '../../../../../components/Toast/Toast';
-import { error } from 'console';
 
 const CartProduct = () => {
     const { isMediumMD } = useMedia();

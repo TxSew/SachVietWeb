@@ -1,13 +1,13 @@
+import { Typography } from '@mui/material';
+import { Controller, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { color } from '../../../Theme/color';
+import { httpAccount } from '../../../submodules/controllers/http/axiosController';
+import { ChangePassword } from '../../../submodules/models/UserModel/User';
 import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
-import { Controller, useForm } from 'react-hook-form';
-import { Typography } from '@mui/material';
-import { color } from '../../../Theme/color';
-import { ChangePassword } from '../../../submodules/models/UserModel/User';
-import { httpAccount } from '../../../submodules/controllers/http/axiosController';
-import { toast } from 'react-toastify';
 function UserInfo() {
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('newPassword');
@@ -25,7 +25,7 @@ function UserInfo() {
                 toast.success('Mật khẩu của bạn thay đổi thành công', {
                     position: 'top-right',
                 });
-            res == undefined &&
+            res === undefined &&
                 toast.error('Mật khẩu thay đổi không thành công!', {
                     position: 'top-right',
                 });

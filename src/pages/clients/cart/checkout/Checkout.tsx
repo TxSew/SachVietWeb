@@ -25,14 +25,13 @@ import { numberFormat } from '../../../../helpers/formatPrice';
 import { getTotals } from '../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../redux/storeClient';
 
+import { TitleHelmet } from '../../../../constants/Helmet';
 import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpPayment, httpProvince, httpVoucher } from '../../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
-import { TitleHelmet } from '../../../../constants/Helmet';
-import { Helmet } from 'react-helmet';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
     const dispatch = useDispatch();
@@ -41,9 +40,8 @@ function Checkout() {
     const [districts, setDistricts] = useState([]);
     const [voucher, setVoucher] = useState<number>(0);
     const [searchParams, setSearchParams] = useSearchParams();
-    const [code, setCode] = useState<string>('');
     const cart: any = useSelector((state: RootState) => state.cart.cartItems);
-    const { cartTotalAmount, cartItems } = useSelector((state: RootState) => state.cart);
+    const { cartTotalAmount } = useSelector((state: RootState) => state.cart);
     const navigate = useNavigate();
     const value: any = searchParams.get('discount');
 
@@ -73,7 +71,6 @@ function Checkout() {
             .getOneVoucher(order)
             .then((res) => {
                 setVoucher(res.discount.discount);
-                setCode(res.discount.code);
             })
             .catch((err) => {
                 console.log(err);

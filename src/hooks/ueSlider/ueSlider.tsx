@@ -11,8 +11,6 @@ const useSlider = (): SliderHook => {
     const handleChange = (event: Event, newValue: number | number[]) => {
         setSliderValue(newValue);
         const [a, b] = newValue as number[];
-        console.log('🚀 ~ file: ueSlider.tsx:14 ~ handleChange ~ b:', b);
-        console.log('🚀 ~ file: ueSlider.tsx:14 ~ handleChange ~ a:', a);
     };
 
     return {

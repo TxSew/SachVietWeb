@@ -1,10 +1,10 @@
-import { Box, Button, Container, Grid, Skeleton, Stack, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Skeleton, Stack } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { image } from '../../../../../assets';
 import ProductItem from '../../../../../components/ProductItem/ProductItem';
 import useLoading from '../../../../../hooks/useLoading/useLoading';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
-import { image } from '../../../../../assets';
 
 function Products() {
     const { isLoading, startLoading, stopLoading } = useLoading();
@@ -15,9 +15,7 @@ function Products() {
             const { products } = productData;
             startLoading();
             if (products) {
-                setTimeout(() => {
-                    stopLoading();
-                }, 500);
+                stopLoading();
             }
             setProducts(products);
         } catch (err) {
