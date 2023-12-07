@@ -118,13 +118,10 @@ function Footer() {
                             <Image src={image.logoFooter} width="260px" height="50px" alt="" />
                             <Box mt={2} fontSize={12}>
                                 <Typography variant="body1" textAlign={'left'}>
-                                    Lầu 5, 387-389 Hai Bà Trưng Quận 3 TP HCM
+                                    259 Hà Huy Tập, TP Buôn Ma Thuột
                                 </Typography>
                                 <Typography variant="caption" color="initial">
-                                    Công Ty Cổ Phần Phát Hành Sách TP HCM - FAHASA
-                                </Typography>
-                                <Typography variant="caption" color="initial">
-                                    60 - 62 Lê Lợi, Quận 1, TP. HCM, Việt Nam
+                                    Công Ty Cổ Phần Phát Hành Sách TP Buôn Ma Thuột - SachViet
                                 </Typography>
                             </Box>
                             <Box
@@ -133,8 +130,9 @@ function Footer() {
                                 }}
                             >
                                 <Typography variant="subtitle1" color="initial">
-                                    Fahasa.com nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua và
-                                    nhận hàng trực tiếp tại văn phòng cũng như tất cả Hệ Thống Fahasa trên toàn quốc
+                                    Sachviet.click nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ đặt mua
+                                    và nhận hàng trực tiếp tại văn phòng cũng như tất cả Hệ Thống SachViet trên toàn
+                                    quốc
                                 </Typography>
                             </Box>
                             {/* lis6 icon */}
@@ -156,7 +154,7 @@ function Footer() {
 
                     {isMediumMD ? (
                         <Grid item xs={12} md={8} sm={12} display={'flex'} container>
-                            <Grid md={4} xs={6}>
+                            <Grid item md={4} xs={6}>
                                 {' '}
                                 <Typography sx={ftItemhdmb} variant="h2" height={'50px'}>
                                     tài khoản của tôi
@@ -280,7 +278,7 @@ function Footer() {
                                     <ListItem sx={ftItemmb}>
                                         <LocalPhoneIcon />
                                         <Typography sx={{ cursor: 'pointer' }} px={1}>
-                                            0378529323
+                                            0383476296
                                         </Typography>
                                     </ListItem>
                                 </List>
