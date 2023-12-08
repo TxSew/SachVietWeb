@@ -407,7 +407,9 @@ const CartProduct = () => {
                                 />
 
                                 <Button variant="outlined" onClick={handleSubmit(handleDiscount)} type="submit">
-                                    <Typography variant="body1">Áp dụng</Typography>
+                                    <Typography sx={isMediumMD ? { fontSize: '12px' } : {}} variant="caption">
+                                        Áp dụng
+                                    </Typography>
                                 </Button>
                             </Stack>
                             <Typography variant="body1" color={color.text_color} py={1} fontSize={'13px'}>

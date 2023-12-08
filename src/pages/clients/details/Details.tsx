@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import AddIcon from '@mui/icons-material/Add';
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {
     Box,
+    Breadcrumbs,
     Button,
     Container,
     Grid,
@@ -24,7 +24,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, createSearchParams, useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { NavLink, createSearchParams, useNavigate, useParams } from 'react-router-dom';
 
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -61,7 +61,8 @@ import { Product } from '../../../submodules/models/ProductModel/Product';
 import { User } from '../../../submodules/models/UserModel/User';
 import CommentItem from './components/comments/CommentItem';
 
-import './style.scss';
+import { Link } from 'react-router-dom';
+import './index.css';
 export const Details = () => {
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
     const [imageFiles, setImageFiles] = useState<any[]>([]);
@@ -267,35 +268,55 @@ export const Details = () => {
         <Box bgcolor={'#eee'}>
             {TitleHelmet('Chi tiết sản phẩm')}
             <Container maxWidth="xl">
-                <Stack
-                    direction={'row'}
-                    py={1}
-                    alignItems={'center'}
-                    textTransform={'uppercase'}
-                    sx={
-                        isMediumMD
-                            ? {
-                                  fontSize: '12px',
-                              }
-                            : {}
-                    }
+                <Breadcrumbs
+                    aria-label="breadcrumb"
+                    sx={{
+                        py: '10px',
+                        color: color.text_color,
+                    }}
                 >
-                    <Typography variant="caption">{Detail?.category?.name}</Typography>
-                    <ChevronRightOutlinedIcon />
-                    <Typography
-                        variant="caption"
-                        sx={{
-                            overflow: 'hidden',
-                            textAlign: 'center',
-                            display: '-webkit-box',
-                            lineClamp: 2,
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                        }}
+                    <Link
+                        style={{ color: color.text_color }}
+                        color={color.text_color}
+                        to={`/filter?category=${Detail?.category?.slug}`}
                     >
-                        {Detail?.title}
-                    </Typography>
-                </Stack>
+                        <Typography
+                            color={'#1d1c1cde !important'}
+                            variant="caption"
+                            fontSize={isMediumMD ? '13px' : '15px'}
+                            fontWeight={'bold'}
+                        >
+                            {Detail?.category?.name}
+                        </Typography>
+                    </Link>
+                    <NavLink color="inherit" to={''}>
+                        <Typography
+                            variant="caption"
+                            fontWeight={'bold'}
+                            sx={
+                                isMediumMD
+                                    ? {
+                                          overflow: 'hidden',
+                                          display: '-webkit-box',
+                                          lineClamp: 2,
+                                          fontSize: '13px',
+                                          WebkitLineClamp: 2,
+                                          WebkitBoxOrient: 'vertical',
+                                      }
+                                    : {
+                                          overflow: 'hidden',
+                                          display: '-webkit-box',
+                                          lineClamp: 2,
+                                          WebkitLineClamp: 2,
+                                          WebkitBoxOrient: 'vertical',
+                                      }
+                            }
+                        >
+                            {Detail?.title}
+                        </Typography>
+                    </NavLink>
+                </Breadcrumbs>
+
                 <Box pb={2}>
                     <Grid container bgcolor={'#fff'} p={2}>
                         <Grid item xs={12} md={5} pb={3}>
@@ -432,7 +453,7 @@ export const Details = () => {
                             <Box p={2}>
                                 <Typography
                                     variant="h1"
-                                    fontSize={'22.1px'}
+                                    fontSize={isMediumMD ? '17px' : '22.1px'}
                                     textTransform={'capitalize'}
                                     fontWeight={500}
                                     sx={{
@@ -453,13 +474,7 @@ export const Details = () => {
                                         justifyContent={'space-between'}
                                         flexWrap={'wrap'}
                                     >
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={1}
-                                            sx={{
-                                                width: '50%',
-                                            }}
-                                        >
+                                        <Stack direction={'row'} spacing={1}>
                                             <Typography>Nhà xuất bản</Typography>
                                             <Typography fontWeight={'bold'} color={'primary'}>
                                                 <NavLink
@@ -472,13 +487,7 @@ export const Details = () => {
                                                 </NavLink>
                                             </Typography>
                                         </Stack>
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={1}
-                                            sx={{
-                                                width: '50%',
-                                            }}
-                                        >
+                                        <Stack direction={'row'} spacing={1}>
                                             <Typography>Tác giả:</Typography>
                                             <Typography fontWeight={'bold'}>
                                                 <NavLink
@@ -491,13 +500,7 @@ export const Details = () => {
                                                 </NavLink>
                                             </Typography>
                                         </Stack>
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={1}
-                                            sx={{
-                                                width: '50%',
-                                            }}
-                                        >
+                                        <Stack direction={'row'} spacing={1}>
                                             <Typography>Loại sản phẩm:</Typography>
                                             <Typography fontWeight={'bold'}>
                                                 <NavLink
@@ -512,16 +515,7 @@ export const Details = () => {
                                         </Stack>
                                     </Stack>
                                 </Box>
-                                <Box mt={1}>
-                                    <Rating
-                                        name="custom-rating-filter-operator"
-                                        defaultChecked={true}
-                                        defaultValue={2}
-                                        size="small"
-                                        precision={0.5}
-                                        readOnly
-                                    />
-                                </Box>
+
                                 <Box>
                                     <Stack direction={'row'} spacing={2} mt={2}>
                                         <Typography
@@ -529,15 +523,29 @@ export const Details = () => {
                                             color={color.price}
                                             fontSize={25}
                                             fontWeight={'bold'}
+                                            sx={
+                                                isMediumMD
+                                                    ? {
+                                                          fontSize: '17px',
+                                                      }
+                                                    : {}
+                                            }
                                         >
                                             {`${numberFormat(Number(Detail.price_sale))} `}
                                         </Typography>
                                         <Typography
                                             className="price"
                                             fontSize={15}
-                                            sx={{
-                                                textDecoration: 'line-through',
-                                            }}
+                                            sx={
+                                                isMediumMD
+                                                    ? {
+                                                          fontSize: '17px',
+                                                          textDecoration: 'line-through',
+                                                      }
+                                                    : {
+                                                          textDecoration: 'line-through',
+                                                      }
+                                            }
                                         >
                                             {Detail.sale ? `${numberFormat(Number(Detail.price))} ` : ''}
                                         </Typography>
@@ -563,27 +571,27 @@ export const Details = () => {
                                             <Typography>Chia sẻ:</Typography>
                                             <Stack mt={2} direction={'row'} spacing={1}>
                                                 <FacebookShareButton url={String(window.location)}>
-                                                    <FacebookIcon size={32} round />
+                                                    <FacebookIcon size={25} round />
                                                 </FacebookShareButton>
                                                 <FacebookMessengerShareButton
                                                     url={String(window.location)}
                                                     appId="521270401588372"
                                                 >
-                                                    <FacebookMessengerIcon size={32} round />
+                                                    <FacebookMessengerIcon size={25} round />
                                                 </FacebookMessengerShareButton>
                                                 <PinterestShareButton
                                                     url={String(window.location)}
                                                     media={`${String(window.location)}`}
                                                     className="Demo__some-network__share-button"
                                                 >
-                                                    <PinterestIcon size={32} round />
+                                                    <PinterestIcon size={25} round />
                                                 </PinterestShareButton>
                                                 <TwitterShareButton url={String(window.location)} title={'hello'}>
-                                                    <TwitterIcon size={32} round />
+                                                    <TwitterIcon size={25} round />
                                                 </TwitterShareButton>
                                             </Stack>
                                         </Stack>
-                                        <Stack width={'300px'} pr={4}>
+                                        <Stack pr={4}>
                                             <MoreHorizIcon sx={{ cursor: 'pointer' }} />
                                         </Stack>
                                     </Stack>
@@ -736,7 +744,8 @@ export const Details = () => {
                                                     : {
                                                           fontWeight: 'bold',
                                                           color: 'white',
-                                                          fontSize: '12px',
+                                                          fontSize: '11px',
+                                                          padding: '8px 8px',
                                                           textAlign: 'center',
                                                           cursor: 'pointer',
                                                       }
@@ -751,6 +760,7 @@ export const Details = () => {
                                                     ? {
                                                           padding: '16px 24px',
                                                           borderRadius: '0',
+                                                          fontSize: '11px',
                                                           backgroundColor: '#F7941E',
                                                           boxShadow: 'none',
                                                           color: '#FFFFFF',
@@ -761,7 +771,7 @@ export const Details = () => {
                                                           },
                                                       }
                                                     : {
-                                                          padding: '16.9px 24px',
+                                                          padding: '16.9px 8px',
                                                           borderRadius: '0',
                                                           backgroundColor: '#F7941E',
                                                           color: '#FFFFFF',
@@ -797,9 +807,16 @@ export const Details = () => {
                             variant="h2"
                             fontSize={'18px'}
                             textTransform={'uppercase'}
-                            sx={{
-                                p: '16px 0',
-                            }}
+                            sx={
+                                isMediumMD
+                                    ? {
+                                          p: '16px 0',
+                                          fontSize: '15px',
+                                      }
+                                    : {
+                                          p: '16px 0',
+                                      }
+                            }
                         >
                             Thông tin chi tiết
                         </Typography>
@@ -866,8 +883,34 @@ export const Details = () => {
                             <TabContext value={value}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider', px: 0 }}>
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">
-                                        <Tab label="Giới thiệu sản phẩm" value="1" />
-                                        <Tab label="Bình luận" value="2" />
+                                        <Tab
+                                            label="Giới thiệu sản phẩm"
+                                            value="1"
+                                            sx={
+                                                isMediumMD
+                                                    ? {
+                                                          p: '16px 10px',
+                                                          fontSize: '15px',
+                                                      }
+                                                    : {
+                                                          p: '16px 10px',
+                                                      }
+                                            }
+                                        />
+                                        <Tab
+                                            label="Bình luận"
+                                            value="2"
+                                            sx={
+                                                isMediumMD
+                                                    ? {
+                                                          p: '16px 10px',
+                                                          fontSize: '15px',
+                                                      }
+                                                    : {
+                                                          p: '16px 10px',
+                                                      }
+                                            }
+                                        />
                                     </TabList>
                                 </Box>
                                 <TabPanel

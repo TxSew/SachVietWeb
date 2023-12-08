@@ -1,4 +1,5 @@
-import { async } from '@firebase/util';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+
 import CardGiftcardIcon from '@mui/icons-material/CardGiftcard';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import HowToRegSharpIcon from '@mui/icons-material/HowToRegSharp';
@@ -7,29 +8,25 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LoginSharpIcon from '@mui/icons-material/LoginSharp';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import NewspaperIcon from '@mui/icons-material/Newspaper';
 import Person3Icon from '@mui/icons-material/Person3';
 import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import SellIcon from '@mui/icons-material/Sell';
-import ShoppingBasketSharpIcon from '@mui/icons-material/ShoppingBasketSharp';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import {
     Avatar,
     Badge,
-    CardMedia,
     Divider,
     Grid,
     IconButton,
-    ListItem,
-    ListItemButton,
+    InputAdornment,
+    Link,
     ListItemIcon,
-    ListItemText,
     Menu,
     MenuItem,
     Modal,
-    Slide,
+    OutlinedInput,
     Stack,
     TextField,
     Tooltip,
@@ -37,12 +34,12 @@ import {
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container/Container';
 import MuiDrawer from '@mui/material/Drawer';
-import { TransitionProps } from '@mui/material/transitions';
 import Typography from '@mui/material/Typography/Typography';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { createSearchParams, Link, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { color } from '../../../Theme/color';
 import { image } from '../../../assets';
 import Image from '../../../components/Image/Image';
 import { BaseAPi } from '../../../configs/BaseApi';
@@ -53,16 +50,12 @@ import { RootState } from '../../../redux/storeClient';
 import HttpCategoryController from '../../../submodules/controllers/http/httpCategoryController';
 import HttpProductController from '../../../submodules/controllers/http/httpProductController';
 import { User } from '../../../submodules/models/UserModel/User';
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
-const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement;
-    },
-    ref: React.Ref<unknown>
-) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
+import NavMobile from './components/HeaderMobile/NavMobile';
+import NavItem from './components/NavItem/NavItem';
+
 const Header = () => {
+    const location = useLocation();
+
     const http = new HttpProductController(BaseAPi);
     const httpCategory = new HttpCategoryController(BaseAPi);
 
@@ -105,64 +98,6 @@ const Header = () => {
             setUser(getUser);
         }
     }, []);
-    const styles = {
-        position: 'absolute',
-        top: '10%',
-        left: '50%',
-        transform: 'translate(-50%, 0%)',
-        width: '700px',
-        bgcolor: 'background.paper',
-        borderRight: '1px solid #000',
-        boxShadow: 24,
-        outline: 'none',
-        p: 4,
-        pt: 2,
-        borderRadius: '8px',
-    };
-
-    const boxmodal = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '240px',
-        height: '100%',
-        bgcolor: 'background.paper',
-        borderRight: '1px solid #000',
-        boxShadow: 24,
-        outline: 'none',
-        p: 4,
-        pt: 2,
-    };
-
-    const hditem = {
-        display: 'flex',
-        alignItems: 'center',
-        pt: 2,
-        pb: 2,
-        color: '#615c5c',
-        fonSize: '12px',
-        fontWeight: 400,
-        fontStyle: 'normal',
-        lineHieght: 'normal',
-        transition: 'all .3s ease-in-out',
-        '&:hover': {
-            color: '#008C89',
-        },
-    };
-
-    const hdicon = {
-        mr: 1,
-        fontSize: '24px',
-    };
-    const hdicon_mb = {
-        mr: 1,
-        fontSize: '24px',
-        lineHieght: 'normal',
-    };
-
-    const nicon = {
-        lineHeight: 'normal',
-    };
 
     const [openSearch, setOpenSearch] = React.useState(false);
     const handleOpenSearch = () => setOpenSearch(true);
@@ -178,14 +113,13 @@ const Header = () => {
         if (event.target.value) {
             setSearch(event.target.value);
         }
-        // setSearch(event.target.value);
     };
     const navigate = useNavigate();
     const handleKeydown = async (event: any) => {
         const value = convertText(event.target.value);
         if (event.key === 'Enter') {
             navigate({
-                pathname: '/category',
+                pathname: '/filter',
                 search: createSearchParams({
                     q: value,
                 }).toString(),
@@ -193,18 +127,16 @@ const Header = () => {
             handleCloseSearch();
         }
     };
-    const handleSearch = () => {
-        navigate({
-            pathname: '/category',
-            search: createSearchParams({
-                q: search,
-            }).toString(),
-        });
-    };
-    const [value, setValue] = React.useState('1');
 
-    const handleChange = (event: React.SyntheticEvent, newValue: string) => {
-        setValue(newValue);
+    const handleSearch = () => {
+        if (search.length > 1) {
+            navigate({
+                pathname: '/filter',
+                search: createSearchParams({
+                    q: search,
+                }).toString(),
+            });
+        }
     };
 
     const [state, setState] = React.useState({
@@ -214,7 +146,7 @@ const Header = () => {
         right: false,
     });
 
-    const toggleDrawer = (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    const toggleDrawer = (anchor: any, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
         if (
             event.type === 'keydown' &&
             ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')
@@ -225,65 +157,6 @@ const Header = () => {
         setState({ ...state, [anchor]: open });
     };
 
-    const list = (anchor: Anchor) => (
-        <Box
-            sx={{
-                width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 260,
-                background: '#fff',
-                height: '100vh',
-            }}
-            role="presentation"
-        >
-            <div className="dasb-sidebar-menu">
-                <img width={'100px'} src={image.logo} alt="" />
-            </div>
-
-            {categoryHeaderMobile.map((e: any) => {
-                return (
-                    <NavLink to={`/category?category=${e.slug}`}>
-                        <ListItem className="act-header" disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
-                                    minHeight: 48,
-                                    justifyContent: 'initial',
-                                    px: 2,
-                                    transition: 'all .3s ease-in-out',
-                                }}
-                            >
-                                <ListItemIcon
-                                    sx={{
-                                        minWidth: 0,
-                                        color: '#000',
-                                        mr: 3,
-                                    }}
-                                >
-                                    <CardMedia
-                                        component="img"
-                                        sx={{
-                                            width: '38px',
-                                            height: '38px',
-                                            objectFit: 'contain',
-                                            p: 1,
-                                        }}
-                                        title=""
-                                        image="https://cdn0.fahasa.com/skin/frontend/ma_vanese/fahasa/images/category/ico_sachtrongnuoc.svg"
-                                    />
-                                </ListItemIcon>
-                                <ListItemText
-                                    primary={e.name}
-                                    sx={{
-                                        opacity: open ? 1 : 1,
-                                        color: 'black',
-                                    }}
-                                />
-                            </ListItemButton>
-                        </ListItem>
-                    </NavLink>
-                );
-            })}
-        </Box>
-    );
-
     return (
         <>
             <Box width={'100%'}>
@@ -292,50 +165,25 @@ const Header = () => {
             {!isMediumMD ? (
                 <Box width={'100%'}>
                     <Container maxWidth="xl">
-                        <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                        <Box display={'flex'} alignItems={'center'} py={2} justifyContent={'space-between'}>
                             <Box display={'flex'} alignItems={'center'} gap={3}>
-                                <NavLink to={''}>
-                                    <Box sx={hditem}>
-                                        <InfoIcon sx={hdicon} />
-                                        <Typography fontSize={'12px'} style={nicon}>
-                                            Trợ giúp
-                                        </Typography>
-                                    </Box>
-                                </NavLink>
-                                <NavLink to={'/news'}>
-                                    <Box sx={hditem}>
-                                        <NewspaperIcon sx={hdicon} />
-                                        <Typography fontSize={'12px'} style={nicon}>
-                                            Tin tức
-                                        </Typography>
-                                    </Box>
-                                </NavLink>
-                                <NavLink to={'/sales'}>
-                                    <Box sx={hditem}>
-                                        <SellIcon sx={hdicon} />
-                                        <Typography fontSize={'12px'} style={nicon}>
-                                            Khuyễn mãi
-                                        </Typography>
-                                    </Box>
-                                </NavLink>
+                                <NavItem path="/" name="Trợ giúp" icon={<InfoIcon fontSize="small" />} />
+                                <NavItem path="/news" name="Tin tức" icon={<NewspaperIcon fontSize="small" />} />
+                                <NavItem path="/sales" name="Khuyến mãi" icon={<SellIcon fontSize="small" />} />
                             </Box>
                             <Box display={'flex'} alignItems={'center'} gap={3}>
-                                <NavLink to={'/searchOrder'}>
-                                    <Box sx={hditem}>
-                                        <CardGiftcardIcon sx={hdicon} />
-                                        <Typography fontSize={'12px'} style={nicon}>
-                                            Tra cứu đơn hàng
-                                        </Typography>
-                                    </Box>
-                                </NavLink>
-                                <NavLink to={'/user/mycart'}>
-                                    <Box sx={hditem}>
-                                        <ShoppingBasketSharpIcon sx={hdicon} />
-                                        <Typography fontSize={'12px'} style={nicon}>
-                                            Kiểm tra đơn hàng
-                                        </Typography>
-                                    </Box>
-                                </NavLink>
+                                <NavItem
+                                    path="/searchOrder"
+                                    name="Tra cứu đơn hàng"
+                                    icon={<CardGiftcardIcon fontSize="small" />}
+                                />
+
+                                <NavItem
+                                    path="/user/mycart"
+                                    name="Kiểm tra đơn hàng"
+                                    icon={<SellIcon fontSize="small" />}
+                                />
+
                                 {user.id ? (
                                     <Box
                                         position={'relative'}
@@ -345,12 +193,12 @@ const Header = () => {
                                             },
                                         }}
                                     >
-                                        <NavLink to={'/user'} style={hditem}>
-                                            <HowToRegSharpIcon sx={hdicon} />
-                                            <Typography fontSize={'12px'} style={nicon}>
-                                                Tài khoản
-                                            </Typography>
-                                        </NavLink>
+                                        <NavItem
+                                            path="/user"
+                                            name="Tài khoản"
+                                            icon={<HowToRegSharpIcon fontSize="small" />}
+                                        />
+
                                         <Stack
                                             className="user-view"
                                             sx={{
@@ -376,14 +224,14 @@ const Header = () => {
                                         >
                                             <ul>
                                                 <li>
-                                                    <Link
+                                                    <NavLink
                                                         style={{
                                                             color: 'inherit',
                                                         }}
                                                         to="/user/mycart"
                                                     >
                                                         Xem thông tin cá nhân
-                                                    </Link>
+                                                    </NavLink>
                                                 </li>
                                                 <li>
                                                     <Typography
@@ -404,22 +252,16 @@ const Header = () => {
                                     </Box>
                                 ) : (
                                     <Box display={'flex'} gap={2}>
-                                        <NavLink to={'/auth'}>
-                                            <Box sx={hditem}>
-                                                <LoginSharpIcon sx={hdicon} />
-                                                <Typography fontSize={'12px'} style={nicon}>
-                                                    Đăng nhập
-                                                </Typography>
-                                            </Box>
-                                        </NavLink>
-                                        <NavLink to={'/auth'}>
-                                            <Box sx={hditem}>
-                                                <HowToRegSharpIcon sx={hdicon} />
-                                                <Typography fontSize={'12px'} style={nicon}>
-                                                    Đăng ký
-                                                </Typography>
-                                            </Box>
-                                        </NavLink>
+                                        <NavItem
+                                            path="/auth"
+                                            name="Đăng nhập"
+                                            icon={<LoginSharpIcon fontSize="small" />}
+                                        />
+                                        <NavItem
+                                            path="/auth"
+                                            name="Đăng ký"
+                                            icon={<HowToRegSharpIcon fontSize="small" />}
+                                        />
                                     </Box>
                                 )}
                             </Box>
@@ -444,7 +286,7 @@ const Header = () => {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <Link to={'/'}>
+                                    <NavLink to={'/'}>
                                         <Box
                                             sx={{
                                                 display: 'flex',
@@ -453,7 +295,7 @@ const Header = () => {
                                         >
                                             <Image src={image.logo} width="160px" height="50px" alt="Logo" />
                                         </Box>
-                                    </Link>
+                                    </NavLink>
                                 </Grid>
                                 <Grid
                                     item
@@ -512,7 +354,22 @@ const Header = () => {
                                                 top: '130px',
                                             }}
                                         >
-                                            <Box sx={styles}>
+                                            <Box
+                                                sx={{
+                                                    position: 'absolute',
+                                                    top: '10%',
+                                                    left: '50%',
+                                                    transform: 'translate(-50%, 0%)',
+                                                    width: '700px',
+                                                    bgcolor: 'background.paper',
+                                                    borderRight: '1px solid #000',
+                                                    boxShadow: 24,
+                                                    outline: 'none',
+                                                    p: 4,
+                                                    pt: 2,
+                                                    borderRadius: '8px',
+                                                }}
+                                            >
                                                 <Stack
                                                     sx={{
                                                         display: 'flex',
@@ -567,7 +424,7 @@ const Header = () => {
                                                             Products.slice(0, 6).map((e: any) => {
                                                                 return (
                                                                     <Grid item xs={6} md={4}>
-                                                                        <Link
+                                                                        <NavLink
                                                                             to={`/products/${e.slug}`}
                                                                             onClick={handleCloseSearch}
                                                                         >
@@ -608,7 +465,7 @@ const Header = () => {
                                                                                     </Typography>
                                                                                 </Grid>
                                                                             </Box>
-                                                                        </Link>
+                                                                        </NavLink>
                                                                     </Grid>
                                                                 );
                                                             })
@@ -660,14 +517,14 @@ const Header = () => {
                                         pl: '24px',
                                     }}
                                 >
-                                    <NavLink
-                                        hrefLang="tel:0383476296"
-                                        to={'/'}
+                                    <Link
                                         style={{
                                             display: 'flex',
                                             alignItems: 'center',
                                             paddingLeft: '16px',
                                         }}
+                                        href="tel:0383476296"
+                                        underline="none"
                                     >
                                         <PersonOutlineOutlinedIcon
                                             sx={{
@@ -693,7 +550,7 @@ const Header = () => {
                                         >
                                             0383476296
                                         </Typography>
-                                    </NavLink>
+                                    </Link>
                                     <NavLink
                                         to={'/cart'}
                                         style={{
@@ -720,7 +577,7 @@ const Header = () => {
                                                 },
                                             }}
                                         >
-                                            Giỏ hàng{' '}
+                                            Giỏ hàng
                                         </Typography>
                                     </NavLink>
                                 </Grid>
@@ -732,9 +589,6 @@ const Header = () => {
                                     left: '18%',
                                     height: '450px',
                                     position: 'absolute',
-                                    zIndex: 10,
-                                    boxShadow:
-                                        ' rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px',
                                     border: '1px solid #eee',
                                     borderRadius: '12px',
                                     p: 4,
@@ -762,19 +616,17 @@ const Header = () => {
                                         cursor: 'pointer',
                                     }}
                                 >
-                                    {(['left'] as const).map((anchor) => (
-                                        <React.Fragment key={anchor}>
-                                            <MenuIcon onClick={toggleDrawer(anchor, true)} />
+                                    <React.Fragment>
+                                        <MenuIcon onClick={toggleDrawer('left', true)} />
 
-                                            <MuiDrawer
-                                                anchor={anchor}
-                                                open={state[anchor]}
-                                                onClose={toggleDrawer(anchor, false)}
-                                            >
-                                                {list(anchor)}
-                                            </MuiDrawer>
-                                        </React.Fragment>
-                                    ))}
+                                        <MuiDrawer
+                                            anchor={'left'}
+                                            open={state['left']}
+                                            onClose={toggleDrawer('left', false)}
+                                        >
+                                            {location.pathname === '/user' ? '' : <NavMobile />}
+                                        </MuiDrawer>
+                                    </React.Fragment>
                                 </Box>
                                 <NavLink
                                     to={'/'}
@@ -794,7 +646,7 @@ const Header = () => {
                                     }}
                                 >
                                     <Badge badgeContent={cart.length} color="primary">
-                                        <ShoppingCartIcon sx={hdicon_mb} />
+                                        <ShoppingCartIcon />
                                     </Badge>
                                 </NavLink>
 
@@ -825,7 +677,6 @@ const Header = () => {
                                                     }}
                                                 >
                                                     <Person3Icon
-                                                        sx={hdicon_mb}
                                                         style={{
                                                             margin: '0 auto',
                                                         }}
@@ -961,7 +812,7 @@ const Header = () => {
                                                         sx={{
                                                             marginRight: '8px',
                                                         }}
-                                                    />{' '}
+                                                    />
                                                     Đăng ký
                                                 </MenuItem>
                                             </NavLink>
@@ -969,6 +820,26 @@ const Header = () => {
                                     )}
                                 </Box>
                             </Box>
+                        </Box>
+                        <Box pb={2}>
+                            <OutlinedInput
+                                sx={{
+                                    background: color.white,
+                                }}
+                                onChange={(e: any) => {
+                                    setSearch(e.target.value);
+                                }}
+                                key={2}
+                                fullWidth
+                                placeholder="Tìm kiếm sản phẩm..."
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton aria-label="toggle password visibility" onClick={handleSearch}>
+                                            <SearchIcon />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
+                            />
                         </Box>
                     </Container>
                 </Box>

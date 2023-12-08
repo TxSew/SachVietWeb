@@ -68,15 +68,7 @@ const Login = () => {
             }
         }
     };
-    const handleLoginGoogle = () => {
-        signInWithPopup(auth, provider).then((data: any) => {
-            console.log(data);
-            httpAccount.loginGoogle(data.user.accessToken).then((res) => {
-                console.log(res);
-            });
-            // localStorage.setItem('email', data.user.email);
-        });
-    };
+
     return (
         <>
             <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
@@ -197,31 +189,6 @@ const Login = () => {
                         }}
                     >
                         Đăng nhập
-                    </Button>
-                </Box>
-                <Box
-                    mt={2}
-                    sx={{
-                        clear: 'both',
-                        display: 'flex',
-                        direction: 'column',
-                        justifyContent: 'center',
-                    }}
-                >
-                    <Button
-                        onClick={handleLoginGoogle}
-                        variant="outlined"
-                        style={{
-                            width: '100%',
-                            fontSize: '12px',
-                            fontWeight: 'bold',
-                            background: '#ba1a1aff',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '8px 0',
-                        }}
-                    >
-                        Đăng nhập bằng Google
                     </Button>
                 </Box>
             </form>

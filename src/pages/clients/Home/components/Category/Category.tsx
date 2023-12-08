@@ -22,7 +22,7 @@ const CategoryNav = () => {
 
     const RedirectProductPage = (props: any) => {
         redirect({
-            pathname: '/category',
+            pathname: '/filter',
             search: createSearchParams({
                 category: props,
             }).toString(),
@@ -69,11 +69,18 @@ const CategoryNav = () => {
                         }}
                     />
                     <h1
-                        style={{
-                            fontSize: 'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)',
-                            fontWeight: 'bold',
-                            textTransform: 'uppercase',
-                        }}
+                        style={
+                            isMediumMD
+                                ? {
+                                      fontSize: '13px',
+                                      fontWeight: 'bold',
+                                      textTransform: 'uppercase',
+                                  }
+                                : {
+                                      fontWeight: 'bold',
+                                      textTransform: 'uppercase',
+                                  }
+                        }
                     >
                         Danh mục sản phẩm
                     </h1>

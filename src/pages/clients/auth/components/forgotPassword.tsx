@@ -22,6 +22,7 @@ import { toast } from 'react-toastify';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { TitleHelmet } from '../../../../constants/Helmet';
+import { pushWarning } from '../../../../components/Toast/Toast';
 const http = new HttpAccountController(BaseAPi);
 const ForgotPasswordPage = () => {
     const redirect = useNavigate();
@@ -48,27 +49,31 @@ const ForgotPasswordPage = () => {
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
     const handleClickSendOtp = () => {
-        setShowPassword(true);
-        http.sendOtp(email)
-            .then((res) => {
-                if (res.forgot_password_token) {
-                    setShowPassword(false);
-                    toast.success('OTP gửi qua email thành công,vui lòng kiểm tra email ', {
-                        position: 'top-right',
-                    });
+        if (email.length > 1) {
+            setShowPassword(true);
+            http.sendOtp(email)
+                .then((res) => {
+                    if (res.forgot_password_token) {
+                        setShowPassword(false);
+                        toast.success('OTP gửi qua email thành công,vui lòng kiểm tra email ', {
+                            position: 'top-right',
+                        });
 
-                    localStorage.setItem('forgot_password_token', res.forgot_password_token);
-                }
-            })
-            .catch((err) => {
-                setShowPassword(true);
-                if (err.response.data.message == 'Not Found') {
-                    setShowPassword(false);
-                    toast.error('Tài khoản không tồn tại trên hệ thống, vui lòng nhập lại thông tin!', {
-                        position: 'top-right',
-                    });
-                }
-            });
+                        localStorage.setItem('forgot_password_token', res.forgot_password_token);
+                    }
+                })
+                .catch((err) => {
+                    setShowPassword(true);
+                    if (err.response.data.message == 'Not Found') {
+                        setShowPassword(false);
+                        toast.error('Tài khoản không tồn tại trên hệ thống, vui lòng nhập lại thông tin!', {
+                            position: 'top-right',
+                        });
+                    }
+                });
+        } else {
+            pushWarning('Vui lòng nhập địa chỉ email!');
+        }
     };
 
     const handleForgotPassword = (event: any) => {

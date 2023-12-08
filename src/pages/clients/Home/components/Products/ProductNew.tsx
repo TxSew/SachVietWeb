@@ -6,6 +6,7 @@ import { httpProduct } from '../../../../../submodules/controllers/http/axiosCon
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import { redirect, useNavigate } from 'react-router-dom';
 import { image } from '../../../../../assets';
+import useMedia from '../../../../../hooks/useMedia/useMedia';
 
 function ProductNew() {
     const { isLoading, startLoading, stopLoading } = useLoading();
@@ -29,6 +30,7 @@ function ProductNew() {
         const props = {};
         fetchData(props);
     }, []);
+    const { isMediumMD } = useMedia();
 
     return (
         <Box>
@@ -63,10 +65,18 @@ function ProductNew() {
                                 }}
                             />
                             <h2
-                                style={{
-                                    fontSize: 'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)',
-                                    fontWeight: 'bold',
-                                }}
+                                style={
+                                    isMediumMD
+                                        ? {
+                                              fontSize: '13px',
+                                              textTransform: 'uppercase',
+                                              fontWeight: 'bold',
+                                          }
+                                        : {
+                                              fontWeight: 'bold',
+                                              textTransform: 'uppercase',
+                                          }
+                                }
                             >
                                 Sách Mới Phát Hành
                             </h2>
@@ -102,7 +112,7 @@ function ProductNew() {
                     <Stack>
                         <Button
                             onClick={() => {
-                                redirect('/category');
+                                redirect('/filter');
                             }}
                             variant="OutlinedRed"
                         >

@@ -5,10 +5,12 @@ import useLoading from '../../../../../hooks/useLoading/useLoading';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import { image } from '../../../../../assets';
+import useMedia from '../../../../../hooks/useMedia/useMedia';
 
 function Products() {
     const { isLoading, startLoading, stopLoading } = useLoading();
     const [Products, setProducts] = useState<Product[]>([]);
+    const { isMediumMD } = useMedia();
     const fetchData = async (props: any) => {
         try {
             const productData: any = await httpProduct.getAll(props);
@@ -60,10 +62,16 @@ function Products() {
                                 alt=""
                             />
                             <h2
-                                style={{
-                                    fontSize: 'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)',
-                                    fontWeight: 'bold',
-                                }}
+                                style={
+                                    isMediumMD
+                                        ? {
+                                              fontSize: '13px',
+                                              fontWeight: 'bold',
+                                          }
+                                        : {
+                                              fontWeight: 'bold',
+                                          }
+                                }
                             >
                                 XU HƯỚNG MUA SẮM
                             </h2>

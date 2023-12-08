@@ -8,8 +8,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
 
-// import required modules
-// import { Navigation } from "swiper/modules";
 function Banner() {
     const { isMediumMD } = useMedia();
     return (
@@ -36,6 +34,8 @@ function Banner() {
                                         alt="Banner tùy chỉnh"
                                         style={{
                                             width: '100%',
+                                            height: '160px',
+                                            objectFit: 'cover',
                                             borderRadius: '10px',
                                         }}
                                     />
@@ -52,6 +52,8 @@ function Banner() {
                                         alt=""
                                         style={{
                                             borderRadius: '10px',
+                                            objectFit: 'cover',
+                                            height: '160px',
                                             width: '100%',
                                         }}
                                     />

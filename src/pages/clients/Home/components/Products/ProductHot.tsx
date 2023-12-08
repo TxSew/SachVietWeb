@@ -5,6 +5,7 @@ import ProductItem from '../../../../../components/ProductItem/ProductItem';
 import useLoading from '../../../../../hooks/useLoading/useLoading';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
+import useMedia from '../../../../../hooks/useMedia/useMedia';
 interface PropsSort {
     page: number;
     search: string;
@@ -36,7 +37,7 @@ function ProductHots() {
         };
         fetchData(props);
     }, []);
-
+    const { isMediumMD } = useMedia();
     return (
         <Box>
             <Container maxWidth={'xl'}>
@@ -70,10 +71,16 @@ function ProductHots() {
                                 }}
                             />
                             <h2
-                                style={{
-                                    fontSize: 'clamp(1rem, 0.95rem + 0.25vw, 1.25rem)',
-                                    fontWeight: 'bold',
-                                }}
+                                style={
+                                    isMediumMD
+                                        ? {
+                                              fontSize: '13px',
+                                              fontWeight: 'bold',
+                                          }
+                                        : {
+                                              fontWeight: 'bold',
+                                          }
+                                }
                             >
                                 THẾ GIỚI SÁCH THIẾU NHI
                             </h2>

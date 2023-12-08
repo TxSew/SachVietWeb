@@ -135,7 +135,6 @@ function Footer() {
                                     quốc
                                 </Typography>
                             </Box>
-                            {/* lis6 icon */}
 
                             <Stack
                                 sx={{
@@ -312,7 +311,6 @@ function Footer() {
                                 </List>
                             </Grid>
                             <Grid md={3.5} xs={6} sm={6}>
-                                {' '}
                                 <Typography sx={ftItemhd} variant="h2">
                                     Trang chủ
                                 </Typography>
@@ -404,8 +402,7 @@ function Footer() {
                                                     },
                                                 }}
                                             >
-                                                {' '}
-                                                Đăng ký{' '}
+                                                Đăng ký
                                             </ListItem>
                                         </NavLink>
                                     </ListItem>

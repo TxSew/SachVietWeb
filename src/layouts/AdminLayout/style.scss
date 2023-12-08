@@ -8,12 +8,12 @@
         top: 0;
         background-color: #222d32;
         color: white;
-        transition: all .1s ease-out;
+        transition: all 0.1s ease-out;
         display: flex;
         justify-content: space-between;
         align-items: center;
 
-        &>.tool {
+        & > .tool {
             color: rgb(255, 255, 255);
             font-size: 24px;
             padding: 8px 32px;
@@ -38,26 +38,15 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all .3s ease-out;
+            transition: all 0.3s ease-out;
             cursor: pointer;
             font-size: 24px;
             padding-left: 32px;
 
-
-
-            &>i {
+            & > i {
                 display: flex;
                 align-items: center;
             }
-
-        }
-
-
-        i {
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-            margin-right: 24px;
         }
 
         &-right {
@@ -69,7 +58,7 @@
                 color: white;
             }
 
-            &>li {
+            & > li {
                 list-style: none;
                 margin: 0 8px;
             }
@@ -78,29 +67,28 @@
                 display: flex;
                 padding-right: 48px;
 
-                &>label {
+                & > label {
                     display: flex;
                     align-items: center;
 
-                    &>img {
+                    & > img {
                         border-radius: 50%;
                     }
 
-                    &>span {
+                    & > span {
                         margin: 0 0 0 12px;
                         font-size: 14px;
                     }
 
-                    &>i {
+                    & > i {
                         margin: 0 0 0 12px;
                         font-size: 12px;
                     }
                 }
 
-                &>input {
+                & > input {
                     display: none;
                     transition: all 0.7s ease;
-
                 }
 
                 &-drop {
@@ -112,39 +100,33 @@
                     padding: 16px;
                     transition: all 0.7s ease;
 
-
-                    &>a {
+                    & > a {
                         color: black;
-                        transition: all .3s ease-out;
+                        transition: all 0.3s ease-out;
 
-                        &>p {
+                        & > p {
                             padding: 8px 0 0;
                         }
                     }
 
-
-                    &>a:hover {
+                    & > a:hover {
                         color: #71b6f9;
                     }
-
-
                 }
 
-                &>input:checked~#drop {
+                & > input:checked ~ #drop {
                     display: block;
                 }
             }
         }
-
     }
 
     &-wapper {
-
-        &>input {
+        & > input {
             display: none;
         }
 
-        &>input:checked+.dasb-sidebar {
+        & > input:checked + .dasb-sidebar {
             width: 70px;
 
             li {
@@ -156,9 +138,8 @@
             }
 
             li:hover {
-                border-left: 7px solid #008C89;
+                border-left: 7px solid #008c89;
                 background-color: #f8f9fa;
-
 
                 a {
                     color: #71b6f9;
@@ -168,21 +149,20 @@
             span {
                 display: none;
             }
-
         }
-        &>input:checked~.dasb-wapper-main {
+        & > input:checked ~ .dasb-wapper-main {
             width: calc(100% - 90px);
         }
 
         &-main {
             position: relative;
             width: calc(100% - 260px);
-            transition: all .3s ease-in-out;
+            transition: all 0.3s ease-in-out;
 
             &-bg {
                 padding: 0 0 0 16px;
 
-                &>.content {
+                & > .content {
                     background-color: #ffffff;
                     height: 100vh;
                     padding: 16px;
@@ -195,7 +175,7 @@
         position: relative;
         width: 260px;
         background: #222d32;
-        transition: all .3s ease-out;
+        transition: all 0.3s ease-out;
 
         &-menu {
             position: sticky;
@@ -208,7 +188,6 @@
             color: white;
             z-index: 1;
             border-bottom: 3px solid #ccc;
-
         }
 
         &-logo {
@@ -222,24 +201,13 @@
             background-color: #020202;
             color: white;
             z-index: 1;
-
         }
 
         ul {
             position: sticky;
             top: 48px;
             overflow: auto;
-            // height: 100vh;
-            // scrollbar-width: none;
-            // -ms-overflow-style: none;
         }
-
-        // ul::-webkit-scrollbar {
-        //     width: 0 !important;
-        //     display: none;
-        // }
-
-
 
         li {
             display: flex;
@@ -249,9 +217,8 @@
             border-left: 5px solid #222d32;
             border-top: 1px solid #222d32;
             border-bottom: 1px solid #222d32;
-            transition: all .3s ease-in-out;
+            transition: all 0.3s ease-in-out;
         }
-
 
         a.active li div {
             background-color: #161515;
@@ -271,14 +238,13 @@
     }
 }
 
-
 .navdb {
     align-items: center;
     color: #b8c7ce;
     border-left: 5px solid #222d32;
     border-top: 1px solid #222d32;
     border-bottom: 1px solid #222d32;
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 a.active .navdb {
@@ -293,60 +259,47 @@ a.active .navdb div {
     color: #dd4b39;
 }
 
-
-
-
-
 a.active .navdb div {
     background-color: #161515;
     color: #dd4b39;
 }
-
-
 
 a:hover .navdb {
     border-left: 5px solid #dd4b39;
     background-color: #161515;
 }
 
-
-
-
-
-
-
 .act-header {
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 a.active .act-header {
-    background-color: #F39801;
+    background-color: #f39801;
 }
 
 a.active .act-header div {
-    background-color: #F39801;
+    background-color: #f39801;
     color: #fff;
 }
 
 a.active .act-header div {
-    background-color: #F39801;
+    background-color: #f39801;
     color: #fff;
 }
-
 
 a:hover .act-header {
-    background-color: #F39801;
+    background-color: #f39801;
 }
 
 a .act-header {
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
     border-bottom: 1px solid #ccc;
 }
 
 a .act-header div {
-    transition: all .3s ease-in-out;
+    transition: all 0.3s ease-in-out;
 }
 
 a:hover .act-header div {
-    color: #fff
+    color: #fff;
 }
