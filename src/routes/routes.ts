@@ -122,7 +122,7 @@ const PrivateRouter = [
     },
     {
         path: '/admin/productInventory',
-        component: AdminProductInventory,
+        component: AdminProductInvetory,
     },
     {
         path: '/admin/productInventory/:id',

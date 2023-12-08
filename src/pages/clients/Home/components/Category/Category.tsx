@@ -35,7 +35,7 @@ const CategoryNav = () => {
             const category = await httpCategory.getCategory({});
             const filteredData = category.filter((item: any) => item.parentId !== null);
             if (filteredData) {
-                    stopLoading();
+                stopLoading();
             }
             SetCategory(filteredData);
         } catch (error) {
@@ -82,7 +82,7 @@ const CategoryNav = () => {
                 <Grid container px={2} mt={2}>
                     <Swiper
                         watchSlidesProgress={true}
-                        slidesPerView={isMediumMD ? 4 : 10}
+                        slidesPerView={isMediumMD ? 3 : 10}
                         className="mySwiper categorySwiper"
                     >
                         {isLoading

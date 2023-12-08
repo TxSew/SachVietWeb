@@ -77,7 +77,7 @@ const CreateDiscount = () => {
                         <Controller
                             control={control}
                             name="discount"
-                            defaultValue="" // Set an initial value here
+                            defaultValue=""
                             rules={{
                                 required: 'Vui lòng nhập số tiền giảm giá',
                             }}

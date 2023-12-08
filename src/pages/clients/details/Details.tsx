@@ -282,7 +282,19 @@ export const Details = () => {
                 >
                     <Typography variant="caption">{Detail?.category?.name}</Typography>
                     <ChevronRightOutlinedIcon />
-                    <Typography variant="caption">{Detail?.title}</Typography>
+                    <Typography
+                        variant="caption"
+                        sx={{
+                            overflow: 'hidden',
+                            textAlign: 'center',
+                            display: '-webkit-box',
+                            lineClamp: 2,
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: 'vertical',
+                        }}
+                    >
+                        {Detail?.title}
+                    </Typography>
                 </Stack>
                 <Box pb={2}>
                     <Grid container bgcolor={'#fff'} p={2}>
@@ -423,7 +435,14 @@ export const Details = () => {
                                     fontSize={'22.1px'}
                                     textTransform={'capitalize'}
                                     fontWeight={500}
-                                    sx={{ textTransform: 'capitalize' }}
+                                    sx={{
+                                        textTransform: 'capitalize',
+                                        overflow: 'hidden',
+                                        display: '-webkit-box',
+                                        lineClamp: 3,
+                                        WebkitLineClamp: 3,
+                                        WebkitBoxOrient: 'vertical',
+                                    }}
                                 >
                                     {Detail?.title}
                                 </Typography>
