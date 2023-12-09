@@ -151,7 +151,6 @@ export const Details = () => {
         httpProduct
             .checkQuantity(props)
             .then((response) => {
-                console.log('🚀 ~ file: Details.tsx:152 ~ .then ~ response:', response);
                 if (response.message === 'quantity successfully')
                     dispatch(
                         addToCart({

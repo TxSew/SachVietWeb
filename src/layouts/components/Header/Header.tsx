@@ -52,6 +52,7 @@ import HttpProductController from '../../../submodules/controllers/http/httpProd
 import { User } from '../../../submodules/models/UserModel/User';
 import NavMobile from './components/HeaderMobile/NavMobile';
 import NavItem from './components/NavItem/NavItem';
+import NavUser from './components/NavUser/NavUser';
 
 const Header = () => {
     const location = useLocation();
@@ -72,14 +73,17 @@ const Header = () => {
     useEffect(() => {
         fetchValueSearch(dataSearch);
     }, [dataSearch]);
+
     useEffect(() => {
         fetchCategories();
     }, []);
+
     const fetchCategories = async () => {
         const category = await httpCategory.getCategory({});
         const filteredData = category.filter((item: any) => item.parentId !== null);
         setCategoryHeaderMobile(filteredData);
     };
+
     async function fetchValueSearch(props: any) {
         const data = await http.getAll({
             keyword: props,
@@ -108,6 +112,7 @@ const Header = () => {
     };
     const handleClose = () => {
         setAnchorEl(null);
+        redirect('/auth');
     };
     const handleChangeValue = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value) {
@@ -258,7 +263,7 @@ const Header = () => {
                                             icon={<LoginSharpIcon fontSize="small" />}
                                         />
                                         <NavItem
-                                            path="/auth"
+                                            path="/auth?register=true"
                                             name="Đăng ký"
                                             icon={<HowToRegSharpIcon fontSize="small" />}
                                         />
@@ -275,6 +280,7 @@ const Header = () => {
                                     display: 'flex',
                                     flexDirection: 'row',
                                     alignItems: 'center',
+                                    justifyContent: 'space-between',
                                     py: '10px',
                                 }}
                             >
@@ -297,30 +303,7 @@ const Header = () => {
                                         </Box>
                                     </NavLink>
                                 </Grid>
-                                <Grid
-                                    item
-                                    xs={1}
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                    }}
-                                >
-                                    <Box
-                                        sx={{
-                                            textAlign: 'right',
-                                        }}
-                                    >
-                                        <img
-                                            src={image.menu}
-                                            height={'45px'}
-                                            style={{ objectFit: 'cover' }}
-                                            width={'45px'}
-                                            alt=""
-                                        />
-                                    </Box>
-                                </Grid>
+
                                 <Grid
                                     item
                                     xs={5.5}
@@ -624,7 +607,11 @@ const Header = () => {
                                             open={state['left']}
                                             onClose={toggleDrawer('left', false)}
                                         >
-                                            {location.pathname === '/user' ? '' : <NavMobile />}
+                                            {location.pathname == '/user' || location.pathname.startsWith('/user/') ? (
+                                                <NavUser />
+                                            ) : (
+                                                <NavMobile />
+                                            )}
                                         </MuiDrawer>
                                     </React.Fragment>
                                 </Box>
@@ -732,7 +719,7 @@ const Header = () => {
                                                         sx={{
                                                             marginRight: '8px',
                                                         }}
-                                                    />{' '}
+                                                    />
                                                     Thông tin tài khoản
                                                 </MenuItem>
                                             </NavLink>
@@ -797,25 +784,26 @@ const Header = () => {
                                                         sx={{
                                                             marginRight: '8px',
                                                         }}
-                                                    />{' '}
+                                                    />
                                                     Đăng nhập
                                                 </MenuItem>
                                             </NavLink>
-                                            <NavLink to={'/auth'}>
-                                                <MenuItem
-                                                    onClick={handleClose}
+                                            <MenuItem
+                                                onClick={() => {
+                                                    setAnchorEl(null);
+                                                    redirect('/auth?register=true');
+                                                }}
+                                                sx={{
+                                                    color: 'gray',
+                                                }}
+                                            >
+                                                <HowToRegIcon
                                                     sx={{
-                                                        color: 'gray',
+                                                        marginRight: '8px',
                                                     }}
-                                                >
-                                                    <HowToRegIcon
-                                                        sx={{
-                                                            marginRight: '8px',
-                                                        }}
-                                                    />
-                                                    Đăng ký
-                                                </MenuItem>
-                                            </NavLink>
+                                                />
+                                                Đăng ký
+                                            </MenuItem>
                                         </Menu>
                                     )}
                                 </Box>

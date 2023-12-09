@@ -3,6 +3,8 @@ import AdminLayout from './layouts/AdminLayout/AdminLayout';
 import DefaultLayout from './layouts/DefaultLayout/DefaultLayout';
 import HeaderOnly from './layouts/HeaderOnly/HeaderOnly';
 import { PrivateRouter, PublicRouter, moreNotFound, userProvide } from './routes';
+import { useEffect, useState } from 'react';
+import { httpAccount } from './submodules/controllers/http/axiosController';
 
 function isAdminAuthenticated() {
     const token = localStorage.getItem('role');
@@ -19,6 +21,20 @@ function isUserAuthenticated() {
     return false;
 }
 function App() {
+    const [user, setUser] = useState<any>({});
+    useEffect(() => {
+        httpAccount
+            .getMe()
+            .then((response) => {
+                if (response) {
+                    setUser(response);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
     return (
         <div className="App">
             <Router>

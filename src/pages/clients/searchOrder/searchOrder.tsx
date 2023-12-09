@@ -12,7 +12,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Typography
+    Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -20,6 +20,8 @@ import { Link } from 'react-router-dom';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
+import { color } from '../../../Theme/color';
+import useMedia from '../../../hooks/useMedia/useMedia';
 
 function SearchOrder() {
     const [orderUser, setOrderUser] = useState<any>([]);
@@ -28,7 +30,7 @@ function SearchOrder() {
     });
 
     const [isRole, setIsRole] = useState<boolean>(false);
-
+    const { isMediumMD } = useMedia();
     const handleSearch = (data: any) => {
         httpCart.getAll(data).then((response) => {
             if (response?.orders?.length > 0) {
@@ -64,21 +66,41 @@ function SearchOrder() {
                             render={({ field }) => (
                                 <OutlinedInput
                                     {...field}
-                                    sx={{
-                                        maxWidth: '500px',
-                                        mt: 1,
-                                        '& > input': {
-                                            p: '7px',
-                                        },
-                                    }}
+                                    sx={
+                                        isMediumMD
+                                            ? {
+                                                  fontSize: '11px',
+                                                  maxWidth: '500px',
+                                                  mt: 1,
+                                                  '& > input': {
+                                                      p: '7px',
+                                                  },
+                                              }
+                                            : {
+                                                  maxWidth: '500px',
+                                                  mt: 1,
+                                                  '& > input': {
+                                                      p: '7px',
+                                                  },
+                                              }
+                                    }
                                     fullWidth
                                     placeholder="Vui lòng nhập mã đơn hàng, mã vận đơn hoặc số điện thoại !"
                                 />
                             )}
                         />
-                        <Button variant="OutlinedRed" onClick={handleSubmit(handleSearch)}>
-                            Tra cứu
-                        </Button>
+                        <Stack
+                            onClick={handleSubmit(handleSearch)}
+                            p={'4px 20px'}
+                            border={'1px solid red'}
+                            borderRadius={'3px'}
+                            sx={{
+                                cursor: 'pointer',
+                                flexShrink: 0,
+                            }}
+                        >
+                            <Typography color={color.text_color}>Tra cứu</Typography>
+                        </Stack>
                     </Stack>
                     {isRole && (
                         <TableContainer component={Paper}>

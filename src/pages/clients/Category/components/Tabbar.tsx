@@ -36,7 +36,6 @@ function Tabbar(props: Props) {
 
     const handleCheckboxChange = (event: any) => {
         const value = event.target.value;
-        console.log('🚀 ~ file: Tabbar.tsx:37 ~ handleCheckboxChange ~ value:', value);
 
         if (selectedValue !== value) {
             setSelectedValue(value);
@@ -55,14 +54,16 @@ function Tabbar(props: Props) {
                     ''
                 ) : (
                     <>
-                        <Typography variant="h1" fontWeight={'bold'} textTransform={'uppercase'}>
-                            Danh mục sản phẩm
-                        </Typography>
+                        <NavLink to={'/filter'}>
+                            <Typography variant="h1" fontWeight={'bold'} textTransform={'uppercase'} mb={1}>
+                                Tất cả sản phẩm
+                            </Typography>
+                        </NavLink>
                         <Box>
                             {category.map((e: any) => {
                                 return (
-                                    <Box color={'gray'} pl={1}>
-                                        <NavLink to={`/category?category=${e.slug}`}>
+                                    <NavLink to={`/filter?category=${e.slug}`}>
+                                        <Box color={'inherit'} pl={1}>
                                             <Typography
                                                 sx={{
                                                     transition: 'linear 0.2s',
@@ -75,8 +76,8 @@ function Tabbar(props: Props) {
                                             >
                                                 {e.name}
                                             </Typography>
-                                        </NavLink>
-                                    </Box>
+                                        </Box>
+                                    </NavLink>
                                 );
                             })}
                         </Box>

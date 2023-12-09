@@ -62,3 +62,6 @@ span {
   object-fit: cover;
 }
 
+.tableContainer {
+  overflow: auto; /* or overflow: scroll */
+}

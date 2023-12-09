@@ -44,7 +44,7 @@ function Sales() {
                 <Grid container maxWidth={'xl'} mt={2}>
                     {discount?.data?.map((e: Discount) => {
                         return (
-                            <Grid item xs={6} md={4} mb={2} ml={'-8px'}>
+                            <Grid item xs={12} md={4} mb={2} ml={'-8px'}>
                                 <DiscountItem
                                     id={e.id}
                                     code={e.code}

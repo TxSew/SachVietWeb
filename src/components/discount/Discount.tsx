@@ -29,10 +29,10 @@ function DiscountItem(props: Discount) {
             });
     };
     return (
-        <Box bgcolor={color.white} borderRadius={3} p={2} ml={2} height={'150px'}>
+        <Box bgcolor={color.white} borderRadius={3} p={isMediumMD ? 1 : 2} ml={2} height={'150px'}>
             <Stack width={'100%'} direction={'row'} justifyContent={'space-between'} height={'100%'}>
                 <Box
-                    padding={'10px'}
+                    padding={isMediumMD ? '5px' : '10px'}
                     width={'60%'}
                     height={'100%'}
                     display={'flex'}

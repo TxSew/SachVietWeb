@@ -29,7 +29,6 @@ import NavUser from './layout/NavUser';
 import CustomizedSteppers from './Stepper';
 function UserCartDetail() {
     const { id } = useParams();
-    console.log('🚀 ~ file: UsercardDetail.tsx:31 ~ UserCartDetail ~ id:', id);
     const [orderCurrent, setOrderCurrent] = useState<any>({});
 
     useEffect(() => {
@@ -39,7 +38,7 @@ function UserCartDetail() {
     const [open, setOpen] = useState(false);
     const getOrderUser = async () => {
         const orderByUser = await httpCart.getOrderDetail(Number(id));
-        console.log('🚀 ~ file: UsercardDetail.tsx:41 ~ getOrderUser ~ orderByUser:', orderByUser);
+        console.log(orderByUser);
         if (orderByUser) setOrderCurrent(orderByUser);
     };
 
@@ -74,71 +73,65 @@ function UserCartDetail() {
                     }}
                 >
                     <Grid item xs={12}>
-                        <Box display={'flex'} alignContent={'center'} justifyContent={'space-between'}>
-                            <Typography variant="h2" fontSize={'25px'} fontWeight={'bold'} pt={'20px'}>
+                        <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
+                            <Typography variant="h2" fontSize={'25px'} fontWeight={'bold'}>
                                 Chi tiết đơn hàng
                             </Typography>
 
                             {orderCurrent.status == null ? (
-                                <Box
+                                <Stack
                                     sx={{
-                                        display: 'inline-block',
-                                        backgroundColor: '#F6BA71',
+                                        backgroundColor: 'gray',
                                         borderRadius: '30px',
-                                        fontSize: '14px',
-                                        padding: '10px 15px',
-                                        marginTop: '10px',
+                                        p: '5px 10px',
                                         fontWeight: 'bold',
-                                        color: '#F7941E',
                                     }}
+                                    direction={'row'}
+                                    alignItems={'center'}
                                 >
-                                    Đơn hàng chờ xác nhận
-                                </Box>
+                                    <Typography fontSize={'14px'}>Đơn hàng chờ xác nhận</Typography>
+                                </Stack>
                             ) : orderCurrent.status == 1 ? (
-                                <Box
+                                <Stack
                                     sx={{
-                                        display: 'inline-block',
                                         backgroundColor: color.BtnDartGreen,
                                         borderRadius: '30px',
-                                        fontSize: '14px',
-                                        padding: '10px 15px',
-                                        marginTop: '10px',
+                                        p: '5px 10px',
                                         fontWeight: 'bold',
-                                        color: '#F7941E',
                                     }}
+                                    direction={'row'}
+                                    alignItems={'center'}
                                 >
-                                    Đơn hàng đang giao
-                                </Box>
+                                    <Typography fontSize={'14px'}> Đơn hàng đang giao</Typography>
+                                </Stack>
                             ) : orderCurrent.status == 2 ? (
-                                <Box
+                                <Stack
                                     sx={{
-                                        display: 'inline-block',
                                         backgroundColor: color.BtnDartGreen,
                                         borderRadius: '30px',
-                                        fontSize: '14px',
-                                        padding: '10px 15px',
-                                        marginTop: '10px',
+                                        color: 'lightGreen',
+                                        p: '5px 10px',
                                         fontWeight: 'bold',
-                                        color: 'white',
                                     }}
+                                    direction={'row'}
+                                    alignItems={'center'}
                                 >
-                                    Đơn hàng đã giao
-                                </Box>
+                                    <Typography fontSize={'14px'}> Đơn hàng đã giao </Typography>
+                                </Stack>
                             ) : (
-                                <Box
+                                <Stack
                                     sx={{
-                                        display: 'inline-block',
                                         backgroundColor: color.error,
                                         borderRadius: '30px',
-                                        fontSize: '14px',
-                                        padding: '10px 15px',
-                                        marginTop: '10px',
+                                        p: '5px 10px',
                                         fontWeight: 'bold',
                                         color: '#ffff',
                                     }}
+                                    direction={'row'}
+                                    alignItems={'center'}
                                 >
-                                    Đơn hàng đã bị hủy
-                                </Box>
+                                    <Typography fontSize={'14px'}> Đơn hàng đã hủy</Typography>
+                                </Stack>
                             )}
                         </Box>
                         <Box>
@@ -151,17 +144,31 @@ function UserCartDetail() {
                                 <Typography>Ngày mua: </Typography>
                                 <Typography fontWeight={'bold'}>{formatDates(orderCurrent.createdAt)}</Typography>
                             </Stack>
-
+                            <Stack direction={'row'} mt={'10px'}>
+                                <Typography>Thông tin xuất hóa đơn: </Typography>
+                                <Typography fontWeight={'bold'}>không có</Typography>
+                            </Stack>
+                            {orderCurrent.coupon > 1 && (
+                                <Box mt={'10px'} display={'flex'} flexDirection={'column'} rowGap={'5px'}>
+                                    <Stack direction={'row'} spacing={1}>
+                                        <Typography>Giá gốc: </Typography>
+                                        <Typography fontWeight={'bold'} display={'block'}>
+                                            {numberFormat(orderCurrent.money)}
+                                        </Typography>
+                                    </Stack>
+                                    <Stack direction={'row'} spacing={1}>
+                                        <Typography display={'block'}>Đã áp dụng mã giảm giá:</Typography>
+                                        <Typography fontWeight={'bold'} color={color.sale}>
+                                            - {numberFormat(orderCurrent.coupon)}
+                                        </Typography>
+                                    </Stack>
+                                </Box>
+                            )}
                             <Stack direction={'row'} mt={'10px'}>
                                 <Typography>Tổng tiền: </Typography>
                                 <Typography fontWeight={'bold'}>
                                     {numberFormat(orderCurrent.money - orderCurrent.coupon)}
                                 </Typography>
-                            </Stack>
-
-                            <Stack direction={'row'} mt={'10px'}>
-                                <Typography>Thông tin xuất hóa đơn: </Typography>
-                                <Typography fontWeight={'bold'}>không có</Typography>
                             </Stack>
                         </Box>
                     </Grid>
@@ -260,7 +267,7 @@ function UserCartDetail() {
                         padding: '20px',
                     }}
                 >
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
                             <Typography
                                 sx={{
@@ -286,7 +293,7 @@ function UserCartDetail() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={3.8}>
+                    <Grid item md={3.8} xs={12}>
                         <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
                             <Typography
                                 sx={{
@@ -309,7 +316,7 @@ function UserCartDetail() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={3.8}>
+                    <Grid item md={3.8} xs={12}>
                         <Box mt={'20px'} border={'1px solid #B7B4B4'} height={'166px'}>
                             <Typography
                                 sx={{

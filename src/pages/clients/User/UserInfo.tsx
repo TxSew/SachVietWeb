@@ -3,11 +3,13 @@ import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
 import { Controller, useForm } from 'react-hook-form';
-import { Typography } from '@mui/material';
+import { Box, FormControl, OutlinedInput, Stack, Typography } from '@mui/material';
 import { color } from '../../../Theme/color';
 import { ChangePassword } from '../../../submodules/models/UserModel/User';
 import { httpAccount } from '../../../submodules/controllers/http/axiosController';
 import { toast } from 'react-toastify';
+import { Label } from '@mui/icons-material';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 function UserInfo() {
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('newPassword');
@@ -40,102 +42,25 @@ function UserInfo() {
     return (
         <NavUser>
             <div className="main ps-0 pt-3 pb-3 pe-0">
-                <div className="main-waper ">
-                    <div className="main-waper-top pt-2 pb-2 ps-4">
-                        <h1 className="info-acc-hd p-3">Thông tin tài khoản</h1>
-                        <form className="aa" action="" onSubmit={formInfo.handleSubmit(handelChangeInfo)}>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Họ*
-                                </label>
-                                <input
-                                    className="c-12 m-8 l-8"
-                                    type="text"
-                                    placeholder="Họ"
-                                    {...formInfo.register('firstName')}
-                                />
-                            </div>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Tên*
-                                </label>
-                                <input className="c-12 m-8 l-8" type="text" placeholder="Tên" />
-                            </div>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Số điện thoại
-                                </label>
-                                <div className="c-12 m-8 sdt">
-                                    <input
-                                        className="c-9 m-9 l-9"
-                                        type="text"
-                                        placeholder="SDT"
-                                        {...formInfo.register('phone')}
-                                    />
-                                    <p className="c-3 m-3 l-3">
-                                        <Link className="link" to="">
-                                            Thay đổi
-                                        </Link>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Email
-                                </label>
-                                <div className="c-12 m-8 sdt">
-                                    <input className="c-9 m-9 l-9" type="text" />
-                                    <p className="c-3 m-3 l-3">
-                                        <Link className="link" to="">
-                                            Thay đổi
-                                        </Link>
-                                    </p>
-                                </div>
-                            </div>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Giới tính*
-                                </label>
-                                <div className="pe-4 gioitinh">
-                                    <input id="boy" className="" type="checkbox" />
-                                    <label className="ps-2" htmlFor="boy">
-                                        Nam
-                                    </label>
-                                </div>
-                                <div className="ps-4 gioitinh">
-                                    <input id="girl" className="" type="checkbox" />
-                                    <label className="ps-2" htmlFor="girl">
-                                        Nữ
-                                    </label>
-                                </div>
-                            </div>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Sinh nhật
-                                </label>
-                                <input className="c-12 m-8 l-8" type="date" placeholder="Sinh nhật" />
-                            </div>
-                            <div className="info-acc row">
-                                <label className="c-12 m-2 l-2" htmlFor="">
-                                    Mã VIP
-                                </label>
-                                <input className="c-12 m-8 l-8" type="text" placeholder="Nhập mã VIP" />
-                            </div>
-                            <button className="save pe-5 ps-5 pb-2 pt-2">Cập nhật</button>
-                        </form>
-                    </div>
-                </div>
                 <div
                     style={{
                         background: 'white',
-                        marginTop: '20px',
                         padding: ' 40px 20px',
                         borderRadius: '5px',
                     }}
                 >
                     <form className="" onSubmit={handleSubmit(handelChangePassword)}>
                         <h1 className="info-acc-hd p-3">Thay đổi mật khẩu</h1>
-                        <div className="">
+                        <Box
+                            sx={{
+                                px: '10px',
+                                maxWidth: '800px',
+                                width: '100%',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                rowGap: '5px',
+                            }}
+                        >
                             <Controller
                                 control={control}
                                 name="password"
@@ -143,23 +68,29 @@ function UserInfo() {
                                     required: 'Mật khẩu không được để trống!',
                                 }}
                                 render={({ field }) => (
-                                    <div className="info-acc row">
-                                        <label className="c-12 m-2 l-2" htmlFor="">
-                                            Mật khẩu hiện tại
-                                        </label>
-                                        <input
-                                            {...field}
-                                            onChange={(e) => field.onChange(e.target.value)}
-                                            className="c-12 m-8 l-8"
-                                            type="text"
-                                            placeholder="Nhập mât khẩu hiện tại"
-                                        />
-                                        <Typography color={color.error}>
-                                            {errors.password && errors.password.message}
-                                        </Typography>
-                                    </div>
+                                    <FormControl
+                                        sx={{
+                                            display: 'block',
+                                        }}
+                                    >
+                                        <Grid2 container>
+                                            <Grid2 xs={12} md={4}>
+                                                <Typography>Nhập mật khẩu hiện tại</Typography>
+                                            </Grid2>
+                                            <Grid2 xs={12} md={8}>
+                                                <OutlinedInput
+                                                    fullWidth
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    type="text"
+                                                    placeholder="Nhập mât khẩu hiện tại"
+                                                />
+                                            </Grid2>
+                                        </Grid2>
+                                    </FormControl>
                                 )}
                             />
+                            <Typography color={color.error}>{errors.password && errors.password.message}</Typography>
                             <Controller
                                 control={control}
                                 name="newPassword"
@@ -175,23 +106,31 @@ function UserInfo() {
                                     },
                                 }}
                                 render={({ field }) => (
-                                    <div className="info-acc row">
-                                        <label className="c-12 m-2 l-2" htmlFor="">
-                                            Mật khẩu mới
-                                        </label>
-                                        <input
-                                            {...field}
-                                            onChange={(e) => field.onChange(e.target.value)}
-                                            className="c-12 m-8 l-8"
-                                            type="text"
-                                            placeholder="Mật khẩu mới"
-                                        />
-                                        <Typography color={color.error}>
-                                            {errors.newPassword && errors.newPassword.message}
-                                        </Typography>
-                                    </div>
+                                    <FormControl
+                                        sx={{
+                                            display: 'block',
+                                        }}
+                                    >
+                                        <Grid2 container>
+                                            <Grid2 xs={12} md={4}>
+                                                <Typography>Nhập mật khẩu mới</Typography>
+                                            </Grid2>
+                                            <Grid2 xs={12} md={8}>
+                                                <OutlinedInput
+                                                    fullWidth
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    type="text"
+                                                    placeholder="Mật khẩu mới"
+                                                />
+                                            </Grid2>
+                                        </Grid2>
+                                    </FormControl>
                                 )}
                             />
+                            <Typography color={color.error}>
+                                {errors.newPassword && errors.newPassword.message}
+                            </Typography>
 
                             <Controller
                                 control={control}
@@ -201,23 +140,31 @@ function UserInfo() {
                                     validate: validatePasswordConfirmation,
                                 }}
                                 render={({ field }) => (
-                                    <div className="info-acc row">
-                                        <label className="c-12 m-2 l-2" htmlFor="">
-                                            Nhập lại mật khẩu mới
-                                        </label>
-                                        <input
-                                            {...field}
-                                            onChange={(e) => field.onChange(e.target.value)}
-                                            className="c-12 m-8 l-8"
-                                            type="text"
-                                            placeholder="Nhập lại mật khẩu mới"
-                                        />
-                                        <Typography color={color.error}>
-                                            {errors.repeatNewPassword && errors.repeatNewPassword.message}
-                                        </Typography>
-                                    </div>
+                                    <FormControl
+                                        sx={{
+                                            display: 'block',
+                                        }}
+                                    >
+                                        <Grid2 container>
+                                            <Grid2 xs={12} md={4}>
+                                                <Typography>Nhập lại mật khẩu mới</Typography>
+                                            </Grid2>
+                                            <Grid2 xs={12} md={8}>
+                                                <OutlinedInput
+                                                    fullWidth
+                                                    {...field}
+                                                    onChange={(e) => field.onChange(e.target.value)}
+                                                    type="text"
+                                                    placeholder="Nhập lại mật khẩu mới"
+                                                />
+                                            </Grid2>
+                                        </Grid2>
+                                    </FormControl>
                                 )}
                             />
+                            <Typography color={color.error}>
+                                {errors.repeatNewPassword && errors.repeatNewPassword.message}
+                            </Typography>
 
                             <div
                                 style={{
@@ -235,7 +182,7 @@ function UserInfo() {
                                     Lưu
                                 </button>
                             </div>
-                        </div>
+                        </Box>
                     </form>
                 </div>
             </div>

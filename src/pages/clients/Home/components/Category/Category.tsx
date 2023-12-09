@@ -77,6 +77,7 @@ const CategoryNav = () => {
                                       textTransform: 'uppercase',
                                   }
                                 : {
+                                      fontSize: '20px',
                                       fontWeight: 'bold',
                                       textTransform: 'uppercase',
                                   }

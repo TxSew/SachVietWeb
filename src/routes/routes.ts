@@ -16,7 +16,6 @@ import AdminStatistical from '../pages/admin/Statistical/AdminStatistical';
 import AdminCustomer from '../pages/admin/Users/AdminCustomer';
 import Category from '../pages/clients/Category/Category';
 import HomePage from '../pages/clients/Home/Home';
-import User from '../pages/clients/User/DashboardUser';
 import CustomizedSteppers from '../pages/clients/User/Stepper';
 import UserInfo from '../pages/clients/User/UserInfo';
 import UserAdress from '../pages/clients/User/Useradress';
@@ -204,10 +203,6 @@ const PrivateRouter = [
 const userProvide = [
     {
         path: '/user',
-        component: User,
-    },
-    {
-        path: '/user/info',
         component: UserInfo,
     },
     {

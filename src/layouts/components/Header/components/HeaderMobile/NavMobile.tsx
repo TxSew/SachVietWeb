@@ -2,20 +2,44 @@ import { ExpandLess } from '@mui/icons-material';
 import ContentPasteSearchIcon from '@mui/icons-material/ContentPasteSearch';
 import DiscountIcon from '@mui/icons-material/Discount';
 import HomeIcon from '@mui/icons-material/Home';
+import CategoryIcon from '@mui/icons-material/Category';
+import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, Box, Collapse, Link, Stack, Typography } from '@mui/material';
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { color } from '../../../../../Theme/color';
 import { image } from '../../../../../assets';
 import NavItem from '../NavItem/NavItem';
+import { httpAccount, httpCategory } from '../../../../../submodules/controllers/http/axiosController';
 function NavMobile() {
     const [openCategory, setOpenCategory] = React.useState(false);
-
+    const [category, setCategory] = React.useState<any>([]);
+    const [user, setUser] = React.useState<any>({});
+    const redirect = useNavigate();
     const handleOpenCategory = () => {
         setOpenCategory(!openCategory);
     };
+    useEffect(() => {
+        httpCategory.getCategory({}).then((res) => {
+            setCategory(res);
+        });
+    }, []);
+    useEffect(() => {
+        httpAccount
+            .getMe()
+            .then((res) => {
+                console.log(res);
+                if (res) {
+                    setUser(res);
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }, []);
     return (
         <Box
             sx={{
@@ -35,24 +59,77 @@ function NavMobile() {
                         <Avatar alt="Remy Sharp" src="https://xphone.vn/images/no_login.svg" />
                     </Box>
                     <Box>
-                        <Typography fontWeight={'bold'}>Đăng nhập</Typography>
+                        <Typography fontWeight={'bold'}>{user.fullName || 'Đăng nhập'}</Typography>
                         <Typography variant="body1" color={color.text_color}>
-                            Để nhận nhiều ưu đãi hơn
+                            {user.email || 'Để nhận nhiều ưu đãi hơn'}
                         </Typography>
                     </Box>
                 </Stack>
             </Box>
             <Box borderBottom={'1px solid #dadada'} p={'4px 0px'}>
-                <Stack direction={'row'} spacing={1} justifyContent={'center'}>
-                    <Stack direction={'row'} spacing={1} padding={'4px 7px'} bgcolor={'green'}>
-                        <PersonIcon />
-                        <Typography>Đăng nhập</Typography>
+                {user.id ? (
+                    <Stack direction={'row'} spacing={1} justifyContent={'center'}>
+                        <NavLink to={'/user'}>
+                            <Stack
+                                direction={'row'}
+                                spacing={1}
+                                padding={'4px 7px'}
+                                bgcolor={'green'}
+                                color={color.white}
+                                sx={{ cursor: 'pointer' }}
+                            >
+                                <PersonIcon />
+                                <Typography>Tài khoản</Typography>
+                            </Stack>
+                        </NavLink>
+                        <Stack
+                            color={color.white}
+                            direction={'row'}
+                            spacing={1}
+                            padding={'4px 7px'}
+                            bgcolor={'darkgrey'}
+                            sx={{ cursor: 'pointer' }}
+                            onClick={() => {
+                                localStorage.clear();
+                                redirect('/');
+                                window.location.reload();
+                            }}
+                        >
+                            <PersonIcon />
+                            <Typography>Đăng xuất</Typography>
+                        </Stack>
                     </Stack>
-                    <Stack direction={'row'} spacing={1} padding={'4px 7px'} bgcolor={'yellow'}>
-                        <PersonIcon />
-                        <Typography>Đăng ký</Typography>
+                ) : (
+                    <Stack direction={'row'} spacing={1} justifyContent={'center'}>
+                        <Stack
+                            onClick={() => {
+                                redirect('/auth');
+                            }}
+                            direction={'row'}
+                            spacing={1}
+                            padding={'4px 7px'}
+                            bgcolor={'green'}
+                            color={color.white}
+                            sx={{ cursor: 'pointer' }}
+                        >
+                            <PersonIcon />
+                            <Typography>Đăng nhập</Typography>
+                        </Stack>
+                        <NavLink to={'/auth?register=true'}>
+                            <Stack
+                                color={color.white}
+                                direction={'row'}
+                                spacing={1}
+                                padding={'4px 7px'}
+                                bgcolor={'darkgrey'}
+                                sx={{ cursor: 'pointer' }}
+                            >
+                                <PersonIcon />
+                                <Typography>Đăng ký</Typography>
+                            </Stack>
+                        </NavLink>
                     </Stack>
-                </Stack>
+                )}
             </Box>
             <Box>
                 <Box
@@ -92,40 +169,74 @@ function NavMobile() {
                     <NavItem path="/news" name="Tin tức" icon={<NewspaperIcon />} />
                 </Box>
 
-                <Stack onClick={handleOpenCategory}>{<ExpandLess />}</Stack>
-                <Collapse in={openCategory} timeout="auto" unmountOnExit>
-                    <NavLink
-                        to={'/news'}
-                        style={{
-                            color: '#0000 !important',
+                <Box
+                    p={1}
+                    sx={{
+                        borderBottom: '1px solid #dadada',
+                    }}
+                >
+                    <Stack
+                        direction={'row'}
+                        justifyContent={'space-between'}
+                        onClick={handleOpenCategory}
+                        sx={{
+                            cursor: 'pointer',
                         }}
                     >
-                        <Stack
-                            sx={{
-                                cursor: 'pointer',
-                                transition: '0.2s linear',
-                                color: color.text_color,
-                                '&:hover': {
-                                    backgroundColor: '#fff',
-                                },
-                            }}
-                            direction={'row'}
-                            spacing={2}
-                            p={1}
-                            borderBottom={'1px solid #dadada'}
-                        >
-                            <NewspaperIcon />
-                            <Typography>Tin tức</Typography>
+                        <Stack direction={'row'} color={'#615c5c'}>
+                            <CategoryIcon />
+                            <Typography>Danh mục</Typography>
                         </Stack>
-                    </NavLink>
+                        <Box>
+                            <ExpandMoreIcon />
+                        </Box>
+                    </Stack>
+                </Box>
+
+                <Collapse in={openCategory} timeout="auto" unmountOnExit>
+                    {category.map((e: any) => {
+                        return (
+                            <Box
+                                pl={2}
+                                borderBottom={'1px solid #ccc'}
+                                sx={{
+                                    '&:hover': {
+                                        transition: 'linear 0.5s',
+                                        fontWeight: 'bold',
+                                        backgroundColor: '#fff',
+                                    },
+                                    '&:hover a': {
+                                        fontWeight: 'bold',
+                                    },
+                                }}
+                            >
+                                <Link
+                                    underline="none"
+                                    href={`/filter?category=${e.slug}`}
+                                    style={{
+                                        color: 'gray',
+                                    }}
+                                >
+                                    <Box color={'inherit'}>
+                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <LocalLibraryIcon />
+                                            <Typography fontSize={'12px'}>{e.name}</Typography>
+                                        </Stack>
+                                    </Box>
+                                </Link>
+                            </Box>
+                        );
+                    })}
                 </Collapse>
             </Box>
             <Box position={'absolute'} top={'85%'} bgcolor={'#ccc'} width={'100%'}>
                 <Box p={2}>
                     <Typography fontSize={'20px'}>Hỗ trợ</Typography>
-                    <Stack direction={'row'}>
-                        <Typography fontSize={'13px'}>Liên hệ</Typography>
-                        <Link href="tel:0383476296">0383476296</Link>
+                    <Stack direction={'row'} spacing={1}>
+                        <Typography fontSize={'13px'}>Liên hệ:</Typography>
+                        <Link color={color.text_color} href="tel:0383476296">
+                            <Typography>0383476296</Typography>
+                        </Link>
                     </Stack>
                 </Box>
             </Box>
