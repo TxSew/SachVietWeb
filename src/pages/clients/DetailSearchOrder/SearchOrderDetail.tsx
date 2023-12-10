@@ -3,6 +3,7 @@ import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 import {
     Box,
     Button,
+    Container,
     Dialog,
     DialogContent,
     DialogContentText,
@@ -19,30 +20,22 @@ import {
     Typography,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
-import CustomizedSteppers from './Stepper';
-import NavUser from './layout/NavUser';
-
-function UserCartDetail() {
-    const [selectedFiles, setSelectedFiles] = useState<any>([]);
-    const [imageFiles, setImageFiles] = useState<any[]>([]);
-    const [imgs, setImgs] = useState<any>({});
+import CustomizedSteppers from '../User/Stepper';
+function SearchOrderDetail() {
     const { id } = useParams();
     const [orderCurrent, setOrderCurrent] = useState<any>({});
-    const handleOpen = () => setOpendanhgia(true);
-    const handleClose = () => setOpendanhgia(false);
+
     useEffect(() => {
         getOrderUser();
     }, []);
 
     const [open, setOpen] = useState(false);
-    const [openDanhgia, setOpendanhgia] = useState(false);
     const getOrderUser = async () => {
         const orderByUser = await httpCart.getOrderDetail(Number(id));
         if (orderByUser) setOrderCurrent(orderByUser);
@@ -63,16 +56,14 @@ function UserCartDetail() {
         setOpen(false);
     };
 
-    const {
-        handleSubmit,
-        control,
-        reset,
-        formState: { errors },
-        setValue,
-    } = useForm<Comment>({});
-
     return (
-        <NavUser>
+        <Container
+            maxWidth="md"
+            sx={{
+                border: '1px solid #eee',
+                borderRadius: '20px',
+            }}
+        >
             <Box
                 sx={{
                     marginTop: '18px',
@@ -186,90 +177,8 @@ function UserCartDetail() {
                             </Stack>
                         </Box>
                     </Grid>
-
-                    <Grid item xs={12}>
-                        <Box mt={'60px'}>
-                            {orderCurrent.status == null ? (
-                                <Button
-                                    variant="OutlinedRed"
-                                    sx={{
-                                        mt: '10px',
-                                        borderRadius: '15px',
-                                        padding: '7px 27px',
-                                    }}
-                                    onClick={handleClickOpen}
-                                >
-                                    <Typography textTransform={'capitalize'}>Hủy đơn hàng</Typography>
-                                </Button>
-                            ) : (
-                                ''
-                            )}
-                            <Dialog
-                                open={open}
-                                onClose={handleClickClose}
-                                TransitionComponent={Fade}
-                                aria-labelledby="customized-dialog-title"
-                            >
-                                <DialogContent>
-                                    <DialogContentText
-                                        id="alert-dialog-slide-description"
-                                        textAlign={'center'}
-                                        padding={'0 24px '}
-                                        sx={{
-                                            color: 'red',
-                                        }}
-                                    >
-                                        <RemoveShoppingCartIcon
-                                            sx={{
-                                                fontSize: '56px',
-                                                color: 'rgb(201, 33, 39)',
-                                            }}
-                                        />
-                                        <DialogTitle fontSize={'16px'}>
-                                            Bạn chắc chắn muốn hủy đơn hàng này?
-                                        </DialogTitle>
-                                    </DialogContentText>
-                                </DialogContent>
-                                <Box display={'flex'} paddingBottom={'24px'} justifyContent={'space-around'}>
-                                    <Button
-                                        onClick={handleClickClose}
-                                        sx={{
-                                            padding: '8px 16px',
-                                            border: '1px solid #ccc',
-                                            borderRadius: '12px',
-                                            color: 'black',
-                                            fontSize: '12px',
-                                            fontWeight: 'bold',
-                                            width: '96px',
-                                        }}
-                                    >
-                                        Hủy
-                                    </Button>
-                                    <Button
-                                        onClick={() => handleCancelOrder()}
-                                        sx={{
-                                            padding: '8px 16px',
-                                            border: '1px solid red',
-                                            borderRadius: '12px',
-                                            background: 'red',
-                                            color: 'white',
-                                            fontSize: '12px',
-                                            fontWeight: 'bold',
-                                            width: '96px',
-                                            ':hover': {
-                                                backgroundColor: 'rgb(201, 33, 39)',
-                                            },
-                                        }}
-                                    >
-                                        Đồng ý
-                                    </Button>
-                                </Box>
-                            </Dialog>
-                        </Box>
-                    </Grid>
                 </Grid>
             </Box>
-
             <Box mt={'20px'} mb={'20px'}>
                 <Grid
                     container
@@ -402,7 +311,6 @@ function UserCartDetail() {
                                     <TableCell align="center">Giá bán</TableCell>
                                     <TableCell align="center">SL</TableCell>
                                     <TableCell align="center">Thành tiền</TableCell>
-                                    <TableCell align="center">Đánh giá</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -454,47 +362,17 @@ function UserCartDetail() {
                                                         {numberFormat(order.quantity * order.product.price_sale)}
                                                     </Typography>
                                                 </TableCell>
-                                                <TableCell align="center">
-                                                    <Typography fontSize={'12px'}>
-                                                        <Box
-                                                            onClick={handleOpen}
-                                                            bgcolor={color.btnRed}
-                                                            sx={{
-                                                                cursor: 'pointer',
-                                                            }}
-                                                        >
-                                                            <Typography>Đánh giá</Typography>
-                                                        </Box>
-                                                    </Typography>
-                                                </TableCell>
                                             </TableRow>
                                         );
                                     }
-                                    return '';
                                 })}
                             </TableBody>
                         </Table>
                     </TableContainer>
-                    <Dialog
-                        open={openDanhgia}
-                        onClose={handleClickClose}
-                        TransitionComponent={Fade}
-                        aria-labelledby="customized-dialog-title"
-                    >
-                        <DialogContent>
-                            <DialogContentText
-                                id="alert-dialog-slide-description"
-                                textAlign={'center'}
-                                padding={'0 24px '}
-                            >
-                                sdsd
-                            </DialogContentText>
-                        </DialogContent>
-                    </Dialog>
                 </Box>
             </Box>
-        </NavUser>
+        </Container>
     );
 }
 
-export default UserCartDetail;
+export default SearchOrderDetail;

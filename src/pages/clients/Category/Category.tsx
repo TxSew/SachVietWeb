@@ -59,7 +59,7 @@ function Category() {
             sortBy,
             sortWith,
             page,
-            limit: 12,
+            limit: 20,
             keyword: searchValue,
             categoryFilter: categorySearch,
             filter: sale,

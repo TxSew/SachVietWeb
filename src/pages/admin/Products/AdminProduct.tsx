@@ -30,7 +30,7 @@ import * as React from 'react';
 import { useDownloadExcel } from 'react-export-table-to-excel';
 import { Link, redirect, useNavigate } from 'react-router-dom';
 import { color } from '../../../Theme/color';
-import { pushError } from '../../../components/Toast/Toast';
+import { pushError, pushWarning } from '../../../components/Toast/Toast';
 import { numberFormat } from '../../../helpers/formatPrice';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCategory, httpProduct } from '../../../submodules/controllers/http/axiosController';
@@ -102,11 +102,20 @@ export default function AdminProduct() {
         setPage(value);
     };
 
-    const handleDelete = async (id: any) => {
-        await httpProduct.delete(id);
-        pushError('Xoá sản phẩm thành công');
-        const product = Products.filter((e) => e.id !== id);
-        setProducts(product);
+    const handleDelete = async (e: any) => {
+        await httpProduct
+            .delete(e.id)
+            .then((res) => {
+                pushError('Xoá sản phẩm thành công');
+                const product = Products.filter((e) => e.id !== Number(e.id));
+                setProducts(product);
+            })
+
+            .catch((err) => {
+                if (err.response.data.message.message === 'orderDetail have value') {
+                    pushWarning('Sản phẩm đã có người đặt mua , không thể xóa');
+                }
+            });
         handleClickClose();
     };
 

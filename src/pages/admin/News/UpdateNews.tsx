@@ -15,7 +15,7 @@ const UpdateNews = () => {
     const [image, setImage] = useState(null);
     const editorRef = useRef<any>(null);
     const { id } = useParams();
-     const redirect = useNavigate()
+    const redirect = useNavigate();
     useEffect(() => {
         httpNews.getOne(Number(id)).then((res) => {
             reset({
@@ -38,7 +38,7 @@ const UpdateNews = () => {
             httpNews.updateNew(props).then((news) => {
                 if (news) {
                     pushSuccess('cập nhật bài viết thành công');
-                     redirect('/admin/news')
+                    redirect('/admin/news');
                 }
             });
         }
@@ -192,7 +192,7 @@ const UpdateNews = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Mô tả ngắn
+                                    Mô tả
                                 </Typography>
                                 <Controller
                                     control={control}

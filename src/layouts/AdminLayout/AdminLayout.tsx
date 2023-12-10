@@ -1,4 +1,4 @@
-import { Logout, PersonAdd, Settings } from '@mui/icons-material';
+import { Logout } from '@mui/icons-material';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';

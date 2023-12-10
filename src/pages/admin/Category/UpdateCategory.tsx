@@ -187,43 +187,6 @@ const UpdateCategory = () => {
                             <img src={url ?? url} width={'150px'} alt="" />
                         </Stack>
                     )}
-                    <Box width={'100%'}>
-                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Trạng thái
-                        </Typography>
-                        <Controller
-                            control={control}
-                            name="status"
-                            render={({ field }) => (
-                                <FormControl fullWidth>
-                                    <Select
-                                        {...field}
-                                        displayEmpty
-                                        inputProps={{ 'aria-label': 'Without label' }}
-                                        sx={{
-                                            mt: 1,
-                                            '& > div': {
-                                                p: '7px',
-                                            },
-                                        }}
-                                        onChange={(e) => {
-                                            field.onChange(e);
-                                        }}
-                                    >
-                                        <MenuItem value={''}>
-                                            <em>[--Chọn trạng thái--]</em>
-                                        </MenuItem>
-                                        <MenuItem value={1}>
-                                            <em>Đang kinh doanh</em>
-                                        </MenuItem>
-                                        <MenuItem value={0}>
-                                            <em>Ngưng kinh doanh</em>
-                                        </MenuItem>
-                                    </Select>
-                                </FormControl>
-                            )}
-                        />
-                    </Box>
                 </Grid>
             </form>
         </Box>

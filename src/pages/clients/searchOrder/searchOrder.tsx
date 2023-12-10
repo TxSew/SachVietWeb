@@ -179,7 +179,7 @@ function SearchOrder() {
                                                 </TableCell>
 
                                                 <TableCell align="right">
-                                                    <Link to={`/user/mycart/${e.id}`}>
+                                                    <Link to={`/searchOrder/${e.id}`}>
                                                         <Chip label=" Xem" color="primary" />
                                                     </Link>
                                                 </TableCell>

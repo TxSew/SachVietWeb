@@ -43,6 +43,7 @@ import Invoice from '../pages/clients/invoice/invoice';
 import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
 import LoginAdmin from '../pages/clients/LoginAdmin/AdminLogin';
+import SearchOrderDetail from '../pages/clients/DetailSearchOrder/SearchOrderDetail';
 
 const PublicRouter = [
     {
@@ -62,7 +63,6 @@ const PublicRouter = [
         component: Checkout,
         isRequired: true,
     },
-
     {
         path: '/checkout/paymentSuccess/:id',
         component: PaymentSuccess,
@@ -94,7 +94,7 @@ const PublicRouter = [
     },
     {
         path: '/searchOrder/:id',
-        component: SearchOrder,
+        component: SearchOrderDetail,
     },
     {
         path: '/news',
@@ -103,6 +103,11 @@ const PublicRouter = [
     {
         path: '/news/detail/:slug',
         component: NewsDetail,
+    },
+    {
+        path: '/user/:id',
+        component: SearchOrderDetail,
+        isRequired: true,
     },
     {
         path: '/admin',

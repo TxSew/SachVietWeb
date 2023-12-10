@@ -115,7 +115,7 @@ const LoginAdmin = () => {
                     <Typography>Mật khẩu</Typography>
                     <Controller
                         control={control}
-                        defaultValue="" // Set an initial value here
+                        defaultValue=""
                         name="password"
                         rules={{
                             required: 'Mật khẩu không được để trống!',

@@ -178,7 +178,7 @@ const CreateNews = () => {
                             </Grid>
                             <Grid xs={5.8}>
                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                    Nội dung ngắn
+                                    Mô tả
                                     <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                 </Typography>
                                 <Controller

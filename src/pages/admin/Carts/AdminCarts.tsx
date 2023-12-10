@@ -104,8 +104,12 @@ export default function AdminCarts() {
 
     const handleDelete = async (element: any) => {
         await httpCart.delete(Number(element));
-        const filter = carts.filter((e: any) => e.id !== element);
-        setCarts(filter);
+        fetchData({
+            limit: 5,
+        });
+        // const filter = carts.filter((e: any) => e.id !== element);
+        // console.log('🚀 ~ file: AdminCarts.tsx:108 ~ handleDelete ~ filter:', filter);
+        // setCarts(filter);
         pushError('Đơn hàng đã bị xóa');
         handleClickClose();
     };

@@ -406,7 +406,7 @@ const Header = () => {
                                                         ) : (
                                                             Products.slice(0, 6).map((e: any) => {
                                                                 return (
-                                                                    <Grid item xs={6} md={4}>
+                                                                    <Grid key={e.id} item xs={6} md={4}>
                                                                         <NavLink
                                                                             to={`/products/${e.slug}`}
                                                                             onClick={handleCloseSearch}

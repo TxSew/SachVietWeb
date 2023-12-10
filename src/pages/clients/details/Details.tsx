@@ -231,6 +231,7 @@ export const Details = () => {
 
         return uploadedUrls.filter((url: any) => url !== null);
     };
+    
     const handelComment = async (data: any) => {
         let { image, ...rest } = data as any;
 

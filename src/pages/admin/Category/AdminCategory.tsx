@@ -81,13 +81,19 @@ export default function CategoryAdmin() {
     };
 
     const handleDelete = async (element: any) => {
-        const destroy = await httpCategory.delete(element.id);
-        const filter = category.filter((e: any) => {
-            return e.id !== element.id;
-        });
+        const destroy = await httpCategory
+            .delete(element.id)
+            .then((res) => {
+                pushError('Danh mục đã bị xóa ');
+                const filter = category.filter((e: any) => {
+                    return e.id !== element.id;
+                });
 
-        if (destroy) pushError('Danh mục đã bị xóa ');
-        setCategory(filter);
+                setCategory(filter);
+            })
+            .catch((err) => {
+                pushError('Danh mục có sản phẩm! không thể xóa');
+            });
         handleClickClose();
     };
     const handleSearch = async (element: any) => {

@@ -26,7 +26,7 @@ function NewsDetail() {
                     py: 2,
                 }}
             >
-                <Grid container position={'relative'}>
+                <Grid container position={'relative'} justifyContent={'center'}>
                     <Grid xs={12} md={8} bgcolor={'white'} p={2}>
                         <Typography
                             variant={'h1'}
@@ -88,81 +88,6 @@ function NewsDetail() {
                                     __html: htmlContent as unknown as TrustedHTML,
                                 }}
                             />
-                        </Box>
-                    </Grid>
-                    <Grid
-                        xs={12}
-                        md={4}
-                        pl={{ xs: 0, md: '24px' }}
-                        pt={{ xs: 2, md: 0 }}
-                        // position={'sticky'}
-                        // top={0}
-                        // height={'100%'}
-                    >
-                        <Box bgcolor={'white'} p={2} height={'100%'}>
-                            <Typography
-                                variant={'h1'}
-                                pb={2}
-                                fontSize={20}
-                                fontWeight={'bold'}
-                                borderBottom={'2px solid #eee'}
-                            >
-                                Bài viết liên quan
-                            </Typography>
-                            <NavLink to={''}>
-                                <Grid container py={2} borderBottom={'2px solid #eee'}>
-                                    <Grid xs={3.5}>
-                                        <CardMedia
-                                            component="img"
-                                            sx={{
-                                                width: '100%',
-                                                objectFit: 'cover',
-                                            }}
-                                            title=""
-                                            image="https://xphone.vn/storage/images/posts/1700446263_thumb-1200x675.jpg"
-                                        />
-                                    </Grid>
-                                    <Grid
-                                        xs={8.5}
-                                        pl={'10px'}
-                                        display={'flex'}
-                                        justifyContent={'space-between'}
-                                        direction={'column'}
-                                    >
-                                        <Typography
-                                            variant="body1"
-                                            color="initial"
-                                            textAlign={'justify'}
-                                            display={'flex'}
-                                            sx={{
-                                                width: '100%',
-                                                overflow: 'hidden',
-                                                textOverflow: 'ellipsis',
-                                                WebkitLineClamp: 2,
-                                                display: '-webkit-box',
-                                                WebkitBoxOrient: 'vertical',
-                                                cursor: 'pointer',
-                                                '&:hover': {
-                                                    color: '#008C89',
-                                                },
-                                            }}
-                                        >
-                                            Một cuộc đời dang dở Một cuộc đời dang dở Một cuộc đời dang dở Một cuộc đời
-                                            dang dở Một cuộc đời dang dở
-                                        </Typography>
-                                        <Box display={'flex'} alignItems={'center'} gap={1} color={'#ccc'}>
-                                            <AccessAlarmIcon
-                                                sx={{
-                                                    fontSize: 'large',
-                                                }}
-                                            />
-                                            <Typography variant="body1" fontSize={12}>
-                                                Ngày đăng
-                                            </Typography>
-                                        </Box>
-                                    </Grid>
-                                </Grid>
-                            </NavLink>
                         </Box>
                     </Grid>
                 </Grid>

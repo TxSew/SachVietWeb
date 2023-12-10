@@ -1,4 +1,4 @@
-import { Box, Chip, Pagination } from '@mui/material';
+import { Box, Chip, Container, Pagination, Stack, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,6 +16,7 @@ import CartNotFound from '../cart/components/CartNotFound/CartNotFound';
 import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
+import { color } from '../../../Theme/color';
 function UserMyCart() {
     const [orderUser, setOrderUser] = useState<any>({});
     const [page, setPage] = useState<number>(1);
@@ -108,7 +109,7 @@ function UserMyCart() {
                                                                     label=" Đã giao hàng"
                                                                     color="success"
                                                                 />
-                                                            ) : (
+                                                            ) : e.status === 3 ? (
                                                                 <Chip
                                                                     sx={{
                                                                         maxWidth: '130px',
@@ -117,6 +118,8 @@ function UserMyCart() {
                                                                     label="Đã hủy"
                                                                     color="error"
                                                                 />
+                                                            ) : (
+                                                                ''
                                                             )}
                                                         </TableCell>
 
@@ -142,7 +145,31 @@ function UserMyCart() {
                                 </Box>
                             </div>
                         ) : (
-                            <CartNotFound />
+                            <Container maxWidth="xl">
+                                <Box
+                                    bgcolor={color.white}
+                                    p={'40px'}
+                                    borderRadius={2}
+                                    boxShadow={'0px 0px 2px rgba(0, 0, 0, 0.1)'}
+                                >
+                                    <Stack direction={'column'} alignItems={'center'} justifyContent={'center'}>
+                                        <Box
+                                            sx={{
+                                                maxWidth: '160px',
+                                            }}
+                                        >
+                                            <img
+                                                width={'100%'}
+                                                src="https://cdn0.fahasa.com/skin//frontend/ma_vanese/fahasa/images/checkout_cart/ico_emptycart.svg"
+                                                alt=""
+                                            />
+                                        </Box>
+                                        <Typography variant="body1" my={'20px'}>
+                                            Chưa có đơn hàng trong lịch sử đơn hàng của bạn.
+                                        </Typography>
+                                    </Stack>
+                                </Box>
+                            </Container>
                         )}
                     </div>
                 </div>

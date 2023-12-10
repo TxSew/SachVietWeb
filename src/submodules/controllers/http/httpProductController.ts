@@ -94,6 +94,7 @@ class HttpProductController {
         }
     }
     async delete(id: number): Promise<any> {
+        console.log('🚀 ~ file: httpProductController.ts:97 ~ HttpProductController ~ delete ~ id:', id);
         try {
             const response = await this.axiosInstance.delete(`products/${id}`);
             return response.data;

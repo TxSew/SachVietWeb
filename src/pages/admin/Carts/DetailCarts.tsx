@@ -24,9 +24,10 @@ function DetailCarts() {
     const componentRef: any = useRef();
     const { id } = useParams();
     const [orderCurrent, setDetailOrder] = useState<any>({});
+    const [reload, setReload] = useState<any>(1);
     useEffect(() => {
         fetchOrderDetail();
-    }, []);
+    }, [reload]);
     const fetchOrderDetail = async () => {
         try {
             const detail = await httpCart.getOrderDetail(Number(id));
@@ -65,20 +66,70 @@ function DetailCarts() {
                             >
                                 Chi tiết đơn hàng
                             </Typography>
-                            <Box
-                                sx={{
-                                    display: 'inline-block',
-                                    backgroundColor: '#F6BA71',
-                                    borderRadius: '30px',
-                                    fontSize: '14px',
-                                    padding: '10px 15px',
-                                    marginTop: '10px',
-                                    fontWeight: 'bold',
-                                    color: '#F7941E',
-                                }}
-                            >
-                                Đơn hàng chờ xác nhận
-                            </Box>
+                            {orderCurrent.status === null ? (
+                                <Box
+                                    sx={{
+                                        display: 'inline-block',
+                                        backgroundColor: '#F6BA71',
+                                        borderRadius: '30px',
+                                        fontSize: '14px',
+                                        padding: '10px 15px',
+                                        marginTop: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#F7941E',
+                                    }}
+                                >
+                                    Đơn hàng chờ xác nhận
+                                </Box>
+                            ) : orderCurrent.status === 1 ? (
+                                <Box
+                                    sx={{
+                                        display: 'inline-block',
+                                        backgroundColor: color.BtnDartGreen,
+                                        borderRadius: '30px',
+                                        fontSize: '14px',
+                                        padding: '10px 15px',
+                                        marginTop: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#F7941E',
+                                    }}
+                                >
+                                    Đơn hàng đang giao
+                                </Box>
+                            ) : orderCurrent.status === 2 ? (
+                                <Box
+                                    sx={{
+                                        display: 'inline-block',
+                                        backgroundColor: color.BtnDartGreen,
+                                        borderRadius: '30px',
+                                        fontSize: '14px',
+                                        padding: '10px 15px',
+                                        marginTop: '10px',
+                                        fontWeight: 'bold',
+                                        color: 'lightGreen',
+                                    }}
+                                >
+                                    Đơn hàng đã bán
+                                </Box>
+                            ) : orderCurrent.status === 3 ? (
+                                <Box
+                                    sx={{
+                                        display: 'inline-block',
+                                        backgroundColor: '#F6BA71',
+                                        borderRadius: '30px',
+                                        fontSize: '14px',
+                                        padding: '10px 15px',
+                                        marginTop: '10px',
+                                        fontWeight: 'bold',
+                                        color: '#F7941E',
+                                    }}
+                                >
+                                    Đơn hàng đã bị hủy
+                                </Box>
+                            ) : (
+                                ''
+                            )}
+
                             <Box>
                                 <Stack direction={'row'} mt={'10px'}>
                                     <Typography>Mã đơn hàng:</Typography>
@@ -108,26 +159,66 @@ function DetailCarts() {
                     <Grid item xs={3}>
                         <Box mt={'60px'}>
                             <Stack direction={'row'} mt={'10px'} spacing={2}>
-                                <Button
-                                    variant="containedGreen"
-                                    sx={{
-                                        mt: '10px',
-                                        borderRadius: '15px',
-                                        padding: '7px 27px',
-                                    }}
-                                >
-                                    <Typography textTransform={'capitalize'}>Xác nhận đơn hàng</Typography>
-                                </Button>
-                                <Button
-                                    variant="OutlinedRed"
-                                    sx={{
-                                        mt: '10px',
-                                        borderRadius: '15px',
-                                        padding: '7px 27px',
-                                    }}
-                                >
-                                    <Typography textTransform={'capitalize'}>Hủy đơn hàng</Typography>
-                                </Button>
+                                {orderCurrent.status === null ? (
+                                    <Button
+                                        variant="containedGreen"
+                                        sx={{
+                                            backgroundColor: 'gray',
+                                            mt: '10px',
+                                            borderRadius: '15px',
+                                            padding: '7px 27px',
+                                        }}
+                                        onClick={() => {
+                                            httpCart
+                                                .put(Number(orderCurrent.id), {
+                                                    status: 1,
+                                                })
+                                                .then((response) => {
+                                                    console.log(response);
+                                                    setReload(11);
+                                                });
+                                        }}
+                                    >
+                                        <Typography textTransform={'capitalize'}>Xác nhận đơn hàng</Typography>
+                                    </Button>
+                                ) : orderCurrent.status === 1 ? (
+                                    <Button
+                                        variant="containedGreen"
+                                        sx={{
+                                            mt: '10px',
+                                            borderRadius: '15px',
+                                            padding: '7px 27px',
+                                        }}
+                                        onClick={() => {
+                                            httpCart
+                                                .put(Number(orderCurrent.id), {
+                                                    status: 2,
+                                                })
+                                                .then((response) => {
+                                                    console.log(response);
+                                                    setReload(11);
+                                                });
+                                        }}
+                                    >
+                                        <Typography textTransform={'capitalize'}>Xác nhận thanh toán</Typography>
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
+                                {orderCurrent.status == null ? (
+                                    <Button
+                                        variant="OutlinedRed"
+                                        sx={{
+                                            mt: '10px',
+                                            borderRadius: '15px',
+                                            padding: '7px 27px',
+                                        }}
+                                    >
+                                        <Typography textTransform={'capitalize'}>Hủy đơn hàng</Typography>
+                                    </Button>
+                                ) : (
+                                    ''
+                                )}
                             </Stack>
                         </Box>
                     </Grid>
