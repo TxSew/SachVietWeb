@@ -5,22 +5,23 @@ import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { color } from '../../../../Theme/color';
-import { pushError, pushWarning } from '../../../../components/Toast/Toast';
-import { BaseAPi } from '../../../../configs/BaseApi';
-import { auth, provider } from '../../../../configs/fireBaseConfig';
-import { ResponseStatus } from '../../../../helpers/ResponsiveStatus';
-import { httpAccount } from '../../../../submodules/controllers/http/axiosController';
-import HttpAccountController from '../../../../submodules/controllers/http/httpAccountController';
-import { User } from '../../../../submodules/models/UserModel/User';
-
-const Login = () => {
+import HttpAccountController from '../../../submodules/controllers/http/httpAccountController';
+import { BaseAPi } from '../../../configs/BaseApi';
+import { User } from '../../../submodules/models/UserModel/User';
+import { pushError, pushWarning } from '../../../components/Toast/Toast';
+import { ResponseStatus } from '../../../helpers/ResponsiveStatus';
+import { color } from '../../../Theme/color';
+import { image } from '../../../assets';
+const checkAdmin = () => {
+    const admin = JSON.parse(localStorage.getItem('role')!);
+    if (admin) {
+        window.location.assign('/admin/statistical');
+    }
+};
+const LoginAdmin = () => {
+    checkAdmin();
     function handleSuccess(response: any) {
         console.log(response.status);
-    }
-
-    function handleError(error: any) {
-        console.log(error);
     }
 
     const [searchParams, setSearchParams] = useSearchParams();
@@ -47,14 +48,15 @@ const Login = () => {
                     position: 'top-right',
                 });
                 const { account, token, role } = login;
-                localStorage.setItem('user', JSON.stringify(account));
-                localStorage.setItem('token', JSON.stringify(token));
+                if (role) {
+                    localStorage.setItem('role', JSON.stringify(role));
+                }
             }
 
             if (value == 'checkout') {
                 window.location.assign('/checkout');
             } else {
-                window.location.assign('/');
+                window.location.assign('/admin/statistical');
             }
         } catch (err: any) {
             if (err.response.data.message === ResponseStatus.auth.notFound) {
@@ -67,7 +69,16 @@ const Login = () => {
     };
 
     return (
-        <>
+        <Box maxWidth={'600px'} mt={5} py={3} border={'1px solid #eee'} px={3} borderRadius={2}>
+            <Box>
+                <img
+                    src={image.logo}
+                    alt=""
+                    style={{
+                        margin: '0 auto',
+                    }}
+                />
+            </Box>
             <form autoComplete="off" onSubmit={handleSubmit(handleLogin)}>
                 <FormControl
                     sx={{
@@ -154,11 +165,7 @@ const Login = () => {
                         {errors.password && errors.password.message}
                     </Typography>
                 </FormControl>
-                <Typography variant="caption" display={'flex'} textAlign={'end'} justifyContent={'end'} pt={2}>
-                    <Link to={'ChangePassword'} style={{ color: 'red' }}>
-                        Quên mật khẩu?
-                    </Link>
-                </Typography>
+
                 <Box
                     mt={2}
                     sx={{
@@ -189,8 +196,8 @@ const Login = () => {
                     </Button>
                 </Box>
             </form>
-        </>
+        </Box>
     );
 };
 
-export default Login;
+export default LoginAdmin;

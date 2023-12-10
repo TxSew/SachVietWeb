@@ -42,6 +42,7 @@ import PaymentSuccess from '../pages/clients/cart/payment/PaymentSuccess';
 import Invoice from '../pages/clients/invoice/invoice';
 import Error from '../pages/clients/notFound/notFound';
 import SearchOrder from '../pages/clients/searchOrder/searchOrder';
+import LoginAdmin from '../pages/clients/LoginAdmin/AdminLogin';
 
 const PublicRouter = [
     {
@@ -102,6 +103,11 @@ const PublicRouter = [
     {
         path: '/news/detail/:slug',
         component: NewsDetail,
+    },
+    {
+        path: '/admin',
+        component: LoginAdmin,
+        isAdmin: true,
     },
 ];
 

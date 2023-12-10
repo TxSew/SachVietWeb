@@ -134,7 +134,7 @@ const Header = () => {
     };
 
     const handleSearch = () => {
-        if (search.length > 1) {
+        if (search.length > 0) {
             navigate({
                 pathname: '/filter',
                 search: createSearchParams({
@@ -820,6 +820,18 @@ const Header = () => {
                                 key={2}
                                 fullWidth
                                 placeholder="Tìm kiếm sản phẩm..."
+                                onKeyDown={(e) => {
+                                    if (e.key == 'Enter') {
+                                        if (search.length > 0) {
+                                            navigate({
+                                                pathname: '/filter',
+                                                search: createSearchParams({
+                                                    q: search,
+                                                }).toString(),
+                                            });
+                                        }
+                                    }
+                                }}
                                 endAdornment={
                                     <InputAdornment position="end">
                                         <IconButton aria-label="toggle password visibility" onClick={handleSearch}>

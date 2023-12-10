@@ -31,7 +31,6 @@ function NavMobile() {
         httpAccount
             .getMe()
             .then((res) => {
-                console.log(res);
                 if (res) {
                     setUser(res);
                 }
@@ -194,39 +193,41 @@ function NavMobile() {
                 </Box>
 
                 <Collapse in={openCategory} timeout="auto" unmountOnExit>
-                    {category.map((e: any) => {
-                        return (
-                            <Box
-                                pl={2}
-                                borderBottom={'1px solid #ccc'}
-                                sx={{
-                                    '&:hover': {
-                                        transition: 'linear 0.5s',
-                                        fontWeight: 'bold',
-                                        backgroundColor: '#fff',
-                                    },
-                                    '&:hover a': {
-                                        fontWeight: 'bold',
-                                    },
-                                }}
-                            >
-                                <Link
-                                    underline="none"
-                                    href={`/filter?category=${e.slug}`}
-                                    style={{
-                                        color: 'gray',
+                    <Box overflow={'scroll'} maxHeight={'200px'}>
+                        {category.map((e: any) => {
+                            return (
+                                <Box
+                                    pl={2}
+                                    borderBottom={'1px solid #ccc'}
+                                    sx={{
+                                        '&:hover': {
+                                            transition: 'linear 0.5s',
+                                            fontWeight: 'bold',
+                                            backgroundColor: '#fff',
+                                        },
+                                        '&:hover a': {
+                                            fontWeight: 'bold',
+                                        },
                                     }}
                                 >
-                                    <Box color={'inherit'}>
-                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
-                                            <LocalLibraryIcon />
-                                            <Typography fontSize={'12px'}>{e.name}</Typography>
-                                        </Stack>
-                                    </Box>
-                                </Link>
-                            </Box>
-                        );
-                    })}
+                                    <Link
+                                        underline="none"
+                                        href={`/filter?category=${e.slug}`}
+                                        style={{
+                                            color: 'gray',
+                                        }}
+                                    >
+                                        <Box color={'inherit'}>
+                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                <LocalLibraryIcon />
+                                                <Typography fontSize={'12px'}>{e.name}</Typography>
+                                            </Stack>
+                                        </Box>
+                                    </Link>
+                                </Box>
+                            );
+                        })}
+                    </Box>
                 </Collapse>
             </Box>
             <Box position={'absolute'} top={'85%'} bgcolor={'#ccc'} width={'100%'}>

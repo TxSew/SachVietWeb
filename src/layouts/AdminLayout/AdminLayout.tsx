@@ -37,7 +37,7 @@ import IconButton from '@mui/material/IconButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import React from 'react';
 import { FaListUl } from 'react-icons/fa';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { image } from '../../assets';
 import useMedia from '../../hooks/useMedia/useMedia';
 import './style.scss';
@@ -380,6 +380,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
             </NavLink>
         </Box>
     );
+    const redirect = useNavigate();
     return (
         <>
             {isMediumMD ? (
@@ -474,33 +475,16 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                     >
-                                        <MenuItem onClick={handleClose}>
-                                            <Avatar /> Profile
-                                        </MenuItem>
-
-                                        <NavLink to={'/'}>
-                                            <MenuItem onClick={handleClose}>
-                                                <Avatar /> My account
-                                            </MenuItem>
-                                        </NavLink>
-                                        <Divider />
-                                        <MenuItem onClick={handleClose}>
-                                            <ListItemIcon>
-                                                <PersonAdd fontSize="small" />
-                                            </ListItemIcon>
-                                            Add another account
-                                        </MenuItem>
-                                        <MenuItem onClick={handleClose}>
-                                            <ListItemIcon>
-                                                <Settings fontSize="small" />
-                                            </ListItemIcon>
-                                            Settings
-                                        </MenuItem>
-                                        <MenuItem onClick={handleClose}>
+                                        <MenuItem
+                                            onClick={() => {
+                                                localStorage.removeItem('role');
+                                                redirect('/');
+                                            }}
+                                        >
                                             <ListItemIcon>
                                                 <Logout fontSize="small" />
                                             </ListItemIcon>
-                                            Logout
+                                            Đăng xuất
                                         </MenuItem>
                                     </Menu>
                                 </ul>
@@ -602,11 +586,16 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                         <Avatar /> My account
                                     </MenuItem>
                                     <Divider />
-                                    <MenuItem onClick={handleClose}>
+                                    <MenuItem
+                                        onClick={() => {
+                                            localStorage.removeItem('role');
+                                            redirect('/');
+                                        }}
+                                    >
                                         <ListItemIcon>
                                             <Logout fontSize="small" />
                                         </ListItemIcon>
-                                        Logout
+                                        Đăng xuất
                                     </MenuItem>
                                 </Menu>
                             </Box>

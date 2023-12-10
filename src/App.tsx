@@ -5,6 +5,7 @@ import HeaderOnly from './layouts/HeaderOnly/HeaderOnly';
 import { PrivateRouter, PublicRouter, moreNotFound, userProvide } from './routes';
 import { useEffect, useState } from 'react';
 import { httpAccount } from './submodules/controllers/http/axiosController';
+import LoginAdminLayout from './layouts/LoginAdminLayout/LoginAdminLayout';
 
 function isAdminAuthenticated() {
     const token = localStorage.getItem('role');
@@ -44,6 +45,9 @@ function App() {
                         let Layout = DefaultLayout;
                         if (e.isRequired) {
                             Layout = HeaderOnly;
+                        }
+                        if (e.isAdmin) {
+                            Layout = LoginAdminLayout;
                         }
                         return (
                             <Route
