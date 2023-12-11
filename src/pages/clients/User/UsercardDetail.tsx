@@ -30,9 +30,6 @@ import CustomizedSteppers from './Stepper';
 import NavUser from './layout/NavUser';
 
 function UserCartDetail() {
-    const [selectedFiles, setSelectedFiles] = useState<any>([]);
-    const [imageFiles, setImageFiles] = useState<any[]>([]);
-    const [imgs, setImgs] = useState<any>({});
     const { id } = useParams();
     const [orderCurrent, setOrderCurrent] = useState<any>({});
     const handleOpen = () => setOpendanhgia(true);

@@ -340,12 +340,11 @@ const Header = () => {
                                             <Box
                                                 sx={{
                                                     position: 'absolute',
-                                                    top: '10%',
-                                                    left: '50%',
+                                                    top: '7.5%',
+                                                    left: '45%',
                                                     transform: 'translate(-50%, 0%)',
-                                                    width: '700px',
+                                                    width: '586px',
                                                     bgcolor: 'background.paper',
-                                                    borderRight: '1px solid #000',
                                                     boxShadow: 24,
                                                     outline: 'none',
                                                     p: 4,
@@ -379,7 +378,7 @@ const Header = () => {
                                                     textTransform={'uppercase'}
                                                     fontWeight={'bold'}
                                                 >
-                                                    Được tìm kiếm nhiều nhất (6 sản phẩm)
+                                                    {`Sản phẩm được tìm kiếm`}
                                                 </Typography>
                                                 <Box padding={'8px 0'}>
                                                     <Grid container spacing={2}>
@@ -455,6 +454,16 @@ const Header = () => {
                                                         )}
                                                     </Grid>
                                                 </Box>
+                                                <Typography
+                                                    variant="h2"
+                                                    display={'block'}
+                                                    padding={'10px 0'}
+                                                    textTransform={'uppercase'}
+                                                    fontWeight={'bold'}
+                                                >
+                                                    {`Từ khoá`}
+                                                </Typography>
+                                                <Typography display={'block'}>{search}</Typography>
                                             </Box>
                                         </Modal>
                                         <TextField
