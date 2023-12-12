@@ -428,13 +428,17 @@ function Checkout() {
                                                 <Stack direction={'row'} spacing={2}>
                                                     <Typography
                                                         variant="caption"
-                                                        className="cartItem_Price"
+                                                        className="cartItem_PriceSale"
                                                         fontWeight={'bold'}
                                                     >
-                                                        {numberFormat(Number(e.price))}
-                                                    </Typography>
-                                                    <Typography variant="caption" className="cartItem_PriceSale">
                                                         {numberFormat(Number(e.price_sale))}
+                                                    </Typography>
+                                                    <Typography
+                                                        variant="caption"
+                                                        className="cartItem_Price"
+                                                        sx={{ textDecorationLine: 'line-through' }}
+                                                    >
+                                                        {numberFormat(Number(e.price))}
                                                     </Typography>
                                                 </Stack>
                                             </Stack>
