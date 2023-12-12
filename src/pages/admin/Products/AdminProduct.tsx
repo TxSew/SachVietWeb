@@ -36,8 +36,10 @@ import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCategory, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
+import useMedia from '../../../hooks/useMedia/useMedia';
 
 export default function AdminProduct() {
+    const { isMediumMD } = useMedia();
     const [Products, setProducts] = React.useState<Product[]>([]);
     const [open, setOpen] = React.useState({
         isChecked: false,
@@ -183,75 +185,89 @@ export default function AdminProduct() {
                     </Link>
                 </Button>
             </Stack>
-            <Stack mb={1} spacing={3} sx={{ minWidth: 300 }} direction={'row'}>
-                <Typography>Sắp xếp:</Typography>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <Select
-                        value={sort}
-                        onChange={handleChangeSort}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="">
-                            <em>Tùy chọn</em>
-                        </MenuItem>
-                        <MenuItem value={'old'}>Cũ nhất</MenuItem>
-                        <MenuItem value={'new'}>Mới nhất</MenuItem>
-                        <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
-                        <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
-                    </Select>
-                </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <Select
-                        value={sortCategory}
-                        onChange={handleSortByCategory}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="">
-                            <em>Chọn danh mục</em>
-                        </MenuItem>
-                        {Category.map((e: Category) => {
-                            return <MenuItem value={e.slug}>{e.name}</MenuItem>;
-                        })}
-                    </Select>
-                </FormControl>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <Select
-                        value={sale}
-                        onChange={handelSale}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value={''}>Mặc định</MenuItem>
-                        <MenuItem value={1}>Sản phẩm giảm giá</MenuItem>
-                        <MenuItem value={2}>Sản phẩm bán chạy</MenuItem>
-                    </Select>
-                </FormControl>
+            <Box mb={1} sx={{ minWidth: 300 }} display={{ xs: 'block', md: 'flex' }} alignItems={'center'} gap={'16px'}>
                 <Button
                     onClick={onDownload}
                     variant="outlinedGreen"
                     sx={{
                         border: '1px solid #ccc',
+                        display: 'flex',
+                        marginLeft: 'auto',
                     }}
                 >
                     <Typography textTransform={'capitalize'} fontSize={'12px'} color={'#333'}>
                         Xuất EXEL
                     </Typography>
                 </Button>
+                <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                    gap={2}
+                    pb={{ xs: 2, md: 0 }}
+                >
+                    <FormControl sx={{ my: 1, minWidth: 120 }}>
+                        <Select
+                            value={sort}
+                            onChange={handleChangeSort}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value="">
+                                <em>Tùy chọn</em>
+                            </MenuItem>
+                            <MenuItem value={'old'}>Cũ nhất</MenuItem>
+                            <MenuItem value={'new'}>Mới nhất</MenuItem>
+                            <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
+                            <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ my: 1, minWidth: 120 }}>
+                        <Select
+                            value={sortCategory}
+                            onChange={handleSortByCategory}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value="">
+                                <em>Chọn danh mục</em>
+                            </MenuItem>
+                            {Category.map((e: Category) => {
+                                return <MenuItem value={e.slug}>{e.name}</MenuItem>;
+                            })}
+                        </Select>
+                    </FormControl>
+                    <FormControl sx={{ my: 1, minWidth: 120 }}>
+                        <Select
+                            value={sale}
+                            onChange={handelSale}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value={''}>Mặc định</MenuItem>
+                            <MenuItem value={1}>Sản phẩm giảm giá</MenuItem>
+                            <MenuItem value={2}>Sản phẩm bán chạy</MenuItem>
+                        </Select>
+                    </FormControl>
+                </Box>
                 <OutlinedInput
-                    sx={{
-                        maxWidth: '300px',
-                        mt: 1,
-                        '& > input': {
-                            p: '7px',
-                        },
-                    }}
+                    sx={
+                        isMediumMD
+                            ? {
+                                  maxWidth: '100%',
+                                  '& > input': {
+                                      p: '7px',
+                                  },
+                              }
+                            : {
+                                  maxWidth: '300px',
+                              }
+                    }
                     fullWidth
                     placeholder="Tìm kiếm sản phẩm..."
                     onChange={handleChangeValue}
                 />
-            </Stack>
+            </Box>
 
             <TableContainer component={Paper} ref={tableRef}>
                 <Table

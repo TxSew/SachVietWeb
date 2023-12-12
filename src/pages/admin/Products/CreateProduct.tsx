@@ -109,7 +109,7 @@ const CreateProduct = () => {
         <Box>
             {TitleHelmet('Thêm sản phẩm')}
             <form action="" onSubmit={handleSubmit(handleAddProduct)}>
-                <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
+                <Stack direction={'row'} justifyContent={'space-between'}>
                     <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Thêm sản phẩm mới
                     </Typography>

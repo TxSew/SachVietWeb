@@ -33,8 +33,10 @@ import { pushError } from '../../../components/Toast/Toast';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpNews } from '../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../submodules/models/ProductModel/Product';
+import useMedia from '../../../hooks/useMedia/useMedia';
 
 export default function AdminNews() {
+    const { isMediumMD } = useMedia();
     const [Products, setProducts] = React.useState<Product[]>([]);
     const [open, setOpen] = React.useState({
         isChecked: false,
@@ -124,11 +126,10 @@ export default function AdminNews() {
 
     return (
         <>
-            <Stack direction={'row'} mb={2} alignItems={'center'} spacing={2} justifyContent={'space-between'}>
-                <Typography variant="h2" fontSize={'26px'} mb={3} fontWeight={'bold'} textTransform={'uppercase'}>
+            <Box display={'flex'} mb={2} alignItems={'center'} justifyContent={'space-between'}>
+                <Typography variant="h2" fontSize={'26px'} fontWeight={'bold'} textTransform={'uppercase'}>
                     Quản lý bài viết
                 </Typography>
-
                 <Button variant="contained">
                     <Link
                         style={{
@@ -139,55 +140,72 @@ export default function AdminNews() {
                         Thêm bài viết
                     </Link>
                 </Button>
-            </Stack>
-            <Stack mb={1} spacing={3} sx={{ minWidth: 300 }} direction={'row'}>
-                <Typography>Sắp xếp:</Typography>
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <Select
-                        value={sort}
-                        onChange={handleChangeSort}
-                        displayEmpty
-                        inputProps={{ 'aria-label': 'Without label' }}
-                    >
-                        <MenuItem value="">
-                            <em>Tùy chọn</em>
-                        </MenuItem>
-                        <MenuItem value={'old'}>Cũ nhất</MenuItem>
-                        <MenuItem value={'new'}>Mới nhất</MenuItem>
-                        <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
-                        <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
-                    </Select>
-                </FormControl>
-
-                <Button
-                    onClick={onDownload}
-                    variant="outlinedGreen"
-                    sx={{
-                        border: '1px solid #ccc',
-                    }}
+            </Box>
+            <Box mb={1} sx={{ minWidth: 300 }} display={{ xs: 'block', md: 'flex' }} alignItems={'center'} gap={'24px'}>
+                <Typography display={'flex'} pb={{ xs: 1, md: 0 }}>
+                    Sắp xếp:
+                </Typography>
+                <Box
+                    display={'flex'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                    gap={3}
+                    pb={{ xs: 2, md: 0 }}
                 >
-                    <Typography textTransform={'capitalize'} fontSize={'12px'} color={'#333'}>
-                        Xuất EXEL
-                    </Typography>
-                </Button>
+                    <FormControl sx={{ minWidth: 120 }}>
+                        <Select
+                            value={sort}
+                            onChange={handleChangeSort}
+                            displayEmpty
+                            inputProps={{ 'aria-label': 'Without label' }}
+                        >
+                            <MenuItem value="">
+                                <em>Tùy chọn</em>
+                            </MenuItem>
+                            <MenuItem value={'old'}>Cũ nhất</MenuItem>
+                            <MenuItem value={'new'}>Mới nhất</MenuItem>
+                            <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
+                            <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    <Button
+                        onClick={onDownload}
+                        variant="outlinedGreen"
+                        sx={{
+                            border: '1px solid #ccc',
+                        }}
+                    >
+                        <Typography textTransform={'capitalize'} fontSize={'12px'} color={'#333'}>
+                            Xuất EXEL
+                        </Typography>
+                    </Button>
+                </Box>
+
                 <OutlinedInput
-                    sx={{
-                        maxWidth: '300px',
-                        mt: 1,
-                        '& > input': {
-                            p: '7px',
-                        },
-                    }}
+                    sx={
+                        isMediumMD
+                            ? {
+                                  maxWidth: '100%',
+                                  '& > input': {
+                                      p: '7px',
+                                  },
+                              }
+                            : {
+                                  maxWidth: '300px',
+                              }
+                    }
                     fullWidth
                     placeholder="Tìm kiếm sản phẩm..."
                     onChange={handleChangeValue}
                 />
-            </Stack>
+            </Box>
 
             <TableContainer component={Paper} ref={tableRef}>
                 <Table
                     sx={{
                         minWidth: 800,
+                        mt: 2,
                     }}
                     aria-label="simple tablek w"
                 >
@@ -260,73 +278,76 @@ export default function AdminNews() {
                                                 handleClickOpen(e.id);
                                             }}
                                         />
-                                        <Dialog
-                                            open={open.isChecked}
-                                            onClose={handleClickClose}
-                                            TransitionComponent={Fade}
-                                            aria-labelledby="customized-dialog-title"
-                                        >
-                                            <DialogContent>
-                                                <DialogContentText
-                                                    id="alert-dialog-slide-description"
-                                                    textAlign={'center'}
-                                                    padding={'0 24px '}
-                                                    sx={{
-                                                        color: 'red',
-                                                    }}
-                                                >
-                                                    <DeleteForeverIcon
-                                                        sx={{
-                                                            fontSize: '56px',
-                                                            color: 'rgb(201, 33, 39)',
-                                                        }}
-                                                    />
-                                                    <DialogTitle fontSize={'16px'}>
-                                                        Bạn chắc chắn muốn xóa bài viết này?
-                                                    </DialogTitle>
-                                                </DialogContentText>
-                                            </DialogContent>
-                                            <Box
-                                                display={'flex'}
-                                                paddingBottom={'24px'}
-                                                justifyContent={'space-around'}
-                                            >
-                                                <Button
-                                                    onClick={handleClickClose}
-                                                    sx={{
-                                                        padding: '8px 16px',
-                                                        border: '1px solid #ccc',
-                                                        borderRadius: '12px',
-                                                        color: 'black',
-                                                        fontSize: '12px',
-                                                        fontWeight: 'bold',
-                                                        width: '96px',
-                                                    }}
-                                                >
-                                                    Hủy
-                                                </Button>
-                                                <Button
-                                                    onClick={() => handleDelete(open.id)}
-                                                    sx={{
-                                                        padding: '8px 16px',
-                                                        border: '1px solid red',
-                                                        borderRadius: '12px',
-                                                        background: 'red',
-                                                        color: 'white',
-                                                        fontSize: '12px',
-                                                        fontWeight: 'bold',
-                                                        width: '96px',
-                                                        ':hover': {
-                                                            backgroundColor: 'rgb(201, 33, 39)',
-                                                        },
-                                                    }}
-                                                >
-                                                    Đồng ý
-                                                </Button>
-                                            </Box>
-                                        </Dialog>
                                     </Stack>
                                 </TableCell>
+                                <Dialog
+                                    open={open.isChecked}
+                                    onClose={handleClickClose}
+                                    sx={{
+                                        '&>.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop': {
+                                            bgcolor: 'rgba(48, 54, 69, 0.1)',
+                                        },
+                                        '& .css-1t1j96h-MuiPaper-root-MuiDialog-paper': {
+                                            boxShadow: 'none',
+                                        },
+                                    }}
+                                    TransitionComponent={Fade}
+                                >
+                                    <DialogContent>
+                                        <DialogContentText
+                                            id="alert-dialog-slide-description"
+                                            textAlign={'center'}
+                                            padding={'0 24px '}
+                                            sx={{
+                                                color: 'red',
+                                            }}
+                                        >
+                                            <DeleteForeverIcon
+                                                sx={{
+                                                    fontSize: '56px',
+                                                    color: 'rgb(201, 33, 39)',
+                                                }}
+                                            />
+                                            <DialogTitle fontSize={'16px'}>
+                                                Bạn chắc chắn muốn xóa bài viết này?
+                                            </DialogTitle>
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <Box display={'flex'} paddingBottom={'24px'} justifyContent={'space-around'}>
+                                        <Button
+                                            onClick={handleClickClose}
+                                            sx={{
+                                                padding: '8px 16px',
+                                                border: '1px solid #ccc',
+                                                borderRadius: '12px',
+                                                color: 'black',
+                                                fontSize: '12px',
+                                                fontWeight: 'bold',
+                                                width: '96px',
+                                            }}
+                                        >
+                                            Hủy
+                                        </Button>
+                                        <Button
+                                            onClick={() => handleDelete(open.id)}
+                                            sx={{
+                                                padding: '8px 16px',
+                                                border: '1px solid red',
+                                                borderRadius: '12px',
+                                                background: 'red',
+                                                color: 'white',
+                                                fontSize: '12px',
+                                                fontWeight: 'bold',
+                                                width: '96px',
+                                                ':hover': {
+                                                    backgroundColor: 'rgb(201, 33, 39)',
+                                                },
+                                            }}
+                                        >
+                                            Đồng ý
+                                        </Button>
+                                    </Box>
+                                </Dialog>
                             </TableRow>
                         ))}
                     </TableBody>
