@@ -231,7 +231,7 @@ export const Details = () => {
 
         return uploadedUrls.filter((url: any) => url !== null);
     };
-    
+
     const handelComment = async (data: any) => {
         let { image, ...rest } = data as any;
 
@@ -239,6 +239,7 @@ export const Details = () => {
             productId: idProduct,
             ...rest,
         } as any;
+
         const listImg = await uploadImages();
         const thumb = listImg.map((e) => {
             return {
@@ -249,6 +250,7 @@ export const Details = () => {
             content: props,
             images: thumb,
         };
+
         httpComment.addComment(comment).then((response) => {
             pushSuccess('Đánh giá sản phẩm thành công');
             reset({});
@@ -289,9 +291,10 @@ export const Details = () => {
                             {Detail?.category?.name}
                         </Typography>
                     </Link>
-                    <NavLink color="inherit" to={''}>
+                    <Link to={''} color={color.text_color} style={{ color: color.text_color }}>
                         <Typography
                             variant="caption"
+                            color={'#1d1c1cde !important'}
                             fontWeight={'bold'}
                             sx={
                                 isMediumMD
@@ -304,6 +307,7 @@ export const Details = () => {
                                           WebkitBoxOrient: 'vertical',
                                       }
                                     : {
+                                          color: '1d1c1cde',
                                           overflow: 'hidden',
                                           display: '-webkit-box',
                                           lineClamp: 2,
@@ -314,7 +318,7 @@ export const Details = () => {
                         >
                             {Detail?.title}
                         </Typography>
-                    </NavLink>
+                    </Link>
                 </Breadcrumbs>
 
                 <Box pb={2}>
@@ -898,7 +902,7 @@ export const Details = () => {
                                             }
                                         />
                                         <Tab
-                                            label="Bình luận"
+                                            label="Đánh giá sản phẩm"
                                             value="2"
                                             sx={
                                                 isMediumMD
@@ -967,7 +971,7 @@ export const Details = () => {
                                     value="2"
                                 >
                                     <Grid container>
-                                        <Grid xs={12} md={4} pb={2}>
+                                        {/* <Grid xs={12} md={4} pb={2}>
                                             {user ? (
                                                 <FormControl>
                                                     <Box
@@ -1123,9 +1127,9 @@ export const Details = () => {
                                                     </Typography>
                                                 </Stack>
                                             )}
-                                        </Grid>
+                                        </Grid> */}
                                         <Grid xs={12} md={8} pb={2}>
-                                            <Box width={'100%'} border={'1px solid #eee'} height={'100%'} p={2}>
+                                            <Box width={'100%'} height={'100%'} p={2}>
                                                 {comments?.comments?.length > 0 ? (
                                                     comments?.comments?.map((e: any) => {
                                                         return (

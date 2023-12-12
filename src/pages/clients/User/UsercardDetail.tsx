@@ -1,5 +1,4 @@
 import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
-
 import {
     Box,
     Button,
@@ -8,18 +7,21 @@ import {
     DialogContentText,
     DialogTitle,
     Fade,
+    FormControl,
     Grid,
     Stack,
     Table,
     TableBody,
     TableCell,
     TableContainer,
+    TextareaAutosize,
     TableHead,
     TableRow,
     Typography,
+    Rating,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { Link, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { formatDates } from '../../../helpers/FortmatDate';
@@ -28,18 +30,37 @@ import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
 import CustomizedSteppers from './Stepper';
 import NavUser from './layout/NavUser';
+import { httpComment } from '../../../submodules/controllers/http/axiosController';
 
 function UserCartDetail() {
     const { id } = useParams();
     const [orderCurrent, setOrderCurrent] = useState<any>({});
-    const handleOpen = () => setOpendanhgia(true);
-    const handleClose = () => setOpendanhgia(false);
+
+    const [openDanhgia, setOpendanhgia] = useState<any>({
+        isCheck: false,
+        value: '',
+    });
+
+    const handleOpen = (id: any) => {
+        setOpendanhgia({
+            isCheck: true,
+            value: id,
+        });
+    };
+
+    const handleClose = () => {
+        setOpendanhgia({
+            isCheck: false,
+            value: '',
+        });
+    };
+
     useEffect(() => {
         getOrderUser();
     }, []);
 
     const [open, setOpen] = useState(false);
-    const [openDanhgia, setOpendanhgia] = useState(false);
+
     const getOrderUser = async () => {
         const orderByUser = await httpCart.getOrderDetail(Number(id));
         if (orderByUser) setOrderCurrent(orderByUser);
@@ -67,6 +88,24 @@ function UserCartDetail() {
         formState: { errors },
         setValue,
     } = useForm<Comment>({});
+
+    const handelComment = (data: any) => {
+        console.log(data);
+        const comment = {
+            productId: Number(openDanhgia.value),
+            ...data,
+        };
+        httpComment
+            .addComment({
+                content: data,
+            })
+            .then((response) => {
+                reset({});
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    };
 
     return (
         <NavUser>
@@ -454,7 +493,7 @@ function UserCartDetail() {
                                                 <TableCell align="center">
                                                     <Typography fontSize={'12px'}>
                                                         <Box
-                                                            onClick={handleOpen}
+                                                            onClick={() => handleOpen(order.product.id)}
                                                             bgcolor={color.btnRed}
                                                             sx={{
                                                                 cursor: 'pointer',
@@ -473,19 +512,82 @@ function UserCartDetail() {
                         </Table>
                     </TableContainer>
                     <Dialog
-                        open={openDanhgia}
-                        onClose={handleClickClose}
+                        open={openDanhgia.isCheck}
+                        onClose={handleClose}
                         TransitionComponent={Fade}
                         aria-labelledby="customized-dialog-title"
                     >
                         <DialogContent>
-                            <DialogContentText
-                                id="alert-dialog-slide-description"
-                                textAlign={'center'}
-                                padding={'0 24px '}
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    pb: 1,
+                                    width: '100%',
+                                }}
                             >
-                                sdsd
-                            </DialogContentText>
+                                <FormControl>
+                                    <Typography component="legend">Chọn đánh giá của bạn:</Typography>
+                                    <Controller
+                                        name="star"
+                                        control={control}
+                                        render={({ field }) => {
+                                            return (
+                                                <Rating
+                                                    {...field}
+                                                    defaultValue={0}
+                                                    size="small"
+                                                    name="simple-controlled"
+                                                    onChange={(event, newRating: any) => {
+                                                        setValue('star', newRating);
+                                                    }}
+                                                />
+                                            );
+                                        }}
+                                    />
+                                    <Typography variant="caption" color={color.error}>
+                                        {errors.star && errors.star.message}
+                                    </Typography>
+                                </FormControl>
+                            </Box>
+                            <FormControl>
+                                <Controller
+                                    name="content"
+                                    control={control}
+                                    rules={{
+                                        required: 'Vui lòng nhập nội dung đánh giá',
+                                    }}
+                                    render={({ field }) => (
+                                        <TextareaAutosize
+                                            {...field}
+                                            style={{
+                                                resize: 'none',
+                                                padding: '12px',
+                                                borderRadius: '4px',
+                                                outline: 'none',
+                                                border: '1px solid #ccc',
+                                            }}
+                                            minRows={4}
+                                            name=""
+                                            id=""
+                                            placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
+                                        ></TextareaAutosize>
+                                    )}
+                                />
+
+                                <Typography variant="caption" color={color.error}>
+                                    {errors.content && errors.content.message}
+                                </Typography>
+                            </FormControl>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                fullWidth="100%"
+                                sx={{ mt: 3, background: '#F39801' }}
+                                onClick={handleSubmit(handelComment)}
+                            >
+                                Gửi nhận xét
+                            </Button>
                         </DialogContent>
                     </Dialog>
                 </Box>

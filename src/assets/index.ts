@@ -13,4 +13,5 @@ export const image = {
     folder: require('./images/folder.png'),
     Fire: require('./images/Fire.png'),
     CategoryIcon: require('./images/categoryIcon.png'),
+    notfound: require('./images/notfound.jpeg'),
 };

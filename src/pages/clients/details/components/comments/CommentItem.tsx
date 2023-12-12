@@ -14,12 +14,7 @@ const CommentItem = (props: Props) => {
     return (
         <Box pt={2} borderBottom={'1px solid #eee'} display={'flex'} justifyContent={'start'} gap={1}>
             <Box>
-                <Avatar
-                    alt="Remy Sharp"
-                    src={
-                        props.avatar || 'https://down-vn.img.susercontent.com/file/ffb79bec4ee0fddca9d0b0679ab9248d_tn'
-                    }
-                />
+                <Avatar alt="Remy Sharp" src={props.avatar || 'https://xphone.vn/images/no_login.svg'} />
             </Box>
             <Box>
                 <Box pb={2}>
