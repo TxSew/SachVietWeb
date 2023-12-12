@@ -6,5 +6,5 @@ export const BaseAPi = {
     // baseURL: 'https://bcd2-14-241-150-19.ngrok-free.app',
     // baseURL: 'https://2846-14-241-150-19.ngrok-free.app',
     // baseURL: ' https://fb24-14-241-150-19.ngrok-free.app',
-    baseURL: 'https://1e53-14-241-150-19.ngrok-free.app',
+    baseURL: 'https://78c7-14-241-150-19.ngrok-free.app',
 };
