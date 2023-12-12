@@ -219,41 +219,41 @@ function Footer() {
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=chua-lanh'}
                                     >
-                                        <ListItem sx={ftItemmb}>Danh mục</ListItem>
+                                        <ListItem sx={ftItemmb}>Sách chữa lành</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=thieu-nhi'}
                                     >
-                                        <ListItem sx={ftItemmb}>Văn học </ListItem>
+                                        <ListItem sx={ftItemmb}>Sách thiêú nhi</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=van-hoc-kinh-djien'}
                                     >
-                                        <ListItem sx={ftItemmb}>Tâm lý - kỹ năng</ListItem>
+                                        <ListItem sx={ftItemmb}>Sách thiên văn</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=tieu-thuyet'}
                                     >
-                                        <ListItem sx={ftItemmb}>Nuôi dạy con</ListItem>
+                                        <ListItem sx={ftItemmb}>Sách tiểu thuyết</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=tam-linh-luan-hoi'}
                                     >
-                                        <ListItem sx={ftItemmb}>Ngoại ngữ</ListItem>
+                                        <ListItem sx={ftItemmb}>Sách tâm linh - Luân hồi</ListItem>
                                     </NavLink>
                                 </List>
                             </Grid>
@@ -319,41 +319,41 @@ function Footer() {
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=chua-lanh'}
                                     >
-                                        <ListItem sx={ftItem}>Danh mục</ListItem>
+                                        <ListItem sx={ftItem}>Sách chữa lành</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=thieu-nhi'}
                                     >
-                                        <ListItem sx={ftItem}>Văn học </ListItem>
+                                        <ListItem sx={ftItem}>Sách thiêú nhi</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=van-hoc-kinh-djien'}
                                     >
-                                        <ListItem sx={ftItem}>Tâm lý - kỹ năng</ListItem>
+                                        <ListItem sx={ftItem}>Sách thiên văn</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=tieu-thuyet'}
                                     >
-                                        <ListItem sx={ftItem}>Nuôi dạy con</ListItem>
+                                        <ListItem sx={ftItem}>Sách tiểu thuyết</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
                                             color: 'black',
                                         }}
-                                        to={''}
+                                        to={'/filter?category=tam-linh-luan-hoi'}
                                     >
-                                        <ListItem sx={ftItem}>Ngoại ngữ</ListItem>
+                                        <ListItem sx={ftItem}>Sách tâm linh - Luân hồi</ListItem>
                                     </NavLink>
                                 </List>
                             </Grid>
