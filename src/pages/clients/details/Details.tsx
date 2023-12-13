@@ -21,7 +21,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, createSearchParams, useNavigate, useParams } from 'react-router-dom';
-
+import { image as thumbnail } from '../../../assets/index';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -221,7 +221,6 @@ export const Details = () => {
                                           WebkitBoxOrient: 'vertical',
                                       }
                                     : {
-                                          color: '1d1c1cde',
                                           overflow: 'hidden',
                                           display: '-webkit-box',
                                           lineClamp: 2,
@@ -804,30 +803,18 @@ export const Details = () => {
                                         <Tab
                                             label="Giới thiệu sản phẩm"
                                             value="1"
-                                            sx={
-                                                isMediumMD
-                                                    ? {
-                                                          p: '16px 10px',
-                                                          fontSize: '15px',
-                                                      }
-                                                    : {
-                                                          p: '16px 10px',
-                                                      }
-                                            }
+                                            sx={{
+                                                p: '16px 10px',
+                                                fontSize: isMediumMD ? '13px' : '15px',
+                                            }}
                                         />
                                         <Tab
                                             label="Đánh giá sản phẩm"
                                             value="2"
-                                            sx={
-                                                isMediumMD
-                                                    ? {
-                                                          p: '16px 10px',
-                                                          fontSize: '15px',
-                                                      }
-                                                    : {
-                                                          p: '16px 10px',
-                                                      }
-                                            }
+                                            sx={{
+                                                p: '16px 10px',
+                                                fontSize: isMediumMD ? '13px' : '15px',
+                                            }}
                                         />
                                     </TabList>
                                 </Box>
@@ -900,12 +887,29 @@ export const Details = () => {
                                                         );
                                                     })
                                                 ) : (
-                                                    <img
-                                                        src={
-                                                            'blob:https://chat.zalo.me/88e844fd-c7e0-4710-9e49-66672783f806'
-                                                        }
-                                                        alt=""
-                                                    />
+                                                    <Stack>
+                                                        <img
+                                                            style={
+                                                                isMediumMD
+                                                                    ? { width: '100px', height: '100px' }
+                                                                    : {
+                                                                          margin: '0 auto',
+                                                                          maxWidth: '200px',
+                                                                          width: '100%',
+                                                                          height: '200px',
+                                                                      }
+                                                            }
+                                                            src={thumbnail.notfound}
+                                                            alt=""
+                                                        />
+                                                        <Typography
+                                                            mt={2}
+                                                            variant="h2"
+                                                            fontSize={isMediumMD ? '14px' : '16px'}
+                                                        >
+                                                            Chưa có đánh giá cho sản phẩm này.
+                                                        </Typography>
+                                                    </Stack>
                                                 )}
                                                 <Box
                                                     sx={{
@@ -916,11 +920,15 @@ export const Details = () => {
                                                         marginX: 'auto',
                                                     }}
                                                 >
-                                                    <Pagination
-                                                        count={comments?.totalPage}
-                                                        page={page}
-                                                        onChange={handleChangePage}
-                                                    />
+                                                    {comments?.totalPage > 0 ? (
+                                                        <Pagination
+                                                            count={comments?.totalPage}
+                                                            page={page}
+                                                            onChange={handleChangePage}
+                                                        />
+                                                    ) : (
+                                                        ''
+                                                    )}
                                                 </Box>
                                             </Box>
                                         </Grid>

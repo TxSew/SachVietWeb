@@ -69,7 +69,7 @@ const LoginAdmin = () => {
     };
 
     return (
-        <Box maxWidth={'600px'} mt={5} py={3} border={'1px solid #eee'} px={3} borderRadius={2}>
+        <Box maxWidth={'600px'} mt={5} py={3} height={'max-content'} border={'1px solid #eee'} px={3} borderRadius={2}>
             <Box>
                 <img
                     src={image.logo}

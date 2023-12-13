@@ -46,12 +46,14 @@ function UserCartDetail() {
     const [openDanhgia, setOpendanhgia] = useState<any>({
         isCheck: false,
         value: '',
+        idOrderDetail: '',
     });
 
-    const handleOpen = (id: any) => {
+    const handleOpen = (props: any) => {
         setOpendanhgia({
             isCheck: true,
-            value: id,
+            value: props.productId,
+            idOrderDetail: props.idOrderDetail,
         });
     };
 
@@ -59,6 +61,7 @@ function UserCartDetail() {
         setOpendanhgia({
             isCheck: false,
             value: '',
+            idOrderDetail: '',
         });
     };
 
@@ -123,6 +126,7 @@ function UserCartDetail() {
         let { image, ...rest } = data as any;
 
         let props = {
+            idOrderDetail: Number(openDanhgia.idOrderDetail),
             productId: Number(openDanhgia.value),
             ...rest,
         } as any;
@@ -141,6 +145,8 @@ function UserCartDetail() {
         httpComment.addComment(comment).then((response) => {
             pushSuccess('Đánh giá sản phẩm thành công');
             reset({});
+            handleClose();
+            getOrderUser();
         });
     };
 
@@ -529,15 +535,34 @@ function UserCartDetail() {
                                                 </TableCell>
                                                 <TableCell align="center">
                                                     <Typography fontSize={'12px'}>
-                                                        <Box
-                                                            onClick={() => handleOpen(order.product.id)}
-                                                            bgcolor={color.btnRed}
-                                                            sx={{
-                                                                cursor: 'pointer',
-                                                            }}
-                                                        >
-                                                            <Typography>Đánh giá</Typography>
-                                                        </Box>
+                                                        {order.status === null ? (
+                                                            <Box
+                                                                onClick={() =>
+                                                                    handleOpen({
+                                                                        productId: order.product.id,
+                                                                        idOrderDetail: order.id,
+                                                                    })
+                                                                }
+                                                                bgcolor={color.btnRed}
+                                                                sx={{
+                                                                    borderRadius: 1,
+                                                                    cursor: 'pointer',
+                                                                    color: color.white,
+                                                                    bgcolor: color.BtnDartGreen,
+                                                                }}
+                                                            >
+                                                                <Typography>Đánh giá</Typography>
+                                                            </Box>
+                                                        ) : (
+                                                            <Box
+                                                                bgcolor={'gray'}
+                                                                sx={{
+                                                                    borderRadius: 1,
+                                                                }}
+                                                            >
+                                                                <Typography>Đã đánh giá</Typography>
+                                                            </Box>
+                                                        )}
                                                     </Typography>
                                                 </TableCell>
                                             </TableRow>

@@ -112,7 +112,6 @@ const Header = () => {
     };
     const handleClose = () => {
         setAnchorEl(null);
-        redirect('/auth');
     };
     const handleChangeValue = async (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.value) {
