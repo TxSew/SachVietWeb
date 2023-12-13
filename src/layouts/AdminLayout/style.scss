@@ -13,7 +13,7 @@
         justify-content: space-between;
         align-items: center;
 
-        & > .tool {
+        &>.tool {
             color: rgb(255, 255, 255);
             font-size: 24px;
             padding: 8px 32px;
@@ -43,7 +43,7 @@
             font-size: 24px;
             padding-left: 32px;
 
-            & > i {
+            &>i {
                 display: flex;
                 align-items: center;
             }
@@ -58,7 +58,7 @@
                 color: white;
             }
 
-            & > li {
+            &>li {
                 list-style: none;
                 margin: 0 8px;
             }
@@ -67,26 +67,26 @@
                 display: flex;
                 padding-right: 48px;
 
-                & > label {
+                &>label {
                     display: flex;
                     align-items: center;
 
-                    & > img {
+                    &>img {
                         border-radius: 50%;
                     }
 
-                    & > span {
+                    &>span {
                         margin: 0 0 0 12px;
                         font-size: 14px;
                     }
 
-                    & > i {
+                    &>i {
                         margin: 0 0 0 12px;
                         font-size: 12px;
                     }
                 }
 
-                & > input {
+                &>input {
                     display: none;
                     transition: all 0.7s ease;
                 }
@@ -100,21 +100,21 @@
                     padding: 16px;
                     transition: all 0.7s ease;
 
-                    & > a {
+                    &>a {
                         color: black;
                         transition: all 0.3s ease-out;
 
-                        & > p {
+                        &>p {
                             padding: 8px 0 0;
                         }
                     }
 
-                    & > a:hover {
+                    &>a:hover {
                         color: #71b6f9;
                     }
                 }
 
-                & > input:checked ~ #drop {
+                &>input:checked~#drop {
                     display: block;
                 }
             }
@@ -122,11 +122,11 @@
     }
 
     &-wapper {
-        & > input {
+        &>input {
             display: none;
         }
 
-        & > input:checked + .dasb-sidebar {
+        &>input:checked+.dasb-sidebar {
             width: 70px;
 
             li {
@@ -150,7 +150,8 @@
                 display: none;
             }
         }
-        & > input:checked ~ .dasb-wapper-main {
+
+        &>input:checked~.dasb-wapper-main {
             width: calc(100% - 90px);
         }
 
@@ -162,7 +163,7 @@
             &-bg {
                 padding: 0 0 0 16px;
 
-                & > .content {
+                &>.content {
                     background-color: #ffffff;
                     height: 100vh;
                     padding: 16px;

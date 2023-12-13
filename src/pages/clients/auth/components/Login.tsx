@@ -1,4 +1,3 @@
-import { signInWithPopup } from '@firebase/auth';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Box, Button, FormControl, IconButton, InputAdornment, OutlinedInput, Typography } from '@mui/material';
 import { useState } from 'react';
@@ -8,21 +7,11 @@ import { toast } from 'react-toastify';
 import { color } from '../../../../Theme/color';
 import { pushError, pushWarning } from '../../../../components/Toast/Toast';
 import { BaseAPi } from '../../../../configs/BaseApi';
-import { auth, provider } from '../../../../configs/fireBaseConfig';
 import { ResponseStatus } from '../../../../helpers/ResponsiveStatus';
-import { httpAccount } from '../../../../submodules/controllers/http/axiosController';
 import HttpAccountController from '../../../../submodules/controllers/http/httpAccountController';
 import { User } from '../../../../submodules/models/UserModel/User';
 
 const Login = () => {
-    function handleSuccess(response: any) {
-        console.log(response.status);
-    }
-
-    function handleError(error: any) {
-        console.log(error);
-    }
-
     const [searchParams, setSearchParams] = useSearchParams();
 
     const [showPassword, setShowPassword] = useState(false);

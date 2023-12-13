@@ -7,18 +7,19 @@ import {
     DialogContentText,
     DialogTitle,
     Fade,
-    FormControl,
+    FormGroup,
     Grid,
+    OutlinedInput,
+    Rating,
     Stack,
     Table,
     TableBody,
     TableCell,
     TableContainer,
-    TextareaAutosize,
     TableHead,
     TableRow,
+    TextareaAutosize,
     Typography,
-    Rating,
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -26,13 +27,19 @@ import { Link, useParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
-import { httpCart } from '../../../submodules/controllers/http/axiosController';
+import { httpCart, httpComment } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
 import CustomizedSteppers from './Stepper';
 import NavUser from './layout/NavUser';
-import { httpComment } from '../../../submodules/controllers/http/axiosController';
+import { Comment } from '../../../submodules/models/CommentModel/Comment';
+import { FormControl } from '@mui/material';
+import { pushSuccess } from '../../../components/Toast/Toast';
+import { storage } from '../../../configs/fireBaseConfig';
 
 function UserCartDetail() {
+    const [selectedFiles, setSelectedFiles] = useState<any>([]);
+    const [imageFiles, setImageFiles] = useState<any[]>([]);
+    const [imgs, setImgs] = useState<any>({});
     const { id } = useParams();
     const [orderCurrent, setOrderCurrent] = useState<any>({});
 
@@ -89,22 +96,52 @@ function UserCartDetail() {
         setValue,
     } = useForm<Comment>({});
 
-    const handelComment = (data: any) => {
-        console.log(data);
-        const comment = {
+    const uploadImages = async () => {
+        const storageRef = storage.ref();
+
+        const uploadTasks = imageFiles.map((file) => {
+            const uploadTask = storageRef.child(`imageUpload/${file.name}`).put(file);
+            return uploadTask;
+        });
+
+        const uploadedUrls = await Promise.all(
+            uploadTasks.map(async (task) => {
+                try {
+                    const snapshot = await task;
+                    const downloadUrl = await snapshot.ref.getDownloadURL();
+                    return downloadUrl;
+                } catch (error) {
+                    console.error('Error uploading file:', error);
+                    return null;
+                }
+            })
+        );
+
+        return uploadedUrls.filter((url: any) => url !== null);
+    };
+    const handelComment = async (data: any) => {
+        let { image, ...rest } = data as any;
+
+        let props = {
             productId: Number(openDanhgia.value),
-            ...data,
+            ...rest,
+        } as any;
+
+        const listImg = await uploadImages();
+        const thumb = listImg.map((e) => {
+            return {
+                images: e,
+            };
+        });
+        const comment = {
+            content: props,
+            images: thumb,
         };
-        httpComment
-            .addComment({
-                content: data,
-            })
-            .then((response) => {
-                reset({});
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+
+        httpComment.addComment(comment).then((response) => {
+            pushSuccess('Đánh giá sản phẩm thành công');
+            reset({});
+        });
     };
 
     return (
@@ -518,76 +555,135 @@ function UserCartDetail() {
                         aria-labelledby="customized-dialog-title"
                     >
                         <DialogContent>
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    pb: 1,
-                                    width: '100%',
-                                }}
-                            >
-                                <FormControl>
-                                    <Typography component="legend">Chọn đánh giá của bạn:</Typography>
-                                    <Controller
-                                        name="star"
-                                        control={control}
-                                        render={({ field }) => {
-                                            return (
+                            <FormGroup>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        pb: 1,
+                                        width: '100%',
+                                    }}
+                                >
+                                    <FormControl>
+                                        <Typography component="legend">Chọn đánh giá của bạn:</Typography>
+                                        <Controller
+                                            name={'star'}
+                                            rules={{
+                                                required: 'Vui lòng đánh giá sản phẩm',
+                                            }}
+                                            control={control}
+                                            render={({ field }) => (
                                                 <Rating
                                                     {...field}
-                                                    defaultValue={0}
+                                                    defaultValue={3}
                                                     size="small"
                                                     name="simple-controlled"
-                                                    onChange={(event, newRating: any) => {
+                                                    onChange={(event: any, newRating: any) => {
                                                         setValue('star', newRating);
                                                     }}
                                                 />
-                                            );
+                                            )}
+                                        />
+                                        <Typography variant="caption" color={color.error}>
+                                            {errors.star && errors.star.message}
+                                        </Typography>
+                                    </FormControl>
+                                </Box>
+                                <FormControl>
+                                    <Controller
+                                        name="content"
+                                        control={control}
+                                        rules={{
+                                            required: 'Vui lòng nhập nội dung đánh giá',
                                         }}
+                                        render={({ field }) => (
+                                            <TextareaAutosize
+                                                {...field}
+                                                style={{
+                                                    resize: 'none',
+                                                    padding: '12px',
+                                                    borderRadius: '4px',
+                                                    outline: 'none',
+                                                    border: '1px solid #ccc',
+                                                }}
+                                                minRows={4}
+                                                name=""
+                                                id=""
+                                                placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
+                                            ></TextareaAutosize>
+                                        )}
                                     />
+
                                     <Typography variant="caption" color={color.error}>
-                                        {errors.star && errors.star.message}
+                                        {errors.content && errors.content.message}
                                     </Typography>
                                 </FormControl>
-                            </Box>
-                            <FormControl>
-                                <Controller
-                                    name="content"
-                                    control={control}
-                                    rules={{
-                                        required: 'Vui lòng nhập nội dung đánh giá',
-                                    }}
-                                    render={({ field }) => (
-                                        <TextareaAutosize
-                                            {...field}
-                                            style={{
-                                                resize: 'none',
-                                                padding: '12px',
-                                                borderRadius: '4px',
-                                                outline: 'none',
-                                                border: '1px solid #ccc',
-                                            }}
-                                            minRows={4}
-                                            name=""
-                                            id=""
-                                            placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
-                                        ></TextareaAutosize>
-                                    )}
-                                />
-
-                                <Typography variant="caption" color={color.error}>
-                                    {errors.content && errors.content.message}
-                                </Typography>
-                            </FormControl>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                fullWidth="100%"
-                                sx={{ mt: 3, background: '#F39801' }}
-                                onClick={handleSubmit(handelComment)}
-                            >
-                                Gửi nhận xét
-                            </Button>
+                                <FormControl>
+                                    <Controller
+                                        name="image"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Box py={1}>
+                                                <Typography variant="body1" color="initial">
+                                                    Tải hình ảnh :
+                                                </Typography>
+                                                <OutlinedInput
+                                                    {...field}
+                                                    onChange={(event: any) => {
+                                                        const files = event.target.files;
+                                                        const selectedFiles = event.target.files;
+                                                        setImageFiles([...imageFiles, ...selectedFiles]);
+                                                        setImgs(files);
+                                                        const fileArray = Array.from(files);
+                                                        field.onChange(event);
+                                                        Promise.all(
+                                                            fileArray.map((file: any) => {
+                                                                return new Promise((resolve, reject) => {
+                                                                    const reader = new FileReader();
+                                                                    reader.onload = (e: any) => {
+                                                                        resolve(e.target.result);
+                                                                    };
+                                                                    reader.onerror = (e) => {
+                                                                        reject(e);
+                                                                    };
+                                                                    reader.readAsDataURL(file);
+                                                                });
+                                                            })
+                                                        ).then((results) => {
+                                                            setSelectedFiles(results);
+                                                        });
+                                                    }}
+                                                    inputProps={{ multiple: true }}
+                                                    type="file"
+                                                />
+                                                <Stack>
+                                                    {selectedFiles.map((dataUrl: any, index: number) => (
+                                                        <img
+                                                            key={index}
+                                                            src={dataUrl}
+                                                            alt={`preview-${index}`}
+                                                            style={{
+                                                                width: '70px',
+                                                                height: '70px',
+                                                                margin: '5px',
+                                                                border: '2px solid #ccc',
+                                                            }}
+                                                        />
+                                                    ))}
+                                                </Stack>
+                                            </Box>
+                                        )}
+                                    />
+                                </FormControl>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    sx={{ mt: 3, background: '#F39801' }}
+                                    onClick={handleSubmit(handelComment)}
+                                >
+                                    Gửi nhận xét
+                                </Button>
+                            </FormGroup>
                         </DialogContent>
                     </Dialog>
                 </Box>

@@ -8,28 +8,23 @@ import {
     Button,
     Container,
     Grid,
-    OutlinedInput,
     Pagination,
-    Rating,
     Stack,
     Tab,
     Table,
     TableBody,
     TableCell,
     TableRow,
-    TextareaAutosize,
     Typography,
     tableCellClasses,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import { Controller, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, createSearchParams, useNavigate, useParams } from 'react-router-dom';
 
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
-import { FormControl } from '@mui/material';
 import {
     FacebookIcon,
     FacebookMessengerIcon,
@@ -48,25 +43,19 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { color } from '../../../Theme/color';
 import ImageMagnifier from '../../../components/ImageMagnifier/ImageMagnifier';
 import ProductItem from '../../../components/ProductItem/ProductItem';
-import { pushSuccess, pushWarning } from '../../../components/Toast/Toast';
-import { storage } from '../../../configs/fireBaseConfig';
+import { pushWarning } from '../../../components/Toast/Toast';
 import { TitleHelmet } from '../../../constants/Helmet';
 import { numberFormat } from '../../../helpers/formatPrice';
 import useMedia from '../../../hooks/useMedia/useMedia';
 import { addToCart } from '../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../redux/storeClient';
 import { httpComment, httpProduct } from '../../../submodules/controllers/http/axiosController';
-import { Comment } from '../../../submodules/models/CommentModel/Comment';
 import { Product } from '../../../submodules/models/ProductModel/Product';
-import { User } from '../../../submodules/models/UserModel/User';
 import CommentItem from './components/comments/CommentItem';
 
 import { Link } from 'react-router-dom';
 import './index.css';
 export const Details = () => {
-    const [selectedFiles, setSelectedFiles] = useState<any>([]);
-    const [imageFiles, setImageFiles] = useState<any[]>([]);
-    const [imgs, setImgs] = useState<any>({});
     const { isMediumMD } = useMedia();
     const [TextMore, setTextMore] = useState(false);
     const [RelatedProduct, setRelatedProduct] = useState<Product[]>([]);
@@ -74,7 +63,7 @@ export const Details = () => {
     const [Detail, setDetail] = useState<Product>({});
     const [image, setImage] = useState<string>('');
     const [comments, setComments] = useState<any>({});
-    const [user, setUser] = useState<User>({} as User);
+
     const [quantity, setQuantity] = useState<number>(1);
     const [page, setPage] = useState<number>(1);
     const { id } = useParams();
@@ -84,7 +73,6 @@ export const Details = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchUser();
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
     }, [id]);
 
@@ -95,18 +83,10 @@ export const Details = () => {
         FetchProductOne(props);
     }, [id, page]);
 
-    const fetchUser = () => {
-        const user = localStorage.getItem('user');
-        const DataUser = JSON.parse(user!);
-        setUser(DataUser);
-    };
-
-    const [idProduct, setProductId] = useState<any>({});
     const FetchProductOne = async (items: any) => {
         try {
             const detailValue = await httpProduct.getOne(Id);
             const props = { productId: detailValue.product.id, ...items };
-            setProductId(detailValue.product.id);
             httpComment.getCommentByProduct(props).then((res) => {
                 setComments(res);
             });
@@ -147,7 +127,6 @@ export const Details = () => {
             productId: detail.id,
             quantity: Number(quantity),
         };
-
         httpProduct
             .checkQuantity(props)
             .then((response) => {
@@ -190,14 +169,6 @@ export const Details = () => {
             border: 'none',
         },
     }));
-    const handelLogin = () => {
-        redirect({
-            pathname: '/auth',
-            search: createSearchParams({
-                q: 'comment',
-            }).toString(),
-        });
-    };
 
     const htmlContent = Detail ? Detail.desc : '';
     const [value, setTab] = React.useState('1');
@@ -208,63 +179,6 @@ export const Details = () => {
     const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(Number(value));
     };
-    const uploadImages = async () => {
-        const storageRef = storage.ref();
-
-        const uploadTasks = imageFiles.map((file) => {
-            const uploadTask = storageRef.child(`imageUpload/${file.name}`).put(file);
-            return uploadTask;
-        });
-
-        const uploadedUrls = await Promise.all(
-            uploadTasks.map(async (task) => {
-                try {
-                    const snapshot = await task;
-                    const downloadUrl = await snapshot.ref.getDownloadURL();
-                    return downloadUrl;
-                } catch (error) {
-                    console.error('Error uploading file:', error);
-                    return null;
-                }
-            })
-        );
-
-        return uploadedUrls.filter((url: any) => url !== null);
-    };
-
-    const handelComment = async (data: any) => {
-        let { image, ...rest } = data as any;
-
-        let props = {
-            productId: idProduct,
-            ...rest,
-        } as any;
-
-        const listImg = await uploadImages();
-        const thumb = listImg.map((e) => {
-            return {
-                images: e,
-            };
-        });
-        const comment = {
-            content: props,
-            images: thumb,
-        };
-
-        httpComment.addComment(comment).then((response) => {
-            pushSuccess('Đánh giá sản phẩm thành công');
-            reset({});
-        });
-        FetchProductOne(page);
-    };
-
-    const {
-        handleSubmit,
-        control,
-        reset,
-        formState: { errors },
-        setValue,
-    } = useForm<Comment>({});
 
     return (
         <Box bgcolor={'#eee'}>
@@ -971,163 +885,6 @@ export const Details = () => {
                                     value="2"
                                 >
                                     <Grid container>
-                                        {/* <Grid xs={12} md={4} pb={2}>
-                                            {user ? (
-                                                <FormControl>
-                                                    <Box
-                                                        sx={{
-                                                            display: 'flex',
-                                                            alignItems: 'center',
-                                                            pb: 1,
-                                                            width: '100%',
-                                                        }}
-                                                    >
-                                                        <FormControl>
-                                                            <Typography component="legend">
-                                                                Chọn đánh giá của bạn:
-                                                            </Typography>
-                                                            <Controller
-                                                                name={'star'}
-                                                                rules={{
-                                                                    required: 'Vui lòng đánh giá sản phẩm',
-                                                                }}
-                                                                control={control}
-                                                                render={({ field }) => (
-                                                                    <Rating
-                                                                        {...field}
-                                                                        defaultValue={3}
-                                                                        size="small"
-                                                                        name="simple-controlled"
-                                                                        onChange={(event, newRating: any) => {
-                                                                            setValue('star', newRating);
-                                                                        }}
-                                                                    />
-                                                                )}
-                                                            />
-                                                            <Typography variant="caption" color={color.error}>
-                                                                {errors.star && errors.star.message}
-                                                            </Typography>
-                                                        </FormControl>
-                                                    </Box>
-                                                    <FormControl>
-                                                        <Controller
-                                                            name="content"
-                                                            control={control}
-                                                            rules={{
-                                                                required: 'Vui lòng nhập nội dung đánh giá',
-                                                            }}
-                                                            render={({ field }) => (
-                                                                <TextareaAutosize
-                                                                    {...field}
-                                                                    style={{
-                                                                        resize: 'none',
-                                                                        padding: '12px',
-                                                                        borderRadius: '4px',
-                                                                        outline: 'none',
-                                                                        border: '1px solid #ccc',
-                                                                    }}
-                                                                    minRows={4}
-                                                                    name=""
-                                                                    id=""
-                                                                    placeholder="Nhập nhận xét về sản phẩm (Tối thiểu 100 kí tự)"
-                                                                ></TextareaAutosize>
-                                                            )}
-                                                        />
-
-                                                        <Typography variant="caption" color={color.error}>
-                                                            {errors.content && errors.content.message}
-                                                        </Typography>
-                                                    </FormControl>
-                                                    <Controller
-                                                        name="image"
-                                                        control={control}
-                                                        render={({ field }) => (
-                                                            <Box py={1}>
-                                                                <Typography variant="body1" color="initial">
-                                                                    Tải hình ảnh :
-                                                                </Typography>
-                                                                <OutlinedInput
-                                                                    {...field}
-                                                                    onChange={(event: any) => {
-                                                                        const files = event.target.files;
-                                                                        const selectedFiles = event.target.files;
-                                                                        setImageFiles([
-                                                                            ...imageFiles,
-                                                                            ...selectedFiles,
-                                                                        ]);
-                                                                        setImgs(files);
-                                                                        const fileArray = Array.from(files);
-                                                                        field.onChange(event);
-                                                                        Promise.all(
-                                                                            fileArray.map((file: any) => {
-                                                                                return new Promise(
-                                                                                    (resolve, reject) => {
-                                                                                        const reader = new FileReader();
-                                                                                        reader.onload = (e: any) => {
-                                                                                            resolve(e.target.result);
-                                                                                        };
-                                                                                        reader.onerror = (e) => {
-                                                                                            reject(e);
-                                                                                        };
-                                                                                        reader.readAsDataURL(file);
-                                                                                    }
-                                                                                );
-                                                                            })
-                                                                        ).then((results) => {
-                                                                            setSelectedFiles(results);
-                                                                        });
-                                                                    }}
-                                                                    inputProps={{ multiple: true }}
-                                                                    type="file"
-                                                                />
-                                                                <Stack>
-                                                                    {selectedFiles.map(
-                                                                        (dataUrl: any, index: number) => (
-                                                                            <img
-                                                                                key={index}
-                                                                                src={dataUrl}
-                                                                                alt={`preview-${index}`}
-                                                                                style={{
-                                                                                    width: '70px',
-                                                                                    height: '70px',
-                                                                                    margin: '5px',
-                                                                                    border: '2px solid #ccc',
-                                                                                }}
-                                                                            />
-                                                                        )
-                                                                    )}
-                                                                </Stack>
-                                                            </Box>
-                                                        )}
-                                                    />
-
-                                                    <Button
-                                                        variant="contained"
-                                                        color="primary"
-                                                        sx={{ mt: 3, background: '#F39801' }}
-                                                        onClick={handleSubmit(handelComment)}
-                                                    >
-                                                        Gửi nhận xét
-                                                    </Button>
-                                                </FormControl>
-                                            ) : (
-                                                <Stack>
-                                                    <Typography>
-                                                        Đăng nhập mới được bình luận
-                                                        <Typography
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                                color: color.sale,
-                                                                textDecoration: 'underline',
-                                                            }}
-                                                            onClick={handelLogin}
-                                                        >
-                                                            Đăng nhập ngay
-                                                        </Typography>
-                                                    </Typography>
-                                                </Stack>
-                                            )}
-                                        </Grid> */}
                                         <Grid xs={12} md={8} pb={2}>
                                             <Box width={'100%'} height={'100%'} p={2}>
                                                 {comments?.comments?.length > 0 ? (

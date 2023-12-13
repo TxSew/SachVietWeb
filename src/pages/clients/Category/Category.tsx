@@ -59,7 +59,7 @@ function Category() {
             sortBy,
             sortWith,
             page,
-            limit: 20,
+            limit: 24,
             keyword: searchValue,
             categoryFilter: categorySearch,
             filter: sale,
@@ -197,7 +197,7 @@ function Category() {
                             <Grid container>
                                 {products.map((item: Product, index) => {
                                     return (
-                                        <Grid key={item.id} item xs={6} md={4} lg={3}>
+                                        <Grid key={item.id} item xs={6} md={4} lg={3} p={'10px'}>
                                             <ProductItem products={item} />
                                         </Grid>
                                     );
