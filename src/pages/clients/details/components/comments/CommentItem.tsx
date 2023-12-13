@@ -17,7 +17,7 @@ const CommentItem = (props: Props) => {
                 <Avatar alt="Remy Sharp" src={props.avatar || 'https://xphone.vn/images/no_login.svg'} />
             </Box>
             <Box>
-                <Box pb={2}>
+                <Box pb={1}>
                     <Typography variant="subtitle1" fontSize={12} fontWeight={700}>
                         {props.fullName}
                     </Typography>
@@ -47,7 +47,7 @@ const CommentItem = (props: Props) => {
                         WebkitLineClamp: 2,
                         WebkitBoxOrient: 'vertical',
                         flexShrink: 0,
-                        mb: 2,
+                        mb: 1,
                     }}
                 >
                     {props.content}

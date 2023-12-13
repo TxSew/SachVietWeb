@@ -18,6 +18,7 @@ import {
     Typography,
     tableCellClasses,
 } from '@mui/material';
+import copy from 'copy-to-clipboard';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, createSearchParams, useNavigate, useParams } from 'react-router-dom';
@@ -179,7 +180,22 @@ export const Details = () => {
     const handleChangePage = (event: React.ChangeEvent<unknown>, value: number) => {
         setPage(Number(value));
     };
+    const [copied, setCopied] = useState<boolean>(false);
+    const [message, setMessage] = useState<string>('');
+    const coppyLink = (link: string) => {
+        copy(link, {
+            debug: true,
+            message: 'Press #{key} to copy',
+        });
+        setCopied(true);
+        setMessage('Đã sao chép!');
 
+        // Sau một khoảng thời gian, đặt lại trạng thái để ẩn thông báo
+        setTimeout(() => {
+            setCopied(false);
+            setMessage('');
+        }, 1500);
+    };
     return (
         <Box bgcolor={'#eee'}>
             {TitleHelmet('Chi tiết sản phẩm')}
@@ -509,203 +525,186 @@ export const Details = () => {
                                             </Stack>
                                         </Stack>
                                         <Stack pr={4}>
-                                            <MoreHorizIcon sx={{ cursor: 'pointer' }} />
+                                            <Box
+                                                onClick={() => coppyLink(`${window.location}`)}
+                                                sx={{
+                                                    position: 'relative',
+                                                }}
+                                            >
+                                                <MoreHorizIcon sx={{ cursor: 'pointer' }} />
+                                                {copied && (
+                                                    <Stack
+                                                        direction={'row'}
+                                                        bgcolor={color.BtnDartGreen}
+                                                        position={'absolute'}
+                                                        top={'100%'}
+                                                        zIndex={3}
+                                                        width={'max-content'}
+                                                        borderRadius={1}
+                                                        left={'-20px'}
+                                                    >
+                                                        <Typography textAlign={'center'} px={1}>
+                                                            {message}
+                                                        </Typography>
+                                                    </Stack>
+                                                )}
+                                            </Box>
                                         </Stack>
                                     </Stack>
                                 </Box>
                                 {/* quantity */}
                                 {!isMediumMD ? (
-                                    <Box mt={3}>
-                                        <Grid direction={'row'} display={'flex'} spacing={7}>
-                                            <Grid xs={4}>
-                                                <Typography variant="caption" fontWeight={'bold'} fontSize={'18px'}>
-                                                    Số lượng
-                                                </Typography>
-                                            </Grid>
-                                            <Grid xs={8}>
-                                                <Stack direction={'row'} sx={{}}>
-                                                    <Stack
-                                                        direction={'row'}
-                                                        spacing={3}
-                                                        border={'1px solid #eee'}
-                                                        alignItems={'center'}
-                                                        p={'5px 12px'}
-                                                        borderRadius={'5px'}
-                                                    >
-                                                        <RemoveIcon
-                                                            onClick={() => {
-                                                                if (quantity <= 1) {
-                                                                    setQuantity(1);
-                                                                } else {
-                                                                    setQuantity((prevQuantity) => prevQuantity - 1);
-                                                                }
-                                                            }}
-                                                            sx={{
-                                                                fontSize: '17px',
-                                                                cursor: 'pointer',
-                                                            }}
-                                                        />
-                                                        <input
-                                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                                                const inputValue: any = e.target.value;
-                                                                const maxLength = 3;
-                                                                if (
-                                                                    (/^(?!0\d*$)\d+$/.test(inputValue) &&
-                                                                        inputValue.length <= maxLength) ||
-                                                                    inputValue == ''
-                                                                )
-                                                                    setQuantity(inputValue);
-                                                            }}
-                                                            value={quantity}
-                                                            type="text"
-                                                            style={{
-                                                                maxWidth: '40px',
-                                                                width: '100%',
-                                                                textAlign: 'center',
-                                                                justifyContent: 'center',
-                                                                alignContent: 'center',
-                                                                outline: '1px solid #ddd',
-                                                                borderRadius: '3px',
-                                                            }}
-                                                        />
-                                                        <AddIcon
-                                                            onClick={() =>
-                                                                setQuantity((prevQuantity) => Number(prevQuantity) + 1)
-                                                            }
-                                                            sx={{
-                                                                fontSize: '17px',
-                                                                cursor: 'pointer',
-                                                            }}
-                                                        />
-                                                    </Stack>
-                                                </Stack>
-                                            </Grid>
-                                        </Grid>
-                                    </Box>
+                                    ''
                                 ) : (
-                                    <Box
-                                        position={'fixed'}
-                                        bottom={0}
-                                        left={0}
-                                        width={'100%'}
-                                        display={'flex'}
-                                        alignItems={'center'}
-                                        justifyContent={'space-between'}
-                                        sx={{
-                                            background: '#008C89',
-                                            zIndex: '1',
-                                        }}
-                                    >
-                                        <Stack
-                                            direction={'row'}
-                                            spacing={3}
-                                            p={'16px 8px'}
-                                            borderRight={'1px solid white'}
-                                        >
-                                            <RemoveIcon
-                                                onClick={() => {
-                                                    if (quantity <= 1) {
-                                                        setQuantity(1);
-                                                    } else {
-                                                        setQuantity((prevQuantity) => prevQuantity - 1);
-                                                    }
-                                                }}
+                                    <>
+                                        {Number(Detail.quantity) <= 0 ? (
+                                            <Box
+                                                position={'fixed'}
+                                                bottom={0}
+                                                left={0}
+                                                width={'100%'}
+                                                display={'flex'}
+                                                alignItems={'center'}
+                                                justifyContent={'center'}
                                                 sx={{
-                                                    fontSize: '20px',
-                                                    color: 'whitesmoke',
-                                                    cursor: 'pointer',
-                                                }}
-                                            />
-                                            <input
-                                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                                    const inputValue: any = e.target.value;
-                                                    const maxLength = 3;
-                                                    if (
-                                                        (/^(?!0\d*$)\d+$/.test(inputValue) &&
-                                                            inputValue.length <= maxLength) ||
-                                                        inputValue == ''
-                                                    )
-                                                        setQuantity(inputValue);
-                                                }}
-                                                value={quantity}
-                                                type="text"
-                                                style={{
-                                                    maxWidth: '40px',
-                                                    width: '100%',
+                                                    py: 2,
+                                                    background: '#008C89',
+                                                    zIndex: '1',
                                                     textAlign: 'center',
-                                                    justifyContent: 'center',
-                                                    alignContent: 'center',
-                                                    outline: '1px solid #ddd',
-                                                    borderRadius: '3px',
                                                 }}
-                                            />
-                                            <AddIcon
-                                                onClick={() => setQuantity((prevQuantity) => Number(prevQuantity) + 1)}
+                                            >
+                                                <Typography textAlign={'center'} fontWeight={'bold'}>
+                                                    Sản phẩm đã hết
+                                                </Typography>
+                                            </Box>
+                                        ) : (
+                                            <Box
+                                                position={'fixed'}
+                                                bottom={0}
+                                                left={0}
+                                                width={'100%'}
+                                                display={'flex'}
+                                                alignItems={'center'}
+                                                justifyContent={'space-between'}
                                                 sx={{
-                                                    fontSize: '20px',
-                                                    color: 'whitesmoke',
-                                                    cursor: 'pointer',
+                                                    background: '#008C89',
+                                                    zIndex: '1',
                                                 }}
-                                            />
-                                        </Stack>
-                                        <Typography
-                                            style={
-                                                !isMediumMD
-                                                    ? {
-                                                          fontWeight: 'bold',
-                                                          color: 'white',
-                                                          textAlign: 'center',
-                                                          padding: '16px 24px',
-                                                          cursor: 'pointer',
-                                                      }
-                                                    : {
-                                                          fontWeight: 'bold',
-                                                          color: 'white',
-                                                          fontSize: '11px',
-                                                          padding: '8px 8px',
-                                                          textAlign: 'center',
-                                                          cursor: 'pointer',
-                                                      }
-                                            }
-                                            onClick={() => handleAddToCart(Detail, quantity)}
-                                        >
-                                            Thêm vào giỏ hàng
-                                        </Typography>
-                                        <Button
-                                            sx={
-                                                !isMediumMD
-                                                    ? {
-                                                          padding: '16px 24px',
-                                                          borderRadius: '0',
-                                                          fontSize: '11px',
-                                                          backgroundColor: '#F7941E',
-                                                          boxShadow: 'none',
-                                                          color: '#FFFFFF',
-                                                          '&:hover': {
-                                                              opacity: '0.9',
-                                                              boxShadow: 'none',
-                                                              backgroundColor: '#F7941E',
-                                                          },
-                                                      }
-                                                    : {
-                                                          padding: '16.9px 8px',
-                                                          borderRadius: '0',
-                                                          backgroundColor: '#F7941E',
-                                                          color: '#FFFFFF',
-                                                          fontSize: '12px',
-                                                          boxShadow: 'none',
-                                                          '&:hover': {
-                                                              opacity: '0.9',
-                                                              boxShadow: 'none',
-                                                              backgroundColor: '#F7941E',
-                                                          },
-                                                      }
-                                            }
-                                            onClick={() => handleOrder(Detail, quantity)}
-                                        >
-                                            Mua ngay
-                                        </Button>
-                                    </Box>
+                                            >
+                                                <Stack
+                                                    direction={'row'}
+                                                    spacing={3}
+                                                    p={'16px 8px'}
+                                                    borderRight={'1px solid white'}
+                                                >
+                                                    <RemoveIcon
+                                                        onClick={() => {
+                                                            if (quantity <= 1) {
+                                                                setQuantity(1);
+                                                            } else {
+                                                                setQuantity((prevQuantity) => prevQuantity - 1);
+                                                            }
+                                                        }}
+                                                        sx={{
+                                                            fontSize: '20px',
+                                                            color: 'whitesmoke',
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                    <input
+                                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                            const inputValue: any = e.target.value;
+                                                            const maxLength = 3;
+                                                            if (
+                                                                (/^(?!0\d*$)\d+$/.test(inputValue) &&
+                                                                    inputValue.length <= maxLength) ||
+                                                                inputValue == ''
+                                                            )
+                                                                setQuantity(inputValue);
+                                                        }}
+                                                        value={quantity}
+                                                        type="text"
+                                                        style={{
+                                                            maxWidth: '40px',
+                                                            width: '100%',
+                                                            textAlign: 'center',
+                                                            justifyContent: 'center',
+                                                            alignContent: 'center',
+                                                            outline: '1px solid #ddd',
+                                                            borderRadius: '3px',
+                                                        }}
+                                                    />
+                                                    <AddIcon
+                                                        onClick={() =>
+                                                            setQuantity((prevQuantity) => Number(prevQuantity) + 1)
+                                                        }
+                                                        sx={{
+                                                            fontSize: '20px',
+                                                            color: 'whitesmoke',
+                                                            cursor: 'pointer',
+                                                        }}
+                                                    />
+                                                </Stack>
+                                                <Typography
+                                                    style={
+                                                        !isMediumMD
+                                                            ? {
+                                                                  fontWeight: 'bold',
+                                                                  color: 'white',
+                                                                  textAlign: 'center',
+                                                                  padding: '16px 24px',
+                                                                  cursor: 'pointer',
+                                                              }
+                                                            : {
+                                                                  fontWeight: 'bold',
+                                                                  color: 'white',
+                                                                  fontSize: '11px',
+                                                                  padding: '8px 8px',
+                                                                  textAlign: 'center',
+                                                                  cursor: 'pointer',
+                                                              }
+                                                    }
+                                                    onClick={() => handleAddToCart(Detail, quantity)}
+                                                >
+                                                    Thêm vào giỏ hàng
+                                                </Typography>
+                                                <Button
+                                                    sx={
+                                                        !isMediumMD
+                                                            ? {
+                                                                  padding: '16px 24px',
+                                                                  borderRadius: '0',
+                                                                  fontSize: '11px',
+                                                                  backgroundColor: '#F7941E',
+                                                                  boxShadow: 'none',
+                                                                  color: '#FFFFFF',
+                                                                  '&:hover': {
+                                                                      opacity: '0.9',
+                                                                      boxShadow: 'none',
+                                                                      backgroundColor: '#F7941E',
+                                                                  },
+                                                              }
+                                                            : {
+                                                                  padding: '16.9px 8px',
+                                                                  borderRadius: '0',
+                                                                  backgroundColor: '#F7941E',
+                                                                  color: '#FFFFFF',
+                                                                  fontSize: '12px',
+                                                                  boxShadow: 'none',
+                                                                  '&:hover': {
+                                                                      opacity: '0.9',
+                                                                      boxShadow: 'none',
+                                                                      backgroundColor: '#F7941E',
+                                                                  },
+                                                              }
+                                                    }
+                                                    onClick={() => handleOrder(Detail, quantity)}
+                                                >
+                                                    Mua ngay
+                                                </Button>
+                                            </Box>
+                                        )}
+                                    </>
                                 )}
                             </Box>
                         </Grid>
