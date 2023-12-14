@@ -26,14 +26,13 @@ import { numberFormat } from '../../../../helpers/formatPrice';
 import { getTotals } from '../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../redux/storeClient';
 
+import { TitleHelmet } from '../../../../constants/Helmet';
 import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpPayment, httpProvince, httpVoucher } from '../../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
-import { TitleHelmet } from '../../../../constants/Helmet';
-import { Helmet } from 'react-helmet';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
     const dispatch = useDispatch();
@@ -88,7 +87,6 @@ function Checkout() {
         }
     };
     const handleCheckout = async (data: any) => {
-        console.log('🚀 ~ file: Checkout.tsx:91 ~ handleCheckout ~ data:', data);
         const detailData = cart.map((e: Product) => {
             return {
                 productName: e.title,
@@ -245,6 +243,10 @@ function Checkout() {
                                 name="phone"
                                 rules={{
                                     required: 'Vui lòng nhập số điện thoại',
+                                    pattern: {
+                                        value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+                                        message: 'Số điện thoại không hợp lệ!',
+                                    },
                                 }}
                                 render={({ field }) => (
                                     <OutlinedInput

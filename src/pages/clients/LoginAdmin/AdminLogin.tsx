@@ -48,6 +48,7 @@ const LoginAdmin = () => {
                     position: 'top-right',
                 });
                 const { account, token, role } = login;
+                localStorage.setItem('token', JSON.stringify(login.token));
                 if (role) {
                     localStorage.setItem('role', JSON.stringify(role));
                 }

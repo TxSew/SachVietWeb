@@ -35,6 +35,7 @@ import { Comment } from '../../../submodules/models/CommentModel/Comment';
 import { FormControl } from '@mui/material';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { storage } from '../../../configs/fireBaseConfig';
+import useMedia from '../../../hooks/useMedia/useMedia';
 
 function UserCartDetail() {
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
@@ -95,7 +96,7 @@ function UserCartDetail() {
         handleSubmit,
         control,
         reset,
-        formState: { errors },
+        formState: { errors, isSubmitting },
         setValue,
     } = useForm<Comment>({});
 
@@ -149,7 +150,7 @@ function UserCartDetail() {
             getOrderUser();
         });
     };
-
+    const { isMediumMD } = useMedia();
     return (
         <NavUser>
             <Box
@@ -167,7 +168,7 @@ function UserCartDetail() {
                 >
                     <Grid item xs={12}>
                         <Box display={'flex'} alignItems={'center'} justifyContent={'space-between'}>
-                            <Typography variant="h2" fontSize={'25px'} fontWeight={'bold'}>
+                            <Typography variant="h2" fontSize={isMediumMD ? '20px' : '25px'} fontWeight={'bold'}>
                                 Chi tiết đơn hàng
                             </Typography>
 
@@ -182,7 +183,7 @@ function UserCartDetail() {
                                     direction={'row'}
                                     alignItems={'center'}
                                 >
-                                    <Typography fontSize={'14px'}>Đơn hàng chờ xác nhận</Typography>
+                                    <Typography fontSize={'12px'}>Đơn hàng chờ xác nhận</Typography>
                                 </Stack>
                             ) : orderCurrent.status == 1 ? (
                                 <Stack
@@ -195,7 +196,7 @@ function UserCartDetail() {
                                     direction={'row'}
                                     alignItems={'center'}
                                 >
-                                    <Typography fontSize={'14px'}> Đơn hàng đang giao</Typography>
+                                    <Typography fontSize={'12px'}> Đơn hàng đang giao</Typography>
                                 </Stack>
                             ) : orderCurrent.status == 2 ? (
                                 <Stack
@@ -586,7 +587,7 @@ function UserCartDetail() {
                                         display: 'flex',
                                         alignItems: 'center',
                                         pb: 1,
-                                        width: '100%',
+                                        width: 'max-content',
                                     }}
                                 >
                                     <FormControl>
@@ -599,8 +600,11 @@ function UserCartDetail() {
                                             control={control}
                                             render={({ field }) => (
                                                 <Rating
+                                                    sx={{
+                                                        width: 'max-content',
+                                                    }}
                                                     {...field}
-                                                    defaultValue={3}
+                                                    defaultValue={0}
                                                     size="small"
                                                     name="simple-controlled"
                                                     onChange={(event: any, newRating: any) => {
@@ -705,8 +709,9 @@ function UserCartDetail() {
                                     color="primary"
                                     sx={{ mt: 3, background: '#F39801' }}
                                     onClick={handleSubmit(handelComment)}
+                                    disabled={isSubmitting}
                                 >
-                                    Gửi nhận xét
+                                    {isSubmitting ? 'Đang xử lý...' : 'Gửi nhận xét'}
                                 </Button>
                             </FormGroup>
                         </DialogContent>

@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/system';
 
 export default function PaymentError() {
     return (
-        <Box py={4}>
+        <Box py={4} bgcolor={'#eee'}>
             <Container maxWidth="xl">
                 <Stack py={2}>
                     <img
