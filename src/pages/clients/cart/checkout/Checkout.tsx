@@ -2,6 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
+    Checkbox,
     Container,
     FormControl,
     FormControlLabel,
@@ -87,6 +88,7 @@ function Checkout() {
         }
     };
     const handleCheckout = async (data: any) => {
+        console.log('🚀 ~ file: Checkout.tsx:91 ~ handleCheckout ~ data:', data);
         const detailData = cart.map((e: Product) => {
             return {
                 productName: e.title,
@@ -342,6 +344,15 @@ function Checkout() {
                                 {errors.address && errors.address.message}
                             </FormHelperText>
                         </FormControl>
+                        <FormControl>
+                            <Controller
+                                name="bill"
+                                control={control}
+                                render={({ field }) => (
+                                    <FormControlLabel control={<Checkbox {...field} />} label="Xuất hóa đơn" />
+                                )}
+                            />
+                        </FormControl>
                     </FormGroup>
                 </Box>
 
@@ -405,7 +416,12 @@ function Checkout() {
                                     <Stack className="cartItem_thumb" direction={'row'} spacing={2}>
                                         <Stack direction={'row'} alignItems={'normal'} spacing={2}>
                                             <Box maxWidth={'119px'} flexShrink={0}>
-                                                <img src={e.image ? e.image : ''} alt="" width={'100%'} />
+                                                <img
+                                                    src={e.image ? e.image : ''}
+                                                    alt=""
+                                                    width={'109px'}
+                                                    height={'160px'}
+                                                />
                                             </Box>
                                             <Stack
                                                 direction={'column'}
