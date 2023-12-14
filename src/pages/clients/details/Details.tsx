@@ -554,7 +554,73 @@ export const Details = () => {
                                 </Box>
                                 {/* quantity */}
                                 {!isMediumMD ? (
-                                    ''
+                                    <Box mt={3}>
+                                        <Grid direction={'row'} display={'flex'} spacing={7}>
+                                            <Grid xs={4}>
+                                                <Typography variant="caption" fontWeight={'bold'} fontSize={'18px'}>
+                                                    Số lượng
+                                                </Typography>
+                                            </Grid>
+                                            <Grid xs={8}>
+                                                <Stack direction={'row'} sx={{}}>
+                                                    <Stack
+                                                        direction={'row'}
+                                                        spacing={3}
+                                                        border={'1px solid #eee'}
+                                                        alignItems={'center'}
+                                                        p={'5px 12px'}
+                                                        borderRadius={'5px'}
+                                                    >
+                                                        <RemoveIcon
+                                                            onClick={() => {
+                                                                if (quantity <= 1) {
+                                                                    setQuantity(1);
+                                                                } else {
+                                                                    setQuantity((prevQuantity) => prevQuantity - 1);
+                                                                }
+                                                            }}
+                                                            sx={{
+                                                                fontSize: '17px',
+                                                                cursor: 'pointer',
+                                                            }}
+                                                        />
+                                                        <input
+                                                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                                                const inputValue: any = e.target.value;
+                                                                const maxLength = 3;
+                                                                if (
+                                                                    (/^(?!0\d*$)\d+$/.test(inputValue) &&
+                                                                        inputValue.length <= maxLength) ||
+                                                                    inputValue == ''
+                                                                )
+                                                                    setQuantity(inputValue);
+                                                            }}
+                                                            value={quantity}
+                                                            type="text"
+                                                            style={{
+                                                                maxWidth: '40px',
+                                                                width: '100%',
+                                                                textAlign: 'center',
+                                                                justifyContent: 'center',
+                                                                alignContent: 'center',
+                                                                outline: '1px solid #ddd',
+                                                                borderRadius: '3px',
+                                                            }}
+                                                        />
+                                                        <AddIcon
+                                                            onClick={() =>
+                                                                setQuantity((prevQuantity) => Number(prevQuantity) + 1)
+                                                            }
+                                                            sx={{
+                                                                fontSize: '17px',
+                                                                cursor: 'pointer',
+                                                            }}
+                                                        />
+                                                    </Stack>
+                                                </Stack>
+                                            </Grid>
+                                        </Grid>
+                                    </Box>
                                 ) : (
                                     <>
                                         {Number(Detail.quantity) <= 0 ? (
