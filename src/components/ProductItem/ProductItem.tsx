@@ -60,7 +60,7 @@ const ProductItem = (Props: ProductItem) => {
                     component="img"
                     width={'100%'}
                     sx={{
-                        maxHeight: '170px',
+                        height: '170px',
                         p: '20px',
                         objectFit: 'contain',
                     }}
