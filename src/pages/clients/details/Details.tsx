@@ -1011,6 +1011,7 @@ export const Details = () => {
                         <Grid container mt={2}>
                             {RelatedProduct.map((e) => {
                                 return (
+
                                     <Grid xs={6} md={3} lg={2} item p={1}>
                                         <ProductItem products={e} />
                                     </Grid>

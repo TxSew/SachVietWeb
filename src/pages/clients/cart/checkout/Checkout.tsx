@@ -418,12 +418,14 @@ function Checkout() {
                                     <Stack className="cartItem_thumb" direction={'row'} spacing={2}>
                                         <Stack direction={'row'} alignItems={'normal'} spacing={2}>
                                             <Box maxWidth={'119px'} flexShrink={0}>
+
                                                 <img
                                                     src={e.image ? e.image : ''}
                                                     alt=""
                                                     width={'109px'}
                                                     height={'160px'}
                                                 />
+
                                             </Box>
                                             <Stack
                                                 direction={'column'}
