@@ -287,6 +287,10 @@ function UserAdress() {
                                         name="phone"
                                         rules={{
                                             required: 'Vui lòng nhập số điện thoại của bạn!',
+                                            pattern: {
+                                                value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+                                                message: 'Số điện thoại không hợp lệ!',
+                                            },
                                         }}
                                         render={({ field }) => (
                                             <OutlinedInput

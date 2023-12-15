@@ -1,6 +1,9 @@
 import {
     Box,
     Button,
+    Dialog,
+    DialogContent,
+    Fade,
     Grid,
     Stack,
     Table,
@@ -19,9 +22,28 @@ import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
+import Invoice from '../../clients/invoice/invoice';
+import { pushError, pushSuccess } from '../../../components/Toast/Toast';
 
 function DetailCarts() {
     const componentRef: any = useRef();
+    const [openInvoice, setOpenInvoice] = useState<any>({
+        isCheck: false,
+        value: 1,
+    });
+    const handleOpen = () => {
+        setOpenInvoice({
+            isCheck: true,
+            value: '3434',
+        });
+    };
+
+    const handleClose = () => {
+        setOpenInvoice({
+            isCheck: false,
+            value: 2,
+        });
+    };
     const { id } = useParams();
     const [orderCurrent, setDetailOrder] = useState<any>({});
     const [reload, setReload] = useState<any>(1);
@@ -41,7 +63,7 @@ function DetailCarts() {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: 'emp-data',
-        onAfterPrint: () => alert('print success'),
+        onPrintError: () => pushError('Xuất hóa đơn thất bại!'),
     });
 
     return (
@@ -152,6 +174,61 @@ function DetailCarts() {
                                     <Typography>Thông tin xuất hóa đơn: </Typography>
                                     <Typography fontWeight={'bold'}>không có</Typography>
                                 </Stack>
+                                {orderCurrent.bill === 1 ? (
+                                    <Box
+                                        onClick={handleOpen}
+                                        sx={{
+                                            display: 'inline-block',
+                                            backgroundColor: 'orange',
+                                            cursor: 'pointer',
+                                            borderRadius: '30px',
+                                            fontSize: '14px',
+                                            padding: '6px 15px',
+                                            marginTop: '10px',
+                                            fontWeight: 'bold',
+                                            color: color.BtnDartGreen,
+                                        }}
+                                    >
+                                        Xem hóa đơn
+                                    </Box>
+                                ) : (
+                                    ''
+                                )}
+                                <Dialog
+                                    open={openInvoice.isCheck}
+                                    onClose={handleClose}
+                                    TransitionComponent={Fade}
+                                    aria-labelledby="customized-dialog-title"
+                                    sx={{
+                                        width: '100%',
+                                    }}
+                                >
+                                    <DialogContent
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    >
+                                        <Box ref={componentRef}>
+                                            <Invoice />
+                                        </Box>
+                                        <Box
+                                            onClick={handlePrint}
+                                            sx={{
+                                                display: 'inline-block',
+                                                backgroundColor: 'orange',
+                                                cursor: 'pointer',
+                                                fontSize: '14px',
+                                                borderRadius: '3px',
+                                                p: '2px 5px',
+                                                marginTop: '10px',
+                                                fontWeight: 'bold',
+                                                color: color.text_color,
+                                            }}
+                                        >
+                                            <Typography>Xuất hóa đơn</Typography>
+                                        </Box>
+                                    </DialogContent>
+                                </Dialog>
                             </Box>
                         </Box>
                     </Grid>

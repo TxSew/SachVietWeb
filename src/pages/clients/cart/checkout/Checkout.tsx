@@ -2,6 +2,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import {
     Box,
     Button,
+    Checkbox,
     Container,
     FormControl,
     FormControlLabel,
@@ -25,14 +26,13 @@ import { numberFormat } from '../../../../helpers/formatPrice';
 import { getTotals } from '../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../redux/storeClient';
 
+import { TitleHelmet } from '../../../../constants/Helmet';
 import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpPayment, httpProvince, httpVoucher } from '../../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
-import { TitleHelmet } from '../../../../constants/Helmet';
-import { Helmet } from 'react-helmet';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
     const dispatch = useDispatch();
@@ -243,6 +243,10 @@ function Checkout() {
                                 name="phone"
                                 rules={{
                                     required: 'Vui lòng nhập số điện thoại',
+                                    pattern: {
+                                        value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+                                        message: 'Số điện thoại không hợp lệ!',
+                                    },
                                 }}
                                 render={({ field }) => (
                                     <OutlinedInput
@@ -342,6 +346,15 @@ function Checkout() {
                                 {errors.address && errors.address.message}
                             </FormHelperText>
                         </FormControl>
+                        <FormControl>
+                            <Controller
+                                name="bill"
+                                control={control}
+                                render={({ field }) => (
+                                    <FormControlLabel control={<Checkbox {...field} />} label="Xuất hóa đơn" />
+                                )}
+                            />
+                        </FormControl>
                     </FormGroup>
                 </Box>
 
@@ -405,7 +418,14 @@ function Checkout() {
                                     <Stack className="cartItem_thumb" direction={'row'} spacing={2}>
                                         <Stack direction={'row'} alignItems={'normal'} spacing={2}>
                                             <Box maxWidth={'119px'} flexShrink={0}>
-                                                <img src={e.image ? e.image : ''} alt="" width={'145px'} />
+
+                                                <img
+                                                    src={e.image ? e.image : ''}
+                                                    alt=""
+                                                    width={'109px'}
+                                                    height={'160px'}
+                                                />
+
                                             </Box>
                                             <Stack
                                                 direction={'column'}

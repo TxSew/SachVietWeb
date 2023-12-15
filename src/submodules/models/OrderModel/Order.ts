@@ -15,6 +15,7 @@ export interface Order extends BaseModel, Modified {
     coupon?: number;
     province?: string;
     district?: string;
+    bill?: string;
     address?: string;
     users?: User;
     orderType?: string;

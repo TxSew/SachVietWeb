@@ -82,10 +82,16 @@ function UserMyCart() {
                                                             {numberFormat(Number(e.money) - Number(e.coupon))}
                                                         </TableCell>
                                                         <TableCell align="center">{e.orderType}</TableCell>
-                                                        <TableCell align="center">
+                                                        <TableCell
+                                                            align="center"
+                                                            sx={{
+                                                                fontSize: '12px',
+                                                            }}
+                                                        >
                                                             {e.status == null ? (
                                                                 <Chip
                                                                     sx={{
+                                                                        fontSize: '12px',
                                                                         maxWidth: '130px',
                                                                         width: '100%',
                                                                     }}
@@ -94,6 +100,7 @@ function UserMyCart() {
                                                             ) : e.status == 1 ? (
                                                                 <Chip
                                                                     sx={{
+                                                                        fontSize: '12px',
                                                                         maxWidth: '130px',
                                                                         width: '100%',
                                                                     }}
@@ -104,6 +111,7 @@ function UserMyCart() {
                                                                 <Chip
                                                                     sx={{
                                                                         maxWidth: '130px',
+                                                                        fontSize: '12px',
                                                                         width: '100%',
                                                                     }}
                                                                     label=" Đã giao hàng"
@@ -113,6 +121,7 @@ function UserMyCart() {
                                                                 <Chip
                                                                     sx={{
                                                                         maxWidth: '130px',
+                                                                        fontSize: '12px',
                                                                         width: '100%',
                                                                     }}
                                                                     label="Đã hủy"
@@ -125,7 +134,13 @@ function UserMyCart() {
 
                                                         <TableCell align="right">
                                                             <Link to={`/user/mycart/${e.id}`}>
-                                                                <Chip label=" Xem" color="primary" />
+                                                                <Chip
+                                                                    label=" Xem"
+                                                                    color="primary"
+                                                                    sx={{
+                                                                        fontSize: '12px',
+                                                                    }}
+                                                                />
                                                             </Link>
                                                         </TableCell>
                                                     </TableRow>

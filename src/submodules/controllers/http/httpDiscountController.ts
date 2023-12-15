@@ -1,10 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
-import { TProductResponse } from '../../models/ProductModel/Product';
 import { AxiosConfig } from '../interface/axiosConfig';
 class HttpDiscountController {
-    get(): TProductResponse | PromiseLike<TProductResponse> {
-        throw new Error('Method not implemented.');
-    }
     private axiosInstance: AxiosInstance;
     constructor(axiosConfig: AxiosConfig) {
         this.axiosInstance = axios.create(axiosConfig);

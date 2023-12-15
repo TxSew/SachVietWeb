@@ -22,7 +22,7 @@ function PaymentSuccess() {
                     </Typography>
                     <Box mt={2} fontStyle={'19px'}>
                         <Typography variant="body1" fontSize={'19px'}>
-                            Cảm ơn bạn đã mua hàng tại Fahasa.com
+                            Cảm ơn bạn đã mua hàng tại Sachviet.click
                         </Typography>
                         <Typography variant="body1" fontSize={'19px'}>
                             Mã đơn hàng của bạn là:
