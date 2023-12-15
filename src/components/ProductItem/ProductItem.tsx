@@ -59,8 +59,8 @@ const ProductItem = (Props: ProductItem) => {
                 <CardMedia
                     component="img"
                     width={'100%'}
-                    height={'170'}
                     sx={{
+                        maxHeight: '170px',
                         p: '20px',
                         objectFit: 'contain',
                     }}
