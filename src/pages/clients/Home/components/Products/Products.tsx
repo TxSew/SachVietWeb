@@ -13,10 +13,10 @@ function Products() {
     const [Products, setProducts] = useState<Product[]>([]);
     const { isMediumMD } = useMedia();
     const fetchData = async (props: any) => {
+        startLoading();
         try {
             const productData: any = await httpProduct.getAll(props);
             const { products } = productData;
-            startLoading();
             if (products) {
                 stopLoading();
             }
@@ -89,7 +89,7 @@ function Products() {
                                       </Grid>
                                   );
                               })
-                            : Array.from({ length: Products.length }).map((e, i) => {
+                            : Array.from({ length: 8 }).map((e, i) => {
                                   return (
                                       <Grid key={i} item lg={3} md={4} xs={6} paddingBottom={4}>
                                           <Skeleton variant="rectangular" width={'95%'} height={'170px'} />

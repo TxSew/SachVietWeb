@@ -13,11 +13,11 @@ function ProductNew() {
     const redirect = useNavigate();
     const [Products, setProducts] = useState<Product[]>([]);
     const fetchData = async (props: any) => {
+        startLoading();
         props.limit = 10;
         try {
             const productData: any = await httpProduct.getAll(props);
             const { products } = productData;
-            startLoading();
             if (products) {
                 stopLoading();
             }
@@ -91,7 +91,7 @@ function ProductNew() {
                                       </Grid>
                                   );
                               })
-                            : Array.from({ length: Products.length }).map((e, i) => {
+                            : Array.from({ length: 10 }).map((e, i) => {
                                   return (
                                       <Grid item lg={2.4} md={4} xs={6} sm={6} paddingBottom={4} key={i}>
                                           <Skeleton variant="rectangular" width={'95%'} height={'170px'} />
@@ -102,9 +102,12 @@ function ProductNew() {
                                               style={{ marginBottom: 6, marginTop: 6 }}
                                           />
                                           <Stack direction={'row'} justifyContent={'space-around'}>
-                                              <Skeleton animation="wave" height={50} width="33%" />
-                                              <Skeleton animation="wave" height={50} width="33%" />
+                                              <Skeleton animation="wave" height={20} width="33%" />
+                                              <Skeleton animation="wave" height={20} width="33%" />
                                           </Stack>
+                                          <Box width={'90%'} mx={'auto'}>
+                                              <Skeleton animation="wave" height={30} width="100%" />
+                                          </Box>
                                       </Grid>
                                   );
                               })}
