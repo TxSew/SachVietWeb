@@ -7,6 +7,7 @@ import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
+import { image } from '../../../../../assets';
 
 function Banner() {
     const { isMediumMD } = useMedia();
@@ -30,13 +31,10 @@ function Banner() {
                                     }}
                                 >
                                     <img
-                                        src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
+                                        src={image.banner1}
                                         alt="Banner tùy chỉnh"
                                         style={{
                                             width: '100%',
-                                            height: '160px',
-                                            objectFit: 'cover',
-                                            borderRadius: '10px',
                                         }}
                                     />
                                 </Box>
@@ -48,12 +46,24 @@ function Banner() {
                                     }}
                                 >
                                     <img
-                                        src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
-                                        alt=""
+                                        src={image.banner2}
+                                        alt="Banner tùy chỉnh"
                                         style={{
-                                            borderRadius: '10px',
-                                            objectFit: 'cover',
-                                            height: '160px',
+                                            width: '100%',
+                                        }}
+                                    />
+                                </Box>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Box
+                                    sx={{
+                                        borderRadius: '10px',
+                                    }}
+                                >
+                                    <img
+                                        src={image.banner3}
+                                        alt="Banner tùy chỉnh"
+                                        style={{
                                             width: '100%',
                                         }}
                                     />
@@ -80,11 +90,10 @@ function Banner() {
                                     }}
                                 >
                                     <img
-                                        src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
+                                        src={image.banner1}
                                         alt=""
                                         style={{
                                             width: '100%',
-                                            borderRadius: '10px',
                                         }}
                                     />
                                 </Box>
@@ -96,10 +105,24 @@ function Banner() {
                                     }}
                                 >
                                     <img
-                                        src="https://theme.hstatic.net/1000363117/1000911694/14/col_hori_img.png?v=483"
+                                        src={image.banner2}
                                         alt=""
                                         style={{
-                                            borderRadius: '10px',
+                                            width: '100%',
+                                        }}
+                                    />
+                                </Box>
+                            </SwiperSlide>
+                            <SwiperSlide>
+                                <Box
+                                    sx={{
+                                        borderRadius: '10px',
+                                    }}
+                                >
+                                    <img
+                                        src={image.banner3}
+                                        alt=""
+                                        style={{
                                             width: '100%',
                                         }}
                                     />

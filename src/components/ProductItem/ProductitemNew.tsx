@@ -62,7 +62,7 @@ const ProductItemNew = (Props: ProductItem) => {
             >
                 <CardMedia
                     component="img"
-                    height={'170'}
+                    height={'170px'}
                     sx={{
                         p: '20px',
                         width: '180px',
