@@ -112,8 +112,8 @@ const CategoryNav = () => {
                                                       sx={{
                                                           m: '0 auto',
                                                       }}
-                                                      height={50}
-                                                      width="60%"
+                                                      height={30}
+                                                      width="66%"
                                                   />
                                               </Box>
                                           </Grid>
