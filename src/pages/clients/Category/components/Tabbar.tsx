@@ -1,6 +1,6 @@
 import { Box, Checkbox, FormControlLabel, FormGroup, OutlinedInput, Slider, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { color } from '../../../../Theme/color';
 import useMedia from '../../../../hooks/useMedia/useMedia';
 import { httpCategory, httpProducer } from '../../../../submodules/controllers/http/axiosController';
@@ -21,6 +21,9 @@ function Tabbar(props: Props) {
     const { isMediumMD } = useMedia();
     const [category, setCategory] = useState<any>([]);
     const [producer, setProducer] = useState<any>({});
+    const [isCategory, setIsCategory] = useState<string>('');
+    const [categoryParams, setCategoryParams] = useSearchParams();
+    const [activeCategory, setActiveCategory] = useState(null);
 
     useEffect(() => {
         httpProducer.getAll({}).then((res) => {
@@ -29,7 +32,8 @@ function Tabbar(props: Props) {
             }
         });
         httpCategory.getCategory({}).then((res) => {
-            setCategory(res);
+            const filteredData = res.filter((item: any) => item.parentId !== null);
+            setCategory(filteredData);
         });
     }, []);
     const [selectedValue, setSelectedValue] = useState('');
@@ -54,30 +58,44 @@ function Tabbar(props: Props) {
                     ''
                 ) : (
                     <>
-                        <NavLink to={'/filter'}>
+                        <NavLink
+                            to={'/filter'}
+                            onClick={() => {
+                                setActiveCategory(null);
+                            }}
+                        >
                             <Typography variant="h1" fontWeight={'bold'} textTransform={'uppercase'} mb={1}>
                                 Tất cả sản phẩm
                             </Typography>
                         </NavLink>
                         <Box>
                             {category.map((e: any) => {
+                                const searchParam = categoryParams.get('category');
+                                const isActive = activeCategory === e.slug;
+
+                                const handleCategoryClick = (slug: any) => {
+                                    setActiveCategory(slug === activeCategory ? null : slug);
+                                };
+
                                 return (
-                                    <NavLink to={`/filter?category=${e.slug}`}>
-                                        <Box color={'inherit'} pl={1}>
+                                    <Box color={'inherit'} pl={1}>
+                                        <NavLink to={`/filter?category=${e.slug}`}>
                                             <Typography
                                                 sx={{
                                                     transition: 'linear 0.2s',
                                                     cursor: 'pointer',
+                                                    color: isActive ? color.sale : '#666',
                                                     '&:hover': {
                                                         color: color.sale,
                                                     },
                                                 }}
-                                                color={'#666'}
+                                                fontWeight={isActive ? 'bold' : ''}
+                                                onClick={() => handleCategoryClick(e.slug)}
                                             >
                                                 {e.name}
                                             </Typography>
-                                        </Box>
-                                    </NavLink>
+                                        </NavLink>
+                                    </Box>
                                 );
                             })}
                         </Box>

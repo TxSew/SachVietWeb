@@ -482,7 +482,7 @@ function UserCartDetail() {
                                     <TableCell align="center">Giá bán</TableCell>
                                     <TableCell align="center">SL</TableCell>
                                     <TableCell align="center">Thành tiền</TableCell>
-                                    <TableCell align="center">Đánh giá</TableCell>
+                                    {orderCurrent.status === 2 ? <TableCell align="center">Đánh giá</TableCell> : ''}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -534,38 +534,42 @@ function UserCartDetail() {
                                                         {numberFormat(order.quantity * order.product.price_sale)}
                                                     </Typography>
                                                 </TableCell>
-                                                <TableCell align="center">
-                                                    <Typography fontSize={'12px'}>
-                                                        {order.status === null ? (
-                                                            <Box
-                                                                onClick={() =>
-                                                                    handleOpen({
-                                                                        productId: order.product.id,
-                                                                        idOrderDetail: order.id,
-                                                                    })
-                                                                }
-                                                                bgcolor={color.btnRed}
-                                                                sx={{
-                                                                    borderRadius: 1,
-                                                                    cursor: 'pointer',
-                                                                    color: color.white,
-                                                                    bgcolor: color.BtnDartGreen,
-                                                                }}
-                                                            >
-                                                                <Typography>Đánh giá</Typography>
-                                                            </Box>
-                                                        ) : (
-                                                            <Box
-                                                                bgcolor={'gray'}
-                                                                sx={{
-                                                                    borderRadius: 1,
-                                                                }}
-                                                            >
-                                                                <Typography>Đã đánh giá</Typography>
-                                                            </Box>
-                                                        )}
-                                                    </Typography>
-                                                </TableCell>
+                                                {orderCurrent.status === 2 ? (
+                                                    <TableCell align="center">
+                                                        <Typography fontSize={'12px'}>
+                                                            {order.status === null ? (
+                                                                <Box
+                                                                    onClick={() =>
+                                                                        handleOpen({
+                                                                            productId: order.product.id,
+                                                                            idOrderDetail: order.id,
+                                                                        })
+                                                                    }
+                                                                    bgcolor={color.btnRed}
+                                                                    sx={{
+                                                                        borderRadius: 1,
+                                                                        cursor: 'pointer',
+                                                                        color: color.white,
+                                                                        bgcolor: color.BtnDartGreen,
+                                                                    }}
+                                                                >
+                                                                    <Typography>Đánh giá</Typography>
+                                                                </Box>
+                                                            ) : (
+                                                                <Box
+                                                                    bgcolor={'gray'}
+                                                                    sx={{
+                                                                        borderRadius: 1,
+                                                                    }}
+                                                                >
+                                                                    <Typography>Đã đánh giá</Typography>
+                                                                </Box>
+                                                            )}
+                                                        </Typography>
+                                                    </TableCell>
+                                                ) : (
+                                                    ''
+                                                )}
                                             </TableRow>
                                         );
                                     }

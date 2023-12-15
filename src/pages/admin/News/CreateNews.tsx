@@ -215,7 +215,7 @@ const CreateNews = () => {
                                             <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                         </Typography>
                                         <Editor
-                                            apiKey="i6krl4na00k3s7n08vuwluc3ynywgw9pt6kd46v0dn1knm3i"
+                                            apiKey="y6r6bf309zyr8a2wfdmqtbg9k3ppxi62522uau0w63mssgiz"
                                             onInit={(evt, editor) => (editorRef.current = editor)}
                                             {...field}
                                             onEditorChange={(e) => field.onChange(e)}

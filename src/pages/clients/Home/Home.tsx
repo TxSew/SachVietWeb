@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material';
+import { Box, Grid, SpeedDial, SpeedDialIcon } from '@mui/material';
 import Banner from './components/Banner/Banner';
 import Products from './components/Products/Products';
 import CategoryNav from './components/Category/Category';
@@ -17,6 +17,11 @@ function HomePage() {
             <Products />
             <ProductHots />
             <ProductNew />
+            <SpeedDial
+                ariaLabel="SpeedDial basic example"
+                sx={{ position: 'fixed', bottom: 16, right: 16 }}
+                icon={<SpeedDialIcon />}
+            ></SpeedDial>
         </Grid>
     );
 }

@@ -8,6 +8,8 @@ export interface User extends Modified, BaseModel, Model {
     phone?: number;
     userGroup?: number;
     email?: string;
+    sex?: number;
+    birthday?: Date;
     address?: string;
     confirmPassword?: string;
 }

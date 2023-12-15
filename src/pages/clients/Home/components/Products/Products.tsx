@@ -6,6 +6,7 @@ import { httpProduct } from '../../../../../submodules/controllers/http/axiosCon
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import { image } from '../../../../../assets';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
+import { Link } from 'react-router-dom';
 
 function Products() {
     const { isLoading, startLoading, stopLoading } = useLoading();
@@ -25,7 +26,9 @@ function Products() {
         }
     };
     useEffect(() => {
-        const props = {};
+        const props = {
+            filter: 1,
+        };
         fetchData(props);
     }, []);
 
@@ -105,7 +108,9 @@ function Products() {
                               })}
                     </Grid>
                     <Stack>
-                        <Button variant="OutlinedRed">Xem thêm</Button>
+                        <Link to="/filter?sale=true">
+                            <Button variant="OutlinedRed">Xem thêm</Button>
+                        </Link>
                     </Stack>
                 </Box>
             </Container>

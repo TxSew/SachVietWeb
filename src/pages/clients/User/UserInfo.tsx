@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import UserIn4 from './components/UserInfo/UserIn4';
 function UserInfo() {
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('newPassword');
@@ -42,219 +43,11 @@ function UserInfo() {
     return (
         <NavUser>
             <div className="main ps-0 pt-3 pb-3 pe-0">
+                <UserIn4 />
                 <div
                     style={{
                         background: 'white',
-                        padding: '16px',
-                        borderRadius: '5px',
-                        marginBottom: '24px',
-                    }}
-                >
-                    <form className="">
-                        <Typography
-                            fontSize={20}
-                            p={1}
-                            pb={3}
-                            display={'flex'}
-                            fontWeight={'bold'}
-                            textTransform={'uppercase'}
-                        >
-                            Thông tin tài khoản
-                        </Typography>
-                        <Box
-                            sx={{
-                                px: '10px',
-                                maxWidth: '800px',
-                                width: '100%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                rowGap: '5px',
-                            }}
-                        >
-                            <Controller
-                                control={control}
-                                name="password"
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{
-                                            display: 'block',
-                                            py: 1,
-                                        }}
-                                    >
-                                        <Grid2 container display={'flex'} alignItems={'center'}>
-                                            <Grid2 xs={12} md={4}>
-                                                <Typography>Họ*</Typography>
-                                            </Grid2>
-                                            <Grid2 xs={12} md={8}>
-                                                <OutlinedInput fullWidth type="text" placeholder="Nhập họ" />
-                                            </Grid2>
-                                        </Grid2>
-                                    </FormControl>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="newPassword"
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{
-                                            display: 'block',
-                                            py: 1,
-                                        }}
-                                    >
-                                        <Grid2 container display={'flex'} alignItems={'center'}>
-                                            <Grid2 xs={12} md={4}>
-                                                <Typography>Tên*</Typography>
-                                            </Grid2>
-                                            <Grid2 xs={12} md={8}>
-                                                <OutlinedInput fullWidth type="text" placeholder="Nhập tên" />
-                                            </Grid2>
-                                        </Grid2>
-                                    </FormControl>
-                                )}
-                            />
-
-                            <Controller
-                                control={control}
-                                name="repeatNewPassword"
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{
-                                            display: 'block',
-                                            py: 1,
-                                        }}
-                                    >
-                                        <Grid2 container display={'flex'} alignItems={'center'}>
-                                            <Grid2 xs={12} md={4}>
-                                                <Typography>Số điện thoại</Typography>
-                                            </Grid2>
-                                            <Grid2 xs={12} md={8}>
-                                                <OutlinedInput fullWidth type="text" placeholder="Nhập số điện thoại" />
-                                            </Grid2>
-                                        </Grid2>
-                                    </FormControl>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="repeatNewPassword"
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{
-                                            display: 'block',
-                                            py: 1,
-                                        }}
-                                    >
-                                        <Grid2 container display={'flex'} alignItems={'center'}>
-                                            <Grid2 xs={12} md={4}>
-                                                <Typography>Email</Typography>
-                                            </Grid2>
-                                            <Grid2 xs={12} md={8}>
-                                                <OutlinedInput fullWidth type="text" placeholder="Nhập email" />
-                                            </Grid2>
-                                        </Grid2>
-                                    </FormControl>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="repeatNewPassword"
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{
-                                            display: 'block',
-                                            py: 1,
-                                        }}
-                                    >
-                                        <Grid2 container display={'flex'} alignItems={'center'}>
-                                            <Grid2 xs={12} md={4}>
-                                                <Typography>Giới tính</Typography>
-                                            </Grid2>
-                                            <Grid2 xs={12} md={8}>
-                                                <RadioGroup
-                                                    row
-                                                    aria-labelledby="demo-row-radio-buttons-group-label"
-                                                    name="row-radio-buttons-group"
-                                                >
-                                                    <FormControlLabel
-                                                        value="Nam"
-                                                        sx={{ marginRight: '24px' }}
-                                                        control={<Radio />}
-                                                        label="Nam"
-                                                    />
-                                                    <FormControlLabel
-                                                        value="Nữ"
-                                                        sx={{ marginRight: '24px' }}
-                                                        control={<Radio />}
-                                                        label="Nữ"
-                                                    />
-                                                    <FormControlLabel
-                                                        value="Khác"
-                                                        sx={{ marginRight: '24px' }}
-                                                        control={<Radio />}
-                                                        label="Khác"
-                                                    />
-                                                </RadioGroup>
-                                            </Grid2>
-                                        </Grid2>
-                                    </FormControl>
-                                )}
-                            />
-                            <Controller
-                                control={control}
-                                name="repeatNewPassword"
-                                render={({ field }) => (
-                                    <FormControl
-                                        sx={{
-                                            display: 'block',
-                                            py: 1,
-                                        }}
-                                    >
-                                        <Grid2 container display={'flex'} alignItems={'center'}>
-                                            <Grid2 xs={12} md={4}>
-                                                <Typography>Ngày sinh</Typography>
-                                            </Grid2>
-                                            <Grid2 xs={12} md={8}>
-                                                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                                    <DatePicker
-                                                        sx={{
-                                                            width: '100%',
-                                                        }}
-                                                    />
-                                                </LocalizationProvider>
-                                            </Grid2>
-                                        </Grid2>
-                                    </FormControl>
-                                )}
-                            />
-                            <Grid2 container display={'flex'} alignItems={'center'} py={3}>
-                                <Grid2 xs={12} md={4}></Grid2>
-                                <Grid2 xs={12} md={8}>
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <button
-                                            className="save pe-5 ps-5 pb-2 pt-2"
-                                            style={{
-                                                textAlign: 'center',
-                                            }}
-                                            type="submit"
-                                        >
-                                            Lưu
-                                        </button>
-                                    </div>
-                                </Grid2>
-                            </Grid2>
-                        </Box>
-                    </form>
-                </div>
-                <div
-                    style={{
-                        background: 'white',
-                        padding: '16px',
+                        padding: '10px',
                         borderRadius: '5px',
                     }}
                 >
@@ -262,7 +55,7 @@ function UserInfo() {
                         <Typography
                             fontSize={20}
                             p={1}
-                            pb={3}
+                            pb={2}
                             display={'flex'}
                             fontWeight={'bold'}
                             textTransform={'uppercase'}
@@ -304,12 +97,14 @@ function UserInfo() {
                                                     type="text"
                                                     placeholder="Nhập mât khẩu hiện tại"
                                                 />
+                                                <Typography color={color.error}>
+                                                    {errors.password && errors.password.message}
+                                                </Typography>
                                             </Grid2>
                                         </Grid2>
                                     </FormControl>
                                 )}
                             />
-                            <Typography color={color.error}>{errors.password && errors.password.message}</Typography>
                             <Controller
                                 control={control}
                                 name="newPassword"
@@ -343,14 +138,14 @@ function UserInfo() {
                                                     type="text"
                                                     placeholder="Mật khẩu mới"
                                                 />
+                                                <Typography color={color.error}>
+                                                    {errors.newPassword && errors.newPassword.message}
+                                                </Typography>
                                             </Grid2>
                                         </Grid2>
                                     </FormControl>
                                 )}
                             />
-                            <Typography color={color.error}>
-                                {errors.newPassword && errors.newPassword.message}
-                            </Typography>
 
                             <Controller
                                 control={control}
@@ -378,14 +173,15 @@ function UserInfo() {
                                                     type="text"
                                                     placeholder="Nhập lại mật khẩu mới"
                                                 />
+                                                <Typography color={color.error}>
+                                                    {errors.repeatNewPassword && errors.repeatNewPassword.message}
+                                                </Typography>
                                             </Grid2>
                                         </Grid2>
                                     </FormControl>
                                 )}
                             />
-                            <Typography color={color.error}>
-                                {errors.repeatNewPassword && errors.repeatNewPassword.message}
-                            </Typography>
+
                             <Grid2 container py={3}>
                                 <Grid2 xs={12} md={4}></Grid2>
                                 <Grid2 xs={12} md={8}>

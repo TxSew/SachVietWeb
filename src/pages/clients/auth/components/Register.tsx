@@ -205,7 +205,7 @@ export const Register = () => {
                 <Typography>Nhập lại mật khẩu</Typography>
                 <Controller
                     control={control}
-                    defaultValue="" // Set an initial value here
+                    defaultValue=""
                     name="confirmPassword"
                     rules={{
                         required: 'Mật khẩu không được để  trống!',
@@ -271,7 +271,7 @@ export const Register = () => {
                 </Button>
                 <br />
                 <Box pt={3} sx={{}}>
-                    Bằng việc đăng ký, bạn đã đồng ý với Fahasa.com về
+                    Bằng việc đăng ký, bạn đã đồng ý với Sachviet.click về
                     <Typography
                         variant="body1"
                         sx={{
@@ -282,7 +282,7 @@ export const Register = () => {
                     >
                         <Link color={color.text_color} to={'/'}>
                             Điều khoản dịch vụ
-                        </Link>{' '}
+                        </Link>
                         &<Link to={'/'}>Chính sách bảo mật</Link>
                     </Typography>
                 </Box>

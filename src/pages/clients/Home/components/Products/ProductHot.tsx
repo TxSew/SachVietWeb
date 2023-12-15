@@ -6,6 +6,7 @@ import useLoading from '../../../../../hooks/useLoading/useLoading';
 import { httpProduct } from '../../../../../submodules/controllers/http/axiosController';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
+import { Link } from 'react-router-dom';
 interface PropsSort {
     page: number;
     search: string;
@@ -114,7 +115,9 @@ function ProductHots() {
                               })}
                     </Grid>
                     <Stack>
-                        <Button variant="OutlinedRed">Xem thêm</Button>
+                        <Link to="/filter?category=thieu-nhi">
+                            <Button variant="OutlinedRed">Xem thêm</Button>
+                        </Link>
                     </Stack>
                 </Box>
             </Container>

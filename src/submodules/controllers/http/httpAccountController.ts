@@ -106,6 +106,14 @@ class HttpAccountController {
             throw error;
         }
     }
+    async updateUser(props: any) {
+        try {
+            const response = await this.axiosInstance.post(`users/updateUser`, props);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 export default HttpAccountController;

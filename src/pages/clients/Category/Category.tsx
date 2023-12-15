@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 
 import React, { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import ProductItem from '../../../components/ProductItem/ProductItem';
 import { TitleHelmet } from '../../../constants/Helmet';
@@ -40,8 +40,10 @@ function Category() {
     const [values, setValue] = useState<any[]>([1, 0] as any[]);
     const [sort, setSort] = React.useState('');
 
+    const redirect = useNavigate();
     const handelSale = (event: any) => {
         setSale(event.target.value);
+        redirect('/filter');
     };
 
     useEffect(() => {
@@ -54,7 +56,7 @@ function Category() {
         const value: any = searchParams.get('q');
         const searchValue = value;
         const categorySearch = searchParams.get('category');
-
+        const filterSale = searchParams.get('sale');
         const props = {
             sortBy,
             sortWith,
@@ -62,7 +64,7 @@ function Category() {
             limit: 24,
             keyword: searchValue,
             categoryFilter: categorySearch,
-            filter: sale,
+            filter: filterSale ? 1 : sale,
             sortMinPrice: debouncedInputValue[0],
             sortMaxPrice: debouncedInputValue[1],
             producerFilter: producer,

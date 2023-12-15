@@ -937,7 +937,7 @@ export const Details = () => {
                                     value="2"
                                 >
                                     <Grid container>
-                                        <Grid xs={12} md={8} pb={2}>
+                                        <Grid xs={12} md={12} pb={2}>
                                             <Box width={'100%'} height={'100%'} p={2}>
                                                 {comments?.comments?.length > 0 ? (
                                                     comments?.comments?.map((e: any) => {
@@ -1011,7 +1011,6 @@ export const Details = () => {
                         <Grid container mt={2}>
                             {RelatedProduct.map((e) => {
                                 return (
-
                                     <Grid xs={6} md={3} lg={2} item p={1}>
                                         <ProductItem products={e} />
                                     </Grid>

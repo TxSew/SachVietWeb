@@ -33,7 +33,7 @@ const CreateDiscount = () => {
             {TitleHelmet('Quản lý Mã giảm giá')}
             <form action="" onSubmit={handleSubmit(handleAddDiscount)}>
                 <Stack direction={{ xs: 'column', md: 'row' }} justifyContent={'space-between'}>
-                    <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'}>
+                    <Typography variant="h2" fontSize={'24px'} fontWeight={'bold'} textTransform={'uppercase'}>
                         Thêm mã giảm giá
                     </Typography>
                     <Button type="submit" variant="contained">
@@ -99,7 +99,8 @@ const CreateDiscount = () => {
                             {errors.discount && errors.discount.message}
                         </Typography>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
-                            Số tiền giới hạn nhập <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
+                            Số tiền giới hạn được áp dụng{' '}
+                            <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller
                             control={control}
@@ -154,7 +155,7 @@ const CreateDiscount = () => {
                     </Grid>
                     <Grid xs={12} md={3.8}>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Ngày giới hạn nhập
+                            Ngày hết hạn nhập
                             <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>
                         <Controller

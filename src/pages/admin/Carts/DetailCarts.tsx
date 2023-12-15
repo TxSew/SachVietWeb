@@ -262,6 +262,7 @@ function DetailCarts() {
                                     <Button
                                         variant="containedGreen"
                                         sx={{
+                                            bgcolor: '#2e7d32',
                                             mt: '10px',
                                             borderRadius: '15px',
                                             padding: '7px 27px',

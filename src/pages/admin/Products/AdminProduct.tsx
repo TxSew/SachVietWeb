@@ -111,6 +111,7 @@ export default function AdminProduct() {
                 pushError('Xoá sản phẩm thành công');
                 const product = Products.filter((e) => e.id !== Number(e.id));
                 setProducts(product);
+                window.location.reload();
             })
 
             .catch((err) => {

@@ -8,8 +8,8 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import NewspaperIcon from '@mui/icons-material/Newspaper';
 import PersonIcon from '@mui/icons-material/Person';
 import { Avatar, Box, Collapse, Link, Stack, Typography } from '@mui/material';
-import React, { useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useNavigate, useSearchParams } from 'react-router-dom';
 import { color } from '../../../../../Theme/color';
 import { image } from '../../../../../assets';
 import NavItem from '../NavItem/NavItem';
@@ -17,6 +17,8 @@ import { httpAccount, httpCategory } from '../../../../../submodules/controllers
 function NavMobile() {
     const [openCategory, setOpenCategory] = React.useState(false);
     const [category, setCategory] = React.useState<any>([]);
+    const [categoryParams, setCategoryParams] = useSearchParams();
+    const [activeCategory, setActiveCategory] = useState<any>(null);
     const [user, setUser] = React.useState<any>({});
     const redirect = useNavigate();
     const handleOpenCategory = () => {
@@ -24,7 +26,8 @@ function NavMobile() {
     };
     useEffect(() => {
         httpCategory.getCategory({}).then((res) => {
-            setCategory(res);
+            const filteredData = res.filter((item: any) => item.parentId !== null);
+            setCategory(filteredData);
         });
     }, []);
     useEffect(() => {
@@ -195,6 +198,12 @@ function NavMobile() {
                 <Collapse in={openCategory} timeout="auto" unmountOnExit>
                     <Box overflow={'scroll'} maxHeight={'200px'}>
                         {category.map((e: any) => {
+                            const searchParam = categoryParams.get('category');
+                            const isActive = activeCategory === e.slug;
+
+                            const handleCategoryClick = (slug: any) => {
+                                setActiveCategory(slug === activeCategory ? null : slug);
+                            };
                             return (
                                 <Box
                                     pl={2}
@@ -210,20 +219,26 @@ function NavMobile() {
                                         },
                                     }}
                                 >
-                                    <Link
-                                        underline="none"
-                                        href={`/filter?category=${e.slug}`}
-                                        style={{
-                                            color: 'gray',
-                                        }}
-                                    >
+                                    <NavLink to={`/filter?category=${e.slug}`}>
                                         <Box color={'inherit'}>
-                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <Stack
+                                                direction={'row'}
+                                                alignItems={'center'}
+                                                spacing={1}
+                                                color={isActive ? color.sale : 'gray'}
+                                            >
                                                 <LocalLibraryIcon />
-                                                <Typography fontSize={'12px'}>{e.name}</Typography>
+                                                <Typography
+                                                    fontSize={'12px'}
+                                                    onClick={() => handleCategoryClick(e.slug)}
+                                                    fontWeight={isActive ? 'bold' : ''}
+                                                    color={isActive ? color.sale : 'gray'}
+                                                >
+                                                    {e.name}
+                                                </Typography>
                                             </Stack>
                                         </Box>
-                                    </Link>
+                                    </NavLink>
                                 </Box>
                             );
                         })}

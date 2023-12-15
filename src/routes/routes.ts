@@ -105,11 +105,6 @@ const PublicRouter = [
         component: NewsDetail,
     },
     {
-        path: '/user/:id',
-        component: SearchOrderDetail,
-        isRequired: true,
-    },
-    {
         path: '/admin',
         component: LoginAdmin,
         isAdmin: true,
