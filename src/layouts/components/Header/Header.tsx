@@ -333,14 +333,13 @@ const Header = () => {
                                                 '& .css-919eu4, .css-i9fmh8-MuiBackdrop-root-MuiModal-backdrop': {
                                                     backgroundColor: 'transparent !important',
                                                 },
-                                                top: '130px',
+                                                top: '25%',
+                                                position: 'absolute',
+                                                left: '44%',
                                             }}
                                         >
                                             <Box
                                                 sx={{
-                                                    position: 'absolute',
-                                                    top: '7.5%',
-                                                    left: '45%',
                                                     transform: 'translate(-50%, 0%)',
                                                     width: '586px',
                                                     bgcolor: 'background.paper',
