@@ -359,33 +359,6 @@ const CreateProduct = () => {
                         </Box>
                     </Grid>
                     <Grid xs={12} md={3.8}>
-                        <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                            Kích thước <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
-                        </Typography>
-                        <Controller
-                            control={control}
-                            rules={{
-                                required: 'Vui lòng nhập kích thước sản phẩm',
-                            }}
-                            name="size"
-                            render={({ field }) => (
-                                <OutlinedInput
-                                    type="text"
-                                    {...field}
-                                    sx={{
-                                        mt: 1,
-                                        '& > input': {
-                                            p: '7px',
-                                        },
-                                    }}
-                                    fullWidth
-                                    placeholder="Vui lòng nhập kích thước sản phẩm"
-                                />
-                            )}
-                        />
-                        <Typography variant="caption" color={color.error}>
-                            {errors.size && errors.size.message}
-                        </Typography>
                         <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'} mt={2}>
                             Giá gốc <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                         </Typography>

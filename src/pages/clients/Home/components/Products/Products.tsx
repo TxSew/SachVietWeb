@@ -13,10 +13,10 @@ function Products() {
     const [Products, setProducts] = useState<Product[]>([]);
     const { isMediumMD } = useMedia();
     const fetchData = async (props: any) => {
+        startLoading();
         try {
             const productData: any = await httpProduct.getAll(props);
             const { products } = productData;
-            startLoading();
             if (products) {
                 stopLoading();
             }
@@ -89,19 +89,14 @@ function Products() {
                                       </Grid>
                                   );
                               })
-                            : Array.from({ length: Products.length }).map((e, i) => {
+                            : Array.from({ length: 8 }).map((e, i) => {
                                   return (
                                       <Grid key={i} item lg={3} md={4} xs={6} paddingBottom={4}>
                                           <Skeleton variant="rectangular" width={'95%'} height={'170px'} />
-                                          <Skeleton
-                                              animation="wave"
-                                              height={'50px'}
-                                              width={'95%'}
-                                              style={{ marginBottom: 6, marginTop: 6 }}
-                                          />
+                                          <Skeleton animation="wave" height={'35px'} width={'95%'} />
                                           <Stack direction={'row'} justifyContent={'space-around'}>
-                                              <Skeleton animation="wave" height={50} width="33%" />
-                                              <Skeleton animation="wave" height={50} width="33%" />
+                                              <Skeleton animation="wave" height={30} width="30%" />
+                                              <Skeleton animation="wave" height={30} width="30%" />
                                           </Stack>
                                       </Grid>
                                   );

@@ -94,12 +94,13 @@ const CategoryNav = () => {
                         className="mySwiper categorySwiper"
                     >
                         {isLoading
-                            ? Array.from({ length: category.length }).map((e) => {
+                            ? Array.from({ length: 10 }).map((e) => {
                                   return (
                                       <SwiperSlide>
-                                          <Grid flexWrap={'wrap'} item>
+                                          <Grid flexWrap={'wrap'} item width={'100%'}>
                                               <Box p={'0 5px'} alignItems={'center'} textAlign={'center'}>
                                                   <Skeleton
+                                                      width={'100%'}
                                                       variant="rectangular"
                                                       height={isMediumMD ? '100px' : '120px'}
                                                       sx={{
@@ -111,8 +112,8 @@ const CategoryNav = () => {
                                                       sx={{
                                                           m: '0 auto',
                                                       }}
-                                                      height={50}
-                                                      width="60%"
+                                                      height={30}
+                                                      width="66%"
                                                   />
                                               </Box>
                                           </Grid>
