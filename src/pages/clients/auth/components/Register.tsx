@@ -51,8 +51,12 @@ export const Register = () => {
                 toast.success('Đăng kí tài khoản thành công', {
                     position: 'top-right',
                 });
-                localStorage.setItem('user', JSON.stringify(register));
+                localStorage.setItem('user', JSON.stringify(Sign.user.dataValues));
+                localStorage.setItem('token', JSON.stringify(Sign.access_token));
             }
+            setTimeout(() => {
+                window.location.assign('/');
+            }, 500);
         } catch (err: any) {
             if (err.response.data.message === 'email already exists') {
                 toast.error('Tài khoản email của bạn đã tồn tại, vui lòng thử lại tài khoản khác!', {

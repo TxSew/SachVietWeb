@@ -44,20 +44,17 @@ const LoginAdmin = () => {
         try {
             const login = await http.login(data);
             if (login) {
-                toast.success('Đăng nhập tài khoản thành công', {
-                    position: 'top-right',
-                });
                 const { account, token, role } = login;
                 localStorage.setItem('token', JSON.stringify(login.token));
                 if (role) {
                     localStorage.setItem('role', JSON.stringify(role));
+                    toast.success('Đăng nhập tài khoản thành công', {
+                        position: 'top-right',
+                    });
+                    window.location.assign('/admin/statistical');
+                } else {
+                    pushError('tài khoản không có quyền truy cập trang quản trị!');
                 }
-            }
-
-            if (value == 'checkout') {
-                window.location.assign('/checkout');
-            } else {
-                window.location.assign('/admin/statistical');
             }
         } catch (err: any) {
             if (err.response.data.message === ResponseStatus.auth.notFound) {
