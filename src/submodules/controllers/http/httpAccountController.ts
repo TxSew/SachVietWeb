@@ -7,6 +7,7 @@ class HttpAccountController {
         this.axiosInstance = axios.create(axiosConfig);
         const token: any = localStorage.getItem('token');
         const jwtToken = JSON.parse(token!);
+        console.log(jwtToken);
         this.axiosInstance.defaults.headers.common['ngrok-skip-browser-warning'] = '69420';
 
         if (jwtToken) {

@@ -11,7 +11,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Typography
+    Typography,
 } from '@mui/material';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -31,14 +31,19 @@ function SearchOrder() {
     const [isRole, setIsRole] = useState<boolean>(false);
     const { isMediumMD } = useMedia();
     const handleSearch = (data: any) => {
-        httpCart.getAll(data).then((response) => {
-            if (response?.orders?.length > 0) {
-                setIsRole(true);
-            } else {
-                setIsRole(false);
-            }
-            setOrderUser(response);
-        });
+        data = data.keyword.replace('#', '');
+        httpCart
+            .getAll({
+                keyword: data,
+            })
+            .then((response) => {
+                if (response?.orders?.length > 0) {
+                    setIsRole(true);
+                } else {
+                    setIsRole(false);
+                }
+                setOrderUser(response);
+            });
     };
 
     return (

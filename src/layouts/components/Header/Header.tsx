@@ -164,7 +164,7 @@ const Header = () => {
     return (
         <>
             <Box width={'100%'}>
-                <Image src={image.bannertop} alt="logo" width="100%" />
+                <Image src="https://bookbuy.vn/Images/frontend/sieu-sale-thang-10.jpg" alt="logo" width="100%" />
             </Box>
             {!isMediumMD ? (
                 <Box width={'100%'}>
@@ -181,12 +181,19 @@ const Header = () => {
                                     name="Tra cứu đơn hàng"
                                     icon={<CardGiftcardIcon fontSize="small" />}
                                 />
-
-                                <NavItem
-                                    path="/user/mycart"
-                                    name="Kiểm tra đơn hàng"
-                                    icon={<SellIcon fontSize="small" />}
-                                />
+                                {user.id ? (
+                                    <NavItem
+                                        path="/user/mycart"
+                                        name="Kiểm tra đơn hàng"
+                                        icon={<SellIcon fontSize="small" />}
+                                    />
+                                ) : (
+                                    <NavItem
+                                        path="/auth"
+                                        name="Kiểm tra đơn hàng"
+                                        icon={<SellIcon fontSize="small" />}
+                                    />
+                                )}
 
                                 {user.id ? (
                                     <Box
