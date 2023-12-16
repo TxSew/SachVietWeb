@@ -59,11 +59,17 @@ const ProductItem = (Props: ProductItem) => {
                 <CardMedia
                     component="img"
                     width={'100%'}
-                    sx={{
-                        height: '170px',
-                        p: '20px',
-                        objectFit: 'contain',
-                    }}
+                    sx={
+                        isMediumMD
+                            ? {
+                                  objectFit: 'contain',
+                                  p: 1,
+                              }
+                            : {
+                                  objectFit: 'contain',
+                                  p: 3,
+                              }
+                    }
                     title=""
                     image={Props.products.image}
                 />
@@ -88,15 +94,27 @@ const ProductItem = (Props: ProductItem) => {
                         color={'#3333333'}
                         fontSize={'14px'}
                         textTransform={'capitalize'}
-                        sx={{
-                            overflow: 'hidden',
-                            textAlign: 'center',
-                            display: '-webkit-box',
-                            lineClamp: 2,
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            flexShrink: 0,
-                        }}
+                        sx={
+                            isMediumMD
+                                ? {
+                                      overflow: 'hidden',
+                                      textAlign: 'center',
+                                      display: '-webkit-box',
+                                      lineClamp: 2,
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical',
+                                      flexShrink: 0,
+                                  }
+                                : {
+                                      overflow: 'hidden',
+                                      textAlign: 'center',
+                                      display: '-webkit-box',
+                                      lineClamp: 2,
+                                      WebkitLineClamp: 2,
+                                      WebkitBoxOrient: 'vertical',
+                                      flexShrink: 0,
+                                  }
+                        }
                     >
                         {Props.products.title}
                     </Typography>
