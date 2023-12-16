@@ -47,7 +47,6 @@ export default function Auth() {
     }, [params]);
 
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
-        console.log('🚀 ~ file: Auth.tsx:50 ~ handleChange ~ newValue:', newValue);
         setValue(newValue);
     };
 

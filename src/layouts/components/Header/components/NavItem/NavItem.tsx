@@ -2,7 +2,20 @@ import { Box, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-function NavItem(props: { path: string; icon: React.ReactNode; name: string }) {
+function NavItem(
+    props: { path: string; icon: React.ReactNode; name: string; link?: string },
+    children?: React.ReactNode
+) {
+    const Router = (
+        <NavLink
+            to={props.path}
+            style={{
+                color: '#615c5c',
+            }}
+        >
+            {children}
+        </NavLink>
+    );
     return (
         <NavLink
             to={props.path}

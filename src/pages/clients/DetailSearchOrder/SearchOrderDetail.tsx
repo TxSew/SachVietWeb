@@ -26,6 +26,8 @@ import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
+import DoneIcon from '@mui/icons-material/Done';
+import CloseIcon from '@mui/icons-material/Close';
 import CustomizedSteppers from '../User/Stepper';
 function SearchOrderDetail() {
     const { id } = useParams();
@@ -149,9 +151,23 @@ function SearchOrderDetail() {
                                 <Typography>Ngày mua: </Typography>
                                 <Typography fontWeight={'bold'}>{formatDates(orderCurrent.createdAt)}</Typography>
                             </Stack>
-                            <Stack direction={'row'} mt={'10px'}>
-                                <Typography>Thông tin xuất hóa đơn: </Typography>
-                                <Typography fontWeight={'bold'}>không có</Typography>
+                            <Stack direction={'row'} mt={'10px'} alignItems={'center'}>
+                                <Typography> Xuất hóa đơn: </Typography>
+                                <Typography fontWeight={'bold'} lineHeight={1}>
+                                    {orderCurrent.bill ? (
+                                        <DoneIcon
+                                            sx={{
+                                                fontSize: '15px',
+                                            }}
+                                        />
+                                    ) : (
+                                        <CloseIcon
+                                            sx={{
+                                                fontSize: '15px',
+                                            }}
+                                        />
+                                    )}
+                                </Typography>
                             </Stack>
                             {orderCurrent.coupon > 1 && (
                                 <Box mt={'10px'} display={'flex'} flexDirection={'column'} rowGap={'5px'}>
@@ -178,6 +194,97 @@ function SearchOrderDetail() {
                         </Box>
                     </Grid>
                 </Grid>
+            </Box>
+            <Box
+                sx={{
+                    marginTop: '10px',
+                    backgroundColor: color.white,
+                    padding: '20px',
+                }}
+            >
+                <Stack direction={'row'}>
+                    <Typography variant="body1">Đơn hàng:</Typography>
+                    <Typography variant="body1">{`#${orderCurrent?.id}`}</Typography>
+                </Stack>
+
+                <TableContainer>
+                    <Table
+                        sx={{
+                            minWidth: 800,
+                        }}
+                        aria-label="simple tablek w"
+                    >
+                        <TableHead>
+                            <TableRow
+                                sx={{
+                                    '& > th': {
+                                        fontWeight: 'bold',
+                                    },
+                                }}
+                            >
+                                <TableCell>STT</TableCell>
+                                <TableCell align="center">Hình ảnh</TableCell>
+                                <TableCell align="center">Tên sản phẩm</TableCell>
+                                <TableCell align="center">SKU</TableCell>
+                                <TableCell align="center">Giá bán</TableCell>
+                                <TableCell align="center">SL</TableCell>
+                                <TableCell align="center">Thành tiền</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {orderCurrent?.orderDetail?.map((order: any) => {
+                                if (order.product) {
+                                    return (
+                                        <TableRow key={order.product.id}>
+                                            <TableCell>{order?.product?.id}</TableCell>
+                                            <TableCell>
+                                                <img
+                                                    width={'80px'}
+                                                    height={'70px'}
+                                                    src={order.product.image}
+                                                    alt=""
+                                                    style={{
+                                                        margin: 'auto',
+                                                        objectFit: 'contain',
+                                                    }}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="center">
+                                                <Link
+                                                    to={`/products/${order.product.slug}`}
+                                                    style={{
+                                                        flexShrink: 0,
+                                                        color: '#333333',
+                                                    }}
+                                                >
+                                                    <Typography fontSize={'12px'}>{order.product.title}</Typography>
+                                                </Link>
+                                            </TableCell>
+
+                                            <TableCell align="center">
+                                                <Typography fontSize={'12px'}>{order.product.id}</Typography>
+                                            </TableCell>
+
+                                            <TableCell align="center">
+                                                <Typography fontSize={'12px'}>{order.product.price_sale}</Typography>
+                                            </TableCell>
+
+                                            <TableCell align="center">
+                                                <Typography fontSize={'12px'}>{order.quantity}</Typography>
+                                            </TableCell>
+
+                                            <TableCell align="center">
+                                                <Typography fontSize={'12px'}>
+                                                    {numberFormat(order.quantity * order.product.price_sale)}
+                                                </Typography>
+                                            </TableCell>
+                                        </TableRow>
+                                    );
+                                }
+                            })}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
             </Box>
             <Box mt={'20px'} mb={'20px'}>
                 <Grid
@@ -268,108 +375,8 @@ function SearchOrderDetail() {
                             </Box>
                         </Box>
                     </Grid>
-                    <CustomizedSteppers status={orderCurrent.status} />
                 </Grid>
-                <Box
-                    sx={{
-                        marginTop: '10px',
-                        backgroundColor: color.white,
-                        padding: '20px',
-                    }}
-                >
-                    <Stack direction={'row'}>
-                        <Typography variant="body1">Đơn hàng:</Typography>
-                        <Typography variant="body1">{`#${orderCurrent?.id}`}</Typography>
-                    </Stack>
-
-                    <Stack direction={'row'} mt={'18px'}>
-                        <Typography variant="body1">Số lượng:</Typography>
-                        <Typography variant="body1" fontWeight={'bold'}>
-                            {orderCurrent.quantity}
-                        </Typography>
-                    </Stack>
-
-                    <TableContainer>
-                        <Table
-                            sx={{
-                                minWidth: 800,
-                            }}
-                            aria-label="simple tablek w"
-                        >
-                            <TableHead>
-                                <TableRow
-                                    sx={{
-                                        '& > th': {
-                                            fontWeight: 'bold',
-                                        },
-                                    }}
-                                >
-                                    <TableCell>STT</TableCell>
-                                    <TableCell align="center">Hình ảnh</TableCell>
-                                    <TableCell align="center">Tên sản phẩm</TableCell>
-                                    <TableCell align="center">SKU</TableCell>
-                                    <TableCell align="center">Giá bán</TableCell>
-                                    <TableCell align="center">SL</TableCell>
-                                    <TableCell align="center">Thành tiền</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {orderCurrent?.orderDetail?.map((order: any) => {
-                                    if (order.product) {
-                                        return (
-                                            <TableRow key={order.product.id}>
-                                                <TableCell>{order?.product?.id}</TableCell>
-                                                <TableCell>
-                                                    <img
-                                                        width={'80px'}
-                                                        height={'70px'}
-                                                        src={order.product.image}
-                                                        alt=""
-                                                        style={{
-                                                            margin: 'auto',
-                                                            objectFit: 'contain',
-                                                        }}
-                                                    />
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <Link
-                                                        to={`/products/${order.product.slug}`}
-                                                        style={{
-                                                            flexShrink: 0,
-                                                            color: '#333333',
-                                                        }}
-                                                    >
-                                                        <Typography fontSize={'12px'}>{order.product.title}</Typography>
-                                                    </Link>
-                                                </TableCell>
-
-                                                <TableCell align="center">
-                                                    <Typography fontSize={'12px'}>{order.product.id}</Typography>
-                                                </TableCell>
-
-                                                <TableCell align="center">
-                                                    <Typography fontSize={'12px'}>
-                                                        {order.product.price_sale}
-                                                    </Typography>
-                                                </TableCell>
-
-                                                <TableCell align="center">
-                                                    <Typography fontSize={'12px'}>{order.quantity}</Typography>
-                                                </TableCell>
-
-                                                <TableCell align="center">
-                                                    <Typography fontSize={'12px'}>
-                                                        {numberFormat(order.quantity * order.product.price_sale)}
-                                                    </Typography>
-                                                </TableCell>
-                                            </TableRow>
-                                        );
-                                    }
-                                })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Box>
+                <CustomizedSteppers status={orderCurrent.status} />
             </Box>
         </Container>
     );

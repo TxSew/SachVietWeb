@@ -26,6 +26,9 @@ function DiscountItem(props: Discount) {
                 if (error.response.data.message == 'payment limit exceeded') {
                     pushWarning('Mã giảm giá đã hết hạn sử dụng!, Không thể thêm vào ví voucher của bạn');
                 }
+                if (error.response.data.message == 'Unauthorized') {
+                    pushWarning('Vui lòng đăng nhập để nhận mã giảm giá!');
+                }
             });
     };
     return (

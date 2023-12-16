@@ -61,6 +61,11 @@ function Checkout() {
         const user = localStorage.getItem('user');
         const DataUser = JSON.parse(user!);
         setUser(DataUser);
+        reset({
+            email: DataUser ? DataUser?.email : '',
+            phone: DataUser ? DataUser?.phone : '',
+            fullName: DataUser ? DataUser?.fullName : '',
+        });
     };
 
     const fetchDiscount = () => {
@@ -126,6 +131,7 @@ function Checkout() {
         handleSubmit,
         control,
         setValue,
+        reset,
         formState: { errors, isSubmitting },
     } = useForm<Order>();
     const handelLogin = () => {
@@ -418,14 +424,12 @@ function Checkout() {
                                     <Stack className="cartItem_thumb" direction={'row'} spacing={2}>
                                         <Stack direction={'row'} alignItems={'normal'} spacing={2}>
                                             <Box maxWidth={'119px'} flexShrink={0}>
-
                                                 <img
                                                     src={e.image ? e.image : ''}
                                                     alt=""
                                                     width={'109px'}
                                                     height={'160px'}
                                                 />
-
                                             </Box>
                                             <Stack
                                                 direction={'column'}
@@ -523,16 +527,8 @@ function Checkout() {
                             ''
                         )}
                         <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
-                            <Typography variant="body1" fontSize={isXSOnly ? '13px' : '15.5px'}>
-                                Phí vận chuyển (Giao hàng tiêu chuẩn)
-                            </Typography>
-                            <Typography variant="body1" fontSize={'15.5px'}>
-                                19.000 đ
-                            </Typography>
-                        </Stack>
-                        <Stack direction={'row'} spacing={3} justifyContent={'flex-end'}>
                             <Typography variant="body1" fontSize={'15.5px'} fontWeight={'bold'}>
-                                Tổng Số Tiền (gồm VAT)
+                                Tổng Số Tiền
                             </Typography>
                             <Typography variant="body1" fontSize={'15.5px'} fontWeight={'bold'} color={'#F39801'}>
                                 {numberFormat(Number(cartTotalAmount - Number(voucher)))}

@@ -413,7 +413,7 @@ const CartProduct = () => {
                                 </Button>
                             </Stack>
                             <Typography variant="body1" color={color.text_color} py={1} fontSize={'13px'}>
-                                Có thể áp dụng đồng thời mot ma
+                                Có thể áp dụng đồng thời một mã.
                             </Typography>
                         </Box>
                     </Box>

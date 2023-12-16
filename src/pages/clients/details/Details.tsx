@@ -56,6 +56,7 @@ import CommentItem from './components/comments/CommentItem';
 
 import { Link } from 'react-router-dom';
 import './index.css';
+import { CoppyIcon } from '../../../assets/icons/CoppyIcon';
 export const Details = () => {
     const { isMediumMD } = useMedia();
     const [TextMore, setTextMore] = useState(false);
@@ -529,9 +530,10 @@ export const Details = () => {
                                                 onClick={() => coppyLink(`${window.location}`)}
                                                 sx={{
                                                     position: 'relative',
+                                                    cursor: 'pointer',
                                                 }}
                                             >
-                                                <MoreHorizIcon sx={{ cursor: 'pointer' }} />
+                                                <CoppyIcon />
                                                 {copied && (
                                                     <Stack
                                                         direction={'row'}
@@ -889,7 +891,6 @@ export const Details = () => {
                                         px: 2,
                                     }}
                                 >
-                                    {' '}
                                     <Box textAlign={'center'}>
                                         <Typography
                                             textAlign={'center'}
