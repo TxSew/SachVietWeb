@@ -465,6 +465,15 @@ function Checkout() {
                                                         {numberFormat(Number(e.price))}
                                                     </Typography>
                                                 </Stack>
+                                                <Stack direction={'row'} spacing={2}>
+                                                    <Typography
+                                                        variant="caption"
+                                                        className="cartItem_PriceSale"
+                                                        fontWeight={'bold'}
+                                                    >
+                                                        Số lượng: {e.cartQuantity}
+                                                    </Typography>
+                                                </Stack>
                                             </Stack>
                                         </Stack>
                                     </Stack>
