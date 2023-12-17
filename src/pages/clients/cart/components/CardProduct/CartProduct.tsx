@@ -15,7 +15,7 @@ import { numberFormat } from '../../../../../helpers/formatPrice';
 import useMedia from '../../../../../hooks/useMedia/useMedia';
 import { addToCart, decreaseCart, getTotals, removeFromCart } from '../../../../../redux/features/cart/CartProducer';
 import { RootState } from '../../../../../redux/storeClient';
-import { httpVoucher } from '../../../../../submodules/controllers/http/axiosController';
+import { httpProduct, httpVoucher } from '../../../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../../../submodules/models/DiscountModel/Discount';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
 
@@ -68,12 +68,16 @@ const CartProduct = () => {
         dispatch(decreaseCart(id));
     };
     const handleIncrement = (id: any) => {
-        dispatch(
-            addToCart({
-                products: id,
-                quantity: 1,
-            })
-        );
+        if (id.cartQuantity >= Number(id.quantity)) {
+            pushWarning(`Số lượng yêu cầu không có sẵn`);
+        } else {
+            dispatch(
+                addToCart({
+                    products: id,
+                    quantity: 1,
+                })
+            );
+        }
     };
     const redirect = useNavigate();
     const {
@@ -378,7 +382,7 @@ const CartProduct = () => {
                             >
                                 <Controller
                                     control={control}
-                                    defaultValue="" // Set an initial value here
+                                    defaultValue=""
                                     name="voucher"
                                     rules={{
                                         required: 'Vui',

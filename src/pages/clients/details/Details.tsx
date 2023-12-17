@@ -70,8 +70,8 @@ export const Details = () => {
     const [page, setPage] = useState<number>(1);
     const { id } = useParams();
     const Id: any = id;
+    const count = useSelector((state: RootState) => state.cart.cartItems);
 
-    const count = useSelector((state: RootState) => state.counter.value);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -100,28 +100,59 @@ export const Details = () => {
     };
 
     const handleAddToCart = (detail: any, quantity: number) => {
-        const props = {
-            productId: detail.id,
-            quantity: Number(quantity),
-        };
+        if (count.length > 0) {
+            const data = count.filter((c) => c.id === detail.id);
+            console.log(data);
+            if (Number(data[0].cartQuantity) >= detail.quantity) {
+                pushWarning(`Số lượng yêu cầu không có sẵn`);
+                return;
+            }
+            const props = {
+                productId: Number(detail.id),
+                quantity: Number(quantity),
+            };
 
-        httpProduct
-            .checkQuantity(props)
-            .then((response) => {
-                if (response.message === 'quantity successfully')
-                    dispatch(
-                        addToCart({
-                            products: detail,
-                            quantity: Number(quantity),
-                        })
-                    );
-                setQuantity(1);
-            })
-            .catch((error: any) => {
-                if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
-                    pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
-                }
-            });
+            httpProduct
+                .checkQuantity(props)
+                .then((response) => {
+                    if (response.message === 'quantity successfully')
+                        dispatch(
+                            addToCart({
+                                products: detail,
+                                quantity: Number(quantity),
+                            })
+                        );
+                    setQuantity(1);
+                })
+                .catch((error: any) => {
+                    if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
+                        pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
+                    }
+                });
+        } else {
+            const props = {
+                productId: Number(detail.id),
+                quantity: Number(quantity),
+            };
+
+            httpProduct
+                .checkQuantity(props)
+                .then((response) => {
+                    if (response.message === 'quantity successfully')
+                        dispatch(
+                            addToCart({
+                                products: detail,
+                                quantity: Number(quantity),
+                            })
+                        );
+                    setQuantity(1);
+                })
+                .catch((error: any) => {
+                    if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
+                        pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
+                    }
+                });
+        }
     };
 
     const handleOrder = (detail: any, quantity: number) => {
