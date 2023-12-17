@@ -77,7 +77,8 @@ export default function AdminCarts() {
             status: 2,
         });
         const order = (await httpCart.getOrderDetail(id)) as any;
-        httpProduct.updateQuantity(order.orderDetail).then((response) => {
+        console.log('🚀 ~ file: AdminCarts.tsx:80 ~ handleUpdateOrder ~ order:', order);
+        await httpProduct.updateQuantity(order.orderDetail).then((response) => {
             console.log(response);
         });
         window.location.reload();

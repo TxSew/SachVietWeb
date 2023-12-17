@@ -264,7 +264,7 @@ export default function AdminProductInventory() {
                                 <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
                                 <TableCell align="right">
                                     {Number(e.quantity) <= 0 ? (
-                                        <Chip color="error" label="Ngưng hoạt động" />
+                                        <Chip color="error" label="Hết hàng" />
                                     ) : (
                                         <Chip label="Hoạt động" color="success" />
                                     )}

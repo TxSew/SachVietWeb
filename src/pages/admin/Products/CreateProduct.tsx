@@ -88,8 +88,12 @@ const CreateProduct = () => {
             productImages: thumb,
         };
         const storeProduct = await httpProduct.post(ProductDto);
-        if (storeProduct) pushSuccess('Thêm sản phẩm thành công');
-        reset({});
+        if (storeProduct) {
+            pushSuccess('Thêm sản phẩm thành công');
+            setTimeout(() => {
+                window.location.reload();
+            }, 200);
+        }
     };
 
     const {
