@@ -24,8 +24,10 @@ import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
 import Invoice from '../../clients/invoice/invoice';
 import { pushError, pushSuccess } from '../../../components/Toast/Toast';
+import useMedia from '../../../hooks/useMedia/useMedia';
 
 function DetailCarts() {
+    const { isMediumMD } = useMedia();
     const componentRef: any = useRef();
     const [openInvoice, setOpenInvoice] = useState<any>({
         isCheck: false,
@@ -77,7 +79,7 @@ function DetailCarts() {
                         padding: '20px',
                     }}
                 >
-                    <Grid item xs={9}>
+                    <Grid item xs={12}>
                         <Box>
                             <Typography
                                 variant="h2"
@@ -151,6 +153,98 @@ function DetailCarts() {
                             ) : (
                                 ''
                             )}
+                            <Box py={2}>
+                                <Box
+                                    display={{ xs: 'block', md: 'flex' }}
+                                    alignItems={'center'}
+                                    mt={'10px'}
+                                    gap={'16px'}
+                                >
+                                    {orderCurrent.status === null ? (
+                                        <Button
+                                            variant="containedGreen"
+                                            sx={
+                                                isMediumMD
+                                                    ? {
+                                                          padding: '8px 16px',
+                                                          borderRadius: '15px',
+                                                          mr: '16px',
+                                                      }
+                                                    : {
+                                                          backgroundColor: 'gray',
+                                                          borderRadius: '15px',
+                                                      }
+                                            }
+                                            onClick={() => {
+                                                httpCart
+                                                    .put(Number(orderCurrent.id), {
+                                                        status: 1,
+                                                    })
+                                                    .then((response) => {
+                                                        console.log(response);
+                                                        setReload(11);
+                                                    });
+                                            }}
+                                        >
+                                            <Typography
+                                                textTransform={'capitalize'}
+                                                fontSize={{ xs: '12px', md: '14px' }}
+                                            >
+                                                {isMediumMD ? 'Xác nhận' : 'Xác nhận đơn hàng'}
+                                            </Typography>
+                                        </Button>
+                                    ) : orderCurrent.status === 1 ? (
+                                        <Button
+                                            variant="containedGreen"
+                                            sx={
+                                                isMediumMD
+                                                    ? {
+                                                          padding: '8px 16px',
+                                                          borderRadius: '15px',
+                                                          mr: '16px',
+                                                      }
+                                                    : {
+                                                          bgcolor: '#2e7d32',
+                                                          mt: '10px',
+                                                          borderRadius: '15px',
+                                                      }
+                                            }
+                                            onClick={() => {
+                                                httpCart
+                                                    .put(Number(orderCurrent.id), {
+                                                        status: 2,
+                                                    })
+                                                    .then((response) => {
+                                                        console.log(response);
+                                                        setReload(11);
+                                                    });
+                                            }}
+                                        >
+                                            <Typography textTransform={'capitalize'}>Xác nhận thanh toán</Typography>
+                                        </Button>
+                                    ) : (
+                                        ''
+                                    )}
+                                    {orderCurrent.status == null ? (
+                                        <Button
+                                            variant="OutlinedRed"
+                                            sx={{
+                                                borderRadius: '15px',
+                                                padding: '8px 16px',
+                                            }}
+                                        >
+                                            <Typography
+                                                textTransform={'capitalize'}
+                                                fontSize={{ xs: '12px', md: '14px' }}
+                                            >
+                                                {isMediumMD ? 'Hủy' : 'Hủy đơn hàng'}
+                                            </Typography>
+                                        </Button>
+                                    ) : (
+                                        ''
+                                    )}
+                                </Box>
+                            </Box>
 
                             <Box>
                                 <Stack direction={'row'} mt={'10px'}>
@@ -233,73 +327,7 @@ function DetailCarts() {
                         </Box>
                     </Grid>
 
-                    <Grid item xs={3}>
-                        <Box mt={'60px'}>
-                            <Stack direction={'row'} mt={'10px'} spacing={2}>
-                                {orderCurrent.status === null ? (
-                                    <Button
-                                        variant="containedGreen"
-                                        sx={{
-                                            backgroundColor: 'gray',
-                                            mt: '10px',
-                                            borderRadius: '15px',
-                                            padding: '7px 27px',
-                                        }}
-                                        onClick={() => {
-                                            httpCart
-                                                .put(Number(orderCurrent.id), {
-                                                    status: 1,
-                                                })
-                                                .then((response) => {
-                                                    console.log(response);
-                                                    setReload(11);
-                                                });
-                                        }}
-                                    >
-                                        <Typography textTransform={'capitalize'}>Xác nhận đơn hàng</Typography>
-                                    </Button>
-                                ) : orderCurrent.status === 1 ? (
-                                    <Button
-                                        variant="containedGreen"
-                                        sx={{
-                                            bgcolor: '#2e7d32',
-                                            mt: '10px',
-                                            borderRadius: '15px',
-                                            padding: '7px 27px',
-                                        }}
-                                        onClick={() => {
-                                            httpCart
-                                                .put(Number(orderCurrent.id), {
-                                                    status: 2,
-                                                })
-                                                .then((response) => {
-                                                    console.log(response);
-                                                    setReload(11);
-                                                });
-                                        }}
-                                    >
-                                        <Typography textTransform={'capitalize'}>Xác nhận thanh toán</Typography>
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                                {orderCurrent.status == null ? (
-                                    <Button
-                                        variant="OutlinedRed"
-                                        sx={{
-                                            mt: '10px',
-                                            borderRadius: '15px',
-                                            padding: '7px 27px',
-                                        }}
-                                    >
-                                        <Typography textTransform={'capitalize'}>Hủy đơn hàng</Typography>
-                                    </Button>
-                                ) : (
-                                    ''
-                                )}
-                            </Stack>
-                        </Box>
-                    </Grid>
+                    <Grid item xs={3}></Grid>
                 </Grid>
                 <Grid
                     container
@@ -311,7 +339,7 @@ function DetailCarts() {
                         padding: '20px',
                     }}
                 >
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
                             <Typography
                                 sx={{
@@ -337,7 +365,7 @@ function DetailCarts() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} height={'166px'} border={'1px solid #B7B4B4'}>
                             <Typography
                                 sx={{
@@ -360,7 +388,7 @@ function DetailCarts() {
                             </Box>
                         </Box>
                     </Grid>
-                    <Grid item xs={3.8}>
+                    <Grid item xs={12} md={3.8}>
                         <Box mt={'20px'} border={'1px solid #B7B4B4'} height={'166px'}>
                             <Typography
                                 sx={{
