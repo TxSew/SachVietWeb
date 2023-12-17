@@ -229,7 +229,7 @@ function Footer() {
                                         }}
                                         to={'/filter?category=thieu-nhi'}
                                     >
-                                        <ListItem sx={ftItemmb}>Sách thiêú nhi</ListItem>
+                                        <ListItem sx={ftItemmb}>Sách thiếu nhi</ListItem>
                                     </NavLink>
                                     <NavLink
                                         style={{
