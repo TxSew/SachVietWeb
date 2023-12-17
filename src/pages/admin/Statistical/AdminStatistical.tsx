@@ -192,7 +192,7 @@ function AdminStatistical() {
                             <ChartMOney orderCountData={orderCount} statistical={statistical} />
                         </Box>
 
-                        <Grid container display={'flex'} gap={2}>
+                        <Grid container display={'flex'} gap={2} alignItems={'center'} justifyContent={'center'}>
                             <Grid xs={12} md={4}>
                                 <Box
                                     sx={{
@@ -206,7 +206,7 @@ function AdminStatistical() {
                                     }}
                                 >
                                     <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                        <img src={image.price} alt="err" />
+                                        <img src={image.price} alt="err" width="95.16px" height="66.61px" />
                                     </Grid>
                                     <Grid xs={8}>
                                         <Typography variant="body1" color="initial">
@@ -231,7 +231,7 @@ function AdminStatistical() {
                                     }}
                                 >
                                     <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                        <img src={image.quantityProduct} alt="err" />
+                                        <img src={image.quantityProduct} alt="err" width="95.16px" height="66.61px" />
                                     </Grid>
                                     <Grid xs={8}>
                                         <Typography variant="body1" color="initial">
@@ -256,7 +256,7 @@ function AdminStatistical() {
                                     }}
                                 >
                                     <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                        <img src={image.price} alt="err" />
+                                        <img src={image.price} alt="err" width="95.16px" height="66.61px" />
                                     </Grid>
                                     <Grid xs={8}>
                                         <Typography variant="body1" color="initial">
