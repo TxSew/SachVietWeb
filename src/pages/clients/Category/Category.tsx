@@ -132,7 +132,7 @@ function Category() {
             {TitleHelmet('Danh mục sản phẩm')}
 
             <Container maxWidth={'xl'}>
-                <Grid container bgcolor={color.white} py={3} px={3}>
+                <Grid container bgcolor={color.white} py={3} px={'10px'}>
                     <Grid item className="hiddenTab" xs={12} md={3}>
                         <Tabbar
                             handlePrice={handelChangePrice}
@@ -196,7 +196,7 @@ function Category() {
                             </Stack>
                         </Box>
                         <Box mt={3}>
-                            <Grid container>
+                            <Grid container className="aaaa">
                                 {products.map((item: Product, index) => {
                                     return (
                                         <Grid key={item.id} item xs={6} md={4} lg={3} p={'10px'}>
