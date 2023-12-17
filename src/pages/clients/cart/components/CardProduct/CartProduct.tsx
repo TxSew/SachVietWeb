@@ -18,6 +18,7 @@ import { RootState } from '../../../../../redux/storeClient';
 import { httpProduct, httpVoucher } from '../../../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../../../submodules/models/DiscountModel/Discount';
 import { Product } from '../../../../../submodules/models/ProductModel/Product';
+import { Link } from 'react-router-dom';
 
 const CartProduct = () => {
     const { isMediumMD } = useMedia();
@@ -165,46 +166,53 @@ const CartProduct = () => {
                                     <Stack className="cartItem_thumb" direction={'row'} rowGap={2} spacing={2}>
                                         <Stack direction={'row'} alignItems={'normal'} spacing={2} rowGap={2}>
                                             <Box>
-                                                <img
-                                                    src={element.productImages ? element.image : ''}
-                                                    alt=""
-                                                    style={{
-                                                        flexShrink: 0,
-                                                        objectFit: 'cover',
-                                                    }}
-                                                    width={isMediumMD ? '110px' : '119px'}
-                                                    height={'100px'}
-                                                />
+                                                <Link to={`/products/${element.slug}`}>
+                                                    <img
+                                                        src={element.productImages ? element.image : ''}
+                                                        alt=""
+                                                        style={{
+                                                            flexShrink: 0,
+                                                            objectFit: 'cover',
+                                                        }}
+                                                        width={isMediumMD ? '110px' : '119px'}
+                                                        height={'100px'}
+                                                    />
+                                                </Link>
                                             </Box>
                                             <Stack
                                                 direction={'column'}
                                                 justifyContent={'space-between'}
                                                 maxWidth={'350px'}
                                             >
-                                                <Typography
-                                                    sx={
-                                                        isMediumMD
-                                                            ? {
-                                                                  overflow: 'hidden',
-                                                                  display: '-webkit-box',
-                                                                  lineClamp: 2,
-                                                                  WebkitLineClamp: 2,
-                                                                  WebkitBoxOrient: 'vertical',
-                                                                  fontSize: '11px',
-                                                                  flexShrink: 0,
-                                                              }
-                                                            : {
-                                                                  overflow: 'hidden',
-                                                                  display: '-webkit-box',
-                                                                  lineClamp: 2,
-                                                                  WebkitLineClamp: 2,
-                                                                  WebkitBoxOrient: 'vertical',
-                                                                  flexShrink: 0,
-                                                              }
-                                                    }
-                                                >
-                                                    {element.title}
-                                                </Typography>
+                                                <Link to={`/products/${element.slug}`} color="gray">
+                                                    <Typography
+                                                        sx={
+                                                            isMediumMD
+                                                                ? {
+                                                                      overflow: 'hidden',
+                                                                      display: '-webkit-box',
+                                                                      lineClamp: 2,
+                                                                      WebkitLineClamp: 2,
+                                                                      WebkitBoxOrient: 'vertical',
+                                                                      fontSize: '11px',
+                                                                      color: '#808080',
+                                                                      flexShrink: 0,
+                                                                  }
+                                                                : {
+                                                                      overflow: 'hidden',
+                                                                      display: '-webkit-box',
+                                                                      color: '#808080',
+                                                                      lineClamp: 2,
+                                                                      WebkitLineClamp: 2,
+                                                                      WebkitBoxOrient: 'vertical',
+                                                                      flexShrink: 0,
+                                                                  }
+                                                        }
+                                                    >
+                                                        {element.title}
+                                                    </Typography>
+                                                </Link>
+
                                                 <Stack direction={'row'} spacing={2}>
                                                     <Typography
                                                         variant="caption"
@@ -453,7 +461,7 @@ const CartProduct = () => {
                                     fontWeight={'bold'}
                                     color={color.text_color}
                                 >
-                                    Tổng Số Tiền (gồm VAT)
+                                    Tổng Số Tiền
                                 </Typography>
                                 <Typography variant="body1" fontSize={'15.8px'} fontWeight={'bold'} color={color.error}>
                                     {`${numberFormat(Number(cartTotalAmount - voucher))}`}

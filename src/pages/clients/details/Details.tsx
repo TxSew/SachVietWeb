@@ -100,13 +100,8 @@ export const Details = () => {
     };
 
     const handleAddToCart = (detail: any, quantity: number) => {
-        if (count.length > 0) {
-            const data = count.filter((c) => c.id === detail.id);
-            console.log(data);
-            if (Number(data[0].cartQuantity) >= detail.quantity) {
-                pushWarning(`Số lượng yêu cầu không có sẵn`);
-                return;
-            }
+        const filter = count.filter((item) => item.id === detail.id);
+        if (filter.length == 0) {
             const props = {
                 productId: Number(detail.id),
                 quantity: Number(quantity),
@@ -130,11 +125,34 @@ export const Details = () => {
                     }
                 });
         } else {
+            const qty = Number(quantity);
+            const isCheck = filter[0].cartQuantity + qty > detail.quantity;
+
+            if (isCheck == true) {
+                pushWarning(`Số lượng yêu cầu cho không có sẵn`);
+                return;
+            } else {
+                dispatch(
+                    addToCart({
+                        products: detail,
+                        quantity: Number(quantity),
+                    })
+                );
+                setQuantity(1);
+            }
+        }
+    };
+
+    const handleOrder = (detail: any, quantity: number) => {
+        const filter = count.filter((item) => item.id === detail.id);
+        if (filter.length > 0) {
+            redirect('/cart');
+            return;
+        } else {
             const props = {
-                productId: Number(detail.id),
+                productId: detail.id,
                 quantity: Number(quantity),
             };
-
             httpProduct
                 .checkQuantity(props)
                 .then((response) => {
@@ -146,38 +164,14 @@ export const Details = () => {
                             })
                         );
                     setQuantity(1);
+                    redirect('/cart');
                 })
                 .catch((error: any) => {
                     if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
-                        pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
+                        pushWarning(`Số lượng yêu cầu  không có sẵn`);
                     }
                 });
         }
-    };
-
-    const handleOrder = (detail: any, quantity: number) => {
-        const props = {
-            productId: detail.id,
-            quantity: Number(quantity),
-        };
-        httpProduct
-            .checkQuantity(props)
-            .then((response) => {
-                if (response.message === 'quantity successfully')
-                    dispatch(
-                        addToCart({
-                            products: detail,
-                            quantity: Number(quantity),
-                        })
-                    );
-                setQuantity(1);
-                redirect('/cart');
-            })
-            .catch((error: any) => {
-                if (error?.response?.data?.message == 'quantity exceeds quantity Inventory') {
-                    pushWarning(`Số lượng yêu cầu cho ${quantity} không có sẵn`);
-                }
-            });
     };
     const handleChangeImage = (e: any) => {
         setImage(e.image);
@@ -222,7 +216,6 @@ export const Details = () => {
         setCopied(true);
         setMessage('Đã sao chép!');
 
-        // Sau một khoảng thời gian, đặt lại trạng thái để ẩn thông báo
         setTimeout(() => {
             setCopied(false);
             setMessage('');
@@ -1036,20 +1029,24 @@ export const Details = () => {
                     </Box>
                 </Box>
                 <Box pb={2}>
-                    <Box bgcolor={color.white} p={2}>
-                        <Typography variant="h2" fontWeight={'bold'} fontSize={'18.85px'}>
-                            Sản phẩm liên quan
-                        </Typography>
-                        <Grid container mt={2}>
-                            {RelatedProduct.map((e) => {
-                                return (
-                                    <Grid xs={6} md={3} lg={2} item p={1}>
-                                        <ProductItem products={e} />
-                                    </Grid>
-                                );
-                            })}
-                        </Grid>
-                    </Box>
+                    {RelatedProduct.length > 0 ? (
+                        <Box bgcolor={color.white} p={2}>
+                            <Typography variant="h2" fontWeight={'bold'} fontSize={'18.85px'}>
+                                Sản phẩm liên quan
+                            </Typography>
+                            <Grid container mt={2}>
+                                {RelatedProduct.map((e) => {
+                                    return (
+                                        <Grid xs={6} md={3} lg={2} item p={1}>
+                                            <ProductItem products={e} />
+                                        </Grid>
+                                    );
+                                })}
+                            </Grid>
+                        </Box>
+                    ) : (
+                        ''
+                    )}
                 </Box>
             </Container>
         </Box>
