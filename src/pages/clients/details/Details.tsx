@@ -147,7 +147,6 @@ export const Details = () => {
         const filter = count.filter((item) => item.id === detail.id);
         if (filter.length > 0) {
             redirect('/cart');
-            return;
         } else {
             const props = {
                 productId: detail.id,
