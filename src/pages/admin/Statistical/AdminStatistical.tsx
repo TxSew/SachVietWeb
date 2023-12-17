@@ -17,6 +17,7 @@ import { StatisticalDto } from '../../../submodules/models/Statistical/Statistic
 import { color } from '../../../Theme/color';
 import { ChartMOney } from './chart/ChartMoney';
 import StatisticalItem from './components/StatisticalItem';
+import { NavLink } from 'react-router-dom';
 dayjs.locale('vi');
 function AdminStatistical() {
     const [StatisticalCount, setStatisticalCount] = useState<StatisticalDto>();
@@ -191,8 +192,8 @@ function AdminStatistical() {
                             <ChartMOney orderCountData={orderCount} statistical={statistical} />
                         </Box>
 
-                        <Grid container display={'flex'} justifyContent={'center'} gap={2}>
-                            <Grid xs={4}>
+                        <Grid container display={'flex'} gap={2} alignItems={'center'} justifyContent={'center'}>
+                            <Grid xs={12} md={4}>
                                 <Box
                                     sx={{
                                         backgroundColor: '#fff',
@@ -201,31 +202,23 @@ function AdminStatistical() {
                                         gap: 2,
                                         boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
                                         p: 2,
-                                        alignItems: 'center',
+                                        py: 4,
                                     }}
                                 >
                                     <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                        <img
-                                            src={image.price}
-                                            style={{
-                                                width: '100px',
-                                                height: '65px',
-                                            }}
-                                            alt="err"
-                                        />
+                                        <img src={image.price} alt="err" width="95.16px" height="66.61px" />
                                     </Grid>
-                                    <Grid xs={8} textAlign={'center'}>
+                                    <Grid xs={8}>
                                         <Typography variant="body1" color="initial">
                                             Tổng doanh thu
                                         </Typography>
-
                                         <Typography variant="body1" color={color.sale} fontWeight="bold">
                                             {numberFormat(revenue.totalRevenue)}
                                         </Typography>
                                     </Grid>
                                 </Box>
                             </Grid>
-                            <Grid xs={4}>
+                            <Grid xs={12} md={4}>
                                 <Box
                                     sx={{
                                         backgroundColor: '#fff',
@@ -234,17 +227,11 @@ function AdminStatistical() {
                                         gap: 2,
                                         boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
                                         p: 2,
+                                        py: 4,
                                     }}
                                 >
                                     <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                        <img
-                                            src={image.quantityProduct}
-                                            alt="err"
-                                            style={{
-                                                width: '100px',
-                                                height: '65px',
-                                            }}
-                                        />
+                                        <img src={image.quantityProduct} alt="err" width="95.16px" height="66.61px" />
                                     </Grid>
                                     <Grid xs={8}>
                                         <Typography variant="body1" color="initial">
@@ -256,38 +243,31 @@ function AdminStatistical() {
                                     </Grid>
                                 </Box>
                             </Grid>
-                            <Box
-                                sx={{
-                                    backgroundColor: '#fff',
-                                    borderRadius: 2,
-                                    gap: 2,
-                                    display: 'flex',
-                                    boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
-                                    p: 2,
-                                    maxWidth: '350px',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
-                                    <img
-                                        src={image.price}
-                                        style={{
-                                            width: '100px',
-                                            height: '65px',
-                                        }}
-                                        alt="err"
-                                    />
-                                </Grid>
-                                <Grid xs={8} textAlign={'center'}>
-                                    <Typography variant="body1" color="initial">
-                                        Doanh thu hôm nay
-                                    </Typography>
-
-                                    <Typography variant="body1" color={color.sale} fontWeight="bold">
-                                        {numberFormat(statisticalToday.totalMoneyByCustomer)}
-                                    </Typography>
-                                </Grid>
-                            </Box>
+                            <Grid xs={12} md={4}>
+                                <Box
+                                    sx={{
+                                        backgroundColor: '#fff',
+                                        borderRadius: 2,
+                                        display: 'flex',
+                                        gap: 2,
+                                        boxShadow: 'rgba(0, 0, 0, 0.15) 0px 5px 15px 0px',
+                                        p: 2,
+                                        py: 4,
+                                    }}
+                                >
+                                    <Grid xs={4} display={'flex'} alignItems={'center'} px={2}>
+                                        <img src={image.price} alt="err" width="95.16px" height="66.61px" />
+                                    </Grid>
+                                    <Grid xs={8}>
+                                        <Typography variant="body1" color="initial">
+                                            Doanh thu hôm nay
+                                        </Typography>
+                                        <Typography variant="body1" color={color.sale} fontWeight="bold">
+                                            {numberFormat(statisticalToday.totalMoneyByCustomer)}
+                                        </Typography>
+                                    </Grid>
+                                </Box>
+                            </Grid>
                         </Grid>
                     </Container>
                 </Grid>
