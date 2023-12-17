@@ -1,4 +1,4 @@
-import { Box, Chip, Container, Pagination, Stack, Typography } from '@mui/material';
+import { Box, Button, Chip, Container, Pagination, Stack, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -182,6 +182,16 @@ function UserMyCart() {
                                         <Typography variant="body1" my={'20px'}>
                                             Chưa có đơn hàng trong lịch sử đơn hàng của bạn.
                                         </Typography>
+                                        <Button variant="contained">
+                                            <Link
+                                                to={'/'}
+                                                style={{
+                                                    color: 'white',
+                                                }}
+                                            >
+                                                Mua sắm ngay
+                                            </Link>
+                                        </Button>
                                     </Stack>
                                 </Box>
                             </Container>

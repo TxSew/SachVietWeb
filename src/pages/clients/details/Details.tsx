@@ -899,7 +899,7 @@ export const Details = () => {
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider', px: 0 }}>
                                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                                         <Tab
-                                            label="Giới thiệu sản phẩm"
+                                            label="Mô tả"
                                             value="1"
                                             sx={{
                                                 p: '16px 10px',
@@ -907,7 +907,7 @@ export const Details = () => {
                                             }}
                                         />
                                         <Tab
-                                            label="Đánh giá sản phẩm"
+                                            label="Đánh giá và nhận xét"
                                             value="2"
                                             sx={{
                                                 p: '16px 10px',
