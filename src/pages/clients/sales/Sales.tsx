@@ -1,9 +1,9 @@
-import { Box, Container, Grid, Stack } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
 import DiscountItem from '../../../components/discount/Discount';
+import { TitleHelmet } from '../../../constants/Helmet';
 import { httpDiscount } from '../../../submodules/controllers/http/axiosController';
 import { Discount } from '../../../submodules/models/DiscountModel/Discount';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 function Sales() {
     const [discount, setDiscount] = useState<any>({});
@@ -52,6 +52,7 @@ function Sales() {
                                     desc={e.desc}
                                     number_used={e.number_used}
                                     limit_number={e.limit_number}
+                                    payment_limit={e.payment_limit}
                                 />
                             </Grid>
                         );

@@ -33,6 +33,7 @@ import { Order } from '../../../../submodules/models/OrderModel/Order';
 import { Product } from '../../../../submodules/models/ProductModel/Product';
 import { Province } from '../../../../submodules/models/Province/Province';
 import { User } from '../../../../submodules/models/UserModel/User';
+import { pushWarning } from '../../../../components/Toast/Toast';
 function Checkout() {
     const { isMediumMD, isXSOnly } = useMedia();
     const dispatch = useDispatch();
@@ -42,6 +43,7 @@ function Checkout() {
     const [voucher, setVoucher] = useState<number>(0);
     const [searchParams, setSearchParams] = useSearchParams();
     const [code, setCode] = useState<string>('');
+    const redirect = useNavigate();
     const cart: any = useSelector((state: RootState) => state.cart.cartItems);
     const { cartTotalAmount, cartItems } = useSelector((state: RootState) => state.cart);
     const navigate = useNavigate();
@@ -81,7 +83,6 @@ function Checkout() {
                 setCode(res.discount.code);
             })
             .catch((err) => {
-                console.log(err);
                 setVoucher(0);
             });
     };
@@ -92,38 +93,45 @@ function Checkout() {
         }
     };
     const handleCheckout = async (data: any) => {
-        const detailData = cart.map((e: Product) => {
-            return {
-                productName: e.title,
-                productId: e.id,
-                quantity: e.cartQuantity,
-                price: e.price_sale,
-                image: e.image,
+        if (cart.length > 0) {
+            const detailData = cart.map((e: Product) => {
+                return {
+                    productName: e.title,
+                    productId: e.id,
+                    quantity: e.cartQuantity,
+                    price: e.price_sale,
+                    image: e.image,
+                };
+            });
+
+            let orders = {
+                ...data,
+                orderCode: value,
+                userID: user?.id ?? null,
+                money: cartTotalAmount,
             };
-        });
 
-        let orders = {
-            ...data,
-            orderCode: value,
-            userID: user?.id ?? null,
-            money: cartTotalAmount,
-        };
+            const orderData = {
+                orders: orders,
+                orderDetail: detailData,
+                paymentMethod: data.orderType,
+            };
 
-        const orderData = {
-            orders: orders,
-            orderDetail: detailData,
-            paymentMethod: data.orderType,
-        };
+            const payment = await httpPayment.getPayment(orderData);
 
-        const payment = await httpPayment.getPayment(orderData);
+            localStorage.removeItem('cartItems');
+            if (payment.paymentMethod == 'COD') {
+                window.location.assign(payment.url);
+            }
 
-        localStorage.removeItem('cartItems');
-        if (payment.paymentMethod == 'COD') {
-            window.location.assign(payment.url);
-        }
-
-        if (payment.paymentMethod == 'Visa') {
-            window.location.assign(payment.url);
+            if (payment.paymentMethod == 'Visa') {
+                window.location.assign(payment.url);
+            }
+        } else {
+            pushWarning('Không có đơn hàng  tự động quay lại trang giỏ hàng sau 2s!');
+            setTimeout(() => {
+                redirect('/cart');
+            }, 2000);
         }
     };
 

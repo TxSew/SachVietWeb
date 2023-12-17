@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -55,8 +54,8 @@ import { Product } from '../../../submodules/models/ProductModel/Product';
 import CommentItem from './components/comments/CommentItem';
 
 import { Link } from 'react-router-dom';
-import './index.css';
 import { CoppyIcon } from '../../../assets/icons/CoppyIcon';
+import './index.css';
 export const Details = () => {
     const { isMediumMD } = useMedia();
     const [TextMore, setTextMore] = useState(false);

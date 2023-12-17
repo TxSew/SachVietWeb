@@ -459,6 +459,7 @@ function UserCartDetail() {
                                                                 bgcolor={color.btnRed}
                                                                 sx={{
                                                                     borderRadius: 1,
+                                                                    p: '2px 2px',
                                                                     cursor: 'pointer',
                                                                     color: color.white,
                                                                     bgcolor: color.BtnDartGreen,
@@ -471,6 +472,7 @@ function UserCartDetail() {
                                                                 bgcolor={'gray'}
                                                                 sx={{
                                                                     borderRadius: 1,
+                                                                    p: '2px 2px',
                                                                 }}
                                                             >
                                                                 <Typography>Đã đánh giá</Typography>
@@ -479,7 +481,35 @@ function UserCartDetail() {
                                                     </Typography>
                                                 </TableCell>
                                             ) : (
-                                                ''
+                                                <TableCell align="center">
+                                                    <Typography fontSize={'12px'}>
+                                                        {order.status === null ? (
+                                                            <Box
+                                                                bgcolor={color.btnRed}
+                                                                sx={{
+                                                                    borderRadius: 1,
+                                                                    cursor: 'not-allowed',
+                                                                    color: color.white,
+                                                                    p: '2px 2px',
+                                                                    bgcolor: 'gray',
+                                                                }}
+                                                            >
+                                                                <Typography>Đánh giá</Typography>
+                                                            </Box>
+                                                        ) : (
+                                                            <Box
+                                                                bgcolor={'gray'}
+                                                                sx={{
+                                                                    borderRadius: 1,
+                                                                    p: '2px 2px',
+                                                                    cursor: 'not-allowed',
+                                                                }}
+                                                            >
+                                                                <Typography>Đã đánh giá</Typography>
+                                                            </Box>
+                                                        )}
+                                                    </Typography>
+                                                </TableCell>
                                             )}
                                         </TableRow>
                                     );

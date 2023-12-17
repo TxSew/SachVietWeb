@@ -1,10 +1,18 @@
 import { Button, Stack, Typography } from '@mui/material';
 import { Box, Container } from '@mui/system';
+import { Link } from 'react-router-dom';
 
 export default function PaymentError() {
     return (
         <Box py={4} bgcolor={'#eee'}>
-            <Container maxWidth="xl">
+            <Container
+                maxWidth="xl"
+                sx={{
+                    bgcolor: '#fff',
+                    padding: '50px',
+                    borderRadius: '10px',
+                }}
+            >
                 <Stack py={2}>
                     <img
                         src="https://cdn-icons-png.flaticon.com/512/6659/6659895.png"
@@ -18,8 +26,7 @@ export default function PaymentError() {
                         Thanh toán không thành công
                     </Typography>
                 </Stack>
-                <Stack textAlign={'center'} py={3}>
-                    {' '}
+                <Stack textAlign={'center'} py={2}>
                     <Typography textAlign={'center'} maxWidth={485} fontSize={'14px'}>
                         Đã có vấn đề xảy ra với việc thanh toán của bạn, bạn vui lòng thử lại.
                     </Typography>
@@ -36,7 +43,9 @@ export default function PaymentError() {
                             },
                         }}
                     >
-                        Thanh toán lại
+                        <Link to={'/'}>
+                            <Typography color={'#fff'}>Quay lại</Typography>
+                        </Link>
                     </Button>
                 </Stack>
             </Container>

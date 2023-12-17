@@ -1,4 +1,3 @@
-import { Label } from '@mui/icons-material';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import VisibilityIcon from '@mui/icons-material/Visibility';
@@ -31,13 +30,11 @@ import TableRow from '@mui/material/TableRow';
 import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { color } from '../../../Theme/color';
+import { pushError, pushSuccess } from '../../../components/Toast/Toast';
+import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCart, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../submodules/models/OrderModel/Order';
-import useDebounce from '../../../hooks/useDebounce/useDebounce';
-import { pushError, pushSuccess } from '../../../components/Toast/Toast';
-import { numberFormat } from '../../../helpers/formatPrice';
 
 export default function AdminCarts() {
     const [carts, setCarts] = React.useState<any>({});
@@ -77,7 +74,6 @@ export default function AdminCarts() {
             status: 2,
         });
         const order = (await httpCart.getOrderDetail(id)) as any;
-        console.log('🚀 ~ file: AdminCarts.tsx:80 ~ handleUpdateOrder ~ order:', order);
         await httpProduct.updateQuantity(order.orderDetail).then((response) => {
             console.log(response);
         });
@@ -108,9 +104,7 @@ export default function AdminCarts() {
         fetchData({
             limit: 5,
         });
-        // const filter = carts.filter((e: any) => e.id !== element);
-        // console.log('🚀 ~ file: AdminCarts.tsx:108 ~ handleDelete ~ filter:', filter);
-        // setCarts(filter);
+
         pushError('Đơn hàng đã bị xóa');
         handleClickClose();
     };

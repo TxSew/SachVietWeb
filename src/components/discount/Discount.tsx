@@ -17,16 +17,16 @@ function DiscountItem(props: Discount) {
                 }
             })
             .catch((error) => {
-                if (error.response.data.message == 'authorization') {
+                if (error.response.data.message === 'authorization') {
                     pushWarning('Vui lòng đăng nhập để nhận mã giảm giá!');
                 }
-                if (error.response.data.message == 'voucher already exists') {
+                if (error.response.data.message === 'voucher already exists') {
                     pushWarning('Mã giảm giá đã tồn tại!, Vui lòng kiểm tra Ví voucher của bạn');
                 }
-                if (error.response.data.message == 'payment limit exceeded') {
+                if (error.response.data.message === 'payment limit exceeded') {
                     pushWarning('Mã giảm giá đã hết hạn sử dụng!, Không thể thêm vào ví voucher của bạn');
                 }
-                if (error.response.data.message == 'Unauthorized') {
+                if (error.response.data.message === 'Unauthorized') {
                     pushWarning('Vui lòng đăng nhập để nhận mã giảm giá!');
                 }
             });
@@ -89,24 +89,38 @@ function DiscountItem(props: Discount) {
                     >
                         {props.code}
                     </Typography>
-
-                    <Button
-                        variant="contained"
-                        sx={{
-                            background: '#C92127',
-                            padding: '4px 10px',
-                            fontSize: '12px',
-                            fontWeight: 'bold',
-                        }}
-                        onClick={() =>
-                            handleSave({
-                                discountId: props.id,
-                                code: 45345,
-                            })
-                        }
-                    >
-                        Lưu
-                    </Button>
+                    {Number(props.number_used) >= Number(props.limit_number) ? (
+                        <Button
+                            variant="contained"
+                            disabled
+                            sx={{
+                                background: 'gray',
+                                padding: '4px 10px',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                            }}
+                        >
+                            Hết lượt
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            sx={{
+                                background: '#C92127',
+                                padding: '4px 10px',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                            }}
+                            onClick={() =>
+                                handleSave({
+                                    discountId: props.id,
+                                    code: 45345,
+                                })
+                            }
+                        >
+                            Lưu
+                        </Button>
+                    )}
                 </Box>
             </Stack>
         </Box>

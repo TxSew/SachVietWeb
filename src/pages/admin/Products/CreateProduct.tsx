@@ -2,20 +2,18 @@ import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack,
 import { Editor } from '@tinymce/tinymce-react';
 import { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { pushSuccess } from '../../../components/Toast/Toast';
 import { storage } from '../../../configs/fireBaseConfig';
+import { TitleHelmet } from '../../../constants/Helmet';
 import { uploadImageFirebase } from '../../../helpers/uploadImageFIrebase';
 import { validateForm } from '../../../helpers/validateForm';
 import { httpCategory, httpProducer, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { Category } from '../../../submodules/models/ProductModel/Category';
 import { Product } from '../../../submodules/models/ProductModel/Product';
 import { Producer } from '../../../submodules/models/producerModel/producer';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 const CreateProduct = () => {
-    const [urls, setUrls] = useState<any[]>([]);
     const [img, setImg] = useState<string[]>([]);
     const [imgs, setImgs] = useState<any>({});
     const [Producer, setProducer] = useState<Producer[]>([] as Producer[]);
@@ -24,7 +22,6 @@ const CreateProduct = () => {
     const [selectedFiles, setSelectedFiles] = useState<any>([]);
     const [imageFiles, setImageFiles] = useState<any[]>([]);
     const editorRef = useRef<any>(null);
-    const redirect = useNavigate();
 
     useEffect(() => {
         fetchProducer();
