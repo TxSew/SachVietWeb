@@ -142,7 +142,7 @@ function Checkout() {
         reset,
         formState: { errors, isSubmitting },
     } = useForm<Order>({
-        mode:'all'
+        mode: 'all',
     });
     const handelLogin = () => {
         navigate({
@@ -437,14 +437,18 @@ function Checkout() {
                                                 <img
                                                     src={e.image ? e.image : ''}
                                                     alt=""
-                                                    width={'109px'}
-                                                    height={'160px'}
+                                                    width={'90px'}
+                                                    height={'150px'}
+                                                    style={{
+                                                        objectFit: 'cover',
+                                                    }}
                                                 />
                                             </Box>
                                             <Stack
                                                 direction={'column'}
                                                 justifyContent={'space-between'}
                                                 maxWidth={'350px'}
+                                                spacing={2}
                                             >
                                                 <Typography
                                                     sx={{
@@ -475,15 +479,15 @@ function Checkout() {
                                                         {numberFormat(Number(e.price))}
                                                     </Typography>
                                                 </Stack>
-                                                <Stack direction={'row'} spacing={2}>
-                                                    <Typography
-                                                        variant="caption"
-                                                        className="cartItem_PriceSale"
-                                                        fontWeight={'bold'}
-                                                    >
-                                                        Số lượng: {e.cartQuantity}
-                                                    </Typography>
-                                                </Stack>
+                                                {isMediumMD ? (
+                                                    <Stack className="cartItem_action" direction={'row'} spacing={10}>
+                                                        <Typography fontWeight={'bold'} color={'#F39801'}>
+                                                            {e.cartQuantity}
+                                                        </Typography>
+                                                    </Stack>
+                                                ) : (
+                                                    ''
+                                                )}
                                             </Stack>
                                         </Stack>
                                     </Stack>
