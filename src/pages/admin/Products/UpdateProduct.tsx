@@ -442,7 +442,7 @@ const UpdateProduct = () => {
                             {errors.sale && errors.sale.message}
                         </Typography>
                         <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                            Số lượng <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
+                            Số lượng 
                         </Typography>
                         <Controller
                             control={control}

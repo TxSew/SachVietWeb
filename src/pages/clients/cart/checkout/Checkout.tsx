@@ -344,7 +344,7 @@ function Checkout() {
                             <Typography>Địa chỉ nhận hàng</Typography>
                             <Controller
                                 control={control}
-                                defaultValue="" // Set an initial value here
+                                defaultValue=""
                                 name="address"
                                 rules={{
                                     required: 'Vui lòng nhập địa chỉ nhận hàng!',

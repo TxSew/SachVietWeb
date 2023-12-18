@@ -54,7 +54,7 @@ const CreateNews = () => {
                     </Typography>
                 </Stack>
                 <Grid bgcolor={color.white} container mt={3} justifyContent={'space-between'}>
-                    <Grid xs={12} md={7.8} fontSize={'20px'}>
+                    <Grid fontSize={'20px'}>
                         <Grid container justifyContent={'space-between'}>
                             <Grid xs={5.8}>
                                 <Controller
@@ -72,7 +72,9 @@ const CreateNews = () => {
                                                 <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                             </Typography>
                                             <OutlinedInput
+                                            
                                                 {...field}
+                                                
                                                 sx={{
                                                     mt: 1,
                                                     '& > input': {
@@ -135,7 +137,7 @@ const CreateNews = () => {
                                         return (
                                             <FormControl>
                                                 <Typography variant="h2" fontSize={'18px'} fontWeight={'bold'}>
-                                                    Ảnh nổi bật{' '}
+                                                    Ảnh nổi bật
                                                     <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
                                                 </Typography>
                                                 <OutlinedInput

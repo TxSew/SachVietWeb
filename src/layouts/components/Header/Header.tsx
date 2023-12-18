@@ -21,7 +21,6 @@ import {
     Grid,
     IconButton,
     InputAdornment,
-    Link,
     ListItemIcon,
     Menu,
     MenuItem,
@@ -38,7 +37,7 @@ import Typography from '@mui/material/Typography/Typography';
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { NavLink, createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { Link, createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import { color } from '../../../Theme/color';
 import { image } from '../../../assets';
 import Image from '../../../components/Image/Image';
@@ -164,35 +163,96 @@ const Header = () => {
     return (
         <>
             <Box width={'100%'}>
-                <Image src="https://bookbuy.vn/Images/frontend/sieu-sale-thang-10.jpg" alt="logo" width="100%" />
+                <Image src={image.bannertop} alt="logo" width="100%" />
             </Box>
             {!isMediumMD ? (
                 <Box width={'100%'}>
                     <Container maxWidth="xl">
                         <Box display={'flex'} alignItems={'center'} py={2} justifyContent={'space-between'}>
                             <Box display={'flex'} alignItems={'center'} gap={3}>
-                                <NavItem path="/" name="Trợ giúp" icon={<InfoIcon fontSize="small" />} />
-                                <NavItem path="/news" name="Tin tức" icon={<NewspaperIcon fontSize="small" />} />
-                                <NavItem path="/sales" name="Khuyến mãi" icon={<SellIcon fontSize="small" />} />
+                                <Link
+                                    to={'/'}
+                                    style={{
+                                        color: '#615c5c',
+                                    }}
+                                >
+                                    <Box color={'inherit'}>
+                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <InfoIcon fontSize="small" />
+                                            <Typography fontSize={'12px'}>Trợ giúp</Typography>
+                                        </Stack>
+                                    </Box>
+                                </Link>
+
+                                <Link
+                                    to={'/news'}
+                                    style={{
+                                        color: '#615c5c',
+                                    }}
+                                >
+                                    <Box color={'inherit'}>
+                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <NewspaperIcon fontSize="small" />
+                                            <Typography fontSize={'12px'}>Tin tức</Typography>
+                                        </Stack>
+                                    </Box>
+                                </Link>
+                                <Link
+                                    to={'/sales'}
+                                    style={{
+                                        color: '#615c5c',
+                                    }}
+                                >
+                                    <Box color={'inherit'}>
+                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <SellIcon fontSize="small" />
+                                            <Typography fontSize={'12px'}>Khuyến mãi</Typography>
+                                        </Stack>
+                                    </Box>
+                                </Link>
                             </Box>
                             <Box display={'flex'} alignItems={'center'} gap={3}>
-                                <NavItem
-                                    path="/searchOrder"
-                                    name="Tra cứu đơn hàng"
-                                    icon={<CardGiftcardIcon fontSize="small" />}
-                                />
+                                <Link
+                                    to={'/searchOrder'}
+                                    style={{
+                                        color: '#615c5c',
+                                    }}
+                                >
+                                    <Box color={'inherit'}>
+                                        <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                            <CardGiftcardIcon fontSize="small" />
+                                            <Typography fontSize={'12px'}>Tra cứu đơn hàng</Typography>
+                                        </Stack>
+                                    </Box>
+                                </Link>
                                 {user.id ? (
-                                    <NavItem
-                                        path="/user/mycart"
-                                        name="Kiểm tra đơn hàng"
-                                        icon={<SellIcon fontSize="small" />}
-                                    />
+                                    <Link
+                                        to={'/user/mycart'}
+                                        style={{
+                                            color: '#615c5c',
+                                        }}
+                                    >
+                                        <Box color={'inherit'}>
+                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                <SellIcon fontSize="small" />
+                                                <Typography fontSize={'12px'}>Kiểm tra đơn hàng</Typography>
+                                            </Stack>
+                                        </Box>
+                                    </Link>
                                 ) : (
-                                    <NavItem
-                                        path="/auth"
-                                        name="Kiểm tra đơn hàng"
-                                        icon={<SellIcon fontSize="small" />}
-                                    />
+                                    <Link
+                                        to={'/auth'}
+                                        style={{
+                                            color: '#615c5c',
+                                        }}
+                                    >
+                                        <Box color={'inherit'}>
+                                            <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                <SellIcon fontSize="small" />
+                                                <Typography fontSize={'12px'}>Kiểm tra đơn hàng</Typography>
+                                            </Stack>
+                                        </Box>
+                                    </Link>
                                 )}
 
                                 {user.id ? (
@@ -204,11 +264,19 @@ const Header = () => {
                                             },
                                         }}
                                     >
-                                        <NavItem
-                                            path="/user"
-                                            name="Tài khoản"
-                                            icon={<HowToRegSharpIcon fontSize="small" />}
-                                        />
+                                        <Link
+                                            to={'/user'}
+                                            style={{
+                                                color: '#615c5c',
+                                            }}
+                                        >
+                                            <Box color={'inherit'}>
+                                                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                    <HowToRegSharpIcon fontSize="small" />
+                                                    <Typography fontSize={'12px'}>Tài khoản</Typography>
+                                                </Stack>
+                                            </Box>
+                                        </Link>
 
                                         <Stack
                                             className="user-view"
@@ -235,14 +303,14 @@ const Header = () => {
                                         >
                                             <ul>
                                                 <li>
-                                                    <NavLink
+                                                    <Link
                                                         style={{
                                                             color: 'inherit',
                                                         }}
                                                         to="/user/mycart"
                                                     >
                                                         Xem thông tin cá nhân
-                                                    </NavLink>
+                                                    </Link>
                                                 </li>
                                                 <li>
                                                     <Typography
@@ -263,16 +331,32 @@ const Header = () => {
                                     </Box>
                                 ) : (
                                     <Box display={'flex'} gap={2}>
-                                        <NavItem
-                                            path="/auth"
-                                            name="Đăng nhập"
-                                            icon={<LoginSharpIcon fontSize="small" />}
-                                        />
-                                        <NavItem
-                                            path="/auth?register=true"
-                                            name="Đăng ký"
-                                            icon={<HowToRegSharpIcon fontSize="small" />}
-                                        />
+                                        <Link
+                                            to={'/auth'}
+                                            style={{
+                                                color: '#615c5c',
+                                            }}
+                                        >
+                                            <Box color={'inherit'}>
+                                                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                    <LoginSharpIcon fontSize="small" />
+                                                    <Typography fontSize={'12px'}>Đăng nhập</Typography>
+                                                </Stack>
+                                            </Box>
+                                        </Link>
+                                        <Link
+                                            to={'/auth?register=true'}
+                                            style={{
+                                                color: '#615c5c',
+                                            }}
+                                        >
+                                            <Box color={'inherit'}>
+                                                <Stack direction={'row'} alignItems={'center'} spacing={1}>
+                                                    <HowToRegSharpIcon fontSize="small" />
+                                                    <Typography fontSize={'12px'}>Đăng ký</Typography>
+                                                </Stack>
+                                            </Box>
+                                        </Link>
                                     </Box>
                                 )}
                             </Box>
@@ -298,7 +382,7 @@ const Header = () => {
                                         alignItems: 'center',
                                     }}
                                 >
-                                    <NavLink to={'/'}>
+                                    <Link to={'/'}>
                                         <Box
                                             sx={{
                                                 display: 'flex',
@@ -307,7 +391,7 @@ const Header = () => {
                                         >
                                             <Image src={image.logo} width="160px" height="50px" alt="Logo" />
                                         </Box>
-                                    </NavLink>
+                                    </Link>
                                 </Grid>
 
                                 <Grid
@@ -411,7 +495,7 @@ const Header = () => {
                                                             Products.slice(0, 6).map((e: any) => {
                                                                 return (
                                                                     <Grid key={e.id} item xs={6} md={4}>
-                                                                        <NavLink
+                                                                        <Link
                                                                             to={`/products/${e.slug}`}
                                                                             onClick={handleCloseSearch}
                                                                         >
@@ -452,7 +536,7 @@ const Header = () => {
                                                                                     </Typography>
                                                                                 </Grid>
                                                                             </Box>
-                                                                        </NavLink>
+                                                                        </Link>
                                                                     </Grid>
                                                                 );
                                                             })
@@ -520,8 +604,7 @@ const Header = () => {
                                             alignItems: 'center',
                                             paddingLeft: '16px',
                                         }}
-                                        href="tel:0383476296"
-                                        underline="none"
+                                        to="#"
                                     >
                                         <PersonOutlineOutlinedIcon
                                             sx={{
@@ -548,7 +631,7 @@ const Header = () => {
                                             0383476296
                                         </Typography>
                                     </Link>
-                                    <NavLink
+                                    <Link
                                         to={'/cart'}
                                         style={{
                                             display: 'flex',
@@ -576,7 +659,7 @@ const Header = () => {
                                         >
                                             Giỏ hàng
                                         </Typography>
-                                    </NavLink>
+                                    </Link>
                                 </Grid>
                             </Grid>
                             <Box
@@ -629,17 +712,17 @@ const Header = () => {
                                         </MuiDrawer>
                                     </React.Fragment>
                                 </Box>
-                                <NavLink
+                                <Link
                                     to={'/'}
                                     style={{
                                         cursor: 'pointer',
                                     }}
                                 >
                                     <Image src={image.logo} alt="logo" width="100px" height="24px" />
-                                </NavLink>
+                                </Link>
                             </Box>
                             <Box display={'flex'} alignItems={'center'} lineHeight={'normal'} gap={1}>
-                                <NavLink
+                                <Link
                                     to={'/cart'}
                                     style={{
                                         cursor: 'pointer',
@@ -649,7 +732,7 @@ const Header = () => {
                                     <Badge badgeContent={cart.length} color="primary">
                                         <ShoppingCartIcon />
                                     </Badge>
-                                </NavLink>
+                                </Link>
 
                                 <Box>
                                     <Box
@@ -722,7 +805,7 @@ const Header = () => {
                                             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                         >
-                                            <NavLink to={'/user'}>
+                                            <Link to={'/user'}>
                                                 <MenuItem
                                                     onClick={handleClose}
                                                     sx={{
@@ -736,7 +819,7 @@ const Header = () => {
                                                     />
                                                     Thông tin tài khoản
                                                 </MenuItem>
-                                            </NavLink>
+                                            </Link>
                                             <Divider />
                                             <MenuItem
                                                 onClick={() => {
@@ -787,7 +870,7 @@ const Header = () => {
                                             transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                         >
-                                            <NavLink to={'/auth'}>
+                                            <Link to={'/auth'}>
                                                 <MenuItem
                                                     onClick={handleClose}
                                                     sx={{
@@ -801,7 +884,7 @@ const Header = () => {
                                                     />
                                                     Đăng nhập
                                                 </MenuItem>
-                                            </NavLink>
+                                            </Link>
                                             <MenuItem
                                                 onClick={() => {
                                                     setAnchorEl(null);

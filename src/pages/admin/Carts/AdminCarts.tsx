@@ -34,7 +34,7 @@ import { color } from '../../../Theme/color';
 import { pushError, pushSuccess } from '../../../components/Toast/Toast';
 import useDebounce from '../../../hooks/useDebounce/useDebounce';
 import { httpCart, httpProduct } from '../../../submodules/controllers/http/axiosController';
-import { Order } from '../../../submodules/models/OrderModel/Order';
+import { Order, OrderType } from '../../../submodules/models/OrderModel/Order';
 
 export default function AdminCarts() {
     const [carts, setCarts] = React.useState<any>({});
@@ -186,7 +186,7 @@ export default function AdminCarts() {
                                 </TableCell>
                                 <TableCell>Khách hàng</TableCell>
                                 <TableCell align="left">Tổng tiền</TableCell>
-                                <TableCell align="left">Ngày tạo hóa đơn</TableCell>
+                                <TableCell align="left"> Phương thức thanh toán </TableCell>
                                 <TableCell align="left">Trạng thái</TableCell>
                                 <TableCell align="center">Xử lý đơn</TableCell>
                                 <TableCell align="right">Thao tác</TableCell>
@@ -206,7 +206,12 @@ export default function AdminCarts() {
                                             currency: 'USD',
                                         }).format(Number(e.money))}
                                     </TableCell>
-                                    <TableCell align="left">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
+                                    <TableCell align="left">{                                    e.orderType == OrderType.COD
+                                        ? 'Thanh toán khi nhận hàng COD'
+                                        : OrderType.VISA
+                                        ? 'Thanh  toán bằng thẻ Visa'
+                                        : ''}
+ </TableCell>
                                     <TableCell align="left">
                                         {e.status == null ? (
                                             <Typography sx={{ color: 'gray', fontSize: '13px' }}>
@@ -282,7 +287,7 @@ export default function AdminCarts() {
                                                     <Stack onClick={() => handleUpdateOrder(e.id)}>
                                                         <Chip
                                                             color="success"
-                                                            label="Xác nhận thanh toán"
+                                                            label="Xác nhận giao hàng"
                                                             sx={{
                                                                 cursor: 'pointer',
                                                             }}

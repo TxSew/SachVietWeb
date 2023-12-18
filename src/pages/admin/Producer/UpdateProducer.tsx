@@ -40,6 +40,8 @@ const UpdateProducer = () => {
 
     const handleUpdate = async (data: Producer) => {
         const producerUpdate = await httpProducer.put(Number(id), data);
+        console.log(producerUpdate);
+        
         if (producerUpdate) {
             pushSuccess('Cập nhật nhà cung cấp thành công');
         }

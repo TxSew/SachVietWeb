@@ -20,7 +20,7 @@ import { useReactToPrint } from 'react-to-print';
 import { color } from '../../../Theme/color';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
-import { httpCart } from '../../../submodules/controllers/http/axiosController';
+import { httpCart, httpProduct } from '../../../submodules/controllers/http/axiosController';
 import { OrderType } from '../../../submodules/models/OrderModel/Order';
 import Invoice from '../../clients/invoice/invoice';
 import { pushError, pushSuccess } from '../../../components/Toast/Toast';
@@ -209,7 +209,7 @@ function DetailCarts() {
                                                           borderRadius: '15px',
                                                       }
                                             }
-                                            onClick={() => {
+                                            onClick={async () => {
                                                 httpCart
                                                     .put(Number(orderCurrent.id), {
                                                         status: 2,
@@ -218,9 +218,15 @@ function DetailCarts() {
                                                         console.log(response);
                                                         setReload(11);
                                                     });
+                                                    const order = (await httpCart.getOrderDetail(orderCurrent.id)) as any;
+                                                    await httpProduct.updateQuantity(order.orderDetail).then((response) => {
+                                                        console.log(response);
+                                                    });
+                                                    window.location.reload();
+                                                    
                                             }}
                                         >
-                                            <Typography textTransform={'capitalize'}>Xác nhận thanh toán</Typography>
+                                            <Typography textTransform={'capitalize'}>Xác nhận giao hàng</Typography>
                                         </Button>
                                     ) : (
                                         ''

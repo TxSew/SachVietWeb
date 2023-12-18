@@ -266,9 +266,12 @@ export default function AdminProductInventory() {
                                 <TableCell align="center">
                                     {Number(e.quantity) <= 0 ? (
                                         <Chip color="error" label="Hết hàng" />
-                                    ) : (
-                                        <Chip label="Hoạt động" color="success" />
-                                    )}
+                                    ) :Number(e.quantity) <= 5 ?(
+                                        <Chip label="Sắp hết" color="warning" />
+                                    ):
+                                    <Chip label="Còn hàng" color="success" />
+                                    
+                                    }
                                 </TableCell>
                                 <TableCell align="right">
                                     <Stack direction={'row'} spacing={1}>

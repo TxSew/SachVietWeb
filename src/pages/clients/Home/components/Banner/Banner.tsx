@@ -24,6 +24,21 @@ function Banner() {
                             modules={[Navigation]}
                             className="mySwiper"
                         >
+                              <SwiperSlide>
+                                <Box
+                                    sx={{
+                                        borderRadius: '10px',
+                                    }}
+                                >
+                                    <img
+                                        src={image.banner3}
+                                        alt="Banner tùy chỉnh"
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                    />
+                                </Box>
+                            </SwiperSlide>
                             <SwiperSlide>
                                 <Box
                                     sx={{
@@ -54,21 +69,7 @@ function Banner() {
                                     />
                                 </Box>
                             </SwiperSlide>
-                            <SwiperSlide>
-                                <Box
-                                    sx={{
-                                        borderRadius: '10px',
-                                    }}
-                                >
-                                    <img
-                                        src={image.banner3}
-                                        alt="Banner tùy chỉnh"
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                </Box>
-                            </SwiperSlide>
+                          
                         </Swiper>
                     </Grid>
                 </Grid>
@@ -83,6 +84,21 @@ function Banner() {
                             modules={[Navigation]}
                             className="mySwiper"
                         >
+                             <SwiperSlide>
+                                <Box
+                                    sx={{
+                                        borderRadius: '10px',
+                                    }}
+                                >
+                                    <img
+                                        src={image.banner3}
+                                        alt=""
+                                        style={{
+                                            width: '100%',
+                                        }}
+                                    />
+                                </Box>
+                            </SwiperSlide>
                             <SwiperSlide>
                                 <Box
                                     sx={{
@@ -113,21 +129,7 @@ function Banner() {
                                     />
                                 </Box>
                             </SwiperSlide>
-                            <SwiperSlide>
-                                <Box
-                                    sx={{
-                                        borderRadius: '10px',
-                                    }}
-                                >
-                                    <img
-                                        src={image.banner3}
-                                        alt=""
-                                        style={{
-                                            width: '100%',
-                                        }}
-                                    />
-                                </Box>
-                            </SwiperSlide>
+                           
                         </Swiper>
                     </Grid>
                 </Grid>
