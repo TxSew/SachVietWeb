@@ -18,6 +18,7 @@ import { color } from '../../../Theme/color';
 import { ChartMOney } from './chart/ChartMoney';
 import StatisticalItem from './components/StatisticalItem';
 import { NavLink } from 'react-router-dom';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 dayjs.locale('vi');
 function AdminStatistical() {
     const [StatisticalCount, setStatisticalCount] = useState<StatisticalDto>();
@@ -192,8 +193,8 @@ function AdminStatistical() {
                             <ChartMOney orderCountData={orderCount} statistical={statistical} />
                         </Box>
 
-                        <Grid container display={'flex'} gap={2} alignItems={'center'} justifyContent={'center'}>
-                            <Grid xs={12} md={4}>
+                        <Grid container  justifyContent={'space-evenly'} pb={4}>
+                            <Grid2 xs={12} md={3.6}>
                                 <Box
                                     sx={{
                                         backgroundColor: '#fff',
@@ -217,8 +218,8 @@ function AdminStatistical() {
                                         </Typography>
                                     </Grid>
                                 </Box>
-                            </Grid>
-                            <Grid xs={12} md={4}>
+                            </Grid2>
+                            <Grid2 xs={12} md={3.6}>
                                 <Box
                                     sx={{
                                         backgroundColor: '#fff',
@@ -242,8 +243,8 @@ function AdminStatistical() {
                                         </Typography>
                                     </Grid>
                                 </Box>
-                            </Grid>
-                            <Grid xs={12} md={4}>
+                            </Grid2>
+                            <Grid2 xs={12} md={3.6}>
                                 <Box
                                     sx={{
                                         backgroundColor: '#fff',
@@ -267,7 +268,7 @@ function AdminStatistical() {
                                         </Typography>
                                     </Grid>
                                 </Box>
-                            </Grid>
+                            </Grid2>
                         </Grid>
                     </Container>
                 </Grid>

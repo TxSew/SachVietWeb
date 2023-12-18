@@ -64,45 +64,9 @@ function Footer() {
                                 color: 'white',
                             }}
                         >
-                            <EmailIcon />
-                            <Typography fontSize={'20px'} fontWeight={'bold'}>
-                                Đăng ký nhận bản tin
-                            </Typography>
+                           
                         </Stack>
-                        <Stack
-                            direction={'row'}
-                            border={'1px solid #eee'}
-                            spacing={2}
-                            p={1}
-                            borderRadius={2}
-                            fontSize={'14px'}
-                            color={'#F39801'}
-                            bgcolor={'#fff'}
-                            width={'566px'}
-                        >
-                            <input
-                                placeholder="Nhập email của bạn!"
-                                style={{
-                                    flex: 1,
-                                    color: '#F39801',
-                                    fontSize: '16px',
-                                }}
-                            />
-                            <Button
-                                variant="outlined"
-                                sx={{
-                                    border: '1px solid #F39801',
-                                    background: '#F39801',
-                                    color: '#FFF',
-                                    '&:hover': {
-                                        border: '1px solid #008C89',
-                                        color: '#008C89',
-                                    },
-                                }}
-                            >
-                                <Typography variant="body1">Đăng ký</Typography>
-                            </Button>
-                        </Stack>
+                        
                     </Box>
                 </Stack>
             )}

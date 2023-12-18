@@ -13,6 +13,7 @@ import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { Order } from '../../../submodules/models/OrderModel/Order';
 import CartNotFound from '../../clients/cart/components/CartNotFound/CartNotFound';
+import CartUserNotFound from '../../../components/UserCartNotFound/UserCartNotFound';
 
 function OrderUser() {
     const { id } = useParams();
@@ -139,7 +140,7 @@ function OrderUser() {
                     </Box>
                 </div>
             ) : (
-                <CartNotFound />
+                <CartUserNotFound />
             )}
         </Box>
     );

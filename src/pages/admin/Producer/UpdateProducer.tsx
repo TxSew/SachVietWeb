@@ -1,12 +1,12 @@
-import { Box, Button, FormControl, Grid, MenuItem, OutlinedInput, Select, Stack, Typography } from '@mui/material';
+import { Box, Button, Grid, OutlinedInput, Stack, Typography } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { color } from '../../../Theme/color';
+import { pushSuccess } from '../../../components/Toast/Toast';
+import { TitleHelmet } from '../../../constants/Helmet';
 import { httpProducer } from '../../../submodules/controllers/http/axiosController';
 import { Producer } from '../../../submodules/models/producerModel/producer';
-import { TitleHelmet } from '../../../constants/Helmet';
 
 const UpdateProducer = () => {
     const { id } = useParams();
@@ -41,9 +41,7 @@ const UpdateProducer = () => {
     const handleUpdate = async (data: Producer) => {
         const producerUpdate = await httpProducer.put(Number(id), data);
         if (producerUpdate) {
-            toast.success('producer add successfully', {
-                position: 'bottom-right',
-            });
+            pushSuccess('Cập nhật nhà cung cấp thành công');
         }
     };
     return (
@@ -150,45 +148,6 @@ const UpdateProducer = () => {
                     <Typography variant="caption" color={color.error}>
                         {errors.keyword && errors.keyword.message}
                     </Typography>
-                    <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
-                        Trạng thái
-                    </Typography>
-                    <Controller
-                        control={control}
-                        name="status"
-                        rules={{
-                            required: 'Vui lòng nhập trạng thái',
-                        }}
-                        render={({ field }) => (
-                            <FormControl fullWidth>
-                                <Select
-                                    {...field}
-                                    displayEmpty
-                                    inputProps={{ 'aria-label': 'Without label' }}
-                                    sx={{
-                                        mt: 1,
-                                        '& > div': {
-                                            p: '7px',
-                                        },
-                                    }}
-                                    onChange={(e) => {
-                                        field.onChange(e);
-                                    }}
-                                >
-                                    <MenuItem value={''}>
-                                        <em>[--Chọn trạng thái--]</em>
-                                    </MenuItem>
-                                    <MenuItem value={1}>
-                                        <em>Đang kinh doanh</em>
-                                    </MenuItem>
-                                    <MenuItem value={0}>
-                                        <em>Ngưng kinh doanh</em>
-                                    </MenuItem>
-                                </Select>
-                                {/* <FormHelperText>Without label</FormHelperText> */}
-                            </FormControl>
-                        )}
-                    />
                 </Grid>
             </form>
         </Box>

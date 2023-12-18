@@ -24,6 +24,8 @@ export default function AdminCustomer() {
         const props = {
             page: page,
             keyword: debounce,
+            limit:7
+
         };
         fetchData(props);
     }, [page, debounce]);
@@ -77,7 +79,6 @@ export default function AdminCustomer() {
                             <TableCell>Họ tên</TableCell>
                             <TableCell align="left"> Email </TableCell>
                             <TableCell align="left">Số điện thoại</TableCell>
-                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Thao tác </TableCell>
                         </TableRow>
                     </TableHead>
@@ -92,13 +93,7 @@ export default function AdminCustomer() {
                                 </TableCell>
                                 <TableCell align="left">{e.email}</TableCell>
                                 <TableCell align="left">{e.phone}</TableCell>
-                                <TableCell align="center">
-                                    {e.status == null ? (
-                                        <Chip label="Hoạt động" color="success" />
-                                    ) : (
-                                        <Chip color="error" label="Ngưng hoạt động" />
-                                    )}
-                                </TableCell>
+                           
                                 <TableCell align="right">
                                     <Stack
                                         direction={'row'}

@@ -441,6 +441,33 @@ const UpdateProduct = () => {
                         <Typography variant="caption" color={color.error}>
                             {errors.sale && errors.sale.message}
                         </Typography>
+                        <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
+                            Số lượng <span style={{ color: color.error, fontSize: '15px' }}>(*)</span>
+                        </Typography>
+                        <Controller
+                            control={control}
+                            name="quantity"
+                            rules={{
+                                required: 'Vui lòng nhập số lượng sản phẩm!',
+                            }}
+                            render={({ field }) => (
+                                <OutlinedInput
+                                    {...field}
+                                    type="number"
+                                    sx={{
+                                        mt: 1,
+                                        '& > input': {
+                                            p: '7px',
+                                        },
+                                    }}
+                                    fullWidth
+                                    placeholder="Vui lòng nhập Ten của bạn!"
+                                />
+                            )}
+                        />
+                        <Typography variant="caption" color={color.error}>
+                            {errors.quantity && errors.quantity.message}
+                        </Typography>
                         <FormControl>
                             <Typography variant="h2" mt={2} fontSize={'18px'} fontWeight={'bold'}>
                                 Ảnh nổi bật

@@ -61,7 +61,7 @@ export default function AdminCarts() {
     };
     React.useEffect(() => {
         const props = {
-            limit: 5,
+            limit: 6,
             page,
             keyword: debounce,
             status: status,

@@ -143,7 +143,6 @@ export default function CategoryAdmin() {
                             <TableCell>Tên loại danh mục</TableCell>
                             <TableCell align="left">Danh mục cha</TableCell>
                             <TableCell align="left">Ngày tạo</TableCell>
-                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -164,13 +163,7 @@ export default function CategoryAdmin() {
                                     {e.parentName == null ? 'Danh mục gốc' : e.parentName}
                                 </TableCell>
                                 <TableCell align="left">{formatDates(e.createdAt)}</TableCell>
-                                <TableCell align="center">
-                                    {e.status == null ? (
-                                        <Chip label="Hoạt động" color="success" />
-                                    ) : (
-                                        <Chip color="error" label="Ngưng hoạt động" />
-                                    )}
-                                </TableCell>
+                               
                                 <TableCell align="right">
                                     <Stack
                                         direction={'row'}
