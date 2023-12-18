@@ -5,6 +5,7 @@ import useMedia from '../../hooks/useMedia/useMedia';
 import { httpVoucher } from '../../submodules/controllers/http/axiosController';
 import { Discount } from '../../submodules/models/DiscountModel/Discount';
 import { pushSuccess, pushWarning } from '../Toast/Toast';
+import { numberFormat } from '../../helpers/formatPrice';
 const selectedDate = (value: any) => new Date(value);
 const currentDate = new Date();
 
@@ -50,9 +51,16 @@ function DiscountItem(props: Discount) {
                     <Typography variant="h2" fontWeight={'bold'}>
                         {props.desc}
                     </Typography>
-                    <Typography variant="caption">ĐH từ 100K</Typography>
+                    <Typography variant="caption">
+                        ĐH từ
+                        <Typography variant="caption" color={color.borderColor} fontWeight={'bold'}>
+                            {numberFormat(Number(props.payment_limit))}
+                        </Typography>
+                    </Typography>
 
-                    <Typography variant="body1">NHẬP MÃ NGAY</Typography>
+                    <Typography variant="body1" mt={1}>
+                        LƯU MÃ NGAY
+                    </Typography>
                     <Box
                         sx={{
                             position: 'relative',
@@ -113,7 +121,7 @@ function DiscountItem(props: Discount) {
                                 padding: '4px 10px',
                                 fontSize: '12px',
                                 fontWeight: 'bold',
-                                cursor:'not-allowed'
+                                cursor: 'not-allowed',
                             }}
                         >
                             Hết hạn
@@ -133,7 +141,9 @@ function DiscountItem(props: Discount) {
                                     code: 45345,
                                 })
                             }
-                        >Lưu</Button>
+                        >
+                            Lưu
+                        </Button>
                     )}
                 </Box>
             </Stack>

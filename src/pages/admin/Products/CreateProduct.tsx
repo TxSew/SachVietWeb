@@ -30,7 +30,7 @@ const CreateProduct = () => {
 
     const fetchProducer = async () => {
         try {
-            const producer: any = await httpProducer.getAll({});
+            const producer: any = await httpProducer.getList();
             setProducer(producer.producers);
         } catch (error) {
             console.log(error);

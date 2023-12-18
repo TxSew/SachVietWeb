@@ -28,6 +28,14 @@ class HttpProducerController {
             throw error;
         }
     }
+    async getList() {
+        try {
+            const response = await this.axiosInstance.get(`producer/getList`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
+    }
     async getOne(id: number): Promise<any> {
         try {
             const response = await this.axiosInstance.get(`producer/${id}`);
