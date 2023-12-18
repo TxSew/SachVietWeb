@@ -1,4 +1,4 @@
-import { Box, CardMedia, Container, Grid, Stack, Typography } from '@mui/material';
+import { Box, CardMedia, Container, Grid, Pagination, Stack, Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined';
 import { httpNews } from '../../../submodules/controllers/http/axiosController';
@@ -8,11 +8,19 @@ import { Helmet } from 'react-helmet';
 
 function News() {
     const [news, setNews] = useState<any>({});
+    const [page, setPage] = useState<number>(1);
     useEffect(() => {
-        httpNews.getList({}).then((response) => {
+        const props = {
+            page: page,
+        };
+        httpNews.getList(props).then((response) => {
             setNews(response);
         });
-    }, []);
+    }, [page]);
+
+    const handleChange = async (event: React.ChangeEvent<unknown>, value: number) => {
+        setPage(value);
+    };
     return (
         <Box bgcolor={'#eee'}>
             <Helmet>
@@ -116,6 +124,9 @@ function News() {
                         );
                     })}
                 </Grid>
+                <Stack mt={2} textAlign={'center'} justifyContent={'center'} alignItems={''}>
+                    <Pagination count={news.totalPage} page={page} onChange={handleChange} />
+                </Stack>
             </Container>
         </Box>
     );

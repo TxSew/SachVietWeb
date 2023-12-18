@@ -14,7 +14,7 @@ const CreateDiscount = () => {
         reset,
         formState: { errors },
     } = useForm<Discount>({
-        mode:'all',
+        mode: 'all',
         defaultValues: {
             status: '1',
         },
@@ -52,7 +52,14 @@ const CreateDiscount = () => {
                             defaultValue=""
                             rules={{
                                 required: 'Vui lòng nhập mã giảm giá',
-                                validate: validateForm,
+                                minLength: {
+                                    message: 'Vui lòng nhập mã tối thiểu trên 5 kí tự',
+                                    value: 5,
+                                },
+                                maxLength: {
+                                    message: 'Vui lòng nhập mã giới hạn duới 8 kí tự',
+                                    value: 8,
+                                },
                             }}
                             render={({ field }) => (
                                 <OutlinedInput
@@ -82,7 +89,7 @@ const CreateDiscount = () => {
                             rules={{
                                 required: 'Vui lòng nhập số tiền giảm giá',
                                 validate: {
-                                    nonNegative: (value:any) => parseFloat(value) >= 0 || 'Vui lòng nhập số không âm',
+                                    nonNegative: (value: any) => parseFloat(value) >= 0 || 'Vui lòng nhập số không âm',
                                 },
                             }}
                             render={({ field }) => (
@@ -112,7 +119,7 @@ const CreateDiscount = () => {
                             rules={{
                                 required: 'Vui lòng nhập số tiền giới hạn',
                                 validate: {
-                                    nonNegative: (value:any) => parseFloat(value) >= 0 || 'Vui lòng nhập số không âm',
+                                    nonNegative: (value: any) => parseFloat(value) >= 0 || 'Vui lòng nhập số không âm',
                                 },
                             }}
                             render={({ field }) => (
@@ -171,12 +178,12 @@ const CreateDiscount = () => {
                             rules={{
                                 required: 'Vui lòng nhập ngày giới hạn nhập',
                                 validate: {
-                                    futureDate: (value:any) => {
+                                    futureDate: (value: any) => {
                                         const selectedDate = new Date(value);
                                         const currentDate = new Date();
                                         return selectedDate >= currentDate || 'Vui lòng chọn ngày hiện tại trở đi';
                                     },
-                                }
+                                },
                             }}
                             render={({ field }) => (
                                 <OutlinedInput
