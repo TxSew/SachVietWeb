@@ -27,7 +27,7 @@ function NewsDetail() {
                 }}
             >
                 <Grid container position={'relative'} justifyContent={'center'}>
-                    <Grid xs={12} md={8} bgcolor={'white'} p={2}>
+                    <Grid xs={8} bgcolor={'white'} p={2}>
                         <Typography
                             variant={'h1'}
                             pb={2}
@@ -40,7 +40,7 @@ function NewsDetail() {
                         <Box py={2} position={'relative'}>
                             <CardMedia
                                 component="img"
-                                height={'390px'}
+                                height={'351px'}
                                 sx={{
                                     width: '100%',
                                     objectFit: 'cover',
@@ -78,11 +78,20 @@ function NewsDetail() {
                             </Box>
                         </Box>
                         <Box>
-                            <div
+                            <Box
                                 className={``}
-                                style={{
+                                sx={{
                                     textAlign: 'justify',
                                     fontSize: '14px',
+                                    '& img': {
+                                        width: '100%',
+                                        objectFit: 'cover',
+                                        my: 2,
+                                    },
+                                    '& p': {
+                                        lineHeight: '24px',
+                                        fontSize: '14px',
+                                    },
                                 }}
                                 dangerouslySetInnerHTML={{
                                     __html: htmlContent as unknown as TrustedHTML,
