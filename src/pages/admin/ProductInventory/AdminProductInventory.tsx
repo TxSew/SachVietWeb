@@ -232,11 +232,12 @@ export default function AdminProductInventory() {
                         >
                             <TableCell>ID</TableCell>
                             <TableCell>Hình ảnh</TableCell>
-                            <TableCell align="right">Tiêu đề</TableCell>
-                            <TableCell align="right">Số lượng tồn kho</TableCell>
-                            <TableCell align="right">số lượng đã bán</TableCell>
-                            <TableCell align="right">Giá</TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="left">Tiêu đề</TableCell>
+                            <TableCell align="left">Số lượng tồn kho</TableCell>
+                            <TableCell align="left">số lượng đã bán</TableCell>
+                            <TableCell align="left">Giá</TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
+                            <TableCell align="center">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -254,15 +255,15 @@ export default function AdminProductInventory() {
                                         alt=""
                                     />
                                 </TableCell>
-                                <TableCell align="right">{e.title}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.title}</TableCell>
+                                <TableCell align="left">
                                     <Typography color={Number(e.quantity) <= 5 ? color.error : ''}>
                                         {e.quantity}
                                     </Typography>
                                 </TableCell>
-                                <TableCell align="right">{e.soldQuantity}</TableCell>
-                                <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.soldQuantity}</TableCell>
+                                <TableCell align="left">{numberFormat(Number(e.price_sale))}</TableCell>
+                                <TableCell align="center">
                                     {Number(e.quantity) <= 0 ? (
                                         <Chip color="error" label="Hết hàng" />
                                     ) : (

@@ -141,9 +141,9 @@ export default function CategoryAdmin() {
                             <TableCell>ID</TableCell>
                             <TableCell>Hình ảnh</TableCell>
                             <TableCell>Tên loại danh mục</TableCell>
-                            <TableCell align="right">Danh mục cha</TableCell>
-                            <TableCell align="right">Ngày tạo</TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="left">Danh mục cha</TableCell>
+                            <TableCell align="left">Ngày tạo</TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -160,11 +160,11 @@ export default function CategoryAdmin() {
                                 <TableCell component="th" scope="row">
                                     {e.name}
                                 </TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">
                                     {e.parentName == null ? 'Danh mục gốc' : e.parentName}
                                 </TableCell>
-                                <TableCell align="right">{formatDates(e.createdAt)}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{formatDates(e.createdAt)}</TableCell>
+                                <TableCell align="center">
                                     {e.status == null ? (
                                         <Chip label="Hoạt động" color="success" />
                                     ) : (

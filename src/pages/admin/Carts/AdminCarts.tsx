@@ -185,9 +185,9 @@ export default function AdminCarts() {
                                     />
                                 </TableCell>
                                 <TableCell>Khách hàng</TableCell>
-                                <TableCell align="center">Tổng tiền</TableCell>
-                                <TableCell align="center">Ngày tạo hóa đơn</TableCell>
-                                <TableCell align="right">Trạng thái</TableCell>
+                                <TableCell align="left">Tổng tiền</TableCell>
+                                <TableCell align="left">Ngày tạo hóa đơn</TableCell>
+                                <TableCell align="left">Trạng thái</TableCell>
                                 <TableCell align="center">Xử lý đơn</TableCell>
                                 <TableCell align="right">Thao tác</TableCell>
                             </TableRow>
@@ -201,13 +201,13 @@ export default function AdminCarts() {
                                     <TableCell component="th" scope="row">
                                         {e.userID == null ? 'Khách vãng lai' : e.users?.fullName}
                                     </TableCell>
-                                    <TableCell align="right">
+                                    <TableCell align="left">
                                         {Intl.NumberFormat('en-US', {
                                             currency: 'USD',
                                         }).format(Number(e.money))}
                                     </TableCell>
-                                    <TableCell align="center">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
-                                    <TableCell align="right">
+                                    <TableCell align="left">{moment(e.createdAt).format('DD MMM YYYY')}</TableCell>
+                                    <TableCell align="left">
                                         {e.status == null ? (
                                             <Typography sx={{ color: 'gray', fontSize: '13px' }}>
                                                 Đang chờ duyệt
@@ -235,7 +235,7 @@ export default function AdminCarts() {
                                             direction={'row'}
                                             color={color.text_color}
                                             spacing={2}
-                                            justifyContent={'end'}
+                                            justifyContent={'center'}
                                         >
                                             {e.status == null ? (
                                                 <>
