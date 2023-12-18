@@ -139,10 +139,10 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
         setState({ ...state, [anchor]: open });
     };
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(true);
 
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setOpen((pre) => !pre);
     };
 
     const handleDrawerClose = () => {
