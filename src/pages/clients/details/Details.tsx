@@ -458,6 +458,7 @@ export const Details = () => {
                                                 </NavLink>
                                             </Typography>
                                         </Stack>
+
                                         <Stack direction={'row'} spacing={1}>
                                             <Typography>Loại sản phẩm:</Typography>
                                             <Typography fontWeight={'bold'}>
@@ -578,6 +579,30 @@ export const Details = () => {
                                         </Stack>
                                     </Stack>
                                 </Box>
+                                <Stack direction={'row'} spacing={1} mt={2}>
+                                    <Typography>Trạng thái:</Typography>
+                                    {Number(Detail.quantity) <= 0 ? (
+                                        <Typography
+                                            sx={{
+                                                fontSize: '14px',
+                                                color: '#e60505',
+                                                fontWeight: 'bold',
+                                            }}
+                                        >
+                                            Hết hàng
+                                        </Typography>
+                                    ) : (
+                                        <Typography
+                                            sx={{
+                                                color: '#11aa22',
+                                                fontWeight: 'bold',
+                                                fontSize: '14px',
+                                            }}
+                                        >
+                                            Còn hàng
+                                        </Typography>
+                                    )}
+                                </Stack>
                                 {/* quantity */}
                                 {!isMediumMD ? (
                                     <Box mt={3}>
