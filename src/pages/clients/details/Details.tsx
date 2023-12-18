@@ -359,10 +359,12 @@ export const Details = () => {
                                         {Number(Detail.quantity) <= 0 ? (
                                             <Typography
                                                 sx={{
-                                                    padding: '5px 20px',
-                                                    border: '1px solid gray',
-                                                    color: 'gray',
-                                                    borderRadius: '5px',
+                                                    background: 'gray',
+                                                    padding: '8px 16px',
+                                                    color: 'white',
+                                                    borderRadius: '20px',
+                                                    fontWeight: 'bold',
+                                                    textTransform: 'uppercase',
                                                 }}
                                             >
                                                 Hết hàng
