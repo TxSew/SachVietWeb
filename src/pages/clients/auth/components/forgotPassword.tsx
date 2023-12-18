@@ -41,20 +41,20 @@ const ForgotPasswordPage = () => {
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
-
+    const [showHideSend, setHideSend] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('password');
         return value === password || 'Mật khẩu nhập lại không khớp!';
     };
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const handleClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
     const handleClickSendOtp = () => {
         if (email.length > 1) {
-            setShowPassword(true);
+            setHideSend(true);
             http.sendOtp(email)
                 .then((res) => {
                     if (res.forgot_password_token) {
-                        setShowPassword(false);
+                        setHideSend(false);
                         toast.success('OTP gửi qua email thành công,vui lòng kiểm tra email ', {
                             position: 'top-right',
                         });
@@ -63,9 +63,9 @@ const ForgotPasswordPage = () => {
                     }
                 })
                 .catch((err) => {
-                    setShowPassword(true);
+                    setHideSend(true);
                     if (err.response.data.message == 'Not Found') {
-                        setShowPassword(false);
+                        setHideSend(false);
                         toast.error('Tài khoản không tồn tại trên hệ thống, vui lòng nhập lại thông tin!', {
                             position: 'top-right',
                         });
@@ -199,7 +199,7 @@ const ForgotPasswordPage = () => {
                                                             onClick={handleClickSendOtp}
                                                             onMouseDown={handleMouseDownPassword}
                                                         >
-                                                            {showPassword ? (
+                                                            {showHideSend ? (
                                                                 <CircularProgress size={20} />
                                                             ) : (
                                                                 <Typography>Gửi</Typography>
@@ -321,7 +321,7 @@ const ForgotPasswordPage = () => {
                                                 key={1}
                                                 {...field}
                                                 fullWidth
-                                                placeholder="Vui lòng nhập mật khẩu"
+                                                placeholder="Vui lòng nhập lại mật khẩu"
                                                 type={showConfirmPassword ? 'text' : 'password'}
                                                 endAdornment={
                                                     <InputAdornment position="end">
@@ -330,7 +330,7 @@ const ForgotPasswordPage = () => {
                                                             onClick={handleClickShowConfirmPassword}
                                                             onMouseDown={handleMouseDownPassword}
                                                         >
-                                                            {showPassword ? (
+                                                            {showConfirmPassword ? (
                                                                 <VisibilityOff
                                                                     sx={{
                                                                         fontSize: '14px',

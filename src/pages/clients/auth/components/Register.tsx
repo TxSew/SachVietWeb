@@ -220,7 +220,7 @@ export const Register = () => {
                             key={1}
                             {...field}
                             fullWidth
-                            placeholder="Vui lòng nhập mật khẩu"
+                            placeholder="Vui lòng nhập mật lại khẩu"
                             type={showConfirmPassword ? 'text' : 'password'}
                             endAdornment={
                                 <InputAdornment position="end">
@@ -229,7 +229,7 @@ export const Register = () => {
                                         onClick={handelClickShowConfirmPassword}
                                         onMouseDown={handleMouseDownPassword}
                                     >
-                                        {showPassword ? (
+                                        {showConfirmPassword ? (
                                             <VisibilityOff
                                                 sx={{
                                                     fontSize: '14px',
