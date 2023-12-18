@@ -1,17 +1,29 @@
+import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Box, FormControl, IconButton, InputAdornment, OutlinedInput, Typography } from '@mui/material';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
+import { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
+import { color } from '../../../Theme/color';
+import { httpAccount } from '../../../submodules/controllers/http/axiosController';
+import { ChangePassword } from '../../../submodules/models/UserModel/User';
+import UserIn4 from './components/UserInfo/UserIn4';
 import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
-import { Controller, useForm } from 'react-hook-form';
-import { Box, FormControl, FormControlLabel, OutlinedInput, Radio, RadioGroup, Typography } from '@mui/material';
-import { color } from '../../../Theme/color';
-import { ChangePassword } from '../../../submodules/models/UserModel/User';
-import { httpAccount } from '../../../submodules/controllers/http/axiosController';
-import { toast } from 'react-toastify';
-import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
-import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import UserIn4 from './components/UserInfo/UserIn4';
 function UserInfo() {
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showPasswordCurrent, setShowPasswordCurrent] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+
+    const handleClickShowPassword = () => setShowPassword((show) => !show);
+    const handelClickShowConfirmPassword = () => setShowConfirmPassword((show) => !show);
+    const handelClickShowPasswordCurrent = () => setShowPasswordCurrent((show) => !show);
+
+    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+    };
+
     const validatePasswordConfirmation = (value: any) => {
         const password = control._getWatch('newPassword');
         return value === password || 'Mật khẩu nhập lại không khớp!';
@@ -94,8 +106,31 @@ function UserInfo() {
                                                     fullWidth
                                                     {...field}
                                                     onChange={(e) => field.onChange(e.target.value)}
-                                                    type="text"
+                                                    type={showPasswordCurrent ? 'text' : 'password'}
                                                     placeholder="Nhập mât khẩu hiện tại"
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handelClickShowPasswordCurrent}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                            >
+                                                                {showPasswordCurrent ? (
+                                                                    <VisibilityOff
+                                                                        sx={{
+                                                                            fontSize: '14px',
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <Visibility
+                                                                        sx={{
+                                                                            fontSize: '14px',
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    }
                                                 />
                                                 <Typography color={color.error}>
                                                     {errors.password && errors.password.message}
@@ -135,9 +170,33 @@ function UserInfo() {
                                                     fullWidth
                                                     {...field}
                                                     onChange={(e) => field.onChange(e.target.value)}
-                                                    type="text"
+                                                    type={showPassword ? 'text' : 'password'}
                                                     placeholder="Mật khẩu mới"
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handleClickShowPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                            >
+                                                                {showPassword ? (
+                                                                    <VisibilityOff
+                                                                        sx={{
+                                                                            fontSize: '14px',
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <Visibility
+                                                                        sx={{
+                                                                            fontSize: '14px',
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    }
                                                 />
+
                                                 <Typography color={color.error}>
                                                     {errors.newPassword && errors.newPassword.message}
                                                 </Typography>
@@ -170,8 +229,31 @@ function UserInfo() {
                                                     fullWidth
                                                     {...field}
                                                     onChange={(e) => field.onChange(e.target.value)}
-                                                    type="text"
+                                                    type={showConfirmPassword ? 'text' : 'password'}
                                                     placeholder="Nhập lại mật khẩu mới"
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            <IconButton
+                                                                aria-label="toggle password visibility"
+                                                                onClick={handelClickShowConfirmPassword}
+                                                                onMouseDown={handleMouseDownPassword}
+                                                            >
+                                                                {showConfirmPassword ? (
+                                                                    <VisibilityOff
+                                                                        sx={{
+                                                                            fontSize: '14px',
+                                                                        }}
+                                                                    />
+                                                                ) : (
+                                                                    <Visibility
+                                                                        sx={{
+                                                                            fontSize: '14px',
+                                                                        }}
+                                                                    />
+                                                                )}
+                                                            </IconButton>
+                                                        </InputAdornment>
+                                                    }
                                                 />
                                                 <Typography color={color.error}>
                                                     {errors.repeatNewPassword && errors.repeatNewPassword.message}
