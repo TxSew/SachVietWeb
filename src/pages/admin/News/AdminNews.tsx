@@ -218,10 +218,10 @@ export default function AdminNews() {
                             }}
                         >
                             <TableCell>ID</TableCell>
-                            <TableCell align="center">Tiêu đề</TableCell>
+                            <TableCell align="left">Tiêu đề</TableCell>
                             <TableCell align="center">Hình ảnh</TableCell>
-                            <TableCell align="right">Tác giả</TableCell>
-                            <TableCell align="right"> Trạng thái</TableCell>
+                            <TableCell align="left">Tác giả</TableCell>
+                            <TableCell align="center"> Trạng thái</TableCell>
                             <TableCell align="right">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -231,7 +231,7 @@ export default function AdminNews() {
                                 <TableCell component="th" scope="row">
                                     {e.id}
                                 </TableCell>
-                                <TableCell align="center">{e.title}</TableCell>
+                                <TableCell align="left">{e.title}</TableCell>
                                 <TableCell
                                     sx={{
                                         display: 'flex',
@@ -248,8 +248,8 @@ export default function AdminNews() {
                                     />
                                 </TableCell>
 
-                                <TableCell align="right">{e.author}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.author}</TableCell>
+                                <TableCell align="center">
                                     {e.status == null ? (
                                         <Chip label="Xuất bản" color="success" />
                                     ) : (

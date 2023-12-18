@@ -287,11 +287,11 @@ export default function AdminProduct() {
                         >
                             <TableCell>ID</TableCell>
                             <TableCell>Hình ảnh</TableCell>
-                            <TableCell align="right">Tiêu đề</TableCell>
-                            <TableCell align="right">Danh mục</TableCell>
-                            <TableCell align="right">Giá</TableCell>
-                            <TableCell align="right">Nhà cung cấp</TableCell>
-                            <TableCell align="right">Trạng thái</TableCell>
+                            <TableCell align="left">Tiêu đề</TableCell>
+                            <TableCell align="left">Danh mục</TableCell>
+                            <TableCell align="left">Giá</TableCell>
+                            <TableCell align="left">Nhà cung cấp</TableCell>
+                            <TableCell align="center">Trạng thái</TableCell>
                             <TableCell align="right">Hành động</TableCell>
                         </TableRow>
                     </TableHead>
@@ -310,11 +310,11 @@ export default function AdminProduct() {
                                         alt=""
                                     />
                                 </TableCell>
-                                <TableCell align="right">{e.title}</TableCell>
-                                <TableCell align="right">{e.category?.name}</TableCell>
-                                <TableCell align="right">{numberFormat(Number(e.price_sale))}</TableCell>
-                                <TableCell align="right">{e.producer?.name}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="left">{e.title}</TableCell>
+                                <TableCell align="left">{e.category?.name}</TableCell>
+                                <TableCell align="left">{numberFormat(Number(e.price_sale))}</TableCell>
+                                <TableCell align="left">{e.producer?.name}</TableCell>
+                                <TableCell align="center">
                                     {Number(e.quantity) > 0 ? (
                                         <Chip label="Còn hàng" color="success" />
                                     ) : (

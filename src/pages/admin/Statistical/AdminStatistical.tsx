@@ -108,7 +108,7 @@ function AdminStatistical() {
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
                             image={image.category}
-                            path=""
+                            path="/admin/category"
                             name="Danh mục"
                             quantity={Number(StatisticalCount?.Statistical.categoryCount)}
                         />
@@ -116,7 +116,7 @@ function AdminStatistical() {
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
                             image={image.quantityProduct}
-                            path=""
+                            path="/admin/product"
                             name="Sản phẩm"
                             quantity={Number(StatisticalCount?.Statistical.productCount)}
                         />
@@ -125,7 +125,7 @@ function AdminStatistical() {
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
                             image={image.quantityOrder}
-                            path=""
+                            path="/admin/orders"
                             name="Đơn hàng"
                             quantity={Number(StatisticalCount?.Statistical.orderCount)}
                         />
@@ -134,7 +134,7 @@ function AdminStatistical() {
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
                             image={image.producer}
-                            path=""
+                            path="/admin/producer"
                             name="Nhà cung cấp"
                             quantity={Number(StatisticalCount?.Statistical.producerCount)}
                         />
@@ -142,7 +142,7 @@ function AdminStatistical() {
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
                             image={image.sale}
-                            path=""
+                            path="/admin/discount"
                             name="Mã giảm giá"
                             quantity={Number(StatisticalCount?.Statistical.producerCount)}
                         />
@@ -150,7 +150,7 @@ function AdminStatistical() {
                     <Grid item xs={12} md={4}>
                         <StatisticalItem
                             image={image.quantityCustomer}
-                            path=""
+                            path="/admin/customer"
                             name="Khách hàng"
                             quantity={Number(StatisticalCount?.Statistical.UserCount)}
                         />
