@@ -5,6 +5,8 @@ import useMedia from '../../hooks/useMedia/useMedia';
 import { httpVoucher } from '../../submodules/controllers/http/axiosController';
 import { Discount } from '../../submodules/models/DiscountModel/Discount';
 import { pushSuccess, pushWarning } from '../Toast/Toast';
+const selectedDate = (value: any) => new Date(value);
+const currentDate = new Date();
 
 function DiscountItem(props: Discount) {
     const { isMediumMD } = useMedia();
@@ -102,6 +104,20 @@ function DiscountItem(props: Discount) {
                         >
                             Hết lượt
                         </Button>
+                    ) : selectedDate(props.expiration_date) < currentDate ? (
+                        <Button
+                            variant="contained"
+                            disabled
+                            sx={{
+                                background: 'gray',
+                                padding: '4px 10px',
+                                fontSize: '12px',
+                                fontWeight: 'bold',
+                                cursor:'not-allowed'
+                            }}
+                        >
+                            Hết hạn
+                        </Button>
                     ) : (
                         <Button
                             variant="contained"
@@ -117,9 +133,7 @@ function DiscountItem(props: Discount) {
                                     code: 45345,
                                 })
                             }
-                        >
-                            Lưu
-                        </Button>
+                        >Lưu</Button>
                     )}
                 </Box>
             </Stack>

@@ -141,7 +141,9 @@ function Checkout() {
         setValue,
         reset,
         formState: { errors, isSubmitting },
-    } = useForm<Order>();
+    } = useForm<Order>({
+        mode:'all'
+    });
     const handelLogin = () => {
         navigate({
             pathname: '/auth',
