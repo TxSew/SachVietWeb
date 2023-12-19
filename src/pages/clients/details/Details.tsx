@@ -310,6 +310,7 @@ export const Details = () => {
                                                                     src={e.image}
                                                                     style={{
                                                                         height: '60px',
+                                                                        objectFit: 'cover',
                                                                         border: '2px solid #eee',
                                                                     }}
                                                                     alt=""
@@ -337,8 +338,12 @@ export const Details = () => {
                                         </Grid>
                                     ) : (
                                         <Grid justifyContent={'center'} xs={12} md={9} spacing={2}>
-                                            <Box sx={{ padding: '0 64px' }}>
-                                                <ImageMagnifier width="100%" src={String(Detail.image)} />
+                                            <Box>
+                                                <ImageMagnifier
+                                                    width="100%"
+                                                    height="400px"
+                                                    src={String(Detail.image)}
+                                                />
                                             </Box>
                                         </Grid>
                                     )}

@@ -281,7 +281,7 @@ function UserCartDetail() {
 
                     <Grid item xs={12}>
                         <Box mt={'60px'}>
-                            {orderCurrent.status == null ? (
+                            {orderCurrent.status == null && orderCurrent.orderType !== OrderType.VISA ? (
                                 <Button
                                     variant="OutlinedRed"
                                     sx={{

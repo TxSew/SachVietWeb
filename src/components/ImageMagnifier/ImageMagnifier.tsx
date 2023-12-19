@@ -22,13 +22,13 @@ function ImageMagnifier({
         <div
             style={{
                 position: 'relative',
-                height: height,
+                maxHeight: height,
                 width: width,
             }}
         >
             <img
                 src={src}
-                style={{ height: height, width: width }}
+                style={{ maxHeight: height, width: width }}
                 onMouseEnter={(e) => {
                     // update image size and turn-on magnifier
                     const elem = e.currentTarget;

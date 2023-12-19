@@ -195,13 +195,13 @@ const CartProduct = () => {
                                                                       WebkitLineClamp: 2,
                                                                       WebkitBoxOrient: 'vertical',
                                                                       fontSize: '11px',
-                                                                      color: '#808080',
+                                                                      color: '#000000de',
                                                                       flexShrink: 0,
                                                                   }
                                                                 : {
                                                                       overflow: 'hidden',
                                                                       display: '-webkit-box',
-                                                                      color: '#808080',
+                                                                      color: '#000000de',
                                                                       lineClamp: 2,
                                                                       WebkitLineClamp: 2,
                                                                       WebkitBoxOrient: 'vertical',
@@ -373,10 +373,7 @@ const CartProduct = () => {
                                     }}
                                 />
                             </Stack>
-                            <Stack color={color.text_second} direction={'row'}>
-                                <Typography variant="body1"> Xem thêm</Typography>
-                                <KeyboardArrowRightIcon />
-                            </Stack>
+                            <Stack color={color.text_second} direction={'row'}></Stack>
                         </Stack>
                         <Box pt={2}>
                             <Stack
@@ -410,7 +407,14 @@ const CartProduct = () => {
                                             {discount.map((e: any) => {
                                                 return (
                                                     <MenuItem key={e.id} value={e.discountVoucher.code}>
-                                                        <em>{e.discountVoucher.code}</em>
+                                                        <em>
+                                                            <Typography color={'#000000de'}>
+                                                                {e.discountVoucher.code} -
+                                                            </Typography>
+                                                            <Typography color={color.sale}>
+                                                                {`Giảm ${numberFormat(e.discountVoucher.discount)}`}
+                                                            </Typography>
+                                                        </em>
                                                     </MenuItem>
                                                 );
                                             })}

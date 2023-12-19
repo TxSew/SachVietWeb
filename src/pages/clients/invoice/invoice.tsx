@@ -15,6 +15,7 @@ import { httpCart } from '../../../submodules/controllers/http/axiosController';
 import { useParams } from 'react-router-dom';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { image } from '../../../assets';
+import { color } from '../../../Theme/color';
 
 export default function Invoice() {
     const { id } = useParams();
@@ -28,14 +29,7 @@ export default function Invoice() {
     return (
         <Container>
             <Box textAlign={'center'} width={'100%'}>
-                <Box
-                    display={'flex'}
-                    justifyContent={'center'}
-                    height={'134px'}
-                    margin={'auto'}
-                    border={'1px solid #eee'}
-                    borderRadius={2}
-                >
+                <Box display={'flex'} justifyContent={'center'} height={'134px'} margin={'auto'} borderRadius={2}>
                     <img src={image.logo} alt="Logo Sách Việt" />
                 </Box>
                 <Box py={2} borderBottom={'1px dashed #000'}>
@@ -43,10 +37,11 @@ export default function Invoice() {
                         fontSize={'32px'}
                         fontWeight={'bold'}
                         textTransform={'uppercase'}
-                        bgcolor={'gold'}
+                        bgcolor={color.sale}
                         textAlign={'center'}
                         p={1}
                         borderRadius={'8px'}
+                        color={color.text_color}
                     >
                         Hóa đơn
                     </Typography>
@@ -139,13 +134,10 @@ export default function Invoice() {
                 </Box>
 
                 <Box display={'flex'} gap={1} justifyContent={'end'}>
-                    <Typography fontWeight={'bold'}>Thuế (0%):</Typography>
-                    <Typography>20%</Typography>
-                </Box>
-
-                <Box display={'flex'} gap={1} justifyContent={'end'}>
                     <Typography fontWeight={'bold'}>Tổng tiền thanh toán:</Typography>
-                    <Typography>{numberFormat(invoice.money)}</Typography>
+                    <Typography color={color.sale} fontWeight={'bold'}>
+                        {numberFormat(invoice.money)}
+                    </Typography>
                 </Box>
                 <Stack fontWeight={'bold'}>Cảm ơn quý khách đã chọn Sách Việt!</Stack>
             </Box>
