@@ -27,7 +27,7 @@ function NewsDetail() {
                 }}
             >
                 <Grid container position={'relative'} justifyContent={'center'}>
-                    <Grid xs={8} bgcolor={'white'} p={2}>
+                    <Grid xs={12} md={8} bgcolor={'white'} p={2}>
                         <Typography
                             variant={'h1'}
                             pb={2}
