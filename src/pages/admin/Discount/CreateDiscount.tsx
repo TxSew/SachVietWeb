@@ -25,8 +25,12 @@ const CreateDiscount = () => {
             const discount = await httpDiscount.post(data);
             pushSuccess('Thêm mã giảm giá thành công');
             reset({});
-        } catch (err) {
-            pushError('Mã giảm giá đã tồn tại!, Vui lòng nhập mã CODE mới');
+        } catch (err: any) {
+            if (err.response.data.message == 'discount maximum exceeded') {
+                pushError('Không thêm được số tiền giảm giá cao hơn số tiền tổi thiểu');
+            } else {
+                pushError('Mã giảm giá đã tồn tại!, Vui lòng nhập mã CODE mới');
+            }
         }
     };
     return (
