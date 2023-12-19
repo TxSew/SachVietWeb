@@ -377,6 +377,30 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                     </ListItemButton>
                 </ListItem>
             </NavLink>
+            <NavLink to="/">
+                <ListItem className="navdb" disablePadding sx={{ display: 'block' }}>
+                    <ListItemButton
+                        sx={{
+                            minHeight: 48,
+                            justifyContent: open ? 'initial' : 'center',
+                            px: 2.5,
+                        }}
+                    >
+                        <ListItemIcon
+                            sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
+                                color: '#ccc',
+                            }}
+                        >
+                            {' '}
+                            <ArrowBackIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Về trang chủ" sx={{ opacity: open ? 1 : 0 }} />
+                    </ListItemButton>
+                </ListItem>
+            </NavLink>
         </Box>
     );
     const redirect = useNavigate();
@@ -426,7 +450,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                             padding: '0 16px',
                                         }}
                                     >
-                                        <Tooltip title="Account settings">
+                                        <Tooltip title="Hành động">
                                             <IconButton
                                                 onClick={handleClick}
                                                 size="small"
@@ -533,7 +557,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                         padding: '0 16px',
                                     }}
                                 >
-                                    <Tooltip title="Account settings">
+                                    <Tooltip title="Hành động">
                                         <IconButton
                                             onClick={handleClick}
                                             size="small"
@@ -542,7 +566,7 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                             aria-haspopup="true"
                                             aria-expanded={openpro ? 'true' : undefined}
                                         >
-                                            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+                                            <Avatar sx={{ width: 32, height: 32 }}>T</Avatar>
                                         </IconButton>
                                     </Tooltip>
                                 </Box>
@@ -581,10 +605,6 @@ function AdminLayout({ children }: { children: React.ReactNode }) {
                                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                                     anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                 >
-                                    <MenuItem onClick={handleClose}>
-                                        <Avatar /> My account
-                                    </MenuItem>
-                                    <Divider />
                                     <MenuItem
                                         onClick={() => {
                                             localStorage.removeItem('role');

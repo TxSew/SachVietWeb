@@ -141,66 +141,6 @@ export default function AdminNews() {
                     </Link>
                 </Button>
             </Box>
-            <Box mb={1} sx={{ minWidth: 300 }} display={{ xs: 'block', md: 'flex' }} alignItems={'center'} gap={'24px'}>
-                <Typography display={'flex'} pb={{ xs: 1, md: 0 }}>
-                    Sắp xếp:
-                </Typography>
-                <Box
-                    display={'flex'}
-                    alignItems={'center'}
-                    justifyContent={'space-between'}
-                    gap={3}
-                    pb={{ xs: 2, md: 0 }}
-                >
-                    <FormControl sx={{ minWidth: 120 }}>
-                        <Select
-                            value={sort}
-                            onChange={handleChangeSort}
-                            displayEmpty
-                            inputProps={{ 'aria-label': 'Without label' }}
-                        >
-                            <MenuItem value="">
-                                <em>Tùy chọn</em>
-                            </MenuItem>
-                            <MenuItem value={'old'}>Cũ nhất</MenuItem>
-                            <MenuItem value={'new'}>Mới nhất</MenuItem>
-                            <MenuItem value={'priceDown'}>Giá từ thấp lên cao</MenuItem>
-                            <MenuItem value={'priceUp'}>Giá từ cao xuống thấp</MenuItem>
-                        </Select>
-                    </FormControl>
-
-                    <Button
-                        onClick={onDownload}
-                        variant="outlinedGreen"
-                        sx={{
-                            border: '1px solid #ccc',
-                        }}
-                    >
-                        <Typography textTransform={'capitalize'} fontSize={'12px'} color={'#333'}>
-                            Xuất EXEL
-                        </Typography>
-                    </Button>
-                </Box>
-
-                <OutlinedInput
-                    sx={
-                        isMediumMD
-                            ? {
-                                  maxWidth: '100%',
-                                  '& > input': {
-                                      p: '7px',
-                                  },
-                              }
-                            : {
-                                  maxWidth: '300px',
-                              }
-                    }
-                    fullWidth
-                    placeholder="Tìm kiếm sản phẩm..."
-                    onChange={handleChangeValue}
-                />
-            </Box>
-
             <TableContainer component={Paper} ref={tableRef}>
                 <Table
                     sx={{
@@ -246,10 +186,9 @@ export default function AdminNews() {
                                     />
                                 </TableCell>
                                 <TableCell align="left">{e.title}</TableCell>
-                               
 
                                 <TableCell align="left">{e.author}</TableCell>
-                           
+
                                 <TableCell align="right">
                                     <Stack
                                         direction={'row'}

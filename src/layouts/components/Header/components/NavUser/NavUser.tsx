@@ -14,6 +14,7 @@ import { color } from '../../../../../Theme/color';
 import { image } from '../../../../../assets';
 import NavItem from '../NavItem/NavItem';
 import { httpAccount, httpCategory } from '../../../../../submodules/controllers/http/axiosController';
+import LogoutIcon from '@mui/icons-material/Logout';
 function NavUser() {
     const [openCategory, setOpenCategory] = React.useState(false);
     const [category, setCategory] = React.useState<any>([]);
@@ -92,7 +93,7 @@ function NavUser() {
                                 window.location.assign('/');
                             }}
                         >
-                            <PersonIcon />
+                            <LogoutIcon />
                             <Typography>Đăng xuất</Typography>
                         </Stack>
                     </Stack>
@@ -136,14 +137,7 @@ function NavUser() {
                 >
                     <NavItem path="/user" name="Thông tin tài khoản" icon={<NewspaperIcon fontSize="small" />} />
                 </Box>
-                <Box
-                    p={1}
-                    sx={{
-                        borderBottom: '1px solid #dadada',
-                    }}
-                >
-                    <NavItem path="/user/adress" name="Số địa chỉ" icon={<ContentPasteSearchIcon />} />
-                </Box>
+
                 <Box
                     p={1}
                     sx={{
@@ -169,7 +163,7 @@ function NavUser() {
                     <NavItem path="/" name=" Về trang chủ" icon={<HomeIcon />} />
                 </Box>
             </Box>
-            <Box position={'absolute'} top={'85%'} bgcolor={'#ccc'} width={'100%'}>
+            <Box position={'absolute'} bottom={'0px'} bgcolor={'#ccc'} width={'100%'}>
                 <Box p={2}>
                     <Typography fontSize={'20px'}>Hỗ trợ</Typography>
                     <Stack direction={'row'} spacing={1}>
