@@ -367,7 +367,19 @@ function Checkout() {
                                 name="bill"
                                 control={control}
                                 render={({ field }) => (
-                                    <FormControlLabel control={<Checkbox {...field} />} label="Xuất hóa đơn" />
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                {...field}
+                                                checked={Number(field.value) == 1}
+                                                onChange={(e) => {
+                                                    const newValue = e.target.checked ? 1 : 0; // Set giá trị mới cho field
+                                                    field.onChange(newValue); // Cập nhật giá trị của field khi checkbox thay đổi
+                                                }}
+                                            />
+                                        }
+                                        label="Xuất hóa đơn"
+                                    />
                                 )}
                             />
                         </FormControl>

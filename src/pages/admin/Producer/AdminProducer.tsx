@@ -158,7 +158,7 @@ export default function ProducerAdmin() {
                                     {e.code}
                                 </TableCell>
                                 <TableCell align="left">{e.keyword}</TableCell>
-                              
+
                                 <TableCell align="right">
                                     <Stack
                                         direction={'row'}
