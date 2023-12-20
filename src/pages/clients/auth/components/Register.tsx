@@ -129,7 +129,7 @@ export const Register = () => {
                     rules={{
                         required: 'Vui lòng nhập số diện thoại!',
                         pattern: {
-                            value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+                            value: /^(?:0|\+84)\d{9,10}$/,
                             message: 'Số điện thoại không hợp lệ!',
                         },
                     }}
