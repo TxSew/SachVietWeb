@@ -15,8 +15,8 @@ const CreateNews = () => {
     const editorRef = useRef<any>(null);
     const handleAddNew = async (data: any) => {
         const image = await uploadImageFirebase(img);
+        data.image = image;
         const props = {
-            image: image,
             ...data,
         };
 
