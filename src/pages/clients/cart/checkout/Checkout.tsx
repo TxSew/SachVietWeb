@@ -260,7 +260,7 @@ function Checkout() {
                                 rules={{
                                     required: 'Vui lòng nhập số điện thoại',
                                     pattern: {
-                                        value: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+                                        value: /^(?:0|\+84)\d{9,10}$/,
                                         message: 'Số điện thoại không hợp lệ!',
                                     },
                                 }}
