@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { formatDates } from '../../../helpers/FortmatDate';
 import { numberFormat } from '../../../helpers/formatPrice';
 import { httpCart } from '../../../submodules/controllers/http/axiosController';
-import { Order } from '../../../submodules/models/OrderModel/Order';
+import { Order, OrderType } from '../../../submodules/models/OrderModel/Order';
 import CartNotFound from '../cart/components/CartNotFound/CartNotFound';
 import './index.scss';
 import NavUser from './layout/NavUser';
@@ -81,7 +81,14 @@ function UserMyCart() {
                                                         <TableCell align="center">
                                                             {numberFormat(Number(e.money) - Number(e.coupon))}
                                                         </TableCell>
-                                                        <TableCell align="center">{e.orderType}</TableCell>
+                                                        <TableCell align="center">{
+
+e.orderType == OrderType.COD
+    ? 'COD'
+    : OrderType.VISA
+    ? 'Stripe'
+    : ''
+                                                        }</TableCell>
                                                         <TableCell
                                                             align="center"
                                                             sx={{

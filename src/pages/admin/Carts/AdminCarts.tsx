@@ -209,7 +209,7 @@ export default function AdminCarts() {
                                     <TableCell align="left">{                                    e.orderType == OrderType.COD
                                         ? 'Thanh toán khi nhận hàng COD'
                                         : OrderType.VISA
-                                        ? 'Thanh  toán bằng thẻ Visa'
+                                        ? 'Thanh  toán qua Stripe'
                                         : ''}
  </TableCell>
                                     <TableCell align="left">

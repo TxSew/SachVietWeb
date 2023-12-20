@@ -163,7 +163,10 @@ const Header = () => {
     return (
         <>
             <Box width={'100%'}>
+                <Link to={'/sales'}>
+                
                 <Image src={image.bannertop} alt="logo" width="100%" />
+                </Link>
             </Box>
             {!isMediumMD ? (
                 <Box width={'100%'}>

@@ -416,7 +416,7 @@ function Checkout() {
                                                 fontWeight: 'bold',
                                             }}
                                             control={<Radio />}
-                                            label="Thanh toán thẻ tín dụng Stripe"
+                                            label="Thanh toán qua Stripe"
                                         />
                                     </RadioGroup>
                                 )}

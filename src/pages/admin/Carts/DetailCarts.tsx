@@ -417,7 +417,7 @@ function DetailCarts() {
                                     {orderCurrent.orderType == OrderType.COD
                                         ? 'Thanh toán bằng tiền mặt khi nhận hàng'
                                         : OrderType.VISA
-                                        ? 'Thanh  toán bằng thẻ tín dụng'
+                                        ? 'Thanh  toán qua Stripe'
                                         : ''}
                                 </Typography>
                             </Box>
