@@ -36,6 +36,8 @@ import { Discount } from '../../../submodules/models/DiscountModel/Discount';
 import useMedia from '../../../hooks/useMedia/useMedia';
 
 export default function AdminDiscount() {
+    const selectedDate = (value: any) => new Date(value);
+const currentDate = new Date();
     const { isMediumMD } = useMedia();
 
     const [discount, setDiscount] = React.useState<any>({});
@@ -181,7 +183,7 @@ export default function AdminDiscount() {
 
                                 <TableCell align="left">{formatDates(e.expiration_date)}</TableCell>
                                 <TableCell align="center">
-                                    {e?.status === 1 ? <Chip label="Hoạt động" color="success" /> : 'unactive'}
+                                    {Number(e.number_used) >= Number(e.limit_number) ? <Chip label="Hết lượt" color="warning" /> : selectedDate(e.expiration_date) < currentDate ? <Chip label="Hết hạn" color="error" /> :  <Chip label="Hoạt động" color="success" />}
                                 </TableCell>
                                 <TableCell align="right">
                                     <Stack

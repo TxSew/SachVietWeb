@@ -41,11 +41,16 @@ function UserInfo() {
                 toast.success('Mật khẩu của bạn thay đổi thành công', {
                     position: 'top-right',
                 });
-             res?.message =='password is incorrect' && pushWarning('Mật khẩu không đúng vui lòng nhập lại!')
             res == undefined &&
                 toast.error('Mật khẩu thay đổi không thành công!', {
                     position: 'top-right',
                 });
+        }).catch((error) =>{
+            console.log(error)
+            if(error.response.data.message == 'password is incorrect') {
+                pushWarning('Mật khẩu không đúng vui lòng nhập lại!')
+            }
+            
         });
     };
 
