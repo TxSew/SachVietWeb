@@ -11,6 +11,7 @@ import UserIn4 from './components/UserInfo/UserIn4';
 import './index.scss';
 import NavUser from './layout/NavUser';
 import './style.scss';
+import { pushWarning } from '../../../components/Toast/Toast';
 function UserInfo() {
     const [showPassword, setShowPassword] = useState<boolean>(false);
     const [showPasswordCurrent, setShowPasswordCurrent] = useState<boolean>(false);
@@ -40,6 +41,7 @@ function UserInfo() {
                 toast.success('Mật khẩu của bạn thay đổi thành công', {
                     position: 'top-right',
                 });
+             res?.message =='password is incorrect' && pushWarning('Mật khẩu không đúng vui lòng nhập lại!')
             res == undefined &&
                 toast.error('Mật khẩu thay đổi không thành công!', {
                     position: 'top-right',
