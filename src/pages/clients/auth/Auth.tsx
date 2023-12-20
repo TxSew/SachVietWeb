@@ -86,7 +86,7 @@ export default function Auth() {
                                         sx={{
                                             width: '50%',
                                         }}
-                                        label="Đăng kí"
+                                        label="Đăng ký"
                                         {...a11yProps(1)}
                                     />
                                 </Tabs>
